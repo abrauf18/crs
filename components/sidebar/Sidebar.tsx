@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
@@ -29,7 +28,7 @@ export default function SideBar() {
         <>
             <ul className="flex flex-col w-full bg-light-gray items-center justify-center pt-5 h-screen mobile:hidden">
                 <Image
-                    src={crsLogo}
+                    src={crsLogo as string}
                     alt="crs logo"
                     style={{
                         width: "80px",
@@ -39,22 +38,22 @@ export default function SideBar() {
                     }}
                 />
                 <div className="flex flex-col justify-start items-center h-full">
-                    <NavigationItem to="/" itemIconDark={dashboardIcondark} itemIconLight={dashboardIconlight} itemText="Dashboard" />
-                    <NavigationItem to="#" itemIconDark={videoIcondark} itemIconLight={videoIconlight} itemText="Video" />
-                    <NavigationItem to="#" itemIconDark={resourcesIcondark} itemIconLight={resourcesIconlight} itemText="Resources" />
-                    <NavigationItem to="#" itemIconDark={queryIcondark} itemIconLight={queryIconlight} itemText="Query" />
-                    <NavigationItem to="#" itemIconDark={standardIcondark} itemIconLight={standardIconlight} itemText="Standard" />
-                    <NavigationItem to="#" itemIconDark={userIcondark} itemIconLight={userIconlight} itemText="User’s" />
+                    <NavigationItem to="/" itemIconDark={dashboardIcondark as string} itemIconLight={dashboardIconlight as string} itemText="Dashboard" />
+                    <NavigationItem to="#" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
+                    <NavigationItem to="#" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
+                    <NavigationItem to="#" itemIconDark={queryIcondark as string} itemIconLight={queryIconlight as string} itemText="Query" />
+                    <NavigationItem to="#" itemIconDark={standardIcondark as string} itemIconLight={standardIconlight as string} itemText="Standard" />
+                    <NavigationItem to="#" itemIconDark={userIcondark as string} itemIconLight={userIconlight as string} itemText="User’s" />
                 </div>
                 <div className="mb-2">
-                    <NavigationItem to="#" itemIconDark={settingIcondark} itemIconLight={settingIconlight} itemText="Settings" />
-                    <NavigationItem to="#" itemIconDark={logoutIcondark} itemIconLight={logoutIconlight} itemText="Logout" />
+                    <NavigationItem to="#" itemIconDark={settingIcondark as string} itemIconLight={settingIconlight as string} itemText="Settings" />
+                    <NavigationItem to="#" itemIconDark={logoutIcondark as string} itemIconLight={logoutIconlight as string} itemText="Logout" />
                 </div>
             </ul>
             <ul onClick={() => SetMenu(!menu)} className="tablet:hidden bg-light-gray w-screen p-2">
                 <div className="flex justify-between items-center">
                     <Image
-                        src={crsLogo}
+                        src={crsLogo as string}
                         alt="crs logo"
                         style={{
                             width: "50px",
@@ -64,7 +63,7 @@ export default function SideBar() {
                     />
                     <Image
                         className="cursor-pointer"
-                        src={menu ? crossIcon : burgerIcon}
+                        src={menu ? (crossIcon as string) : (burgerIcon as string)}
                         alt="hameburger"
                         width={35}
                         height={35}
@@ -74,14 +73,14 @@ export default function SideBar() {
                     menu && (
                         <div>
                             <div className="flex flex-col justify-start items-center h-full">
-                                <NavigationItem to="/" itemIconDark={dashboardIcondark} itemIconLight={dashboardIconlight} itemText="Dashboard" />
-                                <NavigationItem to="#" itemIconDark={videoIcondark} itemIconLight={videoIconlight} itemText="Video" />
-                                <NavigationItem to="#" itemIconDark={resourcesIcondark} itemIconLight={resourcesIconlight} itemText="Resources" />
-                                <NavigationItem to="#" itemIconDark={queryIcondark} itemIconLight={queryIconlight} itemText="Query" />
-                                <NavigationItem to="#" itemIconDark={standardIcondark} itemIconLight={standardIconlight} itemText="Standard" />
-                                <NavigationItem to="#" itemIconDark={userIcondark} itemIconLight={userIconlight} itemText="User’s" />
-                                <NavigationItem to="#" itemIconDark={settingIcondark} itemIconLight={settingIconlight} itemText="Settings" />
-                                <NavigationItem to="#" itemIconDark={logoutIcondark} itemIconLight={logoutIconlight} itemText="Logout" />
+                                <NavigationItem to="/" itemIconDark={dashboardIcondark as string} itemIconLight={dashboardIconlight as string} itemText="Dashboard" />
+                                <NavigationItem to="#" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
+                                <NavigationItem to="#" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
+                                <NavigationItem to="#" itemIconDark={queryIcondark as string} itemIconLight={queryIconlight as string} itemText="Query" />
+                                <NavigationItem to="#" itemIconDark={standardIcondark as string} itemIconLight={standardIconlight as string} itemText="Standard" />
+                                <NavigationItem to="#" itemIconDark={userIcondark as string} itemIconLight={userIconlight as string} itemText="User’s" />
+                                <NavigationItem to="#" itemIconDark={settingIcondark as string} itemIconLight={settingIconlight as string} itemText="Settings" />
+                                <NavigationItem to="#" itemIconDark={logoutIcondark as string} itemIconLight={logoutIconlight as string} itemText="Logout" />
                             </div>
                         </div>
                     )
