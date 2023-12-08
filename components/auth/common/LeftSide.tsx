@@ -1,7 +1,11 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import wavinghand from '@/public/wavinghand.svg';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import wavinghand from "@/public/assets/wavinghand.svg";
 
 interface MetaText {
     title: string,
@@ -44,7 +48,7 @@ const LeftSide: React.FC<LeftSideProp> = ({ images, metaText }) => {
                     {Array.from({ length: 4 }).map((_, index) => (
                         <div
                             key={index}
-                            className={`duration-700 ease-in-out flex justify-center items-center ${index === activeSlide ? 'block' : 'hidden'
+                            className={`duration-700 ease-in-out flex justify-center items-center ${index === activeSlide ? "block" : "hidden"
                                 }`}
                             data-carousel-item=""
                         >
@@ -54,7 +58,7 @@ const LeftSide: React.FC<LeftSideProp> = ({ images, metaText }) => {
                                 height={250}
                                 alt={`Slide ${index + 1}`}
                                 style={{
-                                    objectFit: 'cover',
+                                    objectFit: "cover",
                                 }}
                             />
                         </div>
@@ -78,7 +82,7 @@ const LeftSide: React.FC<LeftSideProp> = ({ images, metaText }) => {
                         <button
                             key={index}
                             type="button"
-                            className={`w-3 h-3 rounded-full ${index === activeSlide ? 'bg-[#F59A3B]' : 'bg-gray-300'
+                            className={`w-3 h-3 rounded-full ${index === activeSlide ? "bg-primary-color" : "bg-gray-300"
                                 }`}
                             aria-current={index === activeSlide}
                             aria-label={`Slide ${index + 1}`}

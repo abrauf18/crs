@@ -1,9 +1,11 @@
-import crscLogo from '@/public/crsclogo.svg'
-import Image from 'next/image'
-import { Label } from "@/components/ui/label"
-import { CheckBox } from './Checkbox'
-import { Button } from '@/components/ui/button'
-import googleIcon from '@/public/googleIcon.svg'
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import React from "react";
+import crscLogo from "@/public/assets/crsclogo.svg";
+import Image from "next/image";
+import { Label } from "@/components/ui/label";
+import { CheckBox } from "./Checkbox";
+import { Button } from "@/components/ui/button";
+import googleIcon from "@/public/assets/googleIcon.svg";
 
 
 const SigninForm = () => {
@@ -40,7 +42,7 @@ const SigninForm = () => {
                     <a href="#" className='text-xs text-[#131123] ml-auto hover:text-sky-400'>Forgot Password?</a>
                 </div>
                 <div className='text-center'>
-                    <Button type="submit" className="w-full bg-[#F59A3B] hover:bg-[#ffb566] mb-3">Sign In</Button>
+                    <Button type="submit" className="w-full bg-primary-color hover:bg-[#ffb566] mb-3">Sign In</Button>
                     <span className='text-[#131123] text-[12px]'>Or</span>
                     <Button className="w-full bg-[#E7EAE9] text-black mt-3 hover:bg-[#E7EAE9]">
                         <Image
@@ -54,7 +56,7 @@ const SigninForm = () => {
                 </div>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default SigninForm
+export default SigninForm;

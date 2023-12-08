@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import colors from "tailwindcss/colors";
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -8,6 +9,12 @@ module.exports = {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    colors: {
+      "light-gray": "#F5F5F5",
+      "primary-color": "#F59A3B",
+      ...colors,
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -18,6 +25,7 @@ module.exports = {
     extend: {
       screens: {
         mobile: { max: "635px" },
+        tablet: { min: "636px" },
       },
       keyframes: {
         "accordion-down": {
