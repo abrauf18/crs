@@ -11,7 +11,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ icon, cardText, count, isActive }) => {
     return (
-        <div className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-[256px] rounded-lg border-[1px] ${isActive ? "bg-[#F59A3B1A]" : "bg-white"}`}>
+        <div className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border-[1px] ${isActive ? "bg-[#F59A3B1A]" : "bg-white"}`}>
             <Image
                 src={icon}
                 alt="icon"

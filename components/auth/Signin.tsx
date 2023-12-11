@@ -13,11 +13,11 @@ const Signin = () => {
     description: "Enter your Credentials to Access Your Account."
   };
   return (
-    <section className='sm:flex h-screen'>
+    <section className='md:flex mobile:justify-center mobile:items-center h-screen'>
       <div className='mobile:hidden flex bg-light-gray w-full h-full basis-1/2 justify-center items-center md:p-12 p-6'>
         <LeftSide images={images} metaText={metaText} />
       </div>
-      <div className='bg-[#ffffff] w-full h-full basis-1/2 flex justify-center sm:pt-12'>
+      <div className='bg-[#ffffff] w-full h-full basis-1/2 flex justify-center md:pt-12'>
         <SigninForm />
       </div>
     </section>

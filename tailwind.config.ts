@@ -13,6 +13,7 @@ module.exports = {
     colors: {
       "light-gray": "#F5F5F5",
       "primary-color": "#F59A3B",
+      "dark-gray": "#85878D",
       ...colors,
     },
     container: {
@@ -24,8 +25,7 @@ module.exports = {
     },
     extend: {
       screens: {
-        mobile: { max: "635px" },
-        tablet: { min: "636px" },
+        mobile: { max: "767px" },
       },
       keyframes: {
         "accordion-down": {

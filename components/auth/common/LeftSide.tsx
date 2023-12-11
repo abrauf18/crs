@@ -74,7 +74,7 @@ const LeftSide: React.FC<LeftSideProp> = ({ images, metaText }) => {
                             alt='waving hand'
                         />
                     </div>
-                    <p className='text-[#85878D]'>{metaText.description}</p>
+                    <p className='text-dark-gray'>{metaText.description}</p>
                 </div>
                 {/* Slider indicators */}
                 <div className="absolute z-30 flex -translate-x-1/2 mt-7 left-1/2 space-x-3 rtl:space-x-reverse">

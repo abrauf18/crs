@@ -25,8 +25,8 @@ import crossIcon from "@/public/assets/crossIcon.svg";
 export default function SideBar() {
     const [menu, SetMenu] = useState(false);
     return (
-        <>
-            <ul className="flex flex-col w-full bg-light-gray items-center justify-center pt-5 h-screen mobile:hidden">
+        <section className="bg-light-gray md:p-3 md:fixed">
+            <ul className="flex flex-col w-full items-center justify-center pt-5 h-screen mobile:hidden">
                 <Image
                     src={crsLogo as string}
                     alt="crs logo"
@@ -40,17 +40,17 @@ export default function SideBar() {
                 <div className="flex flex-col justify-start items-center h-full">
                     <NavigationItem to="/" itemIconDark={dashboardIcondark as string} itemIconLight={dashboardIconlight as string} itemText="Dashboard" />
                     <NavigationItem to="#" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
-                    <NavigationItem to="#" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
+                    <NavigationItem to="/resources" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
                     <NavigationItem to="#" itemIconDark={queryIcondark as string} itemIconLight={queryIconlight as string} itemText="Query" />
                     <NavigationItem to="#" itemIconDark={standardIcondark as string} itemIconLight={standardIconlight as string} itemText="Standard" />
-                    <NavigationItem to="#" itemIconDark={userIcondark as string} itemIconLight={userIconlight as string} itemText="User’s" />
+                    <NavigationItem to="/users" itemIconDark={userIcondark as string} itemIconLight={userIconlight as string} itemText="User’s" />
                 </div>
                 <div className="mb-2">
                     <NavigationItem to="#" itemIconDark={settingIcondark as string} itemIconLight={settingIconlight as string} itemText="Settings" />
                     <NavigationItem to="#" itemIconDark={logoutIcondark as string} itemIconLight={logoutIconlight as string} itemText="Logout" />
                 </div>
             </ul>
-            <ul onClick={() => SetMenu(!menu)} className="tablet:hidden bg-light-gray w-screen p-2">
+            <ul onClick={() => SetMenu(!menu)} className="md:hidden bg-light-gray w-screen p-2">
                 <div className="flex justify-between items-center">
                     <Image
                         src={crsLogo as string}
@@ -75,10 +75,10 @@ export default function SideBar() {
                             <div className="flex flex-col justify-start items-center h-full">
                                 <NavigationItem to="/" itemIconDark={dashboardIcondark as string} itemIconLight={dashboardIconlight as string} itemText="Dashboard" />
                                 <NavigationItem to="#" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
-                                <NavigationItem to="#" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
+                                <NavigationItem to="/resources" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
                                 <NavigationItem to="#" itemIconDark={queryIcondark as string} itemIconLight={queryIconlight as string} itemText="Query" />
                                 <NavigationItem to="#" itemIconDark={standardIcondark as string} itemIconLight={standardIconlight as string} itemText="Standard" />
-                                <NavigationItem to="#" itemIconDark={userIcondark as string} itemIconLight={userIconlight as string} itemText="User’s" />
+                                <NavigationItem to="/users" itemIconDark={userIcondark as string} itemIconLight={userIconlight as string} itemText="User’s" />
                                 <NavigationItem to="#" itemIconDark={settingIcondark as string} itemIconLight={settingIconlight as string} itemText="Settings" />
                                 <NavigationItem to="#" itemIconDark={logoutIcondark as string} itemIconLight={logoutIconlight as string} itemText="Logout" />
                             </div>
@@ -86,6 +86,6 @@ export default function SideBar() {
                     )
                 }
             </ul>
-        </>
+        </section>
     );
 }

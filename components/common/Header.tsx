@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProp> = ({ headerText, tagline, iconSrc }) => {
             <div className="flex justify-between items-center mobile:flex-col">
                 <div className="flex flex-col justify-start items-start">
                     <div className='flex justify-center items-center font-semibold text-2xl mb-2'>
-                        <h1>{headerText}</h1>
+                        <h1 className="mr-1">{headerText}</h1>
                         <Image
                             width={25}
                             height={25}
@@ -26,10 +26,10 @@ const Header: React.FC<HeaderProp> = ({ headerText, tagline, iconSrc }) => {
                             alt={`${String(iconSrc)} Icon`}
                         />
                     </div>
-                    <p className='text-[#85878D] text-sm mobile:mb-3'>{tagline}</p>
+                    <p className='text-dark-gray text-sm mobile:mb-3'>{tagline}</p>
                 </div>
                 <div className="flex justify-between items-center">
-                    <div className="flex border-[1px] rounded-lg tablet:px-2 mobile:pr-6 w-full justify-between items-center">
+                    <div className="flex border-[1px] rounded-lg md:px-2 mobile:pr-6 w-full justify-between items-center">
                         <input type="text" className="p-2 border-none outline-none" placeholder="search..." />
                         <Image
                             width={18}
