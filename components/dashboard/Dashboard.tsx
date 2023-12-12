@@ -2,10 +2,10 @@ import React from "react";
 import Header from "../common/Header";
 import wavinghand from "@/public/assets/wavinghand.svg";
 import Card from "../common/Card";
-import userIcon from "@/public/assets/userIcon.svg";
-import videoIcon from "@/public/assets/videoIcon.svg";
-import resourcesIcon from "@/public/assets/resourcesIcon.svg";
-import dataIcon from "@/public/assets/dataIcon.svg";
+import userIcon from "@/public/assets/coloredIcons/userIcon.svg";
+import videoIcon from "@/public/assets/coloredIcons/videoIcon.svg";
+import resourcesIcon from "@/public/assets/coloredIcons/resourcesIcon.svg";
+import dataIcon from "@/public/assets/coloredIcons/dataIcon.svg";
 import Filters from "../common/Filters";
 import Image from "next/image";
 import graph from "@/public/assets/graph.svg";
@@ -19,7 +19,7 @@ const Dashboard = () => {
         <section className="flex flex-col w-full scroll-smooth mobile:mt-12">
             <Header headerText="Hello John Doe!" tagline="Here’s a Quick Overview" iconSrc={wavinghand as string} />
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 mobile:place-items-center">
-                <Card icon={userIcon as string} cardText="Total Videos" count="20K" />
+                <Card icon={userIcon as string} cardText="Total User’s" count="20K" />
                 <Card icon={videoIcon as string} cardText="Video Uploads" count={200} isActive={true} />
                 <Card icon={resourcesIcon as string} cardText="Total Resources" count={150} />
                 <Card icon={dataIcon as string} cardText="Data Insights" count="70%" />

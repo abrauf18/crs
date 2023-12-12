@@ -39,7 +39,7 @@ export default function SideBar() {
                 />
                 <div className="flex flex-col justify-start items-center h-full">
                     <NavigationItem to="/" itemIconDark={dashboardIcondark as string} itemIconLight={dashboardIconlight as string} itemText="Dashboard" />
-                    <NavigationItem to="#" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
+                    <NavigationItem to="/video" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
                     <NavigationItem to="/resources" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
                     <NavigationItem to="#" itemIconDark={queryIcondark as string} itemIconLight={queryIconlight as string} itemText="Query" />
                     <NavigationItem to="#" itemIconDark={standardIcondark as string} itemIconLight={standardIconlight as string} itemText="Standard" />
@@ -74,7 +74,7 @@ export default function SideBar() {
                         <div>
                             <div className="flex flex-col justify-start items-center h-full">
                                 <NavigationItem to="/" itemIconDark={dashboardIcondark as string} itemIconLight={dashboardIconlight as string} itemText="Dashboard" />
-                                <NavigationItem to="#" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
+                                <NavigationItem to="/video" itemIconDark={videoIcondark as string} itemIconLight={videoIconlight as string} itemText="Video" />
                                 <NavigationItem to="/resources" itemIconDark={resourcesIcondark as string} itemIconLight={resourcesIconlight as string} itemText="Resources" />
                                 <NavigationItem to="#" itemIconDark={queryIcondark as string} itemIconLight={queryIconlight as string} itemText="Query" />
                                 <NavigationItem to="#" itemIconDark={standardIcondark as string} itemIconLight={standardIconlight as string} itemText="Standard" />

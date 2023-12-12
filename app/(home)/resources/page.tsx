@@ -2,7 +2,7 @@ import React from "react";
 import Filters from "@/components/common/Filters";
 import Header from "@/components/common/Header";
 import ResourcesTable, { Resource } from "@/components/resources/ResourcesTable";
-import resourcesIcon from "@/public/assets/dark/resourcesIcon.svg";
+import resourcesIcon from "@/public/assets/coloredIcons/resourcesIcon.svg";
 
 export const ResourcesData: Resource[] = [
     {

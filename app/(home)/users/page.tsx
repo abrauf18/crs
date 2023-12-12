@@ -3,7 +3,7 @@ import userImage from "@/public/assets/UserImage.svg";
 import UsersTable, { User } from "@/components/users/UsersTable";
 import Filters from "@/components/common/Filters";
 import Header from "@/components/common/Header";
-import userIcon from "@/public/assets/userIcon.svg";
+import userIcon from "@/public/assets/coloredIcons/userIcon.svg";
 
 export const usersData: User[] = [
     {
