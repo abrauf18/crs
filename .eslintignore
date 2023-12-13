@@ -11,6 +11,7 @@ coverage
 *.scss
 **/out/*
 **/lib/*
-**/components/ui/*
+**/app/components/ui/*
+**/app/assets/*
 next-env.d.ts
 # next.config.js

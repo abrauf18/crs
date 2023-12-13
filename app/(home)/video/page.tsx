@@ -1,14 +1,14 @@
 import React from "react";
-import Header from "@/components/common/Header";
-import videoIcon from "@/public/assets/coloredIcons/videoIcon.svg";
-import VideoHeader from "@/components/video/VideoHeader";
-import VideoCard, { Card } from "@/components/video/VideoCard";
-import videoImage1 from "@/public/assets/videoImages/videoImage1.svg";
-import videoImage2 from "@/public/assets/videoImages/videoImage2.svg";
-import videoImage3 from "@/public/assets/videoImages/videoImage3.svg";
-import videoImage4 from "@/public/assets/videoImages/videoImage4.svg";
-import videoImage5 from "@/public/assets/videoImages/videoImage5.svg";
-import videoImage6 from "@/public/assets/videoImages/videoImage6.svg";
+import Header from "@/app/components/common/Header";
+import VideoHeader from "@/app/modules/video/VideoHeader";
+import VideoCard, { Card } from "@/app/modules/video/VideoCard";
+import videoImage1 from "@/app/assets/images/videoImages/videoImage1.svg";
+import videoImage2 from "@/app/assets/images/videoImages/videoImage2.svg";
+import videoImage3 from "@/app/assets/images/videoImages/videoImage3.svg";
+import videoImage4 from "@/app/assets/images/videoImages/videoImage4.svg";
+import videoImage5 from "@/app/assets/images/videoImages/videoImage5.svg";
+import videoImage6 from "@/app/assets/images/videoImages/videoImage6.svg";
+import { FileVideoIcon } from "lucide-react";
 
 const VideoPage = () => {
     const cards: Card[] = [
@@ -58,7 +58,7 @@ const VideoPage = () => {
 
     return (
         <>
-            <Header headerText="All Video's" iconSrc={videoIcon as string} tagline="Your All Video’s Here" />
+            <Header headerText="All Video's" Icon={FileVideoIcon} tagline="Your All Video’s Here" />
             <VideoHeader text="200 Video’s In Total" />
             <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 place-content-center">
                 {

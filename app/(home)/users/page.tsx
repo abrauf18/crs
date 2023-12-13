@@ -1,9 +1,10 @@
 import React from "react";
-import userImage from "@/public/assets/UserImage.svg";
-import UsersTable, { User } from "@/components/users/UsersTable";
-import Filters from "@/components/common/Filters";
-import Header from "@/components/common/Header";
-import userIcon from "@/public/assets/coloredIcons/userIcon.svg";
+import userImage from "@/app/assets/images/UserImage.svg";
+import UsersTable, { User } from "@/app/modules/users/UsersTable";
+import Filters from "@/app/components/common/Filters";
+import Header from "@/app/components/common/Header";
+import UserIcon from "@/app/assets/icons/UserIcon";
+import Pagintaion from "@/app/components/common/Pagintaion";
 
 export const usersData: User[] = [
     {
@@ -59,10 +60,13 @@ export const usersData: User[] = [
 const UsersPage = () => {
     return (
         <>
-            <Header headerText="All User’s" iconSrc={userIcon as string} tagline="Manage Your All User’s" />
-            <div className="rounded-lg border-[1px] mt-5 py-3 md:px-6 mobile:px-3">
+            <Header headerText="All User’s" Icon={UserIcon} tagline="Manage Your All User’s" />
+            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <Filters text="User’s" />
                 <UsersTable users={usersData} />
+            </div>
+            <div className="flex items-center w-full justify-center mt-5">
+                <Pagintaion />
             </div>
         </>
     );

@@ -1,8 +1,9 @@
 import React from "react";
-import Filters from "@/components/common/Filters";
-import Header from "@/components/common/Header";
-import ResourcesTable, { Resource } from "@/components/resources/ResourcesTable";
-import resourcesIcon from "@/public/assets/coloredIcons/resourcesIcon.svg";
+import Filters from "@/app/components/common/Filters";
+import Header from "@/app/components/common/Header";
+import ResourcesTable, { Resource } from "@/app/modules/resources/ResourcesTable";
+import ResourceIcon from "@/app/assets/icons/ResourceIcon";
+import Pagintaion from "@/app/components/common/Pagintaion";
 
 export const ResourcesData: Resource[] = [
     {
@@ -51,10 +52,13 @@ export const ResourcesData: Resource[] = [
 const ResouresPage = () => {
     return (
         <>
-            <Header headerText="All Resources" iconSrc={resourcesIcon as string} tagline="Your All Resources Here" />
-            <div className="rounded-lg border-[1px] mt-5 py-3 md:px-6 mobile:px-3">
+            <Header headerText="All Resources" Icon={ResourceIcon} tagline="Your All Resources Here" />
+            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <Filters text="Resources" />
                 <ResourcesTable resources={ResourcesData} />
+            </div>
+            <div className="flex items-center w-full justify-center mt-5">
+                <Pagintaion />
             </div>
         </>
     );
