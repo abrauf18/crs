@@ -1,5 +1,5 @@
-import React from "react";
-import { Checkbox } from "@/app/components/ui/checkbox";
+import React from 'react';
+import { Checkbox } from '@/app/components/ui/checkbox';
 
 interface CheckBoxProps {
     label: string;

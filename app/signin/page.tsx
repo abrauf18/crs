@@ -1,10 +1,8 @@
-import React from "react";
-import Signin from "@/app/modules/auth/Signin";
+import React from 'react';
+import Signin from '@/app/modules/auth/Signin';
 
-const SigninPage = () => {
-    return (
-        <Signin />
-    );
-};
+function SigninPage() {
+    return <Signin />;
+}
 
 export default SigninPage;

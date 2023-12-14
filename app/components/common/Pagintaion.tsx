@@ -1,7 +1,7 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
-const Pagintaion = () => {
+function Pagintaion() {
     return (
         <nav aria-label="Page navigation example">
             <ul className="flex items-center -space-x-px h-8 text-sm">
@@ -95,6 +95,6 @@ const Pagintaion = () => {
             </ul>
         </nav>
     );
-};
+}
 
 export default Pagintaion;
