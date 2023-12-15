@@ -20,7 +20,7 @@ import NavigationItem from './NavigationItem';
 export default function SideBar() {
     const [menu, SetMenu] = useState(false);
     return (
-        <section className="bg-light-gray md:p-3 md:fixed">
+        <section className="bg-light-gray md:p-5 md:fixed">
             <ul className="flex flex-col w-full items-center justify-center pt-5 h-screen mobile:hidden">
                 <Image
                     src={crsLogo as string}
@@ -54,7 +54,7 @@ export default function SideBar() {
                         itemText="Query"
                     />
                     <NavigationItem
-                        to="#"
+                        to="/standard"
                         ItemIcon={StandardIcon}
                         itemText="Standard"
                     />
@@ -66,7 +66,7 @@ export default function SideBar() {
                 </div>
                 <div className="mb-2">
                     <NavigationItem
-                        to="#"
+                        to="/setting"
                         ItemIcon={Settings}
                         itemText="Settings"
                     />
@@ -120,7 +120,7 @@ export default function SideBar() {
                             itemText="Query"
                         />
                         <NavigationItem
-                            to="#"
+                            to="/standard"
                             ItemIcon={StandardIcon}
                             itemText="Standard"
                         />
@@ -130,7 +130,7 @@ export default function SideBar() {
                             itemText="User’s"
                         />
                         <NavigationItem
-                            to="#"
+                            to="/setting"
                             ItemIcon={Settings}
                             itemText="Settings"
                         />

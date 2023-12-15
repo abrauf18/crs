@@ -12,12 +12,12 @@ import UsersTable from '../users/UsersTable';
 import ResourcesTable from '../resources/ResourcesTable';
 import Filters from '../../components/common/Filters';
 import Card from '../../components/common/Card';
-import Header from '../../components/common/Header';
+import Searchbar from '../../components/common/Searchbar';
 
 function Dashboard() {
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-12">
-            <Header
+            <Searchbar
                 headerText="Hello John Doe!"
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}

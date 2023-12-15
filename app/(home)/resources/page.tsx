@@ -1,6 +1,6 @@
 import React from 'react';
 import Filters from '@/app/components/common/Filters';
-import Header from '@/app/components/common/Header';
+import Searchbar from '@/app/components/common/Searchbar';
 import ResourcesTable, {
     Resource,
 } from '@/app/modules/resources/ResourcesTable';
@@ -54,7 +54,7 @@ export const ResourcesData: Resource[] = [
 function ResouresPage() {
     return (
         <>
-            <Header
+            <Searchbar
                 headerText="All Resources"
                 Icon={ResourceIcon}
                 tagline="Your All Resources Here"

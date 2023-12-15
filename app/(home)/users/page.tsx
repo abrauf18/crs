@@ -2,9 +2,11 @@ import React from 'react';
 import userImage from '@/app/assets/images/UserImage.svg';
 import UsersTable, { User } from '@/app/modules/users/UsersTable';
 import Filters from '@/app/components/common/Filters';
-import Header from '@/app/components/common/Header';
+import Searchbar from '@/app/components/common/Searchbar';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import Pagintaion from '@/app/components/common/Pagintaion';
+import Profile from '@/app/modules/setting/Profile';
+import { X } from 'lucide-react';
 
 export const usersData: User[] = [
     {
@@ -60,7 +62,7 @@ export const usersData: User[] = [
 function UsersPage() {
     return (
         <>
-            <Header
+            <Searchbar
                 headerText="All User’s"
                 Icon={UserIcon}
                 tagline="Manage Your All User’s"
@@ -72,6 +74,12 @@ function UsersPage() {
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>
+            {/* <div className="absolute right-0 top-0 z-50 bg-white shadow-md p-4 md:p-10 md:h-screen h-auto">
+                <div className="absolute right-5 top-8 p-2 border rounded-full">
+                    <X size={15} />
+                </div>
+                <Profile />
+            </div> */}
         </>
     );
 }

@@ -1,36 +1,34 @@
 import React from 'react';
-import { LucideIcon, SearchIcon, BellIcon } from 'lucide-react';
+import { Filter, Upload } from 'lucide-react';
 
-interface HeaderProp {
-    headerText: string;
-    tagline: string;
-    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
+interface HeaderProps {
+    text: string;
 }
-
-function Header({ headerText, tagline, Icon }: HeaderProp) {
+function Header({ text }: HeaderProps): JSX.Element {
+    const firstWord = text.split(' ')[0];
+    const restText = text.substring(firstWord.length + 1);
     return (
-        <div className="flex justify-between items-center mobile:flex-col">
-            <div className="flex flex-col justify-start items-start">
-                <div className="flex justify-center items-center font-semibold text-2xl mb-2">
-                    <h1 className="mr-1">{headerText}</h1>
-                    <Icon width={25} height={25} />
+        <div className="flex mobile:flex-col justify-between items-center my-7">
+            <h3 className="text-[20px] font-semibold mobile:mb-2">
+                {firstWord}{' '}
+                <span className="font-normal text-dark-gray">{restText}</span>
+            </h3>
+            <div className="flex">
+                <div className="mr-2 px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
+                    <Filter width={15} height={15} />
+                    <button type="button" className="ml-2">
+                        Filters
+                    </button>
                 </div>
-                <p className="text-dark-gray text-sm mobile:mb-3">{tagline}</p>
-            </div>
-            <div className="flex justify-between items-center">
-                <div className="flex border rounded-lg md:px-2 mobile:pr-6 w-full justify-between items-center">
-                    <input
-                        type="text"
-                        className="p-2 border-none outline-none"
-                        placeholder="search..."
-                    />
-                    <SearchIcon width={18} height={18} />
+                <div className="px-2 py-3 border text-sm text-white bg-primary-color rounded-lg flex items-center justify-between cursor-pointer ">
+                    <Upload width={20} height={20} />
+                    <button type="button" className="ml-2">
+                        Upload{' '}
+                        {restText
+                            .split(' ')[0]
+                            .substring(0, restText.split(' ')[0].length - 1)}
+                    </button>
                 </div>
-                <BellIcon
-                    width={45}
-                    height={45}
-                    className="cursor-pointer p-3 rounded-lg ml-3 border bg-white"
-                />
             </div>
         </div>
     );
