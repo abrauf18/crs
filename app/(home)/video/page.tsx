@@ -12,6 +12,7 @@ import UploadVideo from '@/app/components/UploadVideo';
 function VideoPage() {
     const cards: Card[] = [
         {
+            id: '1',
             imageUrl: videoImage1 as string,
             Text: 'Master Digital Product Design..',
             Questions: 5,
@@ -19,6 +20,7 @@ function VideoPage() {
             Resources: 8,
         },
         {
+            id: '2',
             imageUrl: videoImage2 as string,
             Text: 'User Experience Design Fund...',
             Questions: 5,
@@ -26,6 +28,7 @@ function VideoPage() {
             Resources: 8,
         },
         {
+            id: '3',
             imageUrl: videoImage3 as string,
             Text: 'Learn Figma: Basic Fundemen..',
             Questions: 5,
@@ -33,6 +36,7 @@ function VideoPage() {
             Resources: 8,
         },
         {
+            id: '4',
             imageUrl: videoImage4 as string,
             Text: 'learn Figma: User Interface..',
             Questions: 5,
@@ -40,6 +44,7 @@ function VideoPage() {
             Resources: 8,
         },
         {
+            id: '5',
             imageUrl: videoImage5 as string,
             Text: 'Essentials Principal for UI UX...',
             Questions: 5,
@@ -47,6 +52,7 @@ function VideoPage() {
             Resources: 8,
         },
         {
+            id: '6',
             imageUrl: videoImage6 as string,
             Text: 'Master Digital Product Design..',
             Questions: 5,

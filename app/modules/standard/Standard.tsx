@@ -1,12 +1,7 @@
+import React from 'react';
 import CardContent from '@/app/components/common/CardContent';
 import { CalendarDays, File, PlayIcon } from 'lucide-react';
-import React from 'react';
 
-const Icons = {
-    FirstIcon: PlayIcon,
-    SecondIcon: File,
-    ThirdIcon: CalendarDays,
-};
 export const standards = [
     {
         id: '1',
@@ -94,7 +89,12 @@ export const standards = [
     },
 ];
 
-function Standard() {
+async function Standard() {
+    const Icons = {
+        FirstIcon: PlayIcon,
+        SecondIcon: File,
+        ThirdIcon: CalendarDays,
+    };
     return (
         <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
             {standards.map((standard, index) => (
@@ -103,6 +103,8 @@ function Standard() {
                     className="rounded-lg border p-4"
                 >
                     <CardContent
+                        id={standard.id}
+                        route="/standard"
                         heading={standard.heading}
                         first={standard.first}
                         second={standard.second}

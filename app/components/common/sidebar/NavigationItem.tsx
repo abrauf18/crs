@@ -13,15 +13,17 @@ interface NavigationItemProps {
 
 function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
     const pathname = usePathname();
+    const isActive = pathname === to || pathname.startsWith(`${to}/`);
+
     return (
         <Link
-            className={`flex justify-start items-center w-48 p-3 mb-2 rounded-lg font-semibold text-sm ${
-                pathname === to ? 'text-white bg-primary-color' : 'text-black'
-            }`}
             href={to}
+            className={`flex justify-start items-center w-48 p-3 mb-2 rounded-lg font-semibold text-sm ${
+                isActive ? 'text-white bg-primary-color' : 'text-black'
+            }`}
         >
             <div className="mx-4">
-                {pathname === to ? (
+                {isActive ? (
                     <ItemIcon color="white" />
                 ) : (
                     <ItemIcon color="black" />

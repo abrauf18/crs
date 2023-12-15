@@ -9,6 +9,7 @@ import { PlayIcon } from 'lucide-react';
 import CardContent, { IconProps } from '@/app/components/common/CardContent';
 
 export interface Card {
+    id: string;
     imageUrl: string | StaticImport;
     Text: string;
     Questions: number;
@@ -35,6 +36,7 @@ function VideoCard({ card }: VideoCardProps) {
                 </div>
             </Link>
             <CardContent
+                id={card.Questions.toString()}
                 heading={card.Text}
                 first={`Questions (${card.Questions})`}
                 second={`Checkpoints (${card.Checkpoints})`}

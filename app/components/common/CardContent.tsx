@@ -9,6 +9,8 @@ export interface IconProps {
 }
 
 interface CardContentProps {
+    id: string | undefined;
+    route?: string;
     heading: string;
     first: string;
     second: string;
@@ -17,6 +19,8 @@ interface CardContentProps {
 }
 
 function CardContent({
+    id,
+    route,
     heading,
     first,
     second,
@@ -31,26 +35,26 @@ function CardContent({
             </h5>
             <div>
                 <div className="flex gap-2 mb-2">
-                    <div className="flex gap-1 items-center">
-                        <FirstIcon height={22} width={22} color="#F59A3B" />
+                    <div className="flex gap-1 items-center text-dark-gray text-sm">
+                        <FirstIcon height={17} width={17} color="#F59A3B" />
                         <p>{first}</p>
                     </div>
-                    <div className="flex gap-1 items-center">
-                        <SecondIcon width={22} height={22} color="#7AA43E" />
+                    <div className="flex gap-1 items-center text-dark-gray text-sm">
+                        <SecondIcon width={17} height={17} color="#7AA43E" />
                         <p>{second}</p>
                     </div>
                 </div>
-                <div className="flex gap-1 items-center mb-5">
-                    <ThirdIcon height={22} width={22} color="#54C3F4" />
+                <div className="flex gap-1 items-center mb-5 text-dark-gray text-sm">
+                    <ThirdIcon height={17} width={17} color="#54C3F4" />
                     <p>{third}</p>
                 </div>
             </div>
             <div className="flex items-end justify-end">
                 <Link
-                    href="#"
+                    href={route && id ? `${route}/${id}` : '#'}
                     className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2"
                 >
-                    Learn more
+                    Details
                 </Link>
                 <div className="bg-orange-100 p-2 rounded-md">
                     <EditIcon height={20} width={20} color="#F59A3B" />

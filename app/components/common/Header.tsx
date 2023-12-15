@@ -1,11 +1,14 @@
+'use client';
+
 import React from 'react';
 import { Filter, Upload } from 'lucide-react';
 
 interface HeaderProps {
     text: string;
     buttonText: string;
+    handleClick?: () => void;
 }
-function Header({ text, buttonText }: HeaderProps): JSX.Element {
+function Header({ text, buttonText, handleClick }: HeaderProps): JSX.Element {
     const firstWord = text.split(' ')[0];
     const restText = text.substring(firstWord.length + 1);
     return (
@@ -21,11 +24,15 @@ function Header({ text, buttonText }: HeaderProps): JSX.Element {
                         Filters
                     </button>
                 </div>
-                <div className="px-2 py-3 border text-sm text-white bg-primary-color rounded-lg flex items-center justify-between cursor-pointer ">
-                    <Upload width={20} height={20} />
-                    <button type="button" className="ml-1">
-                        {buttonText}
-                    </button>
+                <div
+                    className="px-2 py-3 border text-sm text-white bg-primary-color rounded-lg flex items-center justify-between cursor-pointer gap-1"
+                    onClick={handleClick}
+                >
+                    {buttonText.startsWith('Upload') && (
+                        <Upload width={20} height={20} />
+                    )}
+
+                    <button type="button">{buttonText}</button>
                 </div>
             </div>
         </div>
