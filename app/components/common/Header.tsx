@@ -3,8 +3,9 @@ import { Filter, Upload } from 'lucide-react';
 
 interface HeaderProps {
     text: string;
+    buttonText: string;
 }
-function Header({ text }: HeaderProps): JSX.Element {
+function Header({ text, buttonText }: HeaderProps): JSX.Element {
     const firstWord = text.split(' ')[0];
     const restText = text.substring(firstWord.length + 1);
     return (
@@ -22,11 +23,8 @@ function Header({ text }: HeaderProps): JSX.Element {
                 </div>
                 <div className="px-2 py-3 border text-sm text-white bg-primary-color rounded-lg flex items-center justify-between cursor-pointer ">
                     <Upload width={20} height={20} />
-                    <button type="button" className="ml-2">
-                        Upload{' '}
-                        {restText
-                            .split(' ')[0]
-                            .substring(0, restText.split(' ')[0].length - 1)}
+                    <button type="button" className="ml-1">
+                        {buttonText}
                     </button>
                 </div>
             </div>

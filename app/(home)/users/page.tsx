@@ -2,8 +2,6 @@ import React from 'react';
 import userImage from '@/app/assets/images/UserImage.svg';
 import UsersTable, { User } from '@/app/modules/users/UsersTable';
 import Filters from '@/app/components/common/Filters';
-import Searchbar from '@/app/components/common/Searchbar';
-import UserIcon from '@/app/assets/icons/UserIcon';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import Profile from '@/app/modules/setting/Profile';
 import { X } from 'lucide-react';
@@ -62,11 +60,6 @@ export const usersData: User[] = [
 function UsersPage() {
     return (
         <>
-            <Searchbar
-                headerText="All User’s"
-                Icon={UserIcon}
-                tagline="Manage Your All User’s"
-            />
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <Filters text="User’s" />
                 <UsersTable users={usersData} />

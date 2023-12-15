@@ -1,5 +1,4 @@
 import React from 'react';
-import Searchbar from '@/app/components/common/Searchbar';
 import Header from '@/app/components/common/Header';
 import VideoCard, { Card } from '@/app/modules/video/VideoCard';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
@@ -8,7 +7,6 @@ import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
 import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
-import { FileVideoIcon } from 'lucide-react';
 import UploadVideo from '@/app/components/UploadVideo';
 
 function VideoPage() {
@@ -59,12 +57,7 @@ function VideoPage() {
 
     return (
         <>
-            <Searchbar
-                headerText="All Video's"
-                Icon={FileVideoIcon}
-                tagline="Your All Video’s Here"
-            />
-            <Header text="200 Videos In Total" />
+            <Header text="200 Videos In Total" buttonText="Upload Video" />
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
                 {cards.map((card) => (
                     <VideoCard card={card} key={card.Questions} />

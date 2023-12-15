@@ -32,16 +32,16 @@ function CardContent({
             <div>
                 <div className="flex gap-2 mb-2">
                     <div className="flex gap-1 items-center">
-                        <FirstIcon height={20} width={20} />
+                        <FirstIcon height={22} width={22} color="#F59A3B" />
                         <p>{first}</p>
                     </div>
                     <div className="flex gap-1 items-center">
-                        <SecondIcon width={18} height={18} />
+                        <SecondIcon width={22} height={22} color="#7AA43E" />
                         <p>{second}</p>
                     </div>
                 </div>
                 <div className="flex gap-1 items-center mb-5">
-                    <ThirdIcon height={25} width={25} />
+                    <ThirdIcon height={22} width={22} color="#54C3F4" />
                     <p>{third}</p>
                 </div>
             </div>

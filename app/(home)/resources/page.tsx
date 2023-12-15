@@ -1,10 +1,8 @@
 import React from 'react';
 import Filters from '@/app/components/common/Filters';
-import Searchbar from '@/app/components/common/Searchbar';
 import ResourcesTable, {
     Resource,
 } from '@/app/modules/resources/ResourcesTable';
-import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import Pagintaion from '@/app/components/common/Pagintaion';
 
 export const ResourcesData: Resource[] = [
@@ -54,11 +52,6 @@ export const ResourcesData: Resource[] = [
 function ResouresPage() {
     return (
         <>
-            <Searchbar
-                headerText="All Resources"
-                Icon={ResourceIcon}
-                tagline="Your All Resources Here"
-            />
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <Filters text="Resources" />
                 <ResourcesTable resources={ResourcesData} />
