@@ -16,6 +16,7 @@ interface CardContentProps {
     second: string;
     third: string;
     Icons: IconProps;
+    isModal?: boolean;
 }
 
 function CardContent({
@@ -26,6 +27,7 @@ function CardContent({
     second,
     third,
     Icons,
+    isModal,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
     return (
@@ -49,17 +51,26 @@ function CardContent({
                     <p>{third}</p>
                 </div>
             </div>
-            <div className="flex items-end justify-end">
+            {isModal ? (
                 <Link
                     href={route && id ? `${route}/${id}` : '#'}
-                    className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2"
+                    className="border rounded-lg text-white px-3 py-2 text-sm font-medium text-center mr-2 float-right bg-primary-color"
                 >
-                    Details
+                    Selected
                 </Link>
-                <div className="bg-orange-100 p-2 rounded-md">
-                    <EditIcon height={20} width={20} color="#F59A3B" />
+            ) : (
+                <div className="flex items-end justify-end">
+                    <Link
+                        href={route && id ? `${route}/${id}` : '#'}
+                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2"
+                    >
+                        Details
+                    </Link>
+                    <div className="bg-orange-100 p-2 rounded-md">
+                        <EditIcon height={20} width={20} color="#F59A3B" />
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

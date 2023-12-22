@@ -5,15 +5,15 @@ interface Header {
     heading: string;
     tagline: string;
 }
-interface UploadHeaderProps {
+interface ModalHeaderProps {
     headerText: Header;
     Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
 }
 
-export function UploadHeader({
+export function ModalHeader({
     headerText,
     Icon,
-}: UploadHeaderProps): JSX.Element {
+}: ModalHeaderProps): JSX.Element {
     return (
         <div className="flex justify-between items-center">
             <div className="flex flex-col my-7">
@@ -25,7 +25,7 @@ export function UploadHeader({
                 </div>
                 <p className="text-sm text-dark-gray">{headerText.tagline}</p>
             </div>
-            <div className="rounded-full bg-light-gray border p-1">
+            <div className="rounded-full bg-white border p-1">
                 <X size={20} />
             </div>
         </div>

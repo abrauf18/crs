@@ -1,14 +1,15 @@
 import React from 'react';
 import { FileVideoIcon } from 'lucide-react';
-import UploadItem from './common/UploadItem';
-import FileUploading from './common/FileUploading';
-import { UploadHeader } from './common/UploadHeader';
+import ModalFooter from '@/app/components/common/ModalFooter';
+import UploadItem from '../../components/common/UploadItem';
+import FileUploading from '../../components/common/FileUploading';
+import { ModalHeader } from '../../components/common/ModalHeader';
 
-function UploadVideo() {
+function UploadModal() {
     return (
-        <section className="w-full bg-light-gray h-screen py-4 px-6 shadow-md">
+        <section className="w-full bg-white h-screen py-4 px-6 shadow-md">
             <div>
-                <UploadHeader
+                <ModalHeader
                     headerText={{
                         heading: 'Upload Video',
                         tagline: 'let’s Upload Video For Your User',
@@ -23,13 +24,9 @@ function UploadVideo() {
                     </button>
                 </div>
             </div>
-            <div className="absolute bottom-0 left-0 w-full p-3 border bg-white">
-                <div className="cursor-pointer p-2 rounded-lg bg-primary-color text-white text-center">
-                    <button type="button">Next</button>
-                </div>
-            </div>
+            <ModalFooter text="Continue" />
         </section>
     );
 }
 
-export default UploadVideo;
+export default UploadModal;

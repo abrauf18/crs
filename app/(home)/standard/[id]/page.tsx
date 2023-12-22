@@ -9,7 +9,7 @@ type DetailPageProps = {
     };
 };
 
-const data: Data[] = [
+export const data: Data[] = [
     {
         id: 1,
         name: '3D Printing',

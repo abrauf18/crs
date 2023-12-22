@@ -1,7 +1,8 @@
+import CreateStandard from '@/app/modules/standard/CreateStandard';
 import React from 'react';
 
 function CreateStandardPage() {
-    return <div>CreateStandardPage</div>;
+    return <CreateStandard />;
 }
 
 export default CreateStandardPage;

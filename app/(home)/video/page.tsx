@@ -7,7 +7,7 @@ import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
 import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
-import UploadVideo from '@/app/components/UploadVideo';
+import UploadModal from '@/app/modules/video/UploadModal';
 
 function VideoPage() {
     const cards: Card[] = [
@@ -70,7 +70,7 @@ function VideoPage() {
                 ))}
             </div>
             {/* <div className="absolute right-0 top-0 z-50">
-                <UploadVideo />
+                <UploadModal />
             </div> */}
         </>
     );

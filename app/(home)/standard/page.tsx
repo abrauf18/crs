@@ -10,7 +10,6 @@ function StandardPage() {
     function handleClick(): void {
         push('/standard/create');
     }
-
     return (
         <>
             <Header

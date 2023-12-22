@@ -1,5 +1,6 @@
 import React from 'react';
 import { LucideIcon, SearchIcon, BellIcon } from 'lucide-react';
+import SearchInput from './SearchInput';
 
 interface SearchbarProp {
     headerText: string;
@@ -18,14 +19,7 @@ function Searchbar({ headerText, tagline, Icon }: SearchbarProp) {
                 <p className="text-dark-gray text-sm mobile:mb-3">{tagline}</p>
             </div>
             <div className="flex justify-between items-center">
-                <div className="flex border rounded-lg md:px-2 mobile:pr-6 w-full justify-between items-center">
-                    <input
-                        type="text"
-                        className="p-2 border-none outline-none"
-                        placeholder="search..."
-                    />
-                    <SearchIcon width={18} height={18} />
-                </div>
+                <SearchInput />
                 <BellIcon
                     width={45}
                     height={45}

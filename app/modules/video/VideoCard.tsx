@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -19,9 +21,10 @@ export interface Card {
 
 interface VideoCardProps {
     card: Card;
+    isModal?: boolean;
 }
 
-function VideoCard({ card }: VideoCardProps) {
+function VideoCard({ card, isModal }: VideoCardProps) {
     const Icons: IconProps = {
         FirstIcon: QuestionIcon,
         SecondIcon: CheckPointIcon,
@@ -42,6 +45,7 @@ function VideoCard({ card }: VideoCardProps) {
                 second={`Checkpoints (${card.Checkpoints})`}
                 third={`Resources (${card.Resources})`}
                 Icons={Icons}
+                isModal={isModal}
             />
         </div>
     );
