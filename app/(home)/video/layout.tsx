@@ -1,5 +1,5 @@
 import Searchbar from '@/app/components/common/Searchbar';
-import { FileVideoIcon } from 'lucide-react';
+import VideoIcon from '@/app/assets/icons/VideoIcon';
 
 export default function DashboardLayout({
     children,
@@ -10,7 +10,7 @@ export default function DashboardLayout({
         <section>
             <Searchbar
                 headerText="All Video's"
-                Icon={FileVideoIcon}
+                Icon={VideoIcon}
                 tagline="Your All Video’s Here"
             />
             {children}

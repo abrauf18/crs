@@ -11,7 +11,7 @@ import {
     LogOut,
     LayoutGrid,
 } from 'lucide-react';
-import VideoIcon from '@/app/assets/icons/VideoIcon';
+import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import QueryIcon from '@/app/assets/icons/QueryIcon';
 import StandardIcon from '@/app/assets/icons/StandardIcon';
@@ -40,7 +40,7 @@ export default function SideBar() {
                     />
                     <NavigationItem
                         to="/video"
-                        ItemIcon={VideoIcon}
+                        ItemIcon={SlideShowIcon}
                         itemText="Video"
                     />
                     <NavigationItem
@@ -106,7 +106,7 @@ export default function SideBar() {
                         />
                         <NavigationItem
                             to="/video"
-                            ItemIcon={VideoIcon}
+                            ItemIcon={SlideShowIcon}
                             itemText="Video"
                         />
                         <NavigationItem

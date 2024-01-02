@@ -1,23 +1,15 @@
-import React from "react";
+import React from 'react'
 
-function VideoIcon({ ...props }) {
+const VideoIcon = () => {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-            {...props}
-        >
-            <path
-                stroke={props.color || "#F59A3B"}
-                strokeLinecap="round"
-                strokeWidth="1.5"
-                d="M3 12v6.967c0 2.31 2.534 3.769 4.597 2.648l3.203-1.742M3 8V5.033c0-2.31 2.534-3.769 4.597-2.648l12.812 6.968a2.998 2.998 0 010 5.294l-6.406 3.484"
-            ></path>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.5 3.5H5.5V20.5H18.5V3.5Z" fill="#2F88FF" stroke="#131123" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5.5 5.5H2V18.5H5.5V5.5Z" stroke="#131123" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M22 5.5H18.5V18.5H22V5.5Z" stroke="#131123" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M11 10L14 12L11 14V10Z" fill="#54C3F4" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-    );
+
+    )
 }
 
-export default VideoIcon;
+export default VideoIcon

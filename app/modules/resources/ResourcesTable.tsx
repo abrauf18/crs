@@ -1,3 +1,6 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -27,6 +30,15 @@ const poppins = Poppins({
     weight: ['100', '400', '700'],
 });
 function ResourcesTable({ resources, fontSize }: ResourcesProp) {
+    const { push } = useRouter();
+
+    const handleClick = (
+        event: React.MouseEvent<HTMLTableCellElement, MouseEvent>
+    ) => {
+        const topicName = event.currentTarget.textContent;
+        push(`/resources/${topicName?.split(' ').join('').toLowerCase()}`);
+    };
+
     return (
         <Table
             className={`text-[${fontSize || '18'}px] mobile:text-[14px] ${
@@ -64,7 +76,15 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
                         <TableCell className="text-dark-gray">
                             {resource.type}
                         </TableCell>
-                        <TableCell className="text-dark-gray">
+                        <TableCell
+                            className="text-dark-gray cursor-pointer hover:text-gray-700 hover:underline"
+                            onClick={(
+                                e: React.MouseEvent<
+                                    HTMLTableCellElement,
+                                    MouseEvent
+                                >
+                            ) => handleClick(e)}
+                        >
                             {resource.topic}
                         </TableCell>
                         <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">

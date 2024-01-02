@@ -1,5 +1,7 @@
 import React from 'react';
 import Filters from '@/app/components/common/Filters';
+import ResourceIcon from '@/app/assets/icons/ResourceIcon';
+import Searchbar from '@/app/components/common/Searchbar';
 import ResourcesTable, {
     Resource,
 } from '@/app/modules/resources/ResourcesTable';
@@ -10,7 +12,7 @@ export const ResourcesData: Resource[] = [
         id: 1,
         name: 'XYZ Resources',
         type: 'Video',
-        topic: 'Topic 1',
+        topic: 'Topic xyz',
     },
     {
         id: 2,
@@ -51,7 +53,12 @@ export const ResourcesData: Resource[] = [
 ];
 function ResouresPage() {
     return (
-        <>
+        <section>
+            <Searchbar
+                headerText="All Resources"
+                Icon={ResourceIcon}
+                tagline="Your All Resources Here"
+            />
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <Filters text="Resources" />
                 <ResourcesTable resources={ResourcesData} />
@@ -59,7 +66,7 @@ function ResouresPage() {
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>
-        </>
+        </section>
     );
 }
 

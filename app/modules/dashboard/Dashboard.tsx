@@ -1,5 +1,5 @@
 import React from 'react';
-import VideoIcon from '@/app/assets/icons/VideoIcon';
+import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
@@ -25,7 +25,7 @@ function Dashboard() {
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 mobile:place-items-center">
                 <Card Icon={UserIcon} cardText="Total User’s" count="20K" />
                 <Card
-                    Icon={VideoIcon}
+                    Icon={SlideShowIcon}
                     cardText="Video Uploads"
                     count={200}
                     isActive
