@@ -6,9 +6,10 @@ interface SearchbarProp {
     headerText: string;
     tagline: string;
     Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
+    ArrowLeft?: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
 }
 
-function Searchbar({ headerText, tagline, Icon }: SearchbarProp) {
+function Searchbar({ headerText, tagline, Icon, ArrowLeft }: SearchbarProp) {
     return (
         <div className="flex justify-between items-center mobile:flex-col">
             <div className="flex flex-col justify-start items-start">

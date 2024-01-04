@@ -63,6 +63,11 @@ export default function SideBar() {
                         ItemIcon={UserIcon}
                         itemText="User’s"
                     />
+                    <NavigationItem
+                        to="/students"
+                        ItemIcon={UserIcon}
+                        itemText="Student’s"
+                    />
                 </div>
                 <div className="mb-2">
                     <NavigationItem
