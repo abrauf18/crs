@@ -66,7 +66,7 @@ export default function SideBar() {
                     <NavigationItem
                         to="/students"
                         ItemIcon={UserIcon}
-                        itemText="Student’s"
+                        itemText="Students"
                     />
                 </div>
                 <div className="mb-2">

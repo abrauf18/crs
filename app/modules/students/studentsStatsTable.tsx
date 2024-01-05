@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
     Table,
@@ -12,7 +11,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import Image from 'next/image';
 
 export interface Student {
     id: number;
@@ -94,37 +92,37 @@ function StudentsTable({ students, fontSize }: StudentsProp) {
             <TableBody>
                 {students.map((student, index) => (
                     <TableRow className="border-none" key={student.id}>
-                        <TableCell className="text-dark-gray cursor-pointer font-bold text-center">
+                        <TableCell className="text-dark-gray font-bold text-center">
                             {student.name}
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.first}%
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.firstNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.second}%
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.secondNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.third}%
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.thirdNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.forth}%
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.forthNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.fifth}%
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer text-center">
+                        <TableCell className="text-dark-gray text-center">
                             {student.fifthNum}
                         </TableCell>
                     </TableRow>

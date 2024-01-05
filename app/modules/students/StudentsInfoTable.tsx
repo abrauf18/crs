@@ -13,7 +13,7 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 import Image from 'next/image';
-import Avatar from '@/app/assets/images/Avtar.jpg';
+import Avatar from '@/app/assets/images/UserImage.svg';
 
 export interface StudentInfo {
     image: string;
@@ -95,15 +95,15 @@ function StudentsInfoTable({ students, fontSize }: StudentsInfoProp) {
                         <TableCell className="text-dark-gray">
                             {resource.email}
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer">
+                        <TableCell className="text-dark-gray">
                             {resource.grade}
                         </TableCell>
-                        <TableCell className="text-dark-gray cursor-pointer">
+                        <TableCell className="text-dark-gray">
                             {resource.performance}
                         </TableCell>
                         <TableCell className="flex justify-start items-center p-0 mt-5 ml-3">
                             <div
-                                className="mr-2 bg-light-orange rounded-md p-1"
+                                className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
                                 onClick={() => handleClick(index)}
                             >
                                 <Eye color="#F59A3B" width={18} height={18} />

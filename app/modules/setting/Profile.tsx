@@ -1,7 +1,7 @@
 import { Label } from '@/app/components/ui/label';
 import Image from 'next/image';
 import React from 'react';
-import profileImage from '@/app/assets/images/UserImage.svg';
+import Avatar from '@/app/assets/images/UserImage.svg';
 
 function Profile() {
     return (
@@ -16,8 +16,8 @@ function Profile() {
                             <div className="border-2 border-light-gray rounded-full h-36 w-36 flex justify-center items-center">
                                 <div className="border-2 border-light-gray rounded-full h-32 p-2 w-32 flex justify-center items-center">
                                     <Image
-                                        src={profileImage}
-                                        alt="profile"
+                                        src={Avatar}
+                                        alt="profile Image"
                                         className="w-44 h-44"
                                     />
                                 </div>

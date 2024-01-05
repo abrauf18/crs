@@ -10,7 +10,6 @@ import StudentsTable, {
 import StudentsInfoTable, {
     StudentInfo,
 } from '@/app/modules/students/StudentsInfoTable';
-import Avatar from '@/app/assets/images/Avtar.jpg';
 
 export const StudentsData: Student[] = [
     {
@@ -132,7 +131,7 @@ function StudentPage() {
                 <h1 className="font-bold text-lg">All Students</h1>
 
                 <Button
-                    className="bg-primary-color"
+                    className="bg-primary-color mobile:px-3 hover:bg-orange-400"
                     variant="default"
                     size="default"
                 >
