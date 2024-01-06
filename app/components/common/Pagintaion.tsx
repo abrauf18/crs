@@ -48,7 +48,7 @@ function Pagintaion() {
                     <Link
                         href="#"
                         aria-current="page"
-                        className="z-10 flex items-center justify-center px-3 h-8 leading-tight text-white border border-blue-300 bg-primary-color hover:bg-orange-4"
+                        className="z-10 flex items-center justify-center px-3 h-8 leading-tight text-white border border-blue-300 bg-primary-color hover:bg-orange-400"
                     >
                         3
                     </Link>

@@ -4,8 +4,8 @@ import { User, ArrowLeft, ChevronDown } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
 import Image from 'next/image';
-import Avatar from '@/app/assets/images/Avtar.jpg';
-import Graph from './image/graph.png';
+import Avatar from '@/app/assets/images/UserImage.svg';
+import graphImage from '@/app/assets/images/Graph.png';
 
 function StudentDetail() {
     return (
@@ -30,12 +30,12 @@ function StudentDetail() {
             <div className="flex flex-col lg:flex-row items-center shadow-md rounded-lg py-5 mt-8">
                 {/* Image */}
                 <div className="ml-0 lg:ml-8 mb-6 lg:mb-0">
-                    <div className="border border-[#F59A3B] rounded-full w-fit flex items-center p-3">
-                        <div className="border border-[#F59A3B] rounded-full w-fit flex items-center p-3">
-                            <div className="border border-[#F59A3B] rounded-full w-fit flex items-center p-2">
+                    <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
+                        <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
+                            <div className="border-2 border-primary-color rounded-full w-fit flex items-center p-2">
                                 <Image
                                     src={Avatar}
-                                    alt="crs logo"
+                                    alt="Avatar"
                                     className="rounded-full"
                                     width={150}
                                     height={150}
@@ -90,7 +90,7 @@ function StudentDetail() {
                     <Filters text="Overall Performance" />
                     <div className="mt-5">
                         <Image
-                            src={Graph}
+                            src={graphImage}
                             alt="Graph"
                             width={521}
                             height={355}
