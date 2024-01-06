@@ -85,7 +85,7 @@ function StudentDetail() {
                 </div>
             </div>
 
-            <div className="mt-8 font-semibold text-xl flex flex-col-reverse lg:flex-row">
+            <div className="mt-8 font-semibold text-xl flex flex-col lg:flex-row">
                 <div className="w-full lg:w-[50%] lg:mr-8">
                     <Filters text="Overall Performance" />
                     <div className="mt-5">
@@ -98,9 +98,9 @@ function StudentDetail() {
                         />
                     </div>
                 </div>
-                <div className="w-full lg:w-[50%] flex justify-between mt-3">
+                <div className="w-full lg:w-[50%] flex flex-col md:flex-row justify-between mt-10 md:mt-3 items-center md:items-start">
                     <h1>Student Report</h1>
-                    <div className="px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between h-fit">
+                    <div className="px-4 py-2 mt-2 md:mt-0 border text-sm text-dark-gray rounded-lg flex items-center justify-between h-fit w-fit">
                         <button className="mr-2" type="button">
                             Last Month
                         </button>
