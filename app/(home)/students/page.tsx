@@ -10,6 +10,8 @@ import StudentsTable, {
 import StudentsInfoTable, {
     StudentInfo,
 } from '@/app/modules/students/StudentsInfoTable';
+import TabBar from '@/app/modules/students/TabBar';
+import AddStudentModal from '@/app/modules/students/AddStudentModal';
 
 export const StudentsData: Student[] = [
     {
@@ -119,6 +121,14 @@ export const Studentinfo: StudentInfo[] = [
     },
 ];
 function StudentPage() {
+    const gradeOptions = [
+        'All',
+        '10th grade',
+        '9th grade',
+        '8th grade',
+        '7th grade',
+        '6th grade',
+    ];
     return (
         <section>
             <Searchbar
@@ -126,6 +136,10 @@ function StudentPage() {
                 Icon={User}
                 tagline="Here’s all Students"
             />
+
+            <div className="my-6 w-full border py-2 px-4 rounded-lg">
+                <TabBar options={gradeOptions} />
+            </div>
 
             <div className="flex justify-between mt-5">
                 <h1 className="font-bold text-lg">All Students</h1>
@@ -143,6 +157,10 @@ function StudentPage() {
             </div>
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <StudentsInfoTable students={Studentinfo} />
+            </div>
+
+            <div className="absolute right-0 top-0 z-50 w-[20%]">
+                <AddStudentModal />
             </div>
         </section>
     );

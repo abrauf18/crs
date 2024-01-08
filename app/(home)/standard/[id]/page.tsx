@@ -1,6 +1,6 @@
 import React from 'react';
-import { standards } from '@/app/modules/standard/Standard';
 import { File } from 'lucide-react';
+import { standards } from '@/app/modules/standard/Standard';
 import StandardCard, { Data } from '@/app/modules/standard/StandardCard';
 
 type DetailPageProps = {
