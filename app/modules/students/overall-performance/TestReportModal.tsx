@@ -1,8 +1,7 @@
 import React from 'react';
-import { BookOpenCheck } from 'lucide-react';
+import { BookOpenCheck, Check } from 'lucide-react';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import StarsIcon from '@/app/assets/icons/StarsIcon';
-import { Check } from 'lucide-react';
 
 function TestReportModal() {
     return (

@@ -4,17 +4,20 @@ import React, { useState } from 'react';
 
 interface TabBarProps {
     options: string[];
+    onSelectFilter: (tab: string) => void;
 }
 
-function TabBar({ options }: TabBarProps) {
+function TabBar({ options, onSelectFilter }: TabBarProps) {
     const [activeTab, setActiveTabLocal] = useState('all');
 
     const handleTabClick = (tab: string) => {
         setActiveTabLocal(tab);
+        onSelectFilter(tab);
+        console.log(tab);
     };
 
     return (
-        <div className="flex flex-wrap md:justify-between">
+        <div className="flex flex-wrap lg:justify-between">
             {options.map((option) => (
                 <button
                     key={option}

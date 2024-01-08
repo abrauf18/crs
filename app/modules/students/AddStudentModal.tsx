@@ -19,7 +19,13 @@ function AddStudentModal() {
                 /> */}
                 <div className="flex justify-between items-center">
                     <div className="flex  my-7">
-                        <StudentIcon />
+                        <div className="bg-green-100 px-3 h-fit py-3 rounded-lg">
+                            <StudentIcon
+                                fill="#7AA43E"
+                                width="30"
+                                height="30"
+                            />
+                        </div>
                         <div className="flex flex-col ml-2">
                             <h3 className="text-xl font-semibold  mr-1">
                                 Add Student

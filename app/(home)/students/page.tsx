@@ -1,8 +1,9 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Filters from '@/app/components/common/Filters';
 import { User } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
-import Pagintaion from '@/app/components/common/Pagintaion';
 import { Button } from '@/app/components/ui/button';
 import StudentsTable, {
     Student,
@@ -91,7 +92,47 @@ export const Studentinfo: StudentInfo[] = [
         id: 1,
         name: 'Ali',
         email: 'abcdef@gmail.com',
-        grade: '10th',
+        grade: '7th',
+        performance: '43%',
+        image: '/app/assets/images/Avtar.jpg',
+    },
+    {
+        id: 1,
+        name: 'Ali',
+        email: 'abcdef@gmail.com',
+        grade: '6th',
+        performance: '43%',
+        image: '/app/assets/images/Avtar.jpg',
+    },
+    {
+        id: 1,
+        name: 'Ali',
+        email: 'abcdef@gmail.com',
+        grade: '9th',
+        performance: '43%',
+        image: '/app/assets/images/Avtar.jpg',
+    },
+    {
+        id: 1,
+        name: 'Ali',
+        email: 'abcdef@gmail.com',
+        grade: '9th',
+        performance: '43%',
+        image: '/app/assets/images/Avtar.jpg',
+    },
+    {
+        id: 1,
+        name: 'Ali',
+        email: 'abcdef@gmail.com',
+        grade: '8th',
+        performance: '43%',
+        image: '/app/assets/images/Avtar.jpg',
+    },
+    {
+        id: 1,
+        name: 'Ali',
+        email: 'abcdef@gmail.com',
+        grade: '8th',
         performance: '43%',
         image: '/app/assets/images/Avtar.jpg',
     },
@@ -115,12 +156,26 @@ export const Studentinfo: StudentInfo[] = [
         id: 1,
         name: 'Ali',
         email: 'abcdef@gmail.com',
-        grade: '10th',
+        grade: '8th',
         performance: '43%',
         image: '/app/assets/images/Avtar.jpg',
     },
 ];
 function StudentPage() {
+    const [selectedTab, setSelectedTab] = useState('all');
+    const onSelectFilter = (tab: string) => {
+        setSelectedTab(tab);
+    };
+
+    const filteredStudents = Studentinfo.filter((student) => {
+        if (selectedTab === 'all') {
+            return true; // Show all students
+        }
+        // return student.grade.toLowerCase().includes(selectedTab);
+        console.log(student.grade);
+        console.log(selectedTab.toLowerCase());
+        return student.grade.includes(selectedTab?.split(' ')[0]);
+    });
     const gradeOptions = [
         'All',
         '10th grade',
@@ -137,8 +192,11 @@ function StudentPage() {
                 tagline="Here’s all Students"
             />
 
-            <div className="my-6 w-full border py-2 px-4 rounded-lg">
-                <TabBar options={gradeOptions} />
+            <div className="my-6 w-full border py-2 px-4 rounded-lg ">
+                <TabBar
+                    options={gradeOptions}
+                    onSelectFilter={onSelectFilter}
+                />
             </div>
 
             <div className="flex justify-between mt-5">
@@ -156,12 +214,12 @@ function StudentPage() {
                 <StudentsTable students={StudentsData} />
             </div>
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
-                <StudentsInfoTable students={Studentinfo} />
+                <StudentsInfoTable students={filteredStudents} />
             </div>
 
-            {/* <div className="absolute right-0 top-0 z-50 ">
+            <div className="absolute right-0 top-0 z-50 ">
                 <AddStudentModal />
-            </div> */}
+            </div>
         </section>
     );
 }

@@ -12,16 +12,19 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
+import Image from 'next/image';
+import Avatar from '@/app/assets/images/UserImage.svg';
 
-export interface StudentRecord {
+export interface StudentInfo {
+    image: string;
     id: number;
-    testName: string;
-    result: string;
-    score: string;
+    name: string;
+    email: string;
+    performance: string;
 }
 
-interface StudentsRecordProp {
-    students: StudentRecord[];
+interface StudentsInfoProp {
+    students: StudentInfo[];
     fontSize?: string;
 }
 
@@ -29,12 +32,12 @@ const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-function StudentPerformanceTable({ students, fontSize }: StudentsRecordProp) {
+function StudentsInfoTable({ students, fontSize }: StudentsInfoProp) {
     const { push } = useRouter();
 
     const handleClick = (id: number) => {
         console.log(id);
-        push(`/students/${id}/test-performance`);
+        push(`/students/${id}`);
     };
 
     return (
@@ -48,16 +51,15 @@ function StudentPerformanceTable({ students, fontSize }: StudentsRecordProp) {
                     <TableHead className="w-[100px] text-dark-gray font-bold">
                         SNO.
                     </TableHead>
-                    <TableHead className=" text-dark-gray font-bold">
-                        Test Name
+                    <TableHead className="text-dark-gray font-bold">
+                        Name
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
-                        Result
+                        Email
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
-                        Score
+                        Performance
                     </TableHead>
-
                     <TableHead className="text-dark-gray font-bold">
                         Action
                     </TableHead>
@@ -71,23 +73,37 @@ function StudentPerformanceTable({ students, fontSize }: StudentsRecordProp) {
                                 {index + 1}
                             </span>
                         </TableCell>
-                        <TableCell className="text-dark-gray font-normal">
-                            <span>{resource.testName}</span>
+                        <TableCell>
+                            <span className="rounded flex gap-x-2 items-center">
+                                <Image
+                                    src={Avatar}
+                                    alt="crs logo"
+                                    style={{
+                                        width: '40px',
+                                        height: '40px',
+                                        objectFit: 'fill',
+                                    }}
+                                />
+                                <span>{resource.name}</span>
+                            </span>
                         </TableCell>
 
-                        <TableCell className="text-dark-gray font-normal">
-                            {resource.result}
-                        </TableCell>
-                        <TableCell className="text-dark-gray font-normal">
-                            {resource.score}
+                        <TableCell className="text-dark-gray">
+                            {resource.email}
                         </TableCell>
 
-                        <TableCell className="flex justify-start items-center p-0 mt-5 ml-3 ">
+                        <TableCell className="text-dark-gray">
+                            {resource.performance}
+                        </TableCell>
+                        <TableCell className="flex justify-start items-center p-0 mt-5 ml-3">
                             <div
                                 className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
                                 onClick={() => handleClick(index)}
                             >
                                 <Eye color="#F59A3B" width={18} height={18} />
+                            </div>
+                            <div className="bg-red-100 rounded-md p-1">
+                                <Trash color="#D34645" width={18} height={18} />
                             </div>
                         </TableCell>
                     </TableRow>
@@ -96,4 +112,4 @@ function StudentPerformanceTable({ students, fontSize }: StudentsRecordProp) {
         </Table>
     );
 }
-export default StudentPerformanceTable;
+export default StudentsInfoTable;
