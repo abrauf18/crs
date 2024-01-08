@@ -14,16 +14,16 @@ function TabBar({ options }: TabBarProps) {
     };
 
     return (
-        <div className="flex justify-between ">
+        <div className="flex flex-wrap md:justify-between">
             {options.map((option) => (
                 <button
                     key={option}
                     type="button"
-                    className={`py-2 px-10  rounded-lg text-center ${
+                    className={`py-2 px-4 rounded-lg text-center mb-2 mr-2 ${
                         activeTab === option.toLowerCase()
-                            ? ' bg-primary-color text-white'
-                            : ''
-                    }`}
+                            ? 'bg-primary-color text-white'
+                            : 'bg-gray-200 text-gray-700'
+                    } sm:px-6 md:px-8 lg:px-10 xl:px-12`}
                     onClick={() => handleTabClick(option.toLowerCase())}
                 >
                     {option}

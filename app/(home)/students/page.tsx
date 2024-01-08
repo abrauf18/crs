@@ -159,9 +159,9 @@ function StudentPage() {
                 <StudentsInfoTable students={Studentinfo} />
             </div>
 
-            <div className="absolute right-0 top-0 z-50 w-[20%]">
+            {/* <div className="absolute right-0 top-0 z-50 ">
                 <AddStudentModal />
-            </div>
+            </div> */}
         </section>
     );
 }
