@@ -1,6 +1,7 @@
 import StudentIcon from '@/app/assets/icons/StudentIcon';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import Card from '@/app/modules/classroom/Card';
+import ClassroomModal from '@/app/modules/classroom/ClassroomModal';
 import StudentsInfoTable, {
     StudentInfo,
 } from '@/app/modules/classroom/ClassroomTable';
@@ -85,6 +86,7 @@ function page() {
                     students="40 Students"
                     iconColor="#54C3F4"
                     iconBg="bg-sky-100"
+                    hoverColor="bg-sky-50"
                 />
 
                 <Card
@@ -93,6 +95,7 @@ function page() {
                     students="40 Students"
                     iconColor="#7AA43E"
                     iconBg="bg-green-100"
+                    hoverColor="bg-green-50"
                 />
                 <Card
                     Icon={StudentIcon}
@@ -100,6 +103,7 @@ function page() {
                     students="40 Students"
                     iconColor="#A03ADB"
                     iconBg="bg-purple-100"
+                    hoverColor="bg-purple-50"
                 />
             </div>
             <div className="grid  lg:grid-cols-4 gap-4 mt-4">
@@ -109,6 +113,7 @@ function page() {
                     students="40 Students"
                     iconColor="#A03ADB"
                     iconBg="bg-purple-100"
+                    hoverColor="bg-purple-50"
                 />
                 <Card
                     Icon={StudentIcon}
@@ -116,6 +121,7 @@ function page() {
                     students="40 Students"
                     iconColor="#F59A3B"
                     iconBg="bg-yellow-200"
+                    hoverColor="bg-yellow-50"
                 />
                 <Card
                     Icon={StudentIcon}
@@ -123,6 +129,7 @@ function page() {
                     students="40 Students"
                     iconColor="#E6500D"
                     iconBg="bg-pink-100"
+                    hoverColor="bg-pink-50"
                 />
                 <Card
                     Icon={StudentIcon}
@@ -130,6 +137,7 @@ function page() {
                     students="40 Students"
                     iconColor="#54C3F4"
                     iconBg="bg-sky-100"
+                    hoverColor="bg-sky-50"
                 />
             </div>
 
@@ -139,6 +147,10 @@ function page() {
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
+            </div>
+
+            <div className="absolute right-0 top-0 z-50 lg:w-[25%] ">
+                <ClassroomModal />
             </div>
         </div>
     );

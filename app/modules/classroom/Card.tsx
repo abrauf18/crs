@@ -8,11 +8,21 @@ interface CardProps {
     students: number | string;
     iconColor?: string;
     iconBg?: string;
+    hoverColor?: string;
 }
 
-function Card({ Icon, periods, students, iconColor, iconBg }: CardProps) {
+function Card({
+    Icon,
+    periods,
+    students,
+    iconColor,
+    iconBg,
+    hoverColor,
+}: CardProps) {
     return (
-        <div className="col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border">
+        <div
+            className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border hover:${hoverColor}  `}
+        >
             {/* <Icon width={25} height={25} /> */}
             <div
                 className={`bg-green-100 px-3 h-fit py-3 rounded-full w-fit ${

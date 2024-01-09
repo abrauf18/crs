@@ -217,9 +217,9 @@ function StudentPage() {
                 <StudentsInfoTable students={filteredStudents} />
             </div>
 
-            <div className="absolute right-0 top-0 z-50 ">
+            {/* <div className="absolute right-0 top-0 z-50 ">
                 <AddStudentModal />
-            </div>
+            </div> */}
         </section>
     );
 }
