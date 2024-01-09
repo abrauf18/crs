@@ -21,11 +21,10 @@ function Card({
 }: CardProps) {
     return (
         <div
-            className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border  ${
+            className={`col-span-1 mobile:col-span-2 relative group p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border ${
                 hoverColor ? `hover:${hoverColor}` : ''
-            } `}
+            }`}
         >
-            {/* <Icon width={25} height={25} /> */}
             <div
                 className={`bg-green-100 px-3 h-fit py-3 rounded-full w-fit ${
                     iconBg ?? ''
@@ -35,6 +34,13 @@ function Card({
             </div>
             <p className="text-[16px]">{periods}</p>
             <h1 className="font-semibold text-3xl">{students}</h1>
+
+            <button
+                type="button"
+                className="absolute top-6 right-7 bg-primary-color text-white py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+                Details
+            </button>
         </div>
     );
 }

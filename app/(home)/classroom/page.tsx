@@ -91,7 +91,7 @@ function page() {
 
                 <Card
                     Icon={StudentIcon}
-                    periods="10th Period"
+                    periods="9th Period"
                     students="40 Students"
                     iconColor="#7AA43E"
                     iconBg="bg-green-100"
@@ -99,7 +99,7 @@ function page() {
                 />
                 <Card
                     Icon={StudentIcon}
-                    periods="10th Period"
+                    periods="8th Period"
                     students="40 Students"
                     iconColor="#A03ADB"
                     iconBg="bg-purple-100"
@@ -109,7 +109,7 @@ function page() {
             <div className="grid  lg:grid-cols-4 gap-4 mt-4">
                 <Card
                     Icon={StudentIcon}
-                    periods="10th Period"
+                    periods="7th Period"
                     students="40 Students"
                     iconColor="#A03ADB"
                     iconBg="bg-purple-100"
@@ -117,7 +117,7 @@ function page() {
                 />
                 <Card
                     Icon={StudentIcon}
-                    periods="10th Period"
+                    periods="6th Period"
                     students="40 Students"
                     iconColor="#F59A3B"
                     iconBg="bg-yellow-200"
@@ -125,7 +125,7 @@ function page() {
                 />
                 <Card
                     Icon={StudentIcon}
-                    periods="10th Period"
+                    periods="5th Period"
                     students="40 Students"
                     iconColor="#E6500D"
                     iconBg="bg-pink-100"
@@ -133,7 +133,7 @@ function page() {
                 />
                 <Card
                     Icon={StudentIcon}
-                    periods="10th Period"
+                    periods="4th Period"
                     students="40 Students"
                     iconColor="#54C3F4"
                     iconBg="bg-sky-100"

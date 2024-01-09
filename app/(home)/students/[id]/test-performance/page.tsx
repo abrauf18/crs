@@ -80,9 +80,9 @@ function page() {
                 <Tabs />
                 <TestPerformanceTable test={Studentrecord} />
             </div>
-            <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[25%]">
+            {/* <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[25%]">
                 <MyAnswersModal />
-            </div>
+            </div> */}
         </div>
     );
 }
