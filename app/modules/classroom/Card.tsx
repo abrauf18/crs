@@ -21,7 +21,9 @@ function Card({
 }: CardProps) {
     return (
         <div
-            className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border hover:${hoverColor}  `}
+            className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border  ${
+                hoverColor ? `hover:${hoverColor}` : ''
+            } `}
         >
             {/* <Icon width={25} height={25} /> */}
             <div

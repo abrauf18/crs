@@ -149,9 +149,9 @@ function page() {
                 <Pagintaion />
             </div>
 
-            <div className="absolute right-0 top-0 z-50 lg:w-[25%] ">
+            {/* <div className="absolute right-0 top-0 z-50 w-[95%] lg:w-[25%] ">
                 <ClassroomModal />
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -172,8 +172,6 @@ function StudentPage() {
             return true; // Show all students
         }
         // return student.grade.toLowerCase().includes(selectedTab);
-        console.log(student.grade);
-        console.log(selectedTab.toLowerCase());
         return student.grade.includes(selectedTab?.split(' ')[0]);
     });
     const gradeOptions = [
@@ -217,7 +215,7 @@ function StudentPage() {
                 <StudentsInfoTable students={filteredStudents} />
             </div>
 
-            {/* <div className="absolute right-0 top-0 z-50 ">
+            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <AddStudentModal />
             </div> */}
         </section>

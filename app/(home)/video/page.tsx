@@ -8,6 +8,8 @@ import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
 import UploadModal from '@/app/modules/video/UploadModal';
+import AddQuestions from '@/app/modules/video/AddQuestions';
+import CheckPointsModal from '@/app/modules/video/CheckPointsModal';
 
 function VideoPage() {
     const cards: Card[] = [
@@ -69,8 +71,16 @@ function VideoPage() {
                     <VideoCard card={card} key={card.Questions} />
                 ))}
             </div>
-            {/* <div className="absolute right-0 top-0 z-50">
+            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <UploadModal />
+            </div> */}
+
+            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                <AddQuestions />
+            </div>
+
+            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                <CheckPointsModal />
             </div> */}
         </>
     );

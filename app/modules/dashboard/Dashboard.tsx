@@ -28,7 +28,6 @@ function Dashboard() {
                     Icon={SlideShowIcon}
                     cardText="Video Uploads"
                     count={200}
-                    isActive
                 />
                 <Card
                     Icon={ResourceIcon}

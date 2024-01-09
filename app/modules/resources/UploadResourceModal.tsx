@@ -10,7 +10,7 @@ import UploadItem from '@/app/components/common/UploadItem';
 function UploadResourceModal() {
     return (
         <section className="w-full bg-white h-screen py-4 px-8 shadow-lg">
-            <div>
+            <div className="h-[90%] overflow-y-auto w-full px-2">
                 <ModalHeader
                     headerText={{
                         heading: 'Upload Resource',

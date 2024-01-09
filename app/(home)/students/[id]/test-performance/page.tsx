@@ -1,3 +1,4 @@
+import MyAnswersModal from '@/app/modules/STUDENT/profile/MyAnswersModal';
 import { StudentRecord } from '@/app/modules/students/StudentsRecordTable';
 import Tabs from '@/app/modules/students/test-performance/Tabs';
 import TestPerformanceTable, {
@@ -76,19 +77,11 @@ function page() {
                         </p>
                     </div>
                 </div>
-                {/* Make seprate component for this and add state */}
-                {/* <div className="flex space-x-1 mb-2">
-                    <h1 className="py-2 px-4 border-2 border-primary-color rounded-lg bg-orange-50">
-                        Test
-                    </h1>
-                    <h1 className="p-2">Quizes</h1>
-                </div> */}
-
                 <Tabs />
                 <TestPerformanceTable test={Studentrecord} />
             </div>
-            <div className="flex items-center w-full justify-center mt-5">
-                {/* <Pagintaion /> */}
+            <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[25%]">
+                <MyAnswersModal />
             </div>
         </div>
     );

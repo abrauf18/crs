@@ -2,6 +2,7 @@ import { Eye, Trash } from 'lucide-react';
 import React from 'react';
 import { Poppins } from 'next/font/google';
 import EditIcon from '@/app/assets/icons/EditIcon';
+import PptIcon from '@/app/assets/icons/PptIcon';
 import {
     Table,
     TableHeader,
@@ -10,6 +11,7 @@ import {
     TableBody,
     TableCell,
 } from '../ui/table';
+import Pagintaion from './Pagintaion';
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -48,7 +50,10 @@ function CommonTable({ resources }: { resources: any[] }) {
                                 {index + 1}
                             </span>
                         </TableCell>
-                        <TableCell className="">{resource.title}</TableCell>
+                        <TableCell className="flex space-x-2 items-center">
+                            <PptIcon fill="#1ebeff" />
+                            <span>{resource.title}</span>
+                        </TableCell>
                         <TableCell className="text-dark-gray">
                             {resource.topic}
                         </TableCell>

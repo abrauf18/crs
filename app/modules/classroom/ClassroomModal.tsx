@@ -6,7 +6,7 @@ import Avatar from '@/app/assets/images/UserImage.svg';
 function ClassroomModal() {
     return (
         <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg">
-            <div>
+            <div className="h-[85%] overflow-y-auto w-full px-2">
                 <div className="flex justify-between items-center">
                     <div className="flex  my-7">
                         <div className="flex flex-col ml-2">
@@ -92,7 +92,6 @@ function ClassroomModal() {
                     </div>
                 </div>
             </div>
-            {/* absolute bottom-0 left-0 */}
             <div className="absolute bottom-0 left-0 w-full p-4 border bg-white lg:flex lg:justify-between ">
                 <div className="cursor-pointer w-full mx-1 p-3 rounded-lg border-2 text-dark-gray text-center mt-1 font-bold">
                     <button type="button">Discard Changes</button>

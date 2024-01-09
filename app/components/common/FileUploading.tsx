@@ -1,7 +1,10 @@
 import { Upload, FileVideo } from 'lucide-react';
 import React from 'react';
 
-function FileUploading() {
+interface FileUploadingProp {
+    isCompleted?: boolean;
+}
+function FileUploading({ isCompleted }: FileUploadingProp) {
     return (
         <div className="p-3 border-2 rounded-lg flex justify-between mt-3">
             <div className="h-full">
@@ -13,12 +16,16 @@ function FileUploading() {
                 </h3>
                 <div className="flex gap-1">
                     <Upload size={18} color="#7AA43E" />
-                    <p className="text-sm">Uploading 35%</p>
+                    <p className="text-sm">
+                        {!isCompleted
+                            ? 'Uploading 35%'
+                            : 'Uploaded Successfully'}
+                    </p>
                 </div>
                 <div className="w-full bg-white rounded-md">
                     <div
                         className="h-2 bg-primary-color rounded-md"
-                        style={{ width: '35%' }}
+                        style={{ width: !isCompleted ? '35%' : '100%' }}
                     />
                 </div>
             </div>

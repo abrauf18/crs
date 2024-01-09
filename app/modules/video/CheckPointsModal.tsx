@@ -1,0 +1,102 @@
+import React from 'react';
+import { FileVideoIcon } from 'lucide-react';
+import ModalFooter from '@/app/components/common/ModalFooter';
+import UploadItem from '../../components/common/UploadItem';
+import FileUploading from '../../components/common/FileUploading';
+import { ModalHeader } from '../../components/common/ModalHeader';
+
+function CheckPointsModal() {
+    return (
+        <section className="w-full bg-white h-screen py-4 px-6 shadow-md">
+            <div className="h-[90%] overflow-y-auto w-full px-2">
+                <ModalHeader
+                    headerText={{
+                        heading: 'Set Checkpoints',
+                        tagline: 'Set Check points For better Understanding',
+                    }}
+                    Icon={FileVideoIcon}
+                />
+
+                <FileUploading isCompleted />
+                <div className=" mt-3 flex justify-end w-full">
+                    <button
+                        type="button"
+                        className="text-white text-sm w-fit text-center  bg-primary-color p-3 rounded-lg"
+                    >
+                        Add Check Point
+                    </button>
+                </div>
+
+                <div>
+                    <div className="flex flex-col">
+                        <label htmlFor="question-2" className="font-semibold">
+                            Topic Name
+                        </label>
+
+                        <input
+                            className="bg-gray-100 rounded-lg p-2 border"
+                            placeholder="Write Topic Name"
+                        />
+                    </div>
+                    <div className="flex flex-col mt-4">
+                        <label htmlFor="question-2" className="font-semibold">
+                            Timeline
+                        </label>
+                        <input
+                            className="bg-gray-100 rounded-lg p-2 border"
+                            placeholder="Add Timeline"
+                        />
+                    </div>
+                </div>
+                <hr className="my-4" />
+                <div>
+                    <div className="flex flex-col">
+                        <label htmlFor="question-2" className="font-semibold">
+                            Topic Name
+                        </label>
+
+                        <input
+                            className="bg-gray-100 rounded-lg p-2 border"
+                            placeholder="Write Topic Name"
+                        />
+                    </div>
+                    <div className="flex flex-col mt-4">
+                        <label htmlFor="question-2" className="font-semibold">
+                            Timeline
+                        </label>
+                        <input
+                            className="bg-gray-100 rounded-lg p-2 border"
+                            placeholder="Add Timeline"
+                        />
+                    </div>
+                </div>
+                <hr className="my-4" />
+                <div>
+                    <div className="flex flex-col">
+                        <label htmlFor="question-2" className="font-semibold">
+                            Topic Name
+                        </label>
+
+                        <input
+                            className="bg-gray-100 rounded-lg p-2 border"
+                            placeholder="Write Topic Name"
+                        />
+                    </div>
+                    <div className="flex flex-col mt-4">
+                        <label htmlFor="question-2" className="font-semibold">
+                            Timeline
+                        </label>
+                        <input
+                            className="bg-gray-100 rounded-lg p-2 border"
+                            placeholder="Add Timeline"
+                        />
+                    </div>
+                </div>
+                <hr className="my-4" />
+            </div>
+            <ModalFooter text="Upload Video" />
+        </section>
+    );
+}
+
+export default CheckPointsModal;

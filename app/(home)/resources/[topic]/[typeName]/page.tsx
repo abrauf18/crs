@@ -1,5 +1,6 @@
 import CommonTable from '@/app/components/common/CommonTable';
 import Filters from '@/app/components/common/Filters';
+import Pagintaion from '@/app/components/common/Pagintaion';
 import React from 'react';
 
 function ResourceDetails({ params }: any) {
@@ -22,6 +23,9 @@ function ResourceDetails({ params }: any) {
         <div>
             <Filters text={modifiedName} />
             <CommonTable resources={resources} />
+            <div className="flex items-center w-full justify-center mt-5">
+                <Pagintaion />
+            </div>
         </div>
     );
 }

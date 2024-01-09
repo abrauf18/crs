@@ -7,24 +7,28 @@ interface CardProps {
     cardText: string;
     count: number | string;
     currentPath?: string;
-    isActive?: boolean;
 }
 
-function Card({ Icon, cardText, count, currentPath, isActive }: CardProps) {
+function Card({ Icon, cardText, count, currentPath }: CardProps) {
+    // ${
+    //     isActive
+    //         ? 'bg-light-orange border-primary-color border-2'
+    //         : 'bg-white'
+    // }
     return (
         <div
-            className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border ${
-                isActive
-                    ? 'bg-light-orange border-primary-color border-2'
-                    : 'bg-white'
-            }`}
+            className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border `}
         >
             <Icon width={25} height={25} />
             <p className="text-[16px]">{cardText}</p>
             <h1 className="font-semibold text-3xl">{count}</h1>
             <div className="flex items-end justify-end">
                 <Link
-                    href={`${currentPath}/${cardText.toLowerCase()}`}
+                    href={
+                        currentPath
+                            ? `${currentPath}/${cardText.toLowerCase()}`
+                            : '#'
+                    }
                     className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 w-24 hover:bg-primary-color hover:text-white"
                 >
                     Details
