@@ -67,12 +67,12 @@ function UsersPage() {
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>
-            {/* <div className="absolute right-0 top-0 z-50 bg-white shadow-md p-4 md:p-10 md:h-screen h-auto">
+            <div className="absolute right-0 top-0 z-50 bg-white shadow-md p-4 md:p-10 md:h-screen h-auto">
                 <div className="absolute right-5 top-8 p-2 border rounded-full">
                     <X size={15} />
                 </div>
                 <Profile />
-            </div> */}
+            </div>
         </>
     );
 }

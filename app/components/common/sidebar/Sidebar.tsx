@@ -58,11 +58,11 @@ export default function SideBar() {
                         ItemIcon={StandardIcon}
                         itemText="Standard"
                     />
-                    {/* <NavigationItem
+                    <NavigationItem
                         to="/users"
                         ItemIcon={UserIcon}
                         itemText="User’s"
-                    /> */}
+                    />
                     <NavigationItem
                         to="/classroom"
                         ItemIcon={UserIcon}

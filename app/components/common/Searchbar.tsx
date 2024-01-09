@@ -5,17 +5,19 @@ import SearchInput from './SearchInput';
 interface SearchbarProp {
     headerText: string;
     tagline: string;
-    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
-    ArrowLeft?: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
+    Icon?:
+        | React.ComponentType<React.SVGProps<SVGSVGElement>>
+        | LucideIcon
+        | null;
 }
 
-function Searchbar({ headerText, tagline, Icon, ArrowLeft }: SearchbarProp) {
+function Searchbar({ headerText, tagline, Icon }: SearchbarProp) {
     return (
         <div className="flex justify-between items-center mobile:flex-col">
             <div className="flex flex-col justify-start items-start">
                 <div className="flex justify-center items-center font-semibold text-2xl mb-1">
                     <h1 className="mr-1">{headerText}</h1>
-                    <Icon width={25} height={25} />
+                    {Icon && <Icon width={25} height={25} />}
                 </div>
                 <p className="text-dark-gray text-sm mobile:mb-3">{tagline}</p>
             </div>

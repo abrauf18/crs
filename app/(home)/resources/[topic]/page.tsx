@@ -8,6 +8,7 @@ import { HelpCircle, TicketIcon } from 'lucide-react';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
 import { usePathname } from 'next/navigation';
+import UploadResourceModal from '@/app/modules/resources/UploadResourceModal';
 
 function TopicPage() {
     const path = usePathname();
@@ -47,6 +48,9 @@ function TopicPage() {
                     count={150}
                     currentPath={path}
                 />
+            </div>
+            <div className="absolute right-0 top-0 z-50 ">
+                <UploadResourceModal />
             </div>
         </section>
     );
