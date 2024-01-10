@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import crsLogo from '@/app/assets/images/crsclogo.svg';
 import {
     User as UserIcon,
@@ -11,6 +12,8 @@ import {
     LogOut,
     LayoutGrid,
     LucideIcon,
+    Lightbulb,
+    Bookmark,
 } from 'lucide-react';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
@@ -20,39 +23,100 @@ import NavigationItem, { NavigationItemProps } from './NavigationItem';
 
 export default function SideBar() {
     const [menu, SetMenu] = useState(false);
+    const path = usePathname();
 
-    const navItems: NavigationItemProps[] = [
-        {
-            to: '/admin',
-            ItemIcon: LayoutGrid,
-            itemText: 'Dashboard',
-        },
-        {
-            to: '/admin/video',
-            ItemIcon: SlideShowIcon,
-            itemText: 'Video',
-        },
-        {
-            to: '/admin/resources',
-            ItemIcon: ResourceIcon,
-            itemText: 'Resources',
-        },
-        {
-            to: '#',
-            ItemIcon: QueryIcon,
-            itemText: 'Query',
-        },
-        {
-            to: '/admin/standard',
-            ItemIcon: StandardIcon,
-            itemText: 'Standard',
-        },
-        {
-            to: '/admin/users',
-            ItemIcon: UserIcon,
-            itemText: 'User’s',
-        },
-    ];
+    let navItems: NavigationItemProps[] = [];
+    if (path.startsWith('/admin')) {
+        navItems = [
+            {
+                to: '/admin',
+                ItemIcon: LayoutGrid,
+                itemText: 'Dashboard',
+            },
+            {
+                to: '/admin/video',
+                ItemIcon: SlideShowIcon,
+                itemText: 'Video',
+            },
+            {
+                to: '/admin/resources',
+                ItemIcon: ResourceIcon,
+                itemText: 'Resources',
+            },
+            {
+                to: '#',
+                ItemIcon: QueryIcon,
+                itemText: 'Query',
+            },
+            {
+                to: '/admin/standard',
+                ItemIcon: StandardIcon,
+                itemText: 'Standard',
+            },
+            {
+                to: '/admin/users',
+                ItemIcon: UserIcon,
+                itemText: 'User’s',
+            },
+        ];
+    } else if (path.startsWith('/teacher')) {
+        navItems = [
+            {
+                to: '/teacher',
+                ItemIcon: LayoutGrid,
+                itemText: 'Dashboard',
+            },
+            {
+                to: '#',
+                ItemIcon: SlideShowIcon,
+                itemText: "Standard's",
+            },
+            {
+                to: '/teacher/students',
+                ItemIcon: UserIcon,
+                itemText: 'Students',
+            },
+            {
+                to: '/teacher/learning-plans',
+                ItemIcon: QueryIcon,
+                itemText: 'Learning Plans',
+            },
+            {
+                to: '/teacher/classroom',
+                ItemIcon: StandardIcon,
+                itemText: 'Classroom',
+            },
+        ];
+    } else if (path.startsWith('/student')) {
+        navItems = [
+            {
+                to: '/student',
+                ItemIcon: LayoutGrid,
+                itemText: 'Dashboard',
+            },
+            {
+                to: '#',
+                ItemIcon: Lightbulb,
+                itemText: 'Learning',
+            },
+            {
+                to: '#',
+                ItemIcon: Bookmark,
+                itemText: "Saved Video's",
+            },
+            {
+                to: '/student/profile',
+                ItemIcon: UserIcon,
+                itemText: 'Profile',
+            },
+            {
+                to: '/teacher/resource',
+                ItemIcon: ResourceIcon,
+                itemText: 'Resource',
+            },
+        ];
+    }
+
     return (
         <section className="bg-light-gray md:p-5 md:fixed">
             <ul className="flex flex-col w-full items-center justify-center pt-5 h-screen mobile:hidden">

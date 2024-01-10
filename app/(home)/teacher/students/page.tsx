@@ -7,7 +7,7 @@ import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
 import StudentsTable, {
     Student,
-} from '@/app/modules/students/StudentsStatsTable';
+} from '@/app/modules/students/studentsStatsTable';
 import StudentsInfoTable, {
     StudentInfo,
 } from '@/app/modules/students/StudentsInfoTable';
