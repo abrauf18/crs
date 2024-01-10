@@ -36,7 +36,7 @@ const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-function StudentsTable({ students, fontSize }: StudentsProp) {
+function StatsTable({ students, fontSize }: StudentsProp) {
     const { push } = useRouter();
 
     const handleClick = (
@@ -131,4 +131,4 @@ function StudentsTable({ students, fontSize }: StudentsProp) {
         </Table>
     );
 }
-export default StudentsTable;
+export default StatsTable;

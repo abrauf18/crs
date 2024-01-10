@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -15,7 +15,7 @@ import {
 import Image from 'next/image';
 import Avatar from '@/app/assets/images/UserImage.svg';
 
-export interface StudentInfo {
+export interface StudentInfoInterface {
     image: string;
     id: number;
     name: string;
@@ -25,7 +25,7 @@ export interface StudentInfo {
 }
 
 interface StudentsInfoProp {
-    students: StudentInfo[];
+    students: StudentInfoInterface[];
     fontSize?: string;
 }
 
@@ -35,10 +35,11 @@ const poppins = Poppins({
 });
 function StudentsInfoTable({ students, fontSize }: StudentsInfoProp) {
     const { push } = useRouter();
+    const pathname = usePathname();
 
     const handleClick = (id: number) => {
         console.log(id);
-        push(`/students/${id}`);
+        push(`${pathname}/${id}`);
     };
 
     return (

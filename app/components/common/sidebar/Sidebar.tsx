@@ -11,14 +11,15 @@ import {
     X,
     LogOut,
     LayoutGrid,
-    LucideIcon,
     Lightbulb,
     Bookmark,
+    GraduationCap,
 } from 'lucide-react';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import QueryIcon from '@/app/assets/icons/QueryIcon';
 import StandardIcon from '@/app/assets/icons/StandardIcon';
+import TeacherStandardIcon from '@/app/assets/icons/TeacherStandardIcon';
 import NavigationItem, { NavigationItemProps } from './NavigationItem';
 
 export default function SideBar() {
@@ -68,7 +69,7 @@ export default function SideBar() {
             },
             {
                 to: '#',
-                ItemIcon: SlideShowIcon,
+                ItemIcon: TeacherStandardIcon,
                 itemText: "Standard's",
             },
             {
@@ -78,12 +79,12 @@ export default function SideBar() {
             },
             {
                 to: '/teacher/learning-plans',
-                ItemIcon: QueryIcon,
+                ItemIcon: StandardIcon,
                 itemText: 'Learning Plans',
             },
             {
                 to: '/teacher/classroom',
-                ItemIcon: StandardIcon,
+                ItemIcon: GraduationCap,
                 itemText: 'Classroom',
             },
         ];
