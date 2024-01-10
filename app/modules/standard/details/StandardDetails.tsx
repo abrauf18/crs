@@ -1,9 +1,11 @@
+'use client';
+
 import React from 'react';
 import { File } from 'lucide-react';
 import { standards } from '@/app/modules/standard/Standard';
 import StandardCard, { Data } from '@/app/modules/standard/StandardCard';
 
-type DetailPageProps = {
+type StandardDetailsProps = {
     params: {
         id: string;
     };
@@ -30,7 +32,7 @@ export const data: Data[] = [
     },
 ];
 
-function DetailPage({ params: { id } }: DetailPageProps) {
+function StandardDetails({ params: { id } }: StandardDetailsProps) {
     const selectedStandard = standards.find((standard) => standard.id === id);
 
     if (!selectedStandard) {
@@ -58,4 +60,4 @@ function DetailPage({ params: { id } }: DetailPageProps) {
     );
 }
 
-export default DetailPage;
+export default StandardDetails;

@@ -3,8 +3,8 @@ import { Label } from '@/app/components/ui/label';
 import CreateTopic from '@/app/modules/standard/CreateTopic';
 import { CalendarDays } from 'lucide-react';
 import StandardCard, { Data } from '@/app/modules/standard/StandardCard';
-import VideoModal from './VideoModal';
-import QuizModal from './QuizModal';
+import VideoModal from '../VideoModal';
+import QuizModal from '../QuizModal';
 
 export const data: Data[] = [
     {

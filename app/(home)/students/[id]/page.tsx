@@ -41,18 +41,6 @@ export const Studentrecord: StudentRecord[] = [
         result: '10',
         score: '10th',
     },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10th',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10th',
-    },
 ];
 function StudentDetail() {
     return (

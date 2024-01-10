@@ -57,7 +57,7 @@ export const usersData: User[] = [
         role: 'Moderator',
     },
 ];
-function UsersPage() {
+function Users() {
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
@@ -77,4 +77,4 @@ function UsersPage() {
     );
 }
 
-export default UsersPage;
+export default Users;

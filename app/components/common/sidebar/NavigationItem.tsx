@@ -4,8 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LucideIcon } from 'lucide-react';
+import path from 'path';
 
-interface NavigationItemProps {
+export interface NavigationItemProps {
     to: string;
     ItemIcon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
     itemText: string;
@@ -13,7 +14,9 @@ interface NavigationItemProps {
 
 function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
     const pathname = usePathname();
-    const isActive = pathname === to || pathname.startsWith(`${to}/`);
+    const role = pathname.split('/')[1];
+    const isActive =
+        pathname === to || (pathname.startsWith(to) && to !== `/${role}`);
 
     return (
         <Link

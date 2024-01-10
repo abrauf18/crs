@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -31,12 +31,12 @@ const poppins = Poppins({
 });
 function ResourcesTable({ resources, fontSize }: ResourcesProp) {
     const { push } = useRouter();
-
+    const path = usePathname();
     const handleClick = (
         event: React.MouseEvent<HTMLTableCellElement, MouseEvent>
     ) => {
         const topicName = event.currentTarget.textContent;
-        push(`/resources/${topicName?.split(' ').join('').toLowerCase()}`);
+        push(`${path}/${topicName?.split(' ').join('').toLowerCase()}`);
     };
 
     return (
