@@ -106,7 +106,7 @@ function LearningCard() {
                         <div className="flex items-end justify-end">
                             <div
                                 // href={route && id ? `${route}/${id}` : '#'}
-                                className="border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2"
+                                className="border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 cursor-pointer hover:bg-primary-color hover:text-white"
                             >
                                 View
                             </div>
