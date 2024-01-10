@@ -59,6 +59,16 @@ export default function SideBar() {
                 ItemIcon: UserIcon,
                 itemText: 'User’s',
             },
+            {
+                to: '/admin/setting',
+                ItemIcon: Settings,
+                itemText: 'Settings',
+            },
+            {
+                to: '#',
+                ItemIcon: LogOut,
+                itemText: 'Logout',
+            },
         ];
     } else if (path.startsWith('/teacher')) {
         navItems = [
@@ -87,6 +97,16 @@ export default function SideBar() {
                 ItemIcon: GraduationCap,
                 itemText: 'Classroom',
             },
+            {
+                to: '/teacher/setting',
+                ItemIcon: Settings,
+                itemText: 'Settings',
+            },
+            {
+                to: '#',
+                ItemIcon: LogOut,
+                itemText: 'Logout',
+            },
         ];
     } else if (path.startsWith('/student')) {
         navItems = [
@@ -111,9 +131,14 @@ export default function SideBar() {
                 itemText: 'Profile',
             },
             {
-                to: '/teacher/resource',
-                ItemIcon: ResourceIcon,
-                itemText: 'Resource',
+                to: '/student/setting',
+                ItemIcon: Settings,
+                itemText: 'Settings',
+            },
+            {
+                to: '#',
+                ItemIcon: LogOut,
+                itemText: 'Logout',
             },
         ];
     }
@@ -132,27 +157,30 @@ export default function SideBar() {
                     }}
                 />
                 <div className="flex flex-col justify-start items-center h-full">
-                    {navItems.map((item, index) => (
-                        <NavigationItem
-                            // eslint-disable-next-line react/no-array-index-key
-                            key={index + 1}
-                            to={item.to}
-                            ItemIcon={item.ItemIcon}
-                            itemText={item.itemText}
-                        />
-                    ))}
+                    {navItems
+                        .slice(0, navItems.length - 2)
+                        .map((item, index) => (
+                            <NavigationItem
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={index + 1}
+                                to={item.to}
+                                ItemIcon={item.ItemIcon}
+                                itemText={item.itemText}
+                            />
+                        ))}
                 </div>
                 <div className="mb-5">
-                    <NavigationItem
-                        to="/admin/setting"
-                        ItemIcon={Settings}
-                        itemText="Settings"
-                    />
-                    <NavigationItem
-                        to="#"
-                        ItemIcon={LogOut}
-                        itemText="Logout"
-                    />
+                    {navItems
+                        .slice(navItems.length - 2, navItems.length)
+                        .map((item, index) => (
+                            <NavigationItem
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={index + 1}
+                                to={item.to}
+                                ItemIcon={item.ItemIcon}
+                                itemText={item.itemText}
+                            />
+                        ))}
                 </div>
             </ul>
             <ul

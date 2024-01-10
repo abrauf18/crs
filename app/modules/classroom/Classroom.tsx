@@ -1,86 +1,17 @@
 import StudentIcon from '@/app/assets/icons/StudentIcon';
 import Pagintaion from '@/app/components/common/Pagintaion';
-import Card from '@/app/modules/classroom/Card';
-import ClassroomModal from '@/app/modules/classroom/ClassroomModal';
-import StudentsInfoTable, {
-    StudentInfo,
-} from '@/app/modules/classroom/ClassroomTable';
 import { VideoIcon } from 'lucide-react';
 import React from 'react';
+import StudentsInfoTable from '../students/StudentsInfoTable';
+import { Studentinfo } from '../students/students';
+import ClassroomModal from './ClassroomModal';
+import ClassroomCard from './ClassroomCard';
 
-export const Studentinfo: StudentInfo[] = [
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
-];
-function Class() {
+function Classroom() {
     return (
         <div>
             <div className="grid  lg:grid-cols-3 gap-4 mt-4 ">
-                <Card
+                <ClassroomCard
                     Icon={StudentIcon}
                     periods="10th Period"
                     students="40 Students"
@@ -89,7 +20,7 @@ function Class() {
                     hoverColor="bg-sky-50"
                 />
 
-                <Card
+                <ClassroomCard
                     Icon={StudentIcon}
                     periods="9th Period"
                     students="40 Students"
@@ -97,7 +28,7 @@ function Class() {
                     iconBg="bg-green-100"
                     hoverColor="bg-green-50"
                 />
-                <Card
+                <ClassroomCard
                     Icon={StudentIcon}
                     periods="8th Period"
                     students="40 Students"
@@ -107,7 +38,7 @@ function Class() {
                 />
             </div>
             <div className="grid  lg:grid-cols-4 gap-4 mt-4">
-                <Card
+                <ClassroomCard
                     Icon={StudentIcon}
                     periods="7th Period"
                     students="40 Students"
@@ -115,7 +46,7 @@ function Class() {
                     iconBg="bg-purple-100"
                     hoverColor="bg-purple-50"
                 />
-                <Card
+                <ClassroomCard
                     Icon={StudentIcon}
                     periods="6th Period"
                     students="40 Students"
@@ -123,7 +54,7 @@ function Class() {
                     iconBg="bg-yellow-200"
                     hoverColor="bg-yellow-50"
                 />
-                <Card
+                <ClassroomCard
                     Icon={StudentIcon}
                     periods="5th Period"
                     students="40 Students"
@@ -131,7 +62,7 @@ function Class() {
                     iconBg="bg-pink-100"
                     hoverColor="bg-pink-50"
                 />
-                <Card
+                <ClassroomCard
                     Icon={StudentIcon}
                     periods="4th Period"
                     students="40 Students"
@@ -156,4 +87,4 @@ function Class() {
     );
 }
 
-export default Class;
+export default Classroom;

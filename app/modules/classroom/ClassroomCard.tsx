@@ -2,7 +2,7 @@ import { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
-interface CardProps {
+interface ClassroomCardProps {
     Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
     periods: string;
     students: number | string;
@@ -11,14 +11,14 @@ interface CardProps {
     hoverColor?: string;
 }
 
-function Card({
+function ClassroomCard({
     Icon,
     periods,
     students,
     iconColor,
     iconBg,
     hoverColor,
-}: CardProps) {
+}: ClassroomCardProps) {
     return (
         <div
             className={`col-span-1 mobile:col-span-2 relative group p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border ${
@@ -45,4 +45,4 @@ function Card({
     );
 }
 
-export default Card;
+export default ClassroomCard;

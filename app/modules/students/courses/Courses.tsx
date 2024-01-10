@@ -1,11 +1,10 @@
-import Pagintaion from '@/app/components/common/Pagintaion';
-import StudentPerformanceTable, {
-    StudentRecord,
-} from '@/app/modules/students/overall-performance/PerformanceTable';
-import TestReportModal from '@/app/modules/students/overall-performance/TestReportModal';
 import React from 'react';
 
-export const Studentrecord: StudentRecord[] = [
+import Pagintaion from '@/app/components/common/Pagintaion';
+import CoursesTable, { CoursesListInterface } from './CoursesTable';
+import TestReportModal from './TestReportModal';
+
+export const CoursesList: CoursesListInterface[] = [
     {
         id: 1,
         testName: 'Computer',
@@ -43,7 +42,7 @@ export const Studentrecord: StudentRecord[] = [
         score: '20',
     },
 ];
-function page() {
+function Courses() {
     return (
         <div>
             <h1 className="font-bold text-xl my-6">75% Overall Performance</h1>
@@ -51,7 +50,7 @@ function page() {
                 <h1 className="text-[20px] font-semibold">
                     Kathryn Murphy - Report
                 </h1>
-                <StudentPerformanceTable students={Studentrecord} />
+                <CoursesTable courses={CoursesList} />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
@@ -63,4 +62,4 @@ function page() {
     );
 }
 
-export default page;
+export default Courses;

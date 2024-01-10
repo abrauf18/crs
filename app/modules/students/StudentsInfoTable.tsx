@@ -24,7 +24,7 @@ export interface StudentInfoInterface {
     performance: string;
 }
 
-interface StudentsInfoProp {
+export interface StudentsInfoProp {
     students: StudentInfoInterface[];
     fontSize?: string;
 }
@@ -39,7 +39,7 @@ function StudentsInfoTable({ students, fontSize }: StudentsInfoProp) {
 
     const handleClick = (id: number) => {
         console.log(id);
-        push(`${pathname}/${id}`);
+        push(`/teacher/students/${id}`);
     };
 
     return (

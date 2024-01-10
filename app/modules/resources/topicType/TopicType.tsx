@@ -8,7 +8,7 @@ import { HelpCircle, TicketIcon } from 'lucide-react';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
 import { usePathname } from 'next/navigation';
-import UploadResourceModal from '@/app/modules/resources/UploadResourceModal';
+import UploadResourceModal from '../UploadResourceModal';
 
 function TopicPage() {
     const path = usePathname();

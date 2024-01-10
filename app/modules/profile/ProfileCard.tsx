@@ -11,7 +11,7 @@ interface CardProps {
     border?: string;
 }
 
-function Card({
+function ProfileCard({
     Icon,
     header,
     description,
@@ -37,4 +37,4 @@ function Card({
     );
 }
 
-export default Card;
+export default ProfileCard;

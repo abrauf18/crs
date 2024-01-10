@@ -2,10 +2,6 @@
 
 import React, { useState } from 'react';
 
-// interface TabsProp {
-//     onSetActiveTab: (tab: string) => void;
-// }
-
 function Tabs() {
     const [activeTab, setActiveTabLocal] = useState('test');
 

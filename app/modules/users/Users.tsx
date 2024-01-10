@@ -1,10 +1,10 @@
 import React from 'react';
 import userImage from '@/app/assets/images/UserImage.svg';
-import UsersTable, { User } from '@/app/modules/users/UsersTable';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import Profile from '@/app/modules/setting/Profile';
 import { X } from 'lucide-react';
+import UsersTable, { User } from './UsersTable';
 
 export const usersData: User[] = [
     {

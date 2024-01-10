@@ -7,7 +7,7 @@ import Image from 'next/image';
 import graphImage from '@/app/assets/images/Graph.png';
 import StudentsRecordTable, {
     StudentRecordInterface,
-} from '@/app/modules/students/StudentsRecordTable';
+} from '../StudentsRecordTable';
 
 function StudentOverallReport({
     studentRecord,

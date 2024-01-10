@@ -12,7 +12,7 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 
-export interface Student {
+export interface StatsInterface {
     id: number;
     name: string;
     first: number;
@@ -27,8 +27,8 @@ export interface Student {
     fifthNum: number;
 }
 
-interface StudentsProp {
-    students: Student[];
+interface StatsTableProps {
+    statsList: StatsInterface[];
     fontSize?: string;
 }
 
@@ -36,7 +36,7 @@ const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-function StatsTable({ students, fontSize }: StudentsProp) {
+function StatsTable({ statsList, fontSize }: StatsTableProps) {
     const { push } = useRouter();
 
     const handleClick = (
@@ -90,40 +90,40 @@ function StatsTable({ students, fontSize }: StudentsProp) {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {students.map((student, index) => (
-                    <TableRow className="border-none" key={student.id}>
+                {statsList.map((item, index) => (
+                    <TableRow className="border-none" key={item.id}>
                         <TableCell className="text-dark-gray font-bold text-center">
-                            {student.name}
+                            {item.name}
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.first}%
+                            {item.first}%
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.firstNum}
+                            {item.firstNum}
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.second}%
+                            {item.second}%
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.secondNum}
+                            {item.secondNum}
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.third}%
+                            {item.third}%
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.thirdNum}
+                            {item.thirdNum}
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.forth}%
+                            {item.forth}%
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.forthNum}
+                            {item.forthNum}
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.fifth}%
+                            {item.fifth}%
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {student.fifthNum}
+                            {item.fifthNum}
                         </TableCell>
                     </TableRow>
                 ))}
