@@ -12,6 +12,7 @@ import UploadResourceModal from '@/app/modules/resources/UploadResourceModal';
 
 function TopicPage() {
     const path = usePathname();
+
     return (
         <section>
             <Header text="500 Resources In Total" buttonText="Upload Video" />
@@ -49,9 +50,9 @@ function TopicPage() {
                     currentPath={path}
                 />
             </div>
-            <div className="absolute right-0 top-0 z-50 ">
+            {/* <div className="absolute right-0 top-0 z-50 ">
                 <UploadResourceModal />
-            </div>
+            </div> */}
         </section>
     );
 }

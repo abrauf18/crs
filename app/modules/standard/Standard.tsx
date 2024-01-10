@@ -1,4 +1,8 @@
+'use client';
+
+import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
+import Header from '@/app/components/common/Header';
 import CardContent from '@/app/components/common/CardContent';
 import { CalendarDays, File, PlayIcon } from 'lucide-react';
 
@@ -89,31 +93,44 @@ export const standards = [
     },
 ];
 
-async function Standard() {
+function Standard() {
     const Icons = {
         FirstIcon: PlayIcon,
         SecondIcon: File,
         ThirdIcon: CalendarDays,
     };
+    const { push } = useRouter();
+    const pathname = usePathname();
+
+    function handleClick(): void {
+        push(`${pathname}/create`);
+    }
     return (
-        <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
-            {standards.map((standard, index) => (
-                <div
-                    key={standard.id || index}
-                    className="rounded-lg border p-4"
-                >
-                    <CardContent
-                        id={standard.id}
-                        route="/standard"
-                        heading={standard.heading}
-                        first={standard.first}
-                        second={standard.second}
-                        third={standard.third}
-                        Icons={Icons}
-                    />
-                </div>
-            ))}
-        </section>
+        <>
+            <Header
+                text="40 Standards In Total"
+                buttonText="Create New"
+                handleClick={() => handleClick()}
+            />
+            <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
+                {standards.map((standard, index) => (
+                    <div
+                        key={standard.id || index}
+                        className="rounded-lg border p-4"
+                    >
+                        <CardContent
+                            id={standard.id}
+                            route="/admin/standard"
+                            heading={standard.heading}
+                            first={standard.first}
+                            second={standard.second}
+                            third={standard.third}
+                            Icons={Icons}
+                        />
+                    </div>
+                ))}
+            </section>
+        </>
     );
 }
 

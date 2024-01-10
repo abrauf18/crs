@@ -6,8 +6,8 @@ import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import Image from 'next/image';
 import graph from '@/app/assets/images/graph.svg';
-import { usersData } from '@/app/(home)/users/page';
-import { ResourcesData } from '@/app/(home)/resources/page';
+import { usersData } from '@/app/modules/users/Users';
+import { ResourcesData } from '@/app/modules/resources/Resources';
 import UsersTable from '../users/UsersTable';
 import ResourcesTable from '../resources/ResourcesTable';
 import Filters from '../../components/common/Filters';
@@ -22,7 +22,7 @@ function Dashboard() {
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
-            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 mobile:place-items-center">
+            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 mobile:place-items-center mb-4">
                 <Card Icon={UserIcon} cardText="Total User’s" count="20K" />
                 <Card
                     Icon={SlideShowIcon}

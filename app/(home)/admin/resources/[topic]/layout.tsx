@@ -9,9 +9,10 @@ export default function TopicLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const path = usePathname().split('/')[2];
+    const path = usePathname().split('/')[3];
     const modPath = path[0].toUpperCase() + path.slice(1);
     const topicName = modPath.replace(/^Topic/, 'Topic ');
+
     return (
         <section>
             <Searchbar

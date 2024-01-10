@@ -11,7 +11,7 @@ import UploadModal from '@/app/modules/video/UploadModal';
 import AddQuestions from '@/app/modules/video/AddQuestions';
 import CheckPointsModal from '@/app/modules/video/CheckPointsModal';
 
-function VideoPage() {
+function Video() {
     const cards: Card[] = [
         {
             id: '1',
@@ -71,13 +71,14 @@ function VideoPage() {
                     <VideoCard card={card} key={card.Questions} />
                 ))}
             </div>
+            {/* Modals for uploading steps */}
             {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <UploadModal />
             </div> */}
 
-            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <AddQuestions />
-            </div>
+            </div> */}
 
             {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <CheckPointsModal />
@@ -86,4 +87,4 @@ function VideoPage() {
     );
 }
 
-export default VideoPage;
+export default Video;

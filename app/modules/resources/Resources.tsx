@@ -51,7 +51,7 @@ export const ResourcesData: Resource[] = [
         topic: 'Topic 3',
     },
 ];
-function ResouresPage() {
+function Resoures() {
     return (
         <section>
             <Searchbar
@@ -70,4 +70,4 @@ function ResouresPage() {
     );
 }
 
-export default ResouresPage;
+export default Resoures;

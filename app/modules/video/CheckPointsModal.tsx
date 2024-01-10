@@ -7,8 +7,8 @@ import { ModalHeader } from '../../components/common/ModalHeader';
 
 function CheckPointsModal() {
     return (
-        <section className="w-full bg-white h-screen py-4 px-6 shadow-md">
-            <div className="h-[90%] overflow-y-auto w-full px-2">
+        <section className="w-full bg-white h-screen p-4 shadow-md">
+            <div className="h-[90%] overflow-y-auto w-full px-5">
                 <ModalHeader
                     headerText={{
                         heading: 'Set Checkpoints',
