@@ -126,7 +126,7 @@ function page() {
 
             <div className="flex justify-between mt-8">
                 <p className="font-semibold text-2xl ">Saved Videos</p>
-                <p className="border lg:py-2 px-2 w-[40%] lg:px-4 rounded-lg lg:w-fit font-semibold text-dark-gray ">
+                <p className="border py-2 px-4 text-center rounded-lg h-fit lg:w-fit font-semibold text-dark-gray ">
                     Show All
                 </p>
             </div>
