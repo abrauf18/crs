@@ -95,7 +95,7 @@ export default function SideBar() {
                 itemText: 'Dashboard',
             },
             {
-                to: '#',
+                to: '/student/learning',
                 ItemIcon: Lightbulb,
                 itemText: 'Learning',
             },
