@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import DataIcon from '@/app/assets/icons/DataIcon';
@@ -23,16 +25,23 @@ function Dashboard() {
                 Icon={WavingHandIcon}
             />
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 mobile:place-items-center mb-4">
-                <Card Icon={UserIcon} cardText="Total User’s" count="20K" />
+                <Card
+                    Icon={UserIcon}
+                    cardText="Total User’s"
+                    count="20K"
+                    currentPath="/admin/users"
+                />
                 <Card
                     Icon={SlideShowIcon}
                     cardText="Video Uploads"
                     count={200}
+                    currentPath="/admin/video"
                 />
                 <Card
                     Icon={ResourceIcon}
                     cardText="Total Resources"
                     count={150}
+                    currentPath="/admin/resources"
                 />
                 <Card Icon={DataIcon} cardText="Data Insights" count="70%" />
             </div>

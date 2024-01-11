@@ -15,6 +15,7 @@ export interface NavigationItemProps {
 function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
     const pathname = usePathname();
     const role = pathname.split('/')[1];
+
     const isActive =
         pathname === to || (pathname.startsWith(to) && to !== `/${role}`);
 

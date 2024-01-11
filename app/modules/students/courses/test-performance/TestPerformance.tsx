@@ -54,9 +54,7 @@ export const TestRecord: TestRecordInterface[] = [
         answer: 'Right',
     },
 ];
-// export function onSetActiveTab(tab: string) {
-//     console.log(tab);
-// }
+
 function TestPerformance() {
     return (
         <div>

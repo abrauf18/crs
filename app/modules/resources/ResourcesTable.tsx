@@ -12,6 +12,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
+import { convertSpacesToDashes } from '@/lib/utils';
 
 export interface Resource {
     id: number;
@@ -32,11 +33,17 @@ const poppins = Poppins({
 function ResourcesTable({ resources, fontSize }: ResourcesProp) {
     const { push } = useRouter();
     const path = usePathname();
+
     const handleClick = (
         event: React.MouseEvent<HTMLTableCellElement, MouseEvent>
     ) => {
         const topicName = event.currentTarget.textContent;
-        push(`${path}/${topicName?.split(' ').join('').toLowerCase()}`);
+
+        if (topicName) {
+            const formattedTopicName = convertSpacesToDashes(topicName);
+            const newPath = `${path}/${formattedTopicName.toLowerCase()}`;
+            push(newPath);
+        }
     };
 
     return (

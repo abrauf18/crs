@@ -33,7 +33,6 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
     const { push } = useRouter();
 
     const handleClick = (id: number) => {
-        console.log(id);
         push(`/teacher/students/${id}/courses`);
     };
 

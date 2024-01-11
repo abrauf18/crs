@@ -38,7 +38,6 @@ function StudentsInfoTable({ students, fontSize }: StudentsInfoProp) {
     const pathname = usePathname();
 
     const handleClick = (id: number) => {
-        console.log(id);
         push(`/teacher/students/${id}`);
     };
 

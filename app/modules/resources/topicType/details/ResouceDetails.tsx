@@ -1,13 +1,12 @@
 import CommonTable from '@/app/components/common/CommonTable';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
+import { convertDashesToSpaces } from '@/lib/utils';
 import React from 'react';
 
 function ResourceDetails({ params }: any) {
-    const resourceName = params.typeName.split('%20').join(' '); // removing %20 from typeName
-    const modifiedName = resourceName[0].toUpperCase() + resourceName.slice(1); // uppercase first letter
-    const topicName = params.topic[0].toUpperCase() + params.topic.slice(1); // uppercase first letter
-    const ModifiedTopicName = topicName.replace(/^Topic/, 'Topic '); // adding space after Topic
+    const ModifiedTopicName = convertDashesToSpaces(params.typeName); // adding space after Topic
+
     const resources: any = [
         { id: 1, title: 'Design Thinking', topic: ModifiedTopicName },
         { id: 2, title: 'User Research', topic: ModifiedTopicName },
@@ -21,7 +20,7 @@ function ResourceDetails({ params }: any) {
     ];
     return (
         <div>
-            <Filters text={modifiedName} />
+            <Filters text={ModifiedTopicName} />
             <CommonTable resources={resources} />
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />

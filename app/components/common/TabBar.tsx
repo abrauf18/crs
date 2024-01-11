@@ -14,7 +14,6 @@ function TabBar({ options, onSelectFilter, initialSelectedTab }: TabBarProps) {
     const handleTabClick = (tab: string) => {
         setActiveTabLocal(tab);
         onSelectFilter(tab);
-        console.log(tab);
     };
 
     return (

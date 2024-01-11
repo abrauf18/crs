@@ -34,7 +34,6 @@ function CoursesTable({ courses, fontSize }: CoursesTableProps) {
     const pathname = usePathname();
 
     const handleClick = (id: number) => {
-        console.log(id);
         push(`${pathname}/${id}/test-performance`);
     };
 
