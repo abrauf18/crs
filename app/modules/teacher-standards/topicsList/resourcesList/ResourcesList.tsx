@@ -94,9 +94,11 @@ function ResourcesList() {
     const normalizeTab = (tab: string): string => {
         if (tab.toLowerCase() === 'videos') {
             return 'video';
-        } else if (tab.toLowerCase() === 'quizzes') {
+        }
+        if (tab.toLowerCase() === 'quizzes') {
             return 'quiz';
-        } else if (tab.toLowerCase() === 'assisments') {
+        }
+        if (tab.toLowerCase() === 'assisments') {
             return 'assisment';
         }
         return tab.toLowerCase();
