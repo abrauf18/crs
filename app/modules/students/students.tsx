@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { User } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
+import TabBar from '@/app/components/common/TabBar';
 import StatsTable, { StatsInterface } from './StatsTable';
 import StudentsInfoTable, { StudentInfoInterface } from './StudentsInfoTable';
-import TabBar from './TabBar';
 import AddStudentModal from './AddStudentModal';
 
 export const StatsList: StatsInterface[] = [
@@ -185,12 +185,11 @@ function Students() {
                 tagline="Here’s all Students"
             />
 
-            <div className="my-6 w-full border py-2 px-4 rounded-lg ">
-                <TabBar
-                    options={gradeOptions}
-                    onSelectFilter={onSelectFilter}
-                />
-            </div>
+            <TabBar
+                options={gradeOptions}
+                onSelectFilter={onSelectFilter}
+                initialSelectedTab="all"
+            />
 
             <div className="flex justify-between mt-5">
                 <h1 className="font-bold text-dlg">All Students</h1>

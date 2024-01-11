@@ -78,7 +78,7 @@ export default function SideBar() {
                 itemText: 'Dashboard',
             },
             {
-                to: '#',
+                to: '/teacher/standard',
                 ItemIcon: TeacherStandardIcon,
                 itemText: "Standard's",
             },

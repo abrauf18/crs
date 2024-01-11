@@ -1,0 +1,64 @@
+import React from 'react';
+import Filters from '@/app/components/common/Filters';
+import Searchbar from '@/app/components/common/Searchbar';
+import Pagintaion from '@/app/components/common/Pagintaion';
+import TopicsTable, { TopicsInterface } from './TopicsTable';
+
+export const topicsList: TopicsInterface[] = [
+    {
+        id: 1,
+        topic: 'ABC',
+        assignedResources: '5',
+    },
+    {
+        id: 1,
+        topic: 'ABC',
+        assignedResources: '5',
+    },
+    {
+        id: 1,
+        topic: 'ABC',
+        assignedResources: '5',
+    },
+    {
+        id: 1,
+        topic: 'ABC',
+        assignedResources: '5',
+    },
+    {
+        id: 1,
+        topic: 'ABC',
+        assignedResources: '5',
+    },
+    {
+        id: 1,
+        topic: 'ABC',
+        assignedResources: '5',
+    },
+    {
+        id: 1,
+        topic: 'ABC',
+        assignedResources: '5',
+    },
+];
+function TopicsList() {
+    return (
+        <div>
+            <div className="w-full ">
+                <Searchbar
+                    headerText="Standard"
+                    tagline="Here’s All Topic assigned Resources"
+                />
+                <div className="border rounded-lg p-5 mt-10">
+                    <Filters text="All topic's" />
+                    <TopicsTable topics={topicsList} />
+                </div>
+                <div className="flex justify-center items-center mt-5">
+                    <Pagintaion />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default TopicsList;

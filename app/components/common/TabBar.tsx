@@ -5,10 +5,11 @@ import React, { useState } from 'react';
 interface TabBarProps {
     options: string[];
     onSelectFilter: (tab: string) => void;
+    initialSelectedTab: string;
 }
 
-function TabBar({ options, onSelectFilter }: TabBarProps) {
-    const [activeTab, setActiveTabLocal] = useState('all');
+function TabBar({ options, onSelectFilter, initialSelectedTab }: TabBarProps) {
+    const [activeTab, setActiveTabLocal] = useState(initialSelectedTab);
 
     const handleTabClick = (tab: string) => {
         setActiveTabLocal(tab);
@@ -17,7 +18,7 @@ function TabBar({ options, onSelectFilter }: TabBarProps) {
     };
 
     return (
-        <div className="flex flex-wrap lg:justify-between">
+        <div className="flex flex-wrap lg:justify-between my-6 w-full border py-2 px-4 rounded-lg pt-4">
             {options.map((option) => (
                 <button
                     key={option}
