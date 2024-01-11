@@ -11,6 +11,7 @@ import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
 import ResourceCard, { ResourceCardInterface } from './ResourceCard';
+import AddResourceModal from './AddResourceModal';
 
 function ResourcesList() {
     const tabOptions = [
@@ -143,6 +144,9 @@ function ResourcesList() {
                         <ResourceCard card={card} key={card.Questions} />
                     ))}
                 </div>
+            </div>
+            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                <AddResourceModal />
             </div>
         </section>
     );

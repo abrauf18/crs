@@ -7,7 +7,7 @@ interface Header {
 }
 interface ModalHeaderProps {
     headerText: Header;
-    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
+    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
 }
 
 export function ModalHeader({
@@ -21,7 +21,7 @@ export function ModalHeader({
                     <h3 className="text-xl font-semibold mb-2 mr-1">
                         {headerText.heading}
                     </h3>
-                    <Icon />
+                    {Icon && <Icon />}
                 </div>
                 <p className="text-sm text-dark-gray">{headerText.tagline}</p>
             </div>

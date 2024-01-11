@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GoogleIcon({ ...props }) {
+function MovieIcon({ ...props }) {
     return (
         <svg
             width="17"
@@ -22,4 +22,4 @@ function GoogleIcon({ ...props }) {
     );
 }
 
-export default GoogleIcon;
+export default MovieIcon;

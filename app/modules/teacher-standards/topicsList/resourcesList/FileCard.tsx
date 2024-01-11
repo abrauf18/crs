@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import PptIcon from '@/app/assets/icons/PptIcon';
 import XlsIcon from '@/app/assets/icons/XlsIcon';
-import { EditIcon, HelpCircle } from 'lucide-react';
-import QuestionIcon from '@/app/assets/icons/QuestionIcon';
+import { HelpCircle } from 'lucide-react';
 
 interface FileCardProps {
     id: string;
