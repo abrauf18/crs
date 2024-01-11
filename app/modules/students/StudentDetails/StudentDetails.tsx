@@ -1,5 +1,5 @@
 import React from 'react';
-import { StudentRecordInterface } from '@/app/modules/students/StudentsRecordTable';
+import { StudentRecordInterface } from '../StudentsRecordTable';
 import StudentProfile from './StudentProfile';
 import StudentOverallReport from './StudentOverallReport';
 

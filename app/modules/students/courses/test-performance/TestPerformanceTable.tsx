@@ -1,8 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import React from 'react';
-import { Eye, Trash } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
     Table,
@@ -13,14 +12,14 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 
-export interface TestRecord {
+export interface TestRecordInterface {
     id: number;
     question: string;
     answer: string;
 }
 
 interface TestPerformanceProp {
-    test: TestRecord[];
+    test: TestRecordInterface[];
     fontSize?: string;
 }
 
@@ -29,13 +28,6 @@ const poppins = Poppins({
     weight: ['100', '400', '700'],
 });
 function TestPerformanceTable({ test, fontSize }: TestPerformanceProp) {
-    const { push } = useRouter();
-
-    const handleClick = (id: number) => {
-        console.log(id);
-        // push(`/test/${id}/test-performance`);
-    };
-
     return (
         <Table
             className={`text-[${fontSize || '18'}px] mobile:text-[14px] ${
@@ -44,17 +36,17 @@ function TestPerformanceTable({ test, fontSize }: TestPerformanceProp) {
         >
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px] text-dark-gray font-bold">
+                    <TableHead className="w-[100px] text-dark-gray font-semibold">
                         Q NO.
                     </TableHead>
-                    <TableHead className="w-[900px] text-dark-gray font-bold">
+                    <TableHead className="w-[900px] text-dark-gray font-semibold">
                         Question
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold">
+                    <TableHead className="text-dark-gray font-semibold">
                         Answer
                     </TableHead>
 
-                    <TableHead className="text-dark-gray font-bold">
+                    <TableHead className="text-dark-gray font-semibold">
                         Action
                     </TableHead>
                 </TableRow>
@@ -62,7 +54,7 @@ function TestPerformanceTable({ test, fontSize }: TestPerformanceProp) {
             <TableBody>
                 {test.map((test, index) => (
                     <TableRow className="border-none" key={test.id}>
-                        <TableCell className="font-medium">
+                        <TableCell className="font-normal">
                             <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
                                 {index + 1}
                             </span>
@@ -81,11 +73,8 @@ function TestPerformanceTable({ test, fontSize }: TestPerformanceProp) {
                             {test.answer}
                         </TableCell>
 
-                        <TableCell className="flex justify-start items-center p-0 mt-5 ml-3">
-                            <div
-                                className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
-                                onClick={() => handleClick(index)}
-                            >
+                        <TableCell className="flex justify-center items-center">
+                            <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
                                 <Eye color="#F59A3B" width={18} height={18} />
                             </div>
                         </TableCell>

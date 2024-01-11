@@ -4,14 +4,12 @@ import React, { useState } from 'react';
 import { User } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
-import StatsTable, { Student } from '@/app/modules/students/StatsTable';
-import StudentsInfoTable, {
-    StudentInfoInterface,
-} from '@/app/modules/students/StudentsInfoTable';
-import TabBar from '@/app/modules/students/TabBar';
-import AddStudentModal from '@/app/modules/students/AddStudentModal';
+import StatsTable, { StatsInterface } from './StatsTable';
+import StudentsInfoTable, { StudentInfoInterface } from './StudentsInfoTable';
+import TabBar from './TabBar';
+import AddStudentModal from './AddStudentModal';
 
-export const StudentsData: Student[] = [
+export const StatsList: StatsInterface[] = [
     {
         id: 1,
         name: 'School',
@@ -206,7 +204,7 @@ function Students() {
                 </Button>
             </div>
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
-                <StatsTable students={StudentsData} />
+                <StatsTable statsList={StatsList} />
             </div>
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <StudentsInfoTable students={filteredStudents} />

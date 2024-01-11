@@ -1,8 +1,8 @@
-import Class from '@/app/modules/classroom/Class';
+import Classroom from '@/app/modules/classroom/Classroom';
 import React from 'react';
 
-function ClassPage() {
-    return <Class />;
+function ClassroomPage() {
+    return <Classroom />;
 }
 
-export default ClassPage;
+export default ClassroomPage;

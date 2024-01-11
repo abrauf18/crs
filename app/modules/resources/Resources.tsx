@@ -2,10 +2,8 @@ import React from 'react';
 import Filters from '@/app/components/common/Filters';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import Searchbar from '@/app/components/common/Searchbar';
-import ResourcesTable, {
-    Resource,
-} from '@/app/modules/resources/ResourcesTable';
 import Pagintaion from '@/app/components/common/Pagintaion';
+import ResourcesTable, { Resource } from './ResourcesTable';
 
 export const ResourcesData: Resource[] = [
     {

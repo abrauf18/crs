@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from '@/app/components/common/Header';
-import VideoCard, { Card } from '@/app/modules/video/VideoCard';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import videoImage2 from '@/app/assets/images/videoImages/videoImage2.svg';
 import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
 import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
-import UploadModal from '@/app/modules/video/UploadModal';
-import AddQuestions from '@/app/modules/video/AddQuestions';
-import CheckPointsModal from '@/app/modules/video/CheckPointsModal';
+import VideoCard, { Card } from './VideoCard';
+import UploadModal from './UploadModal';
+import AddQuestions from './AddQuestions';
+import CheckPointsModal from './CheckPointsModal';
 
 function Video() {
     const cards: Card[] = [

@@ -25,7 +25,7 @@ export interface LearningInterface {
     isDisabled: boolean;
 }
 
-interface StudentsInfoProp {
+interface LearningTableProps {
     learnings: LearningInterface[];
     fontSize?: string;
 }
@@ -34,7 +34,7 @@ const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-function LearningTable({ learnings, fontSize }: StudentsInfoProp) {
+function LearningTable({ learnings, fontSize }: LearningTableProps) {
     const { push } = useRouter();
 
     const handleClick = (id: number) => {

@@ -2,9 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
-import Header from '@/app/components/common/Header';
-import CardContent from '@/app/components/common/CardContent';
-import { CalendarDays, EditIcon, File, Link, PlayIcon } from 'lucide-react';
+import { CalendarDays, File, PlayIcon } from 'lucide-react';
 
 export const standards = [
     {

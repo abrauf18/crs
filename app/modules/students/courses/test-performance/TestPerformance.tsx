@@ -1,12 +1,10 @@
-import MyAnswersModal from '@/app/modules/STUDENT/profile/MyAnswersModal';
-import { StudentRecord } from '@/app/modules/students/StudentsRecordTable';
-import Tabs from '@/app/modules/students/test-performance/Tabs';
-import TestPerformanceTable, {
-    TestRecord,
-} from '@/app/modules/students/test-performance/TestPerformanceTable';
 import React from 'react';
+import Tabs from './Tabs';
+import TestPerformanceTable, {
+    TestRecordInterface,
+} from './TestPerformanceTable';
 
-export const Studentrecord: TestRecord[] = [
+export const TestRecord: TestRecordInterface[] = [
     {
         id: 1,
         question:
@@ -59,7 +57,7 @@ export const Studentrecord: TestRecord[] = [
 // export function onSetActiveTab(tab: string) {
 //     console.log(tab);
 // }
-function page() {
+function TestPerformance() {
     return (
         <div>
             <div className="border rounded-lg p-5 mt-10">
@@ -78,7 +76,7 @@ function page() {
                     </div>
                 </div>
                 <Tabs />
-                <TestPerformanceTable test={Studentrecord} />
+                <TestPerformanceTable test={TestRecord} />
             </div>
             {/* <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[25%]">
                 <MyAnswersModal />
@@ -87,4 +85,4 @@ function page() {
     );
 }
 
-export default page;
+export default TestPerformance;
