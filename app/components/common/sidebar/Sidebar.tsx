@@ -131,6 +131,11 @@ export default function SideBar() {
                 itemText: 'Profile',
             },
             {
+                to: '/student/resources',
+                ItemIcon: ResourceIcon,
+                itemText: 'Resources',
+            },
+            {
                 to: '/student/setting',
                 ItemIcon: Settings,
                 itemText: 'Settings',

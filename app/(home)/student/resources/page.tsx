@@ -1,7 +1,8 @@
+import Resources from '@/app/modules/student-resources/Resources';
 import React from 'react';
 
-function page() {
-    return <div>page</div>;
+function ResourcesPage() {
+    return <Resources />;
 }
 
-export default page;
+export default ResourcesPage;
