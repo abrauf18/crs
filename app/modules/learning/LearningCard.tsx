@@ -30,10 +30,11 @@ export const standards = [
     },
     {
         id: '4',
-        heading: 'React.js Mastery',
+        heading: 'Artificial Intelligence - AI',
         first: 'Videos (20)',
         second: 'Exercises (15)',
         third: 'Course Length (3 Weeks)',
+        isActive: true,
     },
     {
         id: '5',
@@ -68,7 +69,9 @@ function LearningCard() {
             {standards.map((standard, index) => (
                 <div
                     key={standard.id || index}
-                    className="rounded-lg border p-4"
+                    className={`rounded-lg border p-4 ${
+                        standard?.isActive && 'border border-primary-color'
+                    }`}
                 >
                     <div className="mt-2">
                         <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-900">
@@ -106,7 +109,10 @@ function LearningCard() {
                         <div className="flex items-end justify-end">
                             <div
                                 // href={route && id ? `${route}/${id}` : '#'}
-                                className="border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 cursor-pointer hover:bg-primary-color hover:text-white"
+                                className={`border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 cursor-pointer hover:bg-primary-color hover:text-white ${
+                                    standard?.isActive &&
+                                    'bg-primary-color text-white'
+                                }`}
                             >
                                 View
                             </div>
