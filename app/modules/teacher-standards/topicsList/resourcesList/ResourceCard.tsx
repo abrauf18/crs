@@ -9,8 +9,6 @@ import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import CheckPointIcon from '@/app/assets/icons/CheckPointIcon';
 import { EditIcon, PlayIcon } from 'lucide-react';
 import CardContent, { IconProps } from '@/app/components/common/CardContent';
-import PptIcon from '@/app/assets/icons/PptIcon';
-import XlsIcon from '@/app/assets/icons/XlsIcon';
 import VideoCard from './VideoCard';
 import FileCard from './FileCard';
 

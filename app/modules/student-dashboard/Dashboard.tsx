@@ -12,9 +12,7 @@ import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
 import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
-import VideoCard, {
-    Card as Video,
-} from '@/app/modules/student-dashboard/VideoCard';
+import VideoCard, { Card as Video } from '@/app/components/common/VideoCard';
 
 const cards: Video[] = [
     {

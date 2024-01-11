@@ -121,7 +121,7 @@ export default function SideBar() {
                 itemText: 'Learning',
             },
             {
-                to: '#',
+                to: '/student/saved-videos',
                 ItemIcon: Bookmark,
                 itemText: "Saved Video's",
             },
