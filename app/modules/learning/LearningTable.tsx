@@ -21,6 +21,7 @@ export interface LearningInterface {
     duration: string;
     status: string;
     questions: string;
+    resourceType: string;
     isDone: boolean;
     isDisabled: boolean;
 }
@@ -28,19 +29,26 @@ export interface LearningInterface {
 interface LearningTableProps {
     learnings: LearningInterface[];
     fontSize?: string;
+    isSubmitAssignment?: boolean;
 }
 
 const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-function LearningTable({ learnings, fontSize }: LearningTableProps) {
+function LearningTable({
+    learnings,
+    fontSize,
+    isSubmitAssignment,
+}: LearningTableProps) {
     const { push } = useRouter();
 
     const handleClick = (id: number) => {
         console.log(id);
         // push(`/students/${id}`);
     };
+    const onSubmitAssignment = () =>
+        push('/student/learning/submit-assignment');
 
     return (
         <Table
@@ -74,7 +82,7 @@ function LearningTable({ learnings, fontSize }: LearningTableProps) {
                         </TableCell>
                         <TableCell className="text-white  flex space-x-2  justify-end">
                             <div
-                                className={`flex space-x-2 items-center border w-fit py-2 px-4 rounded-lg  ${
+                                className={`flex space-x-2 items-center border w-fit py-2 px-4 rounded-xl  ${
                                     learning.isDisabled
                                         ? 'bg-gray-300'
                                         : 'bg-primary-color'
@@ -86,6 +94,32 @@ function LearningTable({ learnings, fontSize }: LearningTableProps) {
                         </TableCell>
                     </TableRow>
                 ))}
+                {isSubmitAssignment && (
+                    <TableRow className="border-none">
+                        <TableCell className="font-medium">
+                            <span className="bg-light-gray px-[7px] py-[4px] rounded-xl">
+                                {learnings.length + 1}
+                            </span>
+                        </TableCell>
+                        <TableCell>Assignment - XYZ</TableCell>
+
+                        <TableCell className="text-dark-gray" />
+                        <TableCell className="text-dark-gray  text-right" />
+                        <TableCell className="text-white  flex space-x-2  justify-end">
+                            <div
+                                className="flex space-x-2 items-center border w-fit py-2 px-4 rounded-xl  bg-primary-color cursor-pointer"
+                                onClick={onSubmitAssignment}
+                            >
+                                <span>
+                                    Submit
+                                    <span className="hidden lg:inline">
+                                        &nbsp;Assignment
+                                    </span>
+                                </span>
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                )}
             </TableBody>
         </Table>
     );

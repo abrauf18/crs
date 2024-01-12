@@ -3,7 +3,7 @@ import Pagintaion from '@/app/components/common/Pagintaion';
 import { VideoIcon } from 'lucide-react';
 import React from 'react';
 import StudentsInfoTable from '../students/StudentsInfoTable';
-import { Studentinfo } from '../students/students';
+import { Studentinfo } from '../students/Students';
 import ClassroomModal from './ClassroomModal';
 import ClassroomCard from './ClassroomCard';
 

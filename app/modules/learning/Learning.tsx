@@ -14,6 +14,7 @@ export const LearningRecord: LearningInterface[] = [
         status: 'Play',
         isDone: true,
         isDisabled: false,
+        resourceType: 'video',
     },
     {
         id: 1,
@@ -23,6 +24,7 @@ export const LearningRecord: LearningInterface[] = [
         status: 'Continue',
         isDone: true,
         isDisabled: false,
+        resourceType: 'video',
     },
     {
         id: 1,
@@ -32,6 +34,7 @@ export const LearningRecord: LearningInterface[] = [
         status: 'Play',
         isDone: false,
         isDisabled: false,
+        resourceType: 'video',
     },
     {
         id: 1,
@@ -41,6 +44,7 @@ export const LearningRecord: LearningInterface[] = [
         status: 'Continue',
         isDone: false,
         isDisabled: false,
+        resourceType: 'quiz',
     },
 ];
 
@@ -53,6 +57,7 @@ export const LearningRecord2: LearningInterface[] = [
         status: 'Play',
         isDone: false,
         isDisabled: true,
+        resourceType: 'quiz',
     },
     {
         id: 1,
@@ -62,6 +67,7 @@ export const LearningRecord2: LearningInterface[] = [
         status: 'Continue',
         isDone: false,
         isDisabled: true,
+        resourceType: 'quiz',
     },
     {
         id: 1,
@@ -71,6 +77,7 @@ export const LearningRecord2: LearningInterface[] = [
         status: 'Play',
         isDone: false,
         isDisabled: true,
+        resourceType: 'video',
     },
     {
         id: 1,
@@ -80,17 +87,13 @@ export const LearningRecord2: LearningInterface[] = [
         status: 'Continue',
         isDone: false,
         isDisabled: true,
+        resourceType: 'video',
     },
 ];
 
 function Learning() {
     return (
         <div>
-            <Searchbar
-                headerText="My Learnings"
-                tagline="Here’s Your All Learning Assigned to You"
-            />
-
             <div className="flex justify-between mt-8">
                 <p className="font-semibold text-2xl ">
                     Your Assigned Learnings
@@ -127,7 +130,7 @@ function Learning() {
                     <CalendarDays color="orange" size={20} />
                     <p className="font-semibold text-lg">Day 1</p>
                 </div>
-                <LearningTable learnings={LearningRecord} />
+                <LearningTable learnings={LearningRecord} isSubmitAssignment />
             </div>
 
             <div className="border rounded-lg p-5 mt-5">

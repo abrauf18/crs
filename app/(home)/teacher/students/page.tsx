@@ -1,4 +1,4 @@
-import Students from '@/app/modules/students/students';
+import Students from '@/app/modules/students/Students';
 import React from 'react';
 
 function StudentPage() {
