@@ -4,6 +4,7 @@ import React from 'react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import DocxIcon from '@/app/assets/icons/DocxIcon';
 import { Edit, Eye, Trash } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export interface AssignmentInterface {
     id: string;
@@ -17,6 +18,8 @@ interface AssignmentCardProp {
 }
 
 function AssignmentCard({ card, isReferenceMaterial }: AssignmentCardProp) {
+    const { push } = useRouter();
+
     return (
         <div className=" bg-gray-50 border my-5 w-full rounded-lg  flex  justify-between items-center md:p-4 mobile:p-3 ">
             <div className="flex space-x-2 items-center">
@@ -30,7 +33,14 @@ function AssignmentCard({ card, isReferenceMaterial }: AssignmentCardProp) {
                 {!isReferenceMaterial && (
                     <>
                         <div className="mr-2 bg-green-100 rounded-md p-2 cursor-pointer">
-                            <Edit color="#7AA43E" width={20} height={20} />
+                            <Edit
+                                color="#7AA43E"
+                                width={20}
+                                height={20}
+                                onClick={() =>
+                                    push('/student/learning/edit-assignment')
+                                }
+                            />
                         </div>
                         <div className="mr-2 bg-red-100 rounded-md p-2 cursor-pointer">
                             <Trash color="#E6500D" width={18} height={18} />

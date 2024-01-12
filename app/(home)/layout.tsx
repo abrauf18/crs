@@ -19,11 +19,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={montserrat.className}>
-                <section className="flex mobile:flex-col">
-                    <div className="md:basis-[280px]">
+                <section className="flex flex-col lg:flex-row">
+                    <div className="lg:basis-[280px]">
                         <SideBar />
                     </div>
-                    <div className="md:basis-full p-6">{children}</div>
+                    <div className="lg:basis-full p-6">{children}</div>
                 </section>
             </body>
         </html>

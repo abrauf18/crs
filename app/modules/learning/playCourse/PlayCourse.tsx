@@ -60,7 +60,7 @@ function PlayCourse() {
                         Artificial Intelligence - AI
                     </h1>
                 </div>
-                <div className="bg-primary-color text-white w-full text-center mt-5 lg:mt-0 lg:w-fit px-4 py-3 rounded-xl">
+                <div className="bg-primary-color text-white w-full text-center mt-5 lg:mt-0 lg:w-fit px-4 py-3 rounded-xl cursor-pointer">
                     Resources
                 </div>
             </div>
@@ -83,7 +83,7 @@ function PlayCourse() {
                 <Image
                     src={PlayCourseImage as string}
                     alt="play"
-                    className="w-full object-cover h-64 md:h-full" // Set a default height and override it for mobile
+                    className="w-full object-cover h-64 md:h-full"
                 />
                 <div className="absolute top-1 right-1 lg:top-5 lg:right-5 z-10 border flex space-x-2 items-center rounded-xl p-2">
                     <BookmarkMinus size={25} color="white" />

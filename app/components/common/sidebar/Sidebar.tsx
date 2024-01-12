@@ -149,8 +149,8 @@ export default function SideBar() {
     }
 
     return (
-        <section className="bg-light-gray md:p-5 md:fixed">
-            <ul className="flex flex-col w-full items-center justify-center pt-5 h-screen mobile:hidden">
+        <section className="bg-light-gray lg:p-5 lg:fixed">
+            <ul className="flex flex-col w-full items-center justify-center pt-5 h-screen hidden lg:block">
                 <Image
                     src={crsLogo as string}
                     alt="crs logo"
@@ -190,7 +190,7 @@ export default function SideBar() {
             </ul>
             <ul
                 onClick={() => SetMenu(!menu)}
-                className="md:hidden bg-light-gray w-screen p-2"
+                className="lg:hidden bg-light-gray w-screen p-2"
             >
                 <div className="flex justify-between items-center">
                     <Image

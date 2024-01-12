@@ -43,14 +43,16 @@ function SubmitAssignment() {
                 <div className="flex lg:space-x-2 flex-col lg:flex-row mobile:space-y-4 mobile:my-4 lg:my-0">
                     <button
                         type="button"
-                        className="py-3 px-4 border h-fit border-primary-color text-dark-gray rounded-xl font-semibold"
+                        className="py-3 px-4 border h-fit border-primary-color text-dark-gray rounded-xl font-semibold cursor-pointer"
                     >
                         Upload File
                     </button>
                     <button
                         type="button"
-                        className="py-3 px-4 bg-primary-color text-white rounded-xl font-semibold"
-                        onClick={() => push(`${pathname}/create-assignment`)}
+                        className="py-3 px-4 bg-primary-color text-white rounded-xl font-semibold cursor-pointer"
+                        onClick={() =>
+                            push('/student/learning/create-assignment')
+                        }
                     >
                         Create Assignment
                     </button>

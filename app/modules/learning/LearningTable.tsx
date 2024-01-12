@@ -82,7 +82,7 @@ function LearningTable({
                         </TableCell>
                         <TableCell className="text-white  flex space-x-2  justify-end">
                             <div
-                                className={`flex space-x-2 items-center border w-fit py-2 px-4 rounded-xl  ${
+                                className={`flex space-x-2 items-center border w-fit py-2 px-4 rounded-xl cursor-pointer ${
                                     learning.isDisabled
                                         ? 'bg-gray-300'
                                         : 'bg-primary-color'

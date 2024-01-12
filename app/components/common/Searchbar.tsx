@@ -13,13 +13,13 @@ interface SearchbarProp {
 
 function Searchbar({ headerText, tagline, Icon }: SearchbarProp) {
     return (
-        <div className="flex lg:justify-between lg:items-center mobile:flex-col mb-4">
+        <div className="flex lg:justify-between lg:items-center flex-col lg:flex-row mb-4">
             <div className="flex flex-col justify-start items-start ">
                 <div className="flex justify-center items-center font-semibold text-2xl mb-1">
                     <h1 className="mr-1">{headerText}</h1>
                     {Icon && <Icon width={25} height={25} />}
                 </div>
-                <p className="text-dark-gray text-sm mobile:mb-3">{tagline}</p>
+                <p className="text-dark-gray text-sm mb-3 lg:mb-0">{tagline}</p>
             </div>
             <div className="flex justify-between items-center">
                 <SearchInput />

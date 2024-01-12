@@ -98,7 +98,7 @@ function Learning() {
                 <p className="font-semibold text-2xl ">
                     Your Assigned Learnings
                 </p>
-                <p className="border lg:py-2 px-2 w-[40%] lg:px-4 rounded-lg lg:w-fit font-semibold text-dark-gray ">
+                <p className="border lg:py-2 px-2 w-[40%] lg:px-4  cursor-pointerrounded-lg lg:w-fit font-semibold text-dark-gray ">
                     Show All
                 </p>
             </div>

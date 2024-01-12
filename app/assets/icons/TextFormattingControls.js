@@ -64,15 +64,15 @@ function TextFormattingControls({ ...props }) {
             <path
                 d="M142 51H158"
                 stroke="#131123"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
                 stroke-linejoin="round"
             />
             <path
                 d="M142 33V39C142 41.5264 143.171 43.7792 145 45.2454M158 33V39C158 43.4183 154.418 47 150 47"
                 stroke="#131123"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
                 stroke-linejoin="round"
             />
             <rect
@@ -113,8 +113,8 @@ function TextFormattingControls({ ...props }) {
             <path
                 d="M303 48H318M303 36H321H303ZM303 42H313H303Z"
                 stroke="#131123"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
             />
             <rect
                 x="-0.5"
@@ -128,8 +128,8 @@ function TextFormattingControls({ ...props }) {
             <path
                 d="M357 36H375M361 42H371M359 48H373"
                 stroke="#131123"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
             />
             <rect
                 x="-0.5"
@@ -143,8 +143,8 @@ function TextFormattingControls({ ...props }) {
             <path
                 d="M411 36H429M419 42H429M414 48H429"
                 stroke="#131123"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
             />
         </svg>
     );
