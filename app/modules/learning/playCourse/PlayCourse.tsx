@@ -54,9 +54,9 @@ function PlayCourse() {
     return (
         <section>
             <div className="flex flex-col justify-between items-center lg:flex-row space-y-2">
-                <div className="flex space-x-2 items-center">
+                <div className="flex lg:space-x-2 items-center w-full justify-start ">
                     <ArrowLeft />
-                    <h1 className="text-black font-semibold  text-lg">
+                    <h1 className="text-black font-semibold text-lg">
                         Artificial Intelligence - AI
                     </h1>
                 </div>

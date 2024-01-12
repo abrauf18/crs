@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import DocxIcon from '@/app/assets/icons/DocxIcon';
 import UploadResourceModal from '@/app/components/common/UploadResourceModal';
+import { usePathname, useRouter } from 'next/navigation';
 import AssignmentCard, { AssignmentInterface } from './AssignmentCard';
 
 const uploadedAssignment: AssignmentInterface[] = [
@@ -27,6 +30,9 @@ const referenceMaterial: AssignmentInterface[] = [
 ];
 
 function SubmitAssignment() {
+    const { push } = useRouter();
+    const pathname = usePathname();
+
     return (
         <section>
             <div className="flex justify-between flex-col lg:flex-row">
@@ -37,13 +43,14 @@ function SubmitAssignment() {
                 <div className="flex lg:space-x-2 flex-col lg:flex-row mobile:space-y-4 mobile:my-4 lg:my-0">
                     <button
                         type="button"
-                        className="p-4 border h-fit border-primary-color text-dark-gray rounded-xl font-semibold"
+                        className="py-3 px-4 border h-fit border-primary-color text-dark-gray rounded-xl font-semibold"
                     >
                         Upload File
                     </button>
                     <button
                         type="button"
-                        className="p-4 bg-primary-color text-white rounded-xl font-semibold"
+                        className="py-3 px-4 bg-primary-color text-white rounded-xl font-semibold"
+                        onClick={() => push(`${pathname}/create-assignment`)}
                     >
                         Create Assignment
                     </button>
@@ -68,15 +75,14 @@ function SubmitAssignment() {
                 />
             ))}
 
-            <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%]">
-                {/* <UploadAssignmentModal /> */}
+            {/* <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%]">
                 <UploadResourceModal
                     headerText="Upload Assignment"
                     buttonText="Submit Assignment"
                     Icon={DocxIcon}
                     description="Upload Your Assignment"
                 />
-            </div>
+            </div> */}
         </section>
     );
 }

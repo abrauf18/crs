@@ -13,8 +13,8 @@ interface SearchbarProp {
 
 function Searchbar({ headerText, tagline, Icon }: SearchbarProp) {
     return (
-        <div className="flex justify-between items-center mobile:flex-col mb-4">
-            <div className="flex flex-col justify-start items-start">
+        <div className="flex lg:justify-between lg:items-center mobile:flex-col mb-4">
+            <div className="flex flex-col justify-start items-start ">
                 <div className="flex justify-center items-center font-semibold text-2xl mb-1">
                     <h1 className="mr-1">{headerText}</h1>
                     {Icon && <Icon width={25} height={25} />}
