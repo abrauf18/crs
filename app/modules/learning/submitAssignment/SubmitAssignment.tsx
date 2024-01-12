@@ -1,5 +1,7 @@
 import React from 'react';
 import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
+import DocxIcon from '@/app/assets/icons/DocxIcon';
+import UploadResourceModal from '@/app/components/common/UploadResourceModal';
 import AssignmentCard, { AssignmentInterface } from './AssignmentCard';
 
 const uploadedAssignment: AssignmentInterface[] = [
@@ -65,6 +67,16 @@ function SubmitAssignment() {
                     isReferenceMaterial
                 />
             ))}
+
+            <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%]">
+                {/* <UploadAssignmentModal /> */}
+                <UploadResourceModal
+                    headerText="Upload Assignment"
+                    buttonText="Submit Assignment"
+                    Icon={DocxIcon}
+                    description="Upload Your Assignment"
+                />
+            </div>
         </section>
     );
 }

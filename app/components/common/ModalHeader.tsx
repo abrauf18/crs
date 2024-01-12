@@ -7,7 +7,10 @@ interface Header {
 }
 interface ModalHeaderProps {
     headerText: Header;
-    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
+    Icon?:
+        | React.ComponentType<React.SVGProps<SVGSVGElement>>
+        | LucideIcon
+        | undefined;
 }
 
 export function ModalHeader({

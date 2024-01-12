@@ -1,14 +1,19 @@
-import { Upload, FileVideo } from 'lucide-react';
+import { Upload, FileVideo, LucideIcon } from 'lucide-react';
 import React from 'react';
 
 interface FileUploadingProp {
     isCompleted?: boolean;
+    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
 }
-function FileUploading({ isCompleted }: FileUploadingProp) {
+function FileUploading({ isCompleted, Icon }: FileUploadingProp) {
     return (
-        <div className="p-3 border-2 rounded-lg flex justify-between mt-3">
+        <div className="p-3 border-2 rounded-lg flex space-x-4 mt-3 items-center">
             <div className="h-full">
-                <FileVideo size={60} fill="#54C3F4" color="#1976D2" />
+                {Icon ? (
+                    <Icon size={80} />
+                ) : (
+                    <FileVideo size={60} fill="#54C3F4" color="#1976D2" />
+                )}
             </div>
             <div className="flex flex-col gap-1">
                 <h3 className="md:text-md text-sm font-semibold">

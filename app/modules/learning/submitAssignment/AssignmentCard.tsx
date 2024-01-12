@@ -4,7 +4,6 @@ import React from 'react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import DocxIcon from '@/app/assets/icons/DocxIcon';
 import { Edit, Eye, Trash } from 'lucide-react';
-import UploadAssignmentModal from './UploadAssignmentModal';
 
 export interface AssignmentInterface {
     id: string;
@@ -38,9 +37,6 @@ function AssignmentCard({ card, isReferenceMaterial }: AssignmentCardProp) {
                         </div>
                     </>
                 )}
-            </div>
-            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
-                <UploadAssignmentModal />
             </div>
         </div>
     );

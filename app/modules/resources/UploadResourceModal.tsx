@@ -1,7 +1,5 @@
 import React from 'react';
-import { BookOpenCheck, Check } from 'lucide-react';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
-import StarsIcon from '@/app/assets/icons/StarsIcon';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import FileUploading from '@/app/components/common/FileUploading';

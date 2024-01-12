@@ -6,6 +6,7 @@ import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
 import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
+import UploadResourceModal from '@/app/components/common/UploadResourceModal';
 import VideoCard, { Card } from './VideoCard';
 import UploadModal from './UploadModal';
 import AddQuestions from './AddQuestions';
@@ -72,8 +73,14 @@ function Video() {
                 ))}
             </div>
             {/* Modals for uploading steps */}
+
             {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
-                <UploadModal />
+                <UploadResourceModal
+                    isDisplayHeaderIcon
+                    buttonText="Continue"
+                    headerText="Upload Video"
+                    description="let’s Upload Video For Your User"
+                />
             </div> */}
 
             {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
