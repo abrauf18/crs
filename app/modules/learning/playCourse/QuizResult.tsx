@@ -22,7 +22,7 @@ function QuizResult({ correctAnswer }: QuizResultProp) {
 
             <div className=" lg:mt-5 lg:w-[40%] flex flex-col items-center  ">
                 <div className=" m-auto">
-                    <p className="font-semibold mb-4 ">
+                    <p className="font-semibold my-5 lg:mt-0 lg:mb-4  ">
                         “Sed ut perspiciatis unde omnis iste natus error sit
                         voluptatem
                     </p>

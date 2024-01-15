@@ -10,7 +10,7 @@ function DocxIcon({ ...props }) {
             xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
-            <g clip-path="url(#clip0_307_8404)">
+            <g clipPath="url(#clip0_307_8404)">
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"

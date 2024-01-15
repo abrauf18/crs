@@ -11,11 +11,13 @@ interface ModalHeaderProps {
         | React.ComponentType<React.SVGProps<SVGSVGElement>>
         | LucideIcon
         | undefined;
+    onClose?: any;
 }
 
 export function ModalHeader({
     headerText,
     Icon,
+    onClose,
 }: ModalHeaderProps): JSX.Element {
     return (
         <div className="flex justify-between items-center">
@@ -28,8 +30,8 @@ export function ModalHeader({
                 </div>
                 <p className="text-sm text-dark-gray">{headerText.tagline}</p>
             </div>
-            <div className="rounded-full bg-white border p-1">
-                <X size={20} />
+            <div className="rounded-full bg-white border p-1 cursor-pointer">
+                <X size={20} onClick={onClose} />
             </div>
         </div>
     );

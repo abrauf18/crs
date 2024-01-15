@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
@@ -69,8 +69,16 @@ export const tickets: TicketsInterface[] = [
     },
 ];
 function SchoolDashboard() {
+    const [isDisplayTicketModal, setIsDisplayTicketModal] = useState(false);
+    const handleDisplayTicketModal = () => {
+        setIsDisplayTicketModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsDisplayTicketModal(false);
+    };
     return (
-        <section className="flex flex-col w-full scroll-smooth mobile:mt-12">
+        <section className="flex flex-col w-full scroll-smooth mt-4 lg:mt-12">
             <Searchbar
                 headerText="Hello John Doe!"
                 tagline="Here’s a Quick Overview"
@@ -107,11 +115,11 @@ function SchoolDashboard() {
                 <Image
                     src={schoolGraph as string}
                     alt="icon"
-                    className="w-full lg:h-full lg:object-contain h-48 object-cover"
+                    className="w-full lg:h-full lg:object-contain h-56 object-cover"
                 />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 mt-5">
-                <div className="border rounded-lg p-5">
+                <div className="border rounded-lg p-5 px-2 lg:px-5">
                     <div className="flex justify-between px-1 mb-2 items-center">
                         <h1 className="text-[20px] font-semibold">
                             Teacher&apos;s
@@ -122,12 +130,15 @@ function SchoolDashboard() {
                     </div>
                     <UsersTable users={usersData} fontSize="12" isDashboard />
                 </div>
-                <div className="border rounded-lg p-5">
+                <div className="border rounded-lg p-5 px-2 lg:px-5 mt-2 lg:mt-0">
                     <div className="flex justify-between px-1 mb-2 items-center">
                         <h1 className="text-[20px] font-semibold">
                             Recent Tickets
                         </h1>
-                        <div className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium">
+                        <div
+                            className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium"
+                            onClick={handleDisplayTicketModal}
+                        >
                             New Ticket
                         </div>
                     </div>
@@ -135,9 +146,11 @@ function SchoolDashboard() {
                 </div>
             </div>
 
-            <div className="absolute right-0 top-0 z-50 w-full lg:w-[25%]">
-                <SubmitTicketModal />
-            </div>
+            {isDisplayTicketModal && (
+                <div className="absolute right-0 top-0 z-50 w-full lg:w-[25%]">
+                    <SubmitTicketModal onClose={handleCloseModal} />
+                </div>
+            )}
         </section>
     );
 }

@@ -1,4 +1,3 @@
-import Searchbar from '@/app/components/common/Searchbar';
 import Card from '@/app/modules/profile/ProfileCard';
 import React from 'react';
 import ClassroomIcon from '@/app/assets/icons/ClassroomIcon';

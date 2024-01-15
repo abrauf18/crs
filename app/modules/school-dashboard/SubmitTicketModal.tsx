@@ -6,7 +6,7 @@ import UploadItem from '../../components/common/UploadItem';
 import FileUploading from '../../components/common/FileUploading';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
-function SubmitTicketModal() {
+function SubmitTicketModal({ onClose }: any) {
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
             <div>
@@ -32,7 +32,7 @@ function SubmitTicketModal() {
                         </div>
                     </div>
                     <div className="rounded-full bg-white border p-1">
-                        <X size={20} />
+                        <X size={20} onClick={onClose} />
                     </div>
                 </div>
 
@@ -40,17 +40,20 @@ function SubmitTicketModal() {
                     <label className="font-semibold" htmlFor="invite">
                         Complaint type
                     </label>
-                    <select name="invite" className="p-3 border rounded-xl">
+                    <select
+                        name="invite"
+                        className="p-3 border rounded-xl bg-gray-50"
+                    >
                         <option value="9th Grade - B">9th Grade - B</option>
                         <option value="9th Grade - A">9th Grade - A</option>
                     </select>
                 </div>
-                <div className="flex flex-col space-y-2 mt-7">
+                <div className="flex flex-col space-y-2 mt-7 ">
                     <label className="font-semibold" htmlFor="name">
                         Your Message
                     </label>
                     <textarea
-                        className="border h-[120px] rounded-lg p-3 resize-none"
+                        className="border h-[120px] rounded-lg p-3 resize-none bg-gray-50"
                         placeholder="Type your message"
                     />
                 </div>
