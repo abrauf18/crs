@@ -162,7 +162,7 @@ export default function SideBar() {
                 itemText: 'Teachers',
             },
             {
-                to: '#',
+                to: '/school/data-aggregation',
                 ItemIcon: DataAggregationIcon,
                 itemText: 'Data Aggregation',
             },

@@ -54,11 +54,12 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
             >
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px] text-dark-gray font-bold">
+                        <TableHead className=" text-dark-gray font-bold">
                             SNO.
                         </TableHead>
-                        <TableHead className=" text-dark-gray font-bold">
-                            Teacher Name
+                        <TableHead className="mr-6 text-dark-gray font-bold">
+                            <span className="hidden lg:block"> Teacher</span>
+                            Name
                         </TableHead>
                         <TableHead className="text-dark-gray font-bold">
                             Email
@@ -80,7 +81,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                                 </span>
                             </TableCell>
                             <TableCell className="">
-                                <span className="rounded flex gap-x-2 items-center">
+                                <span className="rounded flex gap-x-2 items-center mr-6">
                                     <Image
                                         src={Avatar}
                                         alt="crs logo"
@@ -120,7 +121,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                 </TableBody>
             </Table>
             {isEditTeacherModalVisible && (
-                <div className="absolute right-0 top-0 z-50 w-full lg:w-[25%]">
+                <div className="absolute right-0 top-0 z-50 w-full lg:w-[30%]">
                     <AssignClassModal onClose={handleCloseModal} />
                 </div>
             )}

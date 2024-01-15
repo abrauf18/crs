@@ -5,7 +5,7 @@ import { User } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
 import TabBar from '@/app/components/common/TabBar';
-import StatsTable, { StatsInterface } from './StatsTable';
+import StatsTable, { StatsInterface } from '@/app/components/common/StatsTable';
 import StudentsInfoTable, { StudentInfoInterface } from './StudentsInfoTable';
 import AddStudentModal from './AddStudentModal';
 

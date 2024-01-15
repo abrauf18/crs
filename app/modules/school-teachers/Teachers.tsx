@@ -79,12 +79,12 @@ function Teachers() {
         setAddTeacherModalVisible(false);
     };
     return (
-        <section>
+        <section className="px-2 lg:px-4">
             <Searchbar
                 headerText="All Teachers"
                 tagline="All Teacher in your School"
             />
-            <div className="border rounded-lg p-5 px-2 lg:px-5">
+            <div className="border rounded-lg p-5  lg:px-4 ">
                 <div className="flex justify-between px-1 mb-6 items-center">
                     <h1 className="text-[20px] font-semibold">All Teachers</h1>
                     <div

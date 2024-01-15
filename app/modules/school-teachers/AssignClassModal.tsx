@@ -19,26 +19,29 @@ function AssignClassModal({ onClose }: any) {
                     onClose={onClose}
                 />
 
-                <div className="md:flex justify-between items-center mobile:w-full mobile:mb-2">
-                    <div>
-                        <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
-                            <div className="border-2 border-light-gray rounded-full h-36 w-36 flex justify-center items-center">
-                                <div className="border-2 border-light-gray rounded-full h-32 p-2 w-32 flex justify-center items-center">
+                <div className="flex flex-col lg:flex-row lg:justify-between justify-center items-center mobile:w-full mobile:mb-2">
+                    <div className="lg:mb-0 mr-2">
+                        <div className="border border-orange-200 rounded-full w-fit flex items-center p-2">
+                            <div className="border border-orange-200 rounded-full w-fit flex items-center p-2">
+                                <div className="border border-primary-color rounded-full w-fit flex items-center p-2">
                                     <Image
                                         src={Avatar}
-                                        alt="profile Image"
-                                        className="w-44 h-44"
+                                        alt="Avatar"
+                                        className="rounded-full"
+                                        width={120}
+                                        height={120}
+                                        objectFit="contain"
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between items-center mobile:w-full">
+                    <div className="flex flex-col justify-between items-center lg:w-fit w-full lg:mr-8">
                         <button
                             type="button"
-                            className="text-dark-gray flex items-center space-x-2 font-medium mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg mt-2"
+                            className="text-dark-gray flex items-center space-x-2 font-medium lg:w-fit w-ful p-2 md:px-6 md:py-3 border rounded-lg mt-2"
                         >
-                            <Trash2 color="#E6500D" size={20} />{' '}
+                            <Trash2 color="#E6500D" size={20} />
                             <span>Remove</span>
                         </button>
                     </div>

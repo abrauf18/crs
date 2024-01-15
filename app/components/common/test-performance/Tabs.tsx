@@ -10,10 +10,10 @@ function Tabs() {
     };
 
     return (
-        <div className="flex space-x-1">
+        <div className="flex space-x-3">
             <button
                 type="button"
-                className={`py-2 px-4 border-2 rounded-lg ${
+                className={`py-2 px-4 border-2 rounded-xl ${
                     activeTab === 'test'
                         ? ' border-primary-color  bg-orange-50'
                         : ''
@@ -31,7 +31,7 @@ function Tabs() {
                 }`}
                 onClick={() => handleTabClick('quiz')}
             >
-                Quizzes
+                Quizes
             </button>
         </div>
     );
