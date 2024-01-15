@@ -76,11 +76,6 @@ const resources: FileInterface[] = [
 function Profile() {
     return (
         <div>
-            <Searchbar
-                headerText="My Profile"
-                tagline="Track Of Performance & Progress"
-            />
-
             <div className="grid lg:grid-cols-3 gap-5 my-5">
                 <Card
                     Icon={ClassroomIcon}

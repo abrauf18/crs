@@ -1,11 +1,13 @@
 'use client';
 
-import Searchbar from '@/app/components/common/Searchbar';
-import { ArrowLeft, BookmarkMinus, CalendarDays, MoveLeft } from 'lucide-react';
+import { ArrowLeft, CalendarDays } from 'lucide-react';
 import React from 'react';
-import PlayCourseImage from '@/app/assets/images/playCourseImage.svg';
-import Image from 'next/image';
 import LearningTable, { LearningInterface } from '../LearningTable';
+import OpenEndedQuestion from './OpenEndedQuestion';
+import OpenEndedResult from './OpenEndedResult';
+import Quiz from './Quiz';
+import QuizResult from './QuizResult';
+import Video from './Video';
 
 export const LearningRecord: LearningInterface[] = [
     {
@@ -50,46 +52,49 @@ export const LearningRecord: LearningInterface[] = [
     },
 ];
 
-function PlayCourse() {
+function PlayCourse({ params }: any) {
     return (
         <section>
-            <div className="flex flex-col justify-between items-center lg:flex-row space-y-2">
-                <div className="flex lg:space-x-2 items-center w-full justify-start ">
+            <div className="flex flex-col justify-between items-center lg:flex-row space-y-2  mt-8">
+                <div className="flex lg:space-x-2 items-center w-full justify-start mb-4 lg:mb-0 ">
                     <ArrowLeft />
                     <h1 className="text-black font-semibold text-lg">
                         Artificial Intelligence - AI
                     </h1>
                 </div>
-                <div className="bg-primary-color text-white w-full text-center mt-5 lg:mt-0 lg:w-fit px-4 py-3 rounded-xl cursor-pointer">
+                <div className="bg-primary-color text-white w-full text-center lg:w-fit px-4 py-3 rounded-xl cursor-pointer">
                     Resources
                 </div>
             </div>
 
-            {/* <div className="flex items-center mt-5  relative">
-                <Image
-                    src={PlayCourseImage as string}
-                    alt="play"
-                    // layout="fill"
-                    // objectFit="cover"
-                    className="w-full object-cover "
-                />
-                <div className="absolute top-1 right-1 lg:top-5 lg:right-5 z-10 border flex space-x-2 items-center rounded-xl p-2">
-                    <BookmarkMinus size={25} color="white" />
-                    <p className="text-white">Save Here</p>
-                </div>
-            </div> */}
+            {params.resourceType === 'video' && <Video />}
 
-            <div className="flex items-center mt-5 relative">
-                <Image
-                    src={PlayCourseImage as string}
-                    alt="play"
-                    className="w-full object-cover h-64 md:h-full"
-                />
-                <div className="absolute top-1 right-1 lg:top-5 lg:right-5 z-10 border flex space-x-2 items-center rounded-xl p-2">
-                    <BookmarkMinus size={25} color="white" />
-                    <p className="text-white">Save Here</p>
-                </div>
-            </div>
+            {params.resourceType === 'openEndedQuiz' && (
+                <>
+                    <OpenEndedQuestion
+                        questionNumber="2"
+                        questionText="What are the three most important characteristics of this function? How would you stack rank yoursel"
+                    />
+                    <OpenEndedResult isCorrect={false} />
+                    <OpenEndedResult isCorrect />
+                </>
+            )}
+
+            {params.resourceType === 'quiz' && (
+                <>
+                    <Quiz
+                        questionNumber="2"
+                        questionText="If you could visit one planet, which would it be?"
+                        options={[
+                            { id: 1, value: 'Option 01' },
+                            { id: 2, value: 'Option 02' },
+                            { id: 3, value: 'Option 03' },
+                            { id: 4, value: 'Option 04' },
+                        ]}
+                    />
+                    <QuizResult correctAnswer="If you could visit one planet, which would it be?" />
+                </>
+            )}
 
             <div className="border rounded-lg p-5 mt-5">
                 <div className="flex space-x-2 items-center mb-2">

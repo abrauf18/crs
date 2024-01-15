@@ -8,8 +8,6 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableHead,
-    TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
 import PlayIcon from '@/app/assets/icons/PlayIcon';
@@ -69,7 +67,13 @@ function LearningTable({
                                 {learning.isDone && (
                                     <Check color="green" className="mr-4" />
                                 )}
-                                <MovieIcon />
+                                {learning.resourceType === 'video' ? (
+                                    <MovieIcon />
+                                ) : (
+                                    <span className="text-3xl text-sky-400 font-semibold">
+                                        ?
+                                    </span>
+                                )}
                                 <span>{learning.name}</span>
                             </span>
                         </TableCell>

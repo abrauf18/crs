@@ -91,11 +91,12 @@ function StatsTable({ statsList, fontSize }: StatsTableProps) {
             </TableHeader>
             <TableBody>
                 {statsList.map((item, index) => (
-                    <TableRow className="border-none" key={item.id}>
-                        <TableCell className="text-dark-gray font-bold text-center">
+                    <TableRow className="border-none " key={item.id}>
+                        <TableCell className="text-dark-gray font-bold text-center ">
                             {item.name}
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+
+                        <TableCell className="text-dark-gray text-center ">
                             {item.first}%
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">

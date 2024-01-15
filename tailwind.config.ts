@@ -14,6 +14,7 @@ module.exports = {
                 'primary-color': '#F59A3B',
                 'dark-gray': '#85878D',
                 'light-orange': '#F59A3B1A',
+                'lighter-gray': '#FAFAFA',
             },
             container: {
                 center: true,

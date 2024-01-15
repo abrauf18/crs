@@ -12,8 +12,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import Image from 'next/image';
-import Avatar from '@/app/assets/images/UserImage.svg';
 
 export interface MyAnswers {
     question: string;
@@ -37,7 +35,7 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
 
     const handleClick = (id: number) => {
         console.log(id);
-        // push(`/students/${id}`);
+        push(`/student/profile/${id}`);
     };
 
     return (

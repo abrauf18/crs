@@ -5,7 +5,7 @@ import Avatar from '@/app/assets/images/UserImage.svg';
 
 function MyAnswersModal() {
     return (
-        <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg">
+        <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg items-center">
             <div className="h-[100%] overflow-y-auto w-full px-2">
                 <div className="flex justify-between items-center">
                     <div className="flex  my-7">
@@ -23,7 +23,7 @@ function MyAnswersModal() {
                     </div>
                 </div>
 
-                <div className="flex  items-center w-full">
+                <div className="flex   w-full">
                     <div className="p-4 border-2 border-green-600 bg-green-100 rounded-lg w-full">
                         <h1 className="font-medium">Right Answer&apos;s</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
