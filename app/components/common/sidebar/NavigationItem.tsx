@@ -22,7 +22,7 @@ function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
     return (
         <Link
             href={to}
-            className={`flex justify-start items-center w-48 p-3 mb-2 rounded-lg font-semibold text-sm ${
+            className={`flex justify-start items-center w-52 p-3 mb-2 rounded-lg font-semibold text-sm ${
                 isActive ? 'text-white bg-primary-color' : 'text-black'
             }`}
         >

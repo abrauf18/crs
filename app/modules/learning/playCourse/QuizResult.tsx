@@ -9,7 +9,7 @@ interface QuizResultProp {
 
 function QuizResult({ correctAnswer }: QuizResultProp) {
     return (
-        <div className="bg-lighter-gray  p-10 py-20 rounded-lg my-4  flex flex-col justify-center items-center">
+        <div className="bg-lighter-gray  px-7 py-10 lg:p-10 lg:py-20 rounded-lg my-4  flex flex-col justify-center items-center">
             <div>
                 <h1 className="font-semibold text-xl mb-2 flex items-center space-x-2 justify-center">
                     <span>Incorrect Answer</span>
@@ -24,7 +24,7 @@ function QuizResult({ correctAnswer }: QuizResultProp) {
                 <div className=" m-auto">
                     <p className="font-semibold mb-4 ">
                         “Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium doloremque laudantium, to”
+                        voluptatem
                     </p>
                     <label htmlFor="answer" className="w-full font-medium ">
                         Correct Answer

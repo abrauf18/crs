@@ -9,7 +9,7 @@ interface OpenEndedQuestionProp {
 }
 function OpenEndedResult({ isCorrect }: OpenEndedQuestionProp) {
     return (
-        <section className="bg-lighter-gray  p-10 pr-5 rounded-lg my-4 flex flex-col justify-between items-center">
+        <section className="bg-lighter-gray px-5 py-10 lg:p-10  rounded-lg my-4 flex flex-col justify-between items-center">
             <p className="flex space-x-2 font-semibold text-xl">
                 {isCorrect ? (
                     <>

@@ -58,7 +58,7 @@ function PlayCourse({ params }: any) {
             <div className="flex flex-col justify-between items-center lg:flex-row space-y-2  mt-8">
                 <div className="flex lg:space-x-2 items-center w-full justify-start mb-4 lg:mb-0 ">
                     <ArrowLeft />
-                    <h1 className="text-black font-semibold text-lg">
+                    <h1 className="text-black ml-2 font-semibold text-lg">
                         Artificial Intelligence - AI
                     </h1>
                 </div>
@@ -75,8 +75,8 @@ function PlayCourse({ params }: any) {
                         questionNumber="2"
                         questionText="What are the three most important characteristics of this function? How would you stack rank yoursel"
                     />
-                    <OpenEndedResult isCorrect={false} />
-                    <OpenEndedResult isCorrect />
+                    {/* <OpenEndedResult isCorrect={false} />
+                    <OpenEndedResult isCorrect /> */}
                 </>
             )}
 
@@ -92,7 +92,7 @@ function PlayCourse({ params }: any) {
                             { id: 4, value: 'Option 04' },
                         ]}
                     />
-                    <QuizResult correctAnswer="If you could visit one planet, which would it be?" />
+                    {/* <QuizResult correctAnswer="If you could visit one planet, which would it be?" /> */}
                 </>
             )}
 

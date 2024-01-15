@@ -12,7 +12,7 @@ function OpenEndedQuestion({
     questionText,
 }: OpenEndedQuestionProp) {
     return (
-        <div className="bg-lighter-gray  p-10 pr-5 rounded-lg my-4 ">
+        <div className="bg-lighter-gray  py-10 px-5 lg:p-10  rounded-lg my-4 ">
             <div className="flex flex-col justify-center items-center">
                 <h1 className="font-semibold text-xl mb-2">
                     Question {questionNumber}

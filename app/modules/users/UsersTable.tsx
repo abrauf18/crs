@@ -1,6 +1,6 @@
 import React from 'react';
 import EditIcon from '@/app/assets/icons/EditIcon';
-import { Trash } from 'lucide-react';
+import { Eye, Trash } from 'lucide-react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { Poppins } from 'next/font/google';
 import {
@@ -11,6 +11,8 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
+import Image from 'next/image';
+import Avatar from '@/app/assets/images/UserImage.svg';
 
 export interface User {
     id: number;
@@ -23,6 +25,7 @@ export interface User {
 interface UsersProp {
     users: User[];
     fontSize?: string;
+    isDashboard?: boolean;
 }
 
 const poppins = Poppins({
@@ -30,7 +33,7 @@ const poppins = Poppins({
     weight: ['100', '400', '700'],
 });
 
-function UsersTable({ users, fontSize }: UsersProp): JSX.Element {
+function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
     return (
         <Table
             className={`text-[${fontSize || '18'}px] mobile:text-[14px] ${
@@ -64,20 +67,49 @@ function UsersTable({ users, fontSize }: UsersProp): JSX.Element {
                                 {index + 1}
                             </span>
                         </TableCell>
-                        <TableCell className="">{user.name}</TableCell>
+                        <TableCell className="">
+                            <span className="rounded flex gap-x-2 items-center">
+                                <Image
+                                    src={Avatar}
+                                    alt="crs logo"
+                                    style={{
+                                        width: '25px',
+                                        height: '25px',
+                                        objectFit: 'fill',
+                                    }}
+                                />
+                                <span>{user.name}</span>
+                            </span>
+                        </TableCell>
                         <TableCell className="text-dark-gray">
                             {user.email}
                         </TableCell>
                         <TableCell className="text-dark-gray">
                             {user.role}
                         </TableCell>
-                        <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
-                            <div className="mr-2 rounded-md">
-                                <EditIcon width={28} height={28} />
-                            </div>
-                            <div className="bg-red-100 rounded-md p-1">
-                                <Trash color="#D34645" width={18} height={18} />
-                            </div>
+                        <TableCell className="flex justify-center items-center p-0 mt-6 ml-3 ">
+                            {isDashboard ? (
+                                <div className="mr-2 rounded-md flex justify-center w-full h-fulls">
+                                    <Eye
+                                        color="#F59A3B"
+                                        width={18}
+                                        height={18}
+                                    />
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="mr-2 rounded-md">
+                                        <EditIcon width={28} height={28} />
+                                    </div>
+                                    <div className="bg-red-100 rounded-md p-1">
+                                        <Trash
+                                            color="#D34645"
+                                            width={18}
+                                            height={18}
+                                        />
+                                    </div>
+                                </>
+                            )}
                         </TableCell>
                     </TableRow>
                 ))}

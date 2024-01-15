@@ -15,7 +15,7 @@ interface QuizProp {
 
 function Quiz({ questionNumber, questionText, options }: QuizProp) {
     return (
-        <div className="bg-lighter-gray p-10  rounded-lg my-4  flex flex-col justify-center items-center">
+        <div className="bg-lighter-gray px-5 py-10 lg:p-10  rounded-lg my-4  flex flex-col justify-center items-center">
             <div className="text-center">
                 <h1 className="font-semibold text-xl mb-2">
                     Question {questionNumber}

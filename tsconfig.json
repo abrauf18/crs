@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/assets/icons/CheckPointIcon.jsx", "app/assets/icons/CheckPointIcon.js", "app/modules/standard"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/assets/icons/CheckPointIcon.jsx", "app/assets/icons/CheckPointIcon.js", "app/modules/standard", "app/assets/icons/TeacherIcon.js"],
   "exclude": ["node_modules"]
 }

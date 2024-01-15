@@ -14,12 +14,15 @@ import {
     Lightbulb,
     Bookmark,
     GraduationCap,
+    CreditCard,
 } from 'lucide-react';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import QueryIcon from '@/app/assets/icons/QueryIcon';
 import StandardIcon from '@/app/assets/icons/StandardIcon';
+import DataAggregationIcon from '@/app/assets/icons/DataAggregationIcon';
 import TeacherStandardIcon from '@/app/assets/icons/TeacherStandardIcon';
+import TeacherIcon from '@/app/assets/icons/TeacherIcon';
 import NavigationItem, { NavigationItemProps } from './NavigationItem';
 
 export default function SideBar() {
@@ -146,11 +149,44 @@ export default function SideBar() {
                 itemText: 'Logout',
             },
         ];
+    } else if (path.startsWith('/school')) {
+        navItems = [
+            {
+                to: '/school',
+                ItemIcon: LayoutGrid,
+                itemText: 'Dashboard',
+            },
+            {
+                to: '/school/teachers',
+                ItemIcon: TeacherIcon,
+                itemText: 'Teachers',
+            },
+            {
+                to: '#',
+                ItemIcon: DataAggregationIcon,
+                itemText: 'Data Aggregation',
+            },
+            {
+                to: '#',
+                ItemIcon: CreditCard,
+                itemText: 'Payments',
+            },
+            {
+                to: '#',
+                ItemIcon: Settings,
+                itemText: 'Settings',
+            },
+            {
+                to: '#',
+                ItemIcon: LogOut,
+                itemText: 'Logout',
+            },
+        ];
     }
 
     return (
         <section className="bg-light-gray lg:p-5 lg:fixed">
-            <ul className="flex flex-col w-full items-center justify-center pt-5 h-screen hidden lg:block">
+            <ul className="lg:flex flex-col w-full items-center justify-center hidden  pt-5 h-screen">
                 <Image
                     src={crsLogo as string}
                     alt="crs logo"
