@@ -167,7 +167,7 @@ export default function SideBar() {
                 itemText: 'Data Aggregation',
             },
             {
-                to: '#',
+                to: '/school/payment',
                 ItemIcon: CreditCard,
                 itemText: 'Payments',
             },
