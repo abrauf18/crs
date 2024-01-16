@@ -1,7 +1,9 @@
 import StatsTable, { StatsInterface } from '@/app/components/common/StatsTable';
 import Tabs from '@/app/components/common/test-performance/Tabs';
+
 import { LucideMoveUpRight } from 'lucide-react';
 import React from 'react';
+import TestDetailTable, { TestDetailInterface } from './TestDetailTable';
 
 function TestPerformance() {
     const StatsList: StatsInterface[] = [
@@ -76,9 +78,61 @@ function TestPerformance() {
             fifthNum: 30,
         },
     ];
+
+    const TestRecord: TestDetailInterface[] = [
+        {
+            id: 1,
+            question:
+                'What did say as a kid when asked: What do you want to be when you grow up?',
+            rightAnswers: '20',
+            wrongAnswers: '25',
+        },
+        {
+            id: 2,
+            question:
+                'What did say as a kid when asked: What do you want to be when you grow up?',
+            rightAnswers: '20',
+            wrongAnswers: '25',
+        },
+        {
+            id: 3,
+            question:
+                'What did say as a kid when asked: What do you want to be when you grow up?',
+            rightAnswers: '20',
+            wrongAnswers: '25',
+        },
+        {
+            id: 4,
+            question:
+                'What did say as a kid when asked: What do you want to be when you grow up?',
+            rightAnswers: '20',
+            wrongAnswers: '25',
+        },
+        {
+            id: 5,
+            question:
+                'What did say as a kid when asked: What do you want to be when you grow up?',
+            rightAnswers: '20',
+            wrongAnswers: '25',
+        },
+        {
+            id: 6,
+            question:
+                'What did say as a kid when asked: What do you want to be when you grow up?',
+            rightAnswers: '20',
+            wrongAnswers: '25',
+        },
+        {
+            id: 7,
+            question:
+                'What did say as a kid when asked: What do you want to be when you grow up?',
+            rightAnswers: '20',
+            wrongAnswers: '25',
+        },
+    ];
     return (
         <section>
-            <div className=" mt-10">
+            <div className="border px-2 py-5 lg:py-5 lg:px-5 rounded-lg mt-10">
                 <div className="flex flex-col mb-4 lg:flex-row justify-between items-center">
                     <h1 className="text-lg font-semibold mb-4 lg:mb-0">
                         Test Performance - HealthTech
@@ -95,8 +149,12 @@ function TestPerformance() {
                     </div>
                 </div>
                 <Tabs />
-                <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
+                <div className="rounded-xl border mt-5 py-3 md:px-6 mobile:px-3">
                     <StatsTable statsList={StatsList} />
+                </div>
+
+                <div className="rounded-lg  mt-5 py-3 md:px-6 mobile:px-3">
+                    <TestDetailTable test={TestRecord} />
                 </div>
             </div>
         </section>

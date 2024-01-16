@@ -66,14 +66,14 @@ function TextFormattingControls({ ...props }) {
                 stroke="#131123"
                 strokeWidth="2"
                 strokeLinecap="round"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M142 33V39C142 41.5264 143.171 43.7792 145 45.2454M158 33V39C158 43.4183 154.418 47 150 47"
                 stroke="#131123"
                 strokeWidth="2"
                 strokeLinecap="round"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
             />
             <rect
                 x="-0.5"

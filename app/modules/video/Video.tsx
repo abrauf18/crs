@@ -67,7 +67,7 @@ function Video() {
     return (
         <>
             <Header text="200 Videos In Total" buttonText="Upload Video" />
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
+            <div className="grid lg:grid-cols-3  sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
                 {cards.map((card) => (
                     <VideoCard card={card} key={card.Questions} />
                 ))}

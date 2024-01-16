@@ -24,14 +24,14 @@ function SlideShowIcon({ ...props }) {
                     stroke="#7AA43E"
                     stroke-width="1.5"
                     strokeLinecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                 />
                 <path
                     d="M21.5731 18.1061C21.5731 17.3771 20.9817 16.7857 20.2527 16.7857H14.0504C13.1471 16.7857 12.2808 17.1445 11.6421 17.7833C11.0034 18.422 10.6445 19.2883 10.6445 20.1916V23.2143H12.1038L12.5911 28.3571H15.5097L16.6308 19.4278H20.2527C20.9817 19.4278 21.5731 18.8364 21.5731 18.1061Z"
                     stroke="#7AA43E"
                     stroke-width="1.5"
                     strokeLinecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                 />
             </g>
             <defs>

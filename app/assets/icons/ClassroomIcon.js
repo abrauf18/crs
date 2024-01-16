@@ -16,14 +16,14 @@ function ClassroomIcon({ ...props }) {
                     stroke="#7AA43E"
                     strokeWidth="1.5"
                     strokeLinecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                 />
                 <path
                     d="M12.0204 7.10656C12.0204 6.37756 11.4289 5.78613 10.6999 5.78613H4.49765C3.59436 5.78613 2.72807 6.14496 2.08935 6.78369C1.45063 7.42241 1.0918 8.2887 1.0918 9.19199V12.2147H2.55108L3.03837 17.3576H5.95694L7.07808 8.42828H10.6999C11.4289 8.42828 12.0204 7.83685 12.0204 7.10656Z"
                     stroke="#7AA43E"
                     strokeWidth="1.5"
                     strokeLinecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                 />
             </g>
             <defs>
