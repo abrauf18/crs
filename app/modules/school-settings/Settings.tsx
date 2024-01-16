@@ -10,7 +10,7 @@ function Settings() {
             <Searchbar
                 headerText="Settings"
                 tagline="Manage Your Profile"
-                Icon={SettingsIcon}
+                // Icon={SettingsIcon}
             />
             <div className="flex flex-col space-y-8  lg:flex-row lg:justify-between w-full lg:space-x-8 lg:mt-5 ">
                 <Profile isSchoolProfile />
