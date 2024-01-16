@@ -3,15 +3,26 @@ import Image from 'next/image';
 import React from 'react';
 import Avatar from '@/app/assets/images/UserImage.svg';
 
-function Profile() {
+interface MyProfileProps {
+    isSchoolProfile?: boolean;
+}
+function Profile({ isSchoolProfile }: MyProfileProps) {
     return (
-        <section className="bg-white basis-1/2 flex h-full w-full mobile:mt-24">
-            <div className="flex flex-col mobile:p-8 mobile:justify-center mobile:items-center mobile:h-screen m-auto">
+        <section
+            className={`bg-white  flex h-full w-full mt-8 lg:mt-0 ${
+                !isSchoolProfile && 'basis-1/2'
+            }`}
+        >
+            <div
+                className={`flex flex-col  mobile:items-center  ${
+                    !isSchoolProfile ? 'm-auto mobile:h-screen' : 'w-full'
+                }`}
+            >
                 <h1 className="text-2xl font-semibold mb-2 mobile:mb-4">
                     My profile
                 </h1>
                 <div className="md:flex justify-between items-center mobile:w-full mobile:mb-2">
-                    <div>
+                    <div className="flex justify-center">
                         <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
                             <div className="border-2 border-light-gray rounded-full h-36 w-36 flex justify-center items-center">
                                 <div className="border-2 border-light-gray rounded-full h-32 p-2 w-32 flex justify-center items-center">
@@ -24,7 +35,7 @@ function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between items-center mobile:w-full">
+                    <div className="flex flex-col justify-between items-center mobile:w-full mb-4 lg:mb-0">
                         <button
                             type="button"
                             className="text-white bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-3 border rounded-lg mt-2"
@@ -69,20 +80,22 @@ function Profile() {
                         placeholder="Password"
                     />
                 </div>
-                <div className="md:flex md:justify-between w-full mt-2 gap-1">
-                    <button
-                        type="button"
-                        className="text-dark-gray font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg"
-                    >
-                        Discard Changes
-                    </button>
-                    <button
-                        type="button"
-                        className="text-white bg-primary-color font-semibold mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg"
-                    >
-                        Save Changes
-                    </button>
-                </div>
+                {!isSchoolProfile && (
+                    <div className="md:flex md:justify-between w-full mt-2 gap-1">
+                        <button
+                            type="button"
+                            className="text-dark-gray font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg"
+                        >
+                            Discard Changes
+                        </button>
+                        <button
+                            type="button"
+                            className="text-white bg-primary-color font-semibold mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                )}
             </div>
         </section>
     );

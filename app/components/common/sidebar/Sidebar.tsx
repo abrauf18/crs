@@ -172,7 +172,7 @@ export default function SideBar() {
                 itemText: 'Payments',
             },
             {
-                to: '#',
+                to: '/school/setting',
                 ItemIcon: Settings,
                 itemText: 'Settings',
             },
