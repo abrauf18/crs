@@ -12,8 +12,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import Image from 'next/image';
-import Avatar from '@/app/assets/images/UserImage.svg';
 import EditIcon from '@/app/assets/icons/EditIcon';
 
 export interface TopicsInterface {

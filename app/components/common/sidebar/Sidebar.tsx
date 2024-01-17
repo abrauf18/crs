@@ -185,7 +185,7 @@ export default function SideBar() {
     }
 
     return (
-        <section className="bg-light-gray lg:p-5 lg:fixed">
+        <section className="bg-light-gray lg:p-3 lg:fixed">
             <ul className="lg:flex flex-col w-full items-center justify-center hidden  pt-5 h-screen">
                 <Image
                     src={crsLogo as string}

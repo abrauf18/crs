@@ -2,9 +2,9 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
-import Header from '@/app/components/common/Header';
 import CardContent from '@/app/components/common/CardContent';
 import { CalendarDays, File, PlayIcon } from 'lucide-react';
+import Filters from '@/app/components/common/Filters';
 
 export const standards = [
     {
@@ -107,9 +107,9 @@ function Standard() {
     }
     return (
         <>
-            <Header
+            <Filters
                 text="40 Standards In Total"
-                buttonText="Create New"
+                secondButtonText="Create New"
                 handleClick={() => handleClick()}
             />
             <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">

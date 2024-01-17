@@ -1,86 +1,67 @@
-// import React from 'react';
-// import { Filter, ChevronDown, LucideIcon } from 'lucide-react';
-
-// interface FiltersProps {
-//     text: string;
-//     filterIcon?:
-//         | React.ComponentType<React.SVGProps<SVGSVGElement>>
-//         | LucideIcon;
-
-//     firstBtnText?: string;
-//     secondButonText?: string;
-// }
-
-// function Filters({
-//     text,
-//     filterIcon,
-//     firstBtnText,
-//     secondButonText,
-// }: FiltersProps) {
-//     return (
-//         <div className="flex mobile:flex-col justify-between items-center my-3">
-//             <h3 className="text-[20px] font-semibold mobile:mb-2">{text}</h3>
-//             <div className="flex">
-//                 <div className=" cursor-pointer mr-2 px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-//                     {filterIcon ? (
-//                         <filterIcon width={15} height={15} />
-//                     ) : (
-//                         <Filter width={15} height={15} />
-//                     )}
-//                     <button className="ml-2" type="button">
-//                         Filters
-//                     </button>
-//                 </div>
-//                 <div className="px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-//                     <button className="mr-2" type="button">
-//                         This year
-//                     </button>
-//                     <ChevronDown width={15} height={15} />
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-// export default Filters;
-
 import React from 'react';
-import { Filter, ChevronDown, LucideIcon } from 'lucide-react';
+import { Filter, ChevronDown, LucideIcon, Upload } from 'lucide-react';
 
-interface FiltersProps {
+interface FiltersInterface {
     text: string;
-    filterIcon?:
-        | React.ComponentType<React.SVGProps<SVGSVGElement>>
-        | LucideIcon;
-
-    firstBtnText?: string;
     secondButtonText?: string;
+    handleClick?: () => void;
 }
 
 function Filters({
     text,
-    filterIcon: FilterIcon,
-    firstBtnText,
     secondButtonText,
-}: FiltersProps) {
+    handleClick,
+}: FiltersInterface): JSX.Element {
+    const makeFirstNumberBold = (inputText: string) => {
+        const match = inputText.match(/^\d+/);
+        if (match) {
+            const number = match[0];
+            return (
+                <span>
+                    <strong className="text-xl font-bold text-black">
+                        {number}
+                    </strong>
+                    {inputText.substring(number.length)}
+                </span>
+            );
+        }
+        return inputText;
+    };
+
+    const renderHeaderText = () => (
+        <h3 className="text-xl font-semibold text-dark-gray mobile:mb-2">
+            {makeFirstNumberBold(text)}
+        </h3>
+    );
+
     return (
         <div className="flex mobile:flex-col justify-between items-center my-3">
-            <h3 className="text-[20px] font-semibold mobile:mb-2">{text}</h3>
+            {renderHeaderText()}
             <div className="flex">
                 <div className="cursor-pointer mr-2 px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-                    {FilterIcon ? (
-                        <FilterIcon width={15} height={15} />
-                    ) : (
-                        <Filter width={15} height={15} />
-                    )}
+                    <Filter width={15} height={15} />
                     <button className="ml-2" type="button">
-                        {firstBtnText || 'Filters'}
+                        Filters
                     </button>
                 </div>
-                <div className="px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-                    <button className="mr-2" type="button">
+                <div
+                    onClick={handleClick}
+                    className={`px-4 py-3 border text-sm rounded-lg flex items-center justify-between ${
+                        secondButtonText?.startsWith('Create New') ||
+                        secondButtonText?.startsWith('Upload')
+                            ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition
+                            : 'text-dark-gray'
+                    }`}
+                >
+                    <button className="mr-1" type="button">
                         {secondButtonText || 'This year'}
                     </button>
-                    <ChevronDown width={15} height={15} />
+                    {secondButtonText?.startsWith('Upload') ||
+                    secondButtonText?.startsWith('Create New') ? (
+                        <Upload width={15} height={15} />
+                    ) : (
+                        <ChevronDown width={15} height={15} />
+                    )}
                 </div>
             </div>
         </div>

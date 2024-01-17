@@ -61,8 +61,6 @@ function CoursePerformance() {
         <section className="mt-5">
             <Filters
                 text="Course Performance - Coronavirus"
-                filterIcon={Bars}
-                firstBtnText="Filter By"
                 secondButtonText="Student"
             />
             <Tabs />

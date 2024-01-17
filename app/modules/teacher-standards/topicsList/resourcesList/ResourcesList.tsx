@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import Searchbar from '@/app/components/common/Searchbar';
 import TabBar from '@/app/components/common/TabBar';
-import Bars from '@/app/assets/icons/Bars';
+import Filters from '@/app/components/common/Filters';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import videoImage2 from '@/app/assets/images/videoImages/videoImage2.svg';
 import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
@@ -115,29 +114,12 @@ function ResourcesList() {
 
     return (
         <section>
-            <Searchbar
-                headerText="All Resources"
-                tagline="Here’s all Resources"
-            />
             <TabBar
                 options={tabOptions}
                 initialSelectedTab="all"
                 onSelectFilter={onSelectFilter}
             />
-
-            <div className="flex justify-between items-center">
-                <h1 className="font-semibold text-lg">
-                    SB1 Cell Structure - Function
-                </h1>
-                <div className=" cursor-pointer mr-2 px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-                    {/* <Filter width={15} height={15} /> */}
-                    <Bars />
-                    <button className="ml-2" type="button">
-                        Filters
-                    </button>
-                </div>
-            </div>
-
+            <Filters text="SB1 Cell Structure - Functtion" />
             <div className="mt-8 ">
                 <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
                     {filteredResources.map((card) => (
@@ -145,9 +127,9 @@ function ResourcesList() {
                     ))}
                 </div>
             </div>
-            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <AddResourceModal />
-            </div>
+            </div> */}
         </section>
     );
 }

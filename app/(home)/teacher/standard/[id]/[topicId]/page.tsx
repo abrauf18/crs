@@ -1,4 +1,4 @@
-import ResourcesList from '@/app/modules/teacher-standards/topicsList/resourcesList/resourcesList';
+import ResourcesList from '@/app/modules/teacher-standards/topicsList/resourcesList/ResourcesList';
 import React from 'react';
 
 function ResourcesListPage() {

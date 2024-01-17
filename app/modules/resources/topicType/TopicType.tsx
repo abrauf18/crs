@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import Header from '@/app/components/common/Header';
+import React from 'react';
+import Filters from '@/app/components/common/Filters';
 import Card from '@/app/components/common/Card';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import { HelpCircle, TicketIcon } from 'lucide-react';
@@ -15,7 +15,10 @@ function TopicPage() {
 
     return (
         <section>
-            <Header text="500 Resources In Total" buttonText="Upload Video" />
+            <Filters
+                text="500 Resources In Total"
+                secondButtonText="Upload Video"
+            />
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card Icon={VideoIcon} cardText="Total Video's" count="20K" />
                 <Card Icon={SlideShowIcon} cardText="Slideshow" count={200} />

@@ -107,8 +107,6 @@ function SchoolDashboard() {
             </div>
             <Filters
                 text="Overall Performance"
-                filterIcon={Bars}
-                firstBtnText="All"
                 secondButtonText="Average Time Spent"
             />
             <div className="w-auto ">

@@ -17,7 +17,7 @@ function Searchbar({ headerText, tagline, Icon }: SearchbarProp) {
             <div className="flex flex-col justify-start items-start ">
                 <div className="flex justify-center items-center font-semibold text-2xl mb-1">
                     <h1 className="mr-1">{headerText}</h1>
-                    {Icon && <Icon width={25} height={25} />}
+                    {Icon && <Icon width={25} height={25} color="black" />}
                 </div>
                 <p className="text-dark-gray text-sm mb-3 lg:mb-0">{tagline}</p>
             </div>

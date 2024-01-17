@@ -45,10 +45,6 @@ function TopicsList() {
     return (
         <div>
             <div className="w-full ">
-                <Searchbar
-                    headerText="Standard"
-                    tagline="Here’s All Topic assigned Resources"
-                />
                 <div className="border rounded-lg p-5 mt-10">
                     <Filters text="All topic's" />
                     <TopicsTable topics={topicsList} />
