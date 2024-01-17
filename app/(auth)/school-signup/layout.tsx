@@ -44,12 +44,12 @@ export default function DashboardLayout({
             'Your Teacher invited you to Class, Enter details to Create your Account!',
     };
     return (
-        <section className="flex lg:flex-row flex-col justify-between  h-screen">
+        <section className="flex lg:flex-row flex-col justify-between  h-full ">
             {/* <LeftSide images={images} metaText={metaText} /> */}
             <div className="w-full">
                 <LeftSide images={images} metaText={metaText} />
             </div>
-            <div className="w-full  flex flex-col justify-center items-center ">
+            <div className="w-full  flex flex-col  items-center mt-5 ">
                 {children}
             </div>
         </section>

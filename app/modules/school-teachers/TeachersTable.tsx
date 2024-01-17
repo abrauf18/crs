@@ -57,9 +57,9 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                         <TableHead className=" text-dark-gray font-bold">
                             SNO.
                         </TableHead>
-                        <TableHead className="mr-6 text-dark-gray font-bold">
+                        <TableHead className="w-[200px] flex space-x-1 text-dark-gray items-center font-bold">
                             <span className="hidden lg:block"> Teacher</span>
-                            Name
+                            <span>Name</span>
                         </TableHead>
                         <TableHead className="text-dark-gray font-bold">
                             Email

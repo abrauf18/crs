@@ -1,22 +1,29 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import SyncIcon from '@/app/assets/icons/SyncIcon';
+import AppDropDown from '@/app/components/common/AppDropDown';
+import { Label } from '@/app/components/ui/label';
 import UploadItem from '../../components/common/UploadItem';
 import FileUploading from '../../components/common/FileUploading';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 function SubmitTicketModal({ onClose }: any) {
+    const [selectedOption, setSelectedOption] = useState('9th Grade - B');
+
+    const handleSelectChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        setSelectedOption(event.target.value);
+    };
+
+    const gradeOptions = ['9th Grade - B', '9th Grade - A'];
+
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
             <div>
-                {/* <ModalHeader
-                    headerText={{
-                        heading: 'Add Student',
-                        tagline: 'Invite via Email',
-                    }}
-                    Icon={StudentIcon}
-                /> */}
                 <div className="flex justify-between items-center">
                     <div className="flex  my-7">
                         <div className="bg-green-100 px-3 h-fit py-3 rounded-lg">
@@ -37,23 +44,25 @@ function SubmitTicketModal({ onClose }: any) {
                 </div>
 
                 <div className="flex flex-col space-y-2">
-                    <label className="font-semibold" htmlFor="invite">
+                    <Label className="font-semibold" htmlFor="invite">
                         Complaint type
-                    </label>
-                    <select
+                    </Label>
+
+                    <AppDropDown
                         name="invite"
-                        className="p-3 border rounded-xl bg-gray-50"
-                    >
-                        <option value="9th Grade - B">9th Grade - B</option>
-                        <option value="9th Grade - A">9th Grade - A</option>
-                    </select>
+                        options={gradeOptions}
+                        value={selectedOption}
+                        onChange={handleSelectChange}
+                    />
                 </div>
                 <div className="flex flex-col space-y-2 mt-7 ">
-                    <label className="font-semibold" htmlFor="name">
+                    <Label className="font-semibold" htmlFor="name">
                         Your Message
-                    </label>
+                    </Label>
                     <textarea
-                        className="border h-[120px] rounded-lg p-3 resize-none bg-gray-50"
+                        className="border h-[120px] rounded-lg p-3 resize-none 
+                        bg-slate-100 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-medium
+                        "
                         placeholder="Type your message"
                     />
                 </div>

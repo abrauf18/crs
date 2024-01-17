@@ -3,6 +3,8 @@ import { X } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
 import ClassroomIcon from '@/app/assets/icons/ClassroomIcon';
+import { Label } from '@/app/components/ui/label';
+import AppInput from '@/app/components/common/AppInput';
 
 function AddTeacherModal({ onClose }: any) {
     return (
@@ -28,23 +30,18 @@ function AddTeacherModal({ onClose }: any) {
                 </div>
 
                 <div className="flex flex-col space-y-2 mt-2">
-                    <label className="font-semibold" htmlFor="invite">
+                    <Label className="font-semibold" htmlFor="invite">
                         Teacher Name
-                    </label>
-                    <input
-                        placeholder="Enter name"
-                        className="bg-gray-50 rounded-xl border py-3 px-4"
-                    />
+                    </Label>
+
+                    <AppInput placeholder="Enter name" />
                 </div>
-                <div className="flex flex-col space-y-2 mt-4">
-                    <label className="font-semibold" htmlFor="invite">
+                <div className="flex flex-col space-y-2 mt-5">
+                    <Label className="font-semibold" htmlFor="invite">
                         Teacher Email Address
-                    </label>
-                    <input
-                        type="email"
-                        placeholder="Enter email"
-                        className="bg-gray-50 rounded-xl border py-3 px-4"
-                    />
+                    </Label>
+
+                    <AppInput type="email" placeholder="Enter email" />
                 </div>
             </div>
             <ModalFooter text="Invite" />

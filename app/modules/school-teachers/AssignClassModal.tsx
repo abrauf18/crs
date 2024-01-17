@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { Trash, Trash2, X } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
@@ -6,8 +8,19 @@ import Avatar from '@/app/assets/images/UserImage.svg';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
 
 import Image from 'next/image';
+import AppInput from '@/app/components/common/AppInput';
+import AppDropDown from '@/app/components/common/AppDropDown';
 
 function AssignClassModal({ onClose }: any) {
+    const [selectedOption, setSelectedOption] = useState('9th Grade - B');
+
+    const handleSelectChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        setSelectedOption(event.target.value);
+    };
+
+    const gradeOptions = ['9th Grade - B', '9th Grade - A'];
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
             <div className="h-[90%] overflow-y-auto px-2">
@@ -64,66 +77,45 @@ function AssignClassModal({ onClose }: any) {
                     >
                         Add More
                     </label>
-
-                    {/* <select name="invite" className="p-3 border rounded-xl">
-                        <option value="9th Grade - B">9th Grade - B</option>
-                        <option value="9th Grade - A">9th Grade - A</option>
-                    </select> */}
                 </div>
                 <div className="flex flex-col space-y-4 mt-4 ">
-                    <select
+                    <AppDropDown
                         name="invite"
-                        className="p-3 border rounded-xl bg-gray-50 font-medium"
-                    >
-                        <option value="9th Grade - B">9th Grade - B</option>
-                        <option value="9th Grade - A">9th Grade - A</option>
-                    </select>
-                    <input
-                        placeholder="Subject"
-                        className="bg-gray-50 rounded-xl border py-3 px-4"
+                        options={gradeOptions}
+                        value={selectedOption}
+                        onChange={handleSelectChange}
                     />
+                    <AppInput placeholder="Subject" />
                 </div>
                 <hr className="my-5" />
                 <div className="flex flex-col space-y-4 mt-4 ">
-                    <select
+                    <AppDropDown
                         name="invite"
-                        className="p-3 border rounded-xl bg-gray-50 font-medium"
-                    >
-                        <option value="9th Grade - B">9th Grade - B</option>
-                        <option value="9th Grade - A">9th Grade - A</option>
-                    </select>
-                    <input
-                        placeholder="Subject"
-                        className="bg-gray-50 rounded-xl border py-3 px-4"
+                        options={gradeOptions}
+                        value={selectedOption}
+                        onChange={handleSelectChange}
                     />
+                    <AppInput placeholder="Subject" />
                 </div>
                 <hr className="my-5" />
                 <div className="flex flex-col space-y-4 mt-4 ">
-                    <select
+                    <AppDropDown
                         name="invite"
-                        className="p-3 border rounded-xl bg-gray-50 font-medium"
-                    >
-                        <option value="9th Grade - B">9th Grade - B</option>
-                        <option value="9th Grade - A">9th Grade - A</option>
-                    </select>
-                    <input
-                        placeholder="Subject"
-                        className="bg-gray-50 rounded-xl border py-3 px-4"
+                        options={gradeOptions}
+                        value={selectedOption}
+                        onChange={handleSelectChange}
                     />
+                    <AppInput placeholder="Subject" />
                 </div>
                 <hr className="my-5" />
                 <div className="flex flex-col space-y-4 mt-4 pb-4 ">
-                    <select
+                    <AppDropDown
                         name="invite"
-                        className="p-3 border rounded-xl bg-gray-50 font-medium"
-                    >
-                        <option value="9th Grade - B">9th Grade - B</option>
-                        <option value="9th Grade - A">9th Grade - A</option>
-                    </select>
-                    <input
-                        placeholder="Subject"
-                        className="bg-gray-50 rounded-xl border py-3 px-4"
+                        options={gradeOptions}
+                        value={selectedOption}
+                        onChange={handleSelectChange}
                     />
+                    <AppInput placeholder="Subject" />
                 </div>
             </div>
             {/* <ModalFooter text="Invite" /> */}

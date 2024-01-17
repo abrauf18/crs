@@ -43,8 +43,8 @@ function LeftSide({ images, metaText }: LeftSideProp) {
     }, [currentIndex]);
 
     return (
-        <div className="bg-gray-100 h-full p-4 lg:p-10 flex flex-col justify-center items-center">
-            <div className="max-w-[1400px] h-[480px] lg:h-[780px] w-full m-auto py-32 px-4 relative group">
+        <div className="bg-gray-100  lg:p-10 flex flex-col justify-center items-center h-full">
+            <div className="max-w-[1400px] h-[480px] lg:h-[480px] w-full  relative group">
                 <div
                     style={{
                         backgroundImage: `url(${images[currentIndex].src})`,
@@ -57,33 +57,30 @@ function LeftSide({ images, metaText }: LeftSideProp) {
                 <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
                     <ArrowRightCircle onClick={nextSlide} size={30} />
                 </div>
-
-                <div className="flex justify-center items-center flex-col">
-                    <h1 className="flex space-x-3 mt-5">
-                        <span className="font-semibold text-xl">
-                            {metaText.title}
-                        </span>
-                        <WavingHandIcon />
-                    </h1>
-                    <p className="font-medium text-dark-gray w-[60%] text-center">
-                        {metaText.description}
-                    </p>
-                </div>
-                <div className="flex top-4 justify-center py-2">
-                    {images.map((image, slideIndex) => (
-                        <div
-                            key={image}
-                            onClick={() => goToSlide(slideIndex)}
-                            className={` cursor-pointer ${
-                                currentIndex === slideIndex
-                                    ? 'text-orange-500'
-                                    : ''
-                            }`}
-                        >
-                            <Dot size={30} />
-                        </div>
-                    ))}
-                </div>
+            </div>
+            <div className="flex justify-center items-center flex-col ">
+                <h1 className="flex space-x-3 ">
+                    <span className="font-semibold text-xl">
+                        {metaText.title}
+                    </span>
+                    <WavingHandIcon />
+                </h1>
+                <p className="font-medium text-dark-gray w-[60%] text-center">
+                    {metaText.description}
+                </p>
+            </div>
+            <div className="flex top-4 justify-center py-2 mt-5 ">
+                {images.map((image, slideIndex) => (
+                    <div
+                        key={image}
+                        onClick={() => goToSlide(slideIndex)}
+                        className={` cursor-pointer  ${
+                            currentIndex === slideIndex ? 'text-orange-500' : ''
+                        }`}
+                    >
+                        <Dot size={30} />
+                    </div>
+                ))}
             </div>
         </div>
     );

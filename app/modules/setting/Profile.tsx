@@ -2,6 +2,7 @@ import { Label } from '@/app/components/ui/label';
 import Image from 'next/image';
 import React from 'react';
 import Avatar from '@/app/assets/images/UserImage.svg';
+import AppInput from '@/app/components/common/AppInput';
 
 interface MyProfileProps {
     isSchoolProfile?: boolean;
@@ -52,29 +53,18 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 </div>
                 <div className="mb-2 w-full">
                     <Label htmlFor="email">Username</Label>
-                    <input
-                        className="mb-5 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                        type="email"
-                        id="email"
-                        placeholder="username"
-                    />
+
+                    <AppInput type="email" id="email" placeholder="username" />
                 </div>
                 <div className="mb-2 w-full">
                     <Label htmlFor="email">Email Address</Label>
-                    <input
-                        className="mb-5 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                        type="email"
-                        id="email"
-                        placeholder="Email"
-                    />
+
+                    <AppInput type="email" id="email" placeholder="Email" />
                 </div>
                 <div className="mb-2 w-full">
                     <Label htmlFor="password ">Password</Label>
-                    <input
-                        className="mb-2 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                               focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+
+                    <AppInput
                         type="password"
                         id="password"
                         placeholder="Password"

@@ -30,7 +30,7 @@ function Payment() {
                                 type="text"
                                 id="card_number"
                                 name="card_number"
-                                className="bg-gray-50  rounded-lg outline-none"
+                                className="bg-gray-50  rounded-lg outline-none w-full"
                                 placeholder="Enter Card Number"
                             />
                             <div>
