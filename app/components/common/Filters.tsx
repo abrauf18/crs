@@ -46,7 +46,7 @@ function Filters({
                 </div>
                 <div
                     onClick={handleClick}
-                    className={`px-4 py-3 border text-sm rounded-lg flex items-center justify-between ${
+                    className={`px-4 py-3 cursor-pointer border text-sm rounded-lg flex items-center justify-between ${
                         secondButtonText?.startsWith('Create New') ||
                         secondButtonText?.startsWith('Upload')
                             ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition

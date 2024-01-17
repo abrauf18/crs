@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import SyncIcon from '@/app/assets/icons/SyncIcon';
-import AppDropDown from '@/app/components/common/AppDropDown';
+import AppDropDown, {
+    OptionsInterface,
+} from '@/app/components/common/AppDropDown';
 import { Label } from '@/app/components/ui/label';
-import UploadItem from '../../components/common/UploadItem';
-import FileUploading from '../../components/common/FileUploading';
-import { ModalHeader } from '../../components/common/ModalHeader';
 
 function SubmitTicketModal({ onClose }: any) {
     const [selectedOption, setSelectedOption] = useState('9th Grade - B');
@@ -19,7 +18,10 @@ function SubmitTicketModal({ onClose }: any) {
         setSelectedOption(event.target.value);
     };
 
-    const gradeOptions = ['9th Grade - B', '9th Grade - A'];
+    const gradeOptions: OptionsInterface[] = [
+        { label: '9th Grade - B', value: '9th Grade - B' },
+        { label: '9th Grade - A', value: '9th Grade - A' },
+    ];
 
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">

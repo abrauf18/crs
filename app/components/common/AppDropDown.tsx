@@ -2,9 +2,13 @@
 
 import React from 'react';
 
+export interface OptionsInterface {
+    label: string;
+    value: string;
+}
 interface SelectProps {
     name: string;
-    options: string[];
+    options: OptionsInterface[];
     value: string;
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     className?: string;
@@ -29,8 +33,8 @@ function AppDropDown({
             className={selectClassName}
         >
             {options.map((option, index) => (
-                <option key={option} value={option}>
-                    {option}
+                <option key={option.label} value={option.label}>
+                    {option.value}
                 </option>
             ))}
         </select>

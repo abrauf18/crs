@@ -55,9 +55,6 @@ function Courses() {
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>
-            {/* <div className="absolute right-0 top-0 z-50  text-sm lg:w-[25%]">
-                <TestReportModal />
-            </div> */}
         </div>
     );
 }

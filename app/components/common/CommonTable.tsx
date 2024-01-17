@@ -3,6 +3,11 @@ import React from 'react';
 import { Poppins } from 'next/font/google';
 import EditIcon from '@/app/assets/icons/EditIcon';
 import PptIcon from '@/app/assets/icons/PptIcon';
+import RecorderIcon from '@/app/assets/icons/RecorderIcon';
+import TicketIcon from '@/app/assets/icons/TicketIcon';
+import XlsIcon from '@/app/assets/icons/XlsIcon';
+import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
+import QuestionIcon from '@/app/assets/icons/QuestionIcon';
 import {
     Table,
     TableHeader,
@@ -11,7 +16,6 @@ import {
     TableBody,
     TableCell,
 } from '../ui/table';
-import Pagintaion from './Pagintaion';
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -23,7 +27,13 @@ interface resources {
     topic: string;
 }
 
-function CommonTable({ resources }: { resources: any[] }) {
+function CommonTable({
+    resources,
+    resourcesType,
+}: {
+    resources: any[];
+    resourcesType?: string;
+}) {
     return (
         <Table className={`text-md mobile:text-sm ${poppins.className}`}>
             <TableHeader>
@@ -51,7 +61,22 @@ function CommonTable({ resources }: { resources: any[] }) {
                             </span>
                         </TableCell>
                         <TableCell className="flex space-x-2 items-center">
-                            <PptIcon fill="#1ebeff" />
+                            {resourcesType?.toLowerCase() === 'slideshow' && (
+                                <PptIcon fill="#1ebeff" />
+                            )}
+                            {resourcesType?.toLowerCase() ===
+                                "total-video's" && <RecorderIcon />}
+                            {resourcesType?.toLowerCase() === 'worksheets' && (
+                                <XlsIcon color="#54C3F4" />
+                            )}
+                            {resourcesType?.toLowerCase() ===
+                                'exit-ticket-test' && (
+                                <TicketIcon color="#54C3F4" />
+                            )}
+                            {resourcesType?.toLowerCase() === 'quizzes' && (
+                                <QuestionMarkIcon />
+                            )}
+
                             <span>{resource.title}</span>
                         </TableCell>
                         <TableCell className="text-dark-gray">

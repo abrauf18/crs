@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import crscLogo from '@/app/assets/images/crsclogo.svg';
-import Image from 'next/image';
+import React from 'react';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
+import AppInput from '@/app/components/common/AppInput';
 import Link from 'next/link';
-import { Check } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 import { CheckBox } from '../Checkbox';
 import Steps from './Steps';
 
 function SchoolSignup1() {
+    const { push } = useRouter();
+    const pathName = usePathname();
     return (
         <div className=" p-10 w-[95%] lg:w-[75%] flex flex-col ">
             <Steps step={1} totalSteps={3} />
@@ -23,34 +24,30 @@ function SchoolSignup1() {
                 </p>
             </div>
             <form>
-                <Label htmlFor="email">Email Address</Label>
-                <input
-                    className="mb-5 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                    type="email"
-                    id="email"
-                    placeholder="Enter Email"
-                />
+                <div>
+                    <Label htmlFor="email">Email Address</Label>
+                    <AppInput
+                        type="email"
+                        id="email"
+                        placeholder="Enter Email"
+                    />
+                </div>
 
-                <Label htmlFor="name ">User Name</Label>
-                <input
-                    className="mb-2 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                               focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                    type="name"
-                    id="name"
-                    placeholder="Enter Name"
-                />
+                <div className="mt-2">
+                    <Label htmlFor="name ">User Name</Label>
+                    <AppInput type="name" id="name" placeholder="Enter Name" />
+                </div>
 
-                <Label htmlFor="password ">Password</Label>
-                <input
-                    className="mb-2 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                               focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                    type="password"
-                    id="password"
-                    placeholder="Enter Password"
-                />
+                <div className="mt-2">
+                    <Label htmlFor="password ">Password</Label>
+                    <AppInput
+                        type="password"
+                        id="password"
+                        placeholder="Enter Password"
+                    />
+                </div>
 
-                <div className="flex mb-12">
+                <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
                     <Link
                         href="#"
@@ -61,8 +58,9 @@ function SchoolSignup1() {
                 </div>
                 <div className="text-center">
                     <Button
-                        type="submit"
+                        type="button"
                         className="w-full bg-primary-color hover:bg-orange-400 mb-3"
+                        onClick={() => push(`${pathName}/school-profile`)}
                     >
                         Sign In
                     </Button>

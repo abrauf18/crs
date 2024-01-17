@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { Check, Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -40,11 +40,8 @@ function LearningTable({
     isSubmitAssignment,
 }: LearningTableProps) {
     const { push } = useRouter();
+    const pathName = usePathname();
 
-    const handleClick = (id: number) => {
-        console.log(id);
-        // push(`/students/${id}`);
-    };
     const onSubmitAssignment = () =>
         push('/student/learning/submit-assignment');
 
@@ -91,6 +88,11 @@ function LearningTable({
                                         ? 'bg-gray-300'
                                         : 'bg-primary-color'
                                 }`}
+                                onClick={() =>
+                                    push(
+                                        `${pathName}/${learning.id}/${learning.resourceType}`
+                                    )
+                                }
                             >
                                 <PlayIcon stroke="white" />
                                 <p> {learning.status}</p>

@@ -157,6 +157,7 @@ export const Studentinfo: StudentInfoInterface[] = [
     },
 ];
 function Students() {
+    const [isAddStudentModalOpen, setAddStudentModalOpen] = useState(false);
     const [selectedTab, setSelectedTab] = useState('all');
     const onSelectFilter = (tab: string) => {
         setSelectedTab(tab);
@@ -177,6 +178,14 @@ function Students() {
         '7th grade',
         '6th grade',
     ];
+
+    const handleOpenAddStudentModal = () => {
+        setAddStudentModalOpen(true);
+    };
+
+    const handleCloseAddStudentModal = () => {
+        setAddStudentModalOpen(false);
+    };
     return (
         <section>
             <Searchbar
@@ -198,6 +207,7 @@ function Students() {
                     className="bg-primary-color mobile:px-3 hover:bg-orange-400"
                     variant="default"
                     size="default"
+                    onClick={handleOpenAddStudentModal}
                 >
                     Add Student
                 </Button>
@@ -208,9 +218,11 @@ function Students() {
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <StudentsInfoTable students={filteredStudents} />
             </div>
-            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
-                <AddStudentModal />
-            </div> */}
+            {isAddStudentModalOpen && (
+                <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                    <AddStudentModal onClose={handleCloseAddStudentModal} />
+                </div>
+            )}
         </section>
     );
 }

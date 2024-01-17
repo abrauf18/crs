@@ -7,6 +7,7 @@ import React from 'react';
 function ResourceDetails({ params }: any) {
     const ModifiedTopicName = convertDashesToSpaces(params.typeName); // adding space after Topic
 
+    console.log(params);
     const resources: any = [
         { id: 1, title: 'Design Thinking', topic: ModifiedTopicName },
         { id: 2, title: 'User Research', topic: ModifiedTopicName },
@@ -21,7 +22,10 @@ function ResourceDetails({ params }: any) {
     return (
         <div>
             <Filters text={ModifiedTopicName} />
-            <CommonTable resources={resources} />
+            <CommonTable
+                resources={resources}
+                resourcesType={params.typeName}
+            />
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>

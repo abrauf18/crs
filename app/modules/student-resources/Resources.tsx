@@ -56,9 +56,6 @@ function Resources() {
             <div className="flex justify-center items-center mt-5">
                 <Pagintaion />
             </div>
-            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
-                <ResourceDownloadModal />
-            </div>
         </section>
     );
 }

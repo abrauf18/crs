@@ -17,7 +17,7 @@ function Classroom() {
                     students="40 Students"
                     iconColor="#54C3F4"
                     iconBg="bg-sky-100"
-                    hoverColor="bg-sky-50"
+                    activeColor="bg-sky-50"
                 />
 
                 <ClassroomCard
@@ -26,7 +26,7 @@ function Classroom() {
                     students="40 Students"
                     iconColor="#7AA43E"
                     iconBg="bg-green-100"
-                    hoverColor="bg-green-50"
+                    activeColor="bg-green-50"
                 />
                 <ClassroomCard
                     Icon={StudentIcon}
@@ -34,7 +34,7 @@ function Classroom() {
                     students="40 Students"
                     iconColor="#A03ADB"
                     iconBg="bg-purple-100"
-                    hoverColor="bg-purple-50"
+                    activeColor="bg-purple-50"
                 />
             </div>
             <div className="grid  lg:grid-cols-4 gap-4 mt-4">
@@ -44,15 +44,16 @@ function Classroom() {
                     students="40 Students"
                     iconColor="#A03ADB"
                     iconBg="bg-purple-100"
-                    hoverColor="bg-purple-50"
+                    activeColor="bg-purple-50"
                 />
                 <ClassroomCard
                     Icon={StudentIcon}
                     periods="6th Period"
                     students="40 Students"
                     iconColor="#F59A3B"
-                    iconBg="bg-yellow-200"
-                    hoverColor="bg-yellow-50"
+                    iconBg="bg-orange-200"
+                    activeColor="bg-orange-50"
+                    isActive
                 />
                 <ClassroomCard
                     Icon={StudentIcon}
@@ -60,7 +61,7 @@ function Classroom() {
                     students="40 Students"
                     iconColor="#E6500D"
                     iconBg="bg-pink-100"
-                    hoverColor="bg-pink-50"
+                    activeColor="bg-pink-50"
                 />
                 <ClassroomCard
                     Icon={StudentIcon}
@@ -68,13 +69,13 @@ function Classroom() {
                     students="40 Students"
                     iconColor="#54C3F4"
                     iconBg="bg-sky-100"
-                    hoverColor="bg-sky-50"
+                    activeColor="bg-sky-50"
                 />
             </div>
 
             <div className="border rounded-lg p-5 mt-5">
-                <h1 className="text-[20px] font-semibold">6th Class</h1>
-                <StudentsInfoTable students={Studentinfo} />
+                <h1 className="text-[20px] font-semibold">7th Class</h1>
+                <StudentsInfoTable students={Studentinfo} isClassroomTable />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />

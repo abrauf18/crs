@@ -3,7 +3,7 @@ import { BookOpenCheck, Check } from 'lucide-react';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import StarsIcon from '@/app/assets/icons/StarsIcon';
 
-function TestReportModal() {
+function TestReportModal({ onClose }: any) {
     return (
         <section className="w-full bg-white h-screen py-4 px-8 shadow-lg">
             <div>
@@ -12,6 +12,7 @@ function TestReportModal() {
                         heading: 'Cloud Computing',
                         tagline: 'Student Answer’s Report',
                     }}
+                    onClose={onClose}
                     Icon={BookOpenCheck}
                 />
 

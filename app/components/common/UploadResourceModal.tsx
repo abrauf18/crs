@@ -12,6 +12,7 @@ interface UploadResourceModalProp {
     Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
     isDisplayHeaderIcon?: boolean;
     buttonText: string;
+    onClose?: () => void;
 }
 function UploadResourceModal({
     headerText,
@@ -19,6 +20,7 @@ function UploadResourceModal({
     Icon,
     buttonText,
     isDisplayHeaderIcon,
+    onClose,
 }: UploadResourceModalProp) {
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-md">
@@ -29,6 +31,7 @@ function UploadResourceModal({
                         tagline: description,
                     }}
                     Icon={isDisplayHeaderIcon ? FileVideoIcon : undefined}
+                    onClose={onClose}
                 />
                 <UploadItem itemName="Video" />
                 <FileUploading Icon={Icon} />

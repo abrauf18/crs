@@ -5,7 +5,7 @@ import Resource2 from '@/app/assets/images/resourceImages/Resource2.svg';
 import Resource3 from '@/app/assets/images/resourceImages/Resource3.svg';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
-function ResourceDownloadModal() {
+function ResourceDownloadModal({ onClose }: any) {
     const resources: FileInterface[] = [
         {
             id: '1',
@@ -37,6 +37,7 @@ function ResourceDownloadModal() {
                         heading: 'Future of Work',
                         tagline: 'Assigned Resources to Topic',
                     }}
+                    onClose={onClose}
                 />
                 <div className="flex justify-end px-4">
                     <p className="px-5 py-3 bg-primary-color rounded-2xl text-white w-fit ">

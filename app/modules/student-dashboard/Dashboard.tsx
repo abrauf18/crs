@@ -13,6 +13,7 @@ import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
 import VideoCard, { Card as Video } from '@/app/components/common/VideoCard';
+import Link from 'next/link';
 
 const cards: Video[] = [
     {
@@ -113,9 +114,11 @@ function Dashboard() {
                 <p className="font-semibold text-2xl ">
                     Your Assigned Learnings
                 </p>
-                <p className="border lg:py-2 px-2 w-[40%] lg:px-4 rounded-lg lg:w-fit font-semibold text-dark-gray ">
-                    Show All
-                </p>
+                <Link href="/student/learning">
+                    <p className="border cursor-pointer lg:py-2 px-2 w-[40%] lg:px-4 rounded-lg lg:w-fit font-semibold text-dark-gray ">
+                        Show All
+                    </p>
+                </Link>
             </div>
 
             <div className="my-8">
@@ -124,9 +127,11 @@ function Dashboard() {
 
             <div className="flex justify-between mt-8">
                 <p className="font-semibold text-2xl ">Saved Videos</p>
-                <p className="border py-2 px-4 text-center rounded-lg h-fit lg:w-fit font-semibold text-dark-gray ">
-                    Show All
-                </p>
+                <Link href="/student/resources">
+                    <p className="border cursor-pointer py-2 px-4 text-center rounded-lg h-fit lg:w-fit font-semibold text-dark-gray ">
+                        Show All
+                    </p>
+                </Link>
             </div>
 
             <div className="mt-8">

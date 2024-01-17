@@ -1,10 +1,15 @@
+'use client';
+
 import Searchbar from '@/app/components/common/Searchbar';
 import VisaIcon from '@/app/assets/icons/VisaIcon';
 import StripeIcon from '@/app/assets/icons/StripeIcon';
 import PayPalIcon from '@/app/assets/icons/PayPalIcon';
-import React from 'react';
+import React, { useState } from 'react';
+import AppInput from '@/app/components/common/AppInput';
+import { Label } from '@/app/components/ui/label';
 
 function Payment() {
+    const [isFocused, setIsFocused] = useState(false);
     return (
         <section className="lg:px-5">
             <Searchbar
@@ -25,7 +30,7 @@ function Payment() {
                         >
                             Card Number
                         </label>
-                        <div className="border flex items-center justify-between p-2 rounded-lg w-full bg-white">
+                        {/* <div className="border flex items-center justify-between p-2 rounded-lg w-full bg-white">
                             <input
                                 type="text"
                                 id="card_number"
@@ -36,61 +41,84 @@ function Payment() {
                             <div>
                                 <VisaIcon />
                             </div>
+                        </div> */}
+                        <div
+                            className={`border ${
+                                isFocused
+                                    ? 'outline-none border-sky-500 ring-1 ring-sky-500'
+                                    : 'border-gray-300'
+                            } flex items-center justify-between px-3 py-3 rounded-lg w-full bg-slate-100 text-sm shadow-sm`}
+                        >
+                            <input
+                                type="text"
+                                id="card_number"
+                                name="card_number"
+                                className="bg-slate-100 rounded-lg outline-none w-full placeholder-slate-400"
+                                placeholder="Enter Card Number"
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
+                            />
+                            <div>
+                                <VisaIcon />
+                            </div>
                         </div>
                     </div>
                     <div className="flex flex-col mt-5 ">
-                        <label htmlFor="card_name" className="font-medium mb-2">
+                        <Label htmlFor="card_name" className="font-medium mb-2">
                             Cardholder Name
-                        </label>
-                        <input
-                            type="text"
+                        </Label>
+
+                        <AppInput
                             id="card_name"
                             name="card_name"
-                            className="bg-gray-50  rounded-lg outline-none border p-2"
                             placeholder="Enter Cardholder Name"
                         />
                     </div>
 
                     <div className="flex mt-5 justify-between ">
                         <div className="flex flex-col">
-                            <label
+                            <Label
                                 htmlFor="expiry"
                                 className="font-medium mb-2"
                             >
                                 Expiry
-                            </label>
-                            <input
-                                type="text"
-                                id="expiry"
-                                name="expiry"
-                                className="bg-gray-50  rounded-lg outline-none border p-2 w-[90%]"
-                                placeholder="MM/YY"
-                            />
+                            </Label>
+
+                            <div className="w-[90%]">
+                                <AppInput
+                                    type="text"
+                                    id="expiry"
+                                    name="expiry"
+                                    placeholder="MM/YY"
+                                />
+                            </div>
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="cvv" className="font-medium mb-2">
+                            <Label htmlFor="cvv" className="font-medium mb-2">
                                 CVV
-                            </label>
-                            <input
-                                type="text"
-                                id="cvv"
-                                name="cvv"
-                                className="bg-gray-50  rounded-lg outline-none border p-2 w-[90%]"
-                                placeholder="eg: 1234"
-                            />
+                            </Label>
+
+                            <div className="w-[90%]">
+                                <AppInput
+                                    type="text"
+                                    id="cvv"
+                                    name="cvv"
+                                    placeholder="eg: 1234"
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div className="bg-primary-color text-center font-semibold cursor-pointer rounded-xl py-2 text-white mt-5">
+                    <div className="bg-primary-color text-center font-semibold cursor-pointer hover:bg-orange-400 rounded-xl py-2 text-white mt-5 ">
                         <span>Pay Now</span>
                     </div>
 
                     <div className="text-center font-semibold mt-5">Or</div>
                     <div>
-                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2  mt-5">
+                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2 hover:bg-gray-100 mt-5">
                             <StripeIcon />
                             <span>Pay With Stripe</span>
                         </div>
-                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2  mt-5">
+                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2  hover:bg-gray-100 mt-5">
                             <PayPalIcon />
                             <span>Pay With Paypal</span>
                         </div>

@@ -1,9 +1,28 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { FileLineChart, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import Avatar from '@/app/assets/images/UserImage.svg';
+import { Label } from '@/app/components/ui/label';
+import AppInput from '@/app/components/common/AppInput';
+import AppDropDown, {
+    OptionsInterface,
+} from '@/app/components/common/AppDropDown';
 
-function ClassroomModal() {
+function ClassroomModal({ onClose }: any) {
+    const [selectedOption, setSelectedOption] = useState('9th Grade - B');
+
+    const handleSelectChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        setSelectedOption(event.target.value);
+    };
+
+    const gradeOptions: OptionsInterface[] = [
+        { label: '9th Grade - B', value: '9th Grade - B' },
+        { label: '9th Grade - A', value: '9th Grade - A' },
+    ];
     return (
         <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg">
             <div className="h-[85%] overflow-y-auto w-full px-2">
@@ -18,8 +37,8 @@ function ClassroomModal() {
                             </p>
                         </div>
                     </div>
-                    <div className="rounded-full bg-white border p-1">
-                        <X size={20} />
+                    <div className="rounded-full bg-white border p-1 cursor-pointer">
+                        <X size={20} onClick={onClose} />
                     </div>
                 </div>
 
@@ -60,35 +79,39 @@ function ClassroomModal() {
 
                 <div className="my-3 h-fit">
                     <div className="flex flex-col space-y-2">
-                        <label className="font-semibold" htmlFor="name">
+                        <Label className="font-semibold" htmlFor="name">
                             Username
-                        </label>
-                        <input
+                        </Label>
+                        <AppInput
                             name="name"
+                            id="name"
                             placeholder="Enter name"
-                            className="p-3 border rounded-lg"
                         />
                     </div>
 
                     <div className="flex flex-col space-y-2 mt-5">
-                        <label className="font-semibold" htmlFor="email">
+                        <Label className="font-semibold" htmlFor="email">
                             Email Address
-                        </label>
-                        <input
+                        </Label>
+
+                        <AppInput
                             name="email"
+                            id="email"
                             placeholder="Enter email"
-                            className="p-3 border rounded-lg"
                         />
                     </div>
 
                     <div className="flex flex-col space-y-2 mt-5">
-                        <label className="font-semibold" htmlFor="invite">
+                        <Label className="font-semibold" htmlFor="invite">
                             Classroom
-                        </label>
-                        <select name="invite" className="p-3 border rounded-lg">
-                            <option value="9th Grade - B">9th Grade - B</option>
-                            <option value="9th Grade - A">9th Grade - A</option>
-                        </select>
+                        </Label>
+
+                        <AppDropDown
+                            name="invite"
+                            options={gradeOptions}
+                            value={selectedOption}
+                            onChange={handleSelectChange}
+                        />
                     </div>
                 </div>
             </div>

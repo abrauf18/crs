@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
+import AppInput from '@/app/components/common/AppInput';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 import { CheckBox } from '../Checkbox';
@@ -28,34 +29,32 @@ function SignupForm() {
                 </p>
             </div>
             <form>
-                <Label htmlFor="email">Email Address</Label>
-                <input
-                    className="mb-5 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                    type="email"
-                    id="email"
-                    placeholder="Enter Email"
-                />
+                <div className="mt-2">
+                    <Label htmlFor="email">Email Address</Label>
 
-                <Label htmlFor="name ">User Name</Label>
-                <input
-                    className="mb-2 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                               focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                    type="name"
-                    id="name"
-                    placeholder="Enter Name"
-                />
+                    <AppInput
+                        type="email"
+                        id="email"
+                        placeholder="Enter Email"
+                    />
+                </div>
 
-                <Label htmlFor="password ">Password</Label>
-                <input
-                    className="mb-2 mt-1 block w-full px-3 py-2 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400
-                               focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                    type="password"
-                    id="password"
-                    placeholder="Enter Password"
-                />
+                <div className="mt-2">
+                    <Label htmlFor="name ">User Name</Label>
+                    <AppInput id="name" placeholder="Enter Name" />
+                </div>
 
-                <div className="flex mb-12">
+                <div className="mt-2">
+                    <Label htmlFor="password ">Password</Label>
+
+                    <AppInput
+                        type="password"
+                        id="password"
+                        placeholder="Enter Password"
+                    />
+                </div>
+
+                <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
                     <Link
                         href="#"

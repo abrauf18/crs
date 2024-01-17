@@ -54,7 +54,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 <div className="mb-2 w-full">
                     <Label htmlFor="email">Username</Label>
 
-                    <AppInput type="email" id="email" placeholder="username" />
+                    <AppInput type="email" id="email" placeholder="User Name" />
                 </div>
                 <div className="mb-2 w-full">
                     <Label htmlFor="email">Email Address</Label>

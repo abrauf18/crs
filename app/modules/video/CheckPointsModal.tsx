@@ -43,7 +43,7 @@ function CheckPointsModal() {
                             placeholder="Write Topic Name"
                         />
                     </div>
-                    <div className="flex flex-col mt-1">
+                    <div className="flex flex-col mt-4">
                         <Label htmlFor="timeline" className="font-semibold">
                             Timeline
                         </Label>
@@ -62,7 +62,7 @@ function CheckPointsModal() {
                             placeholder="Write Topic Name"
                         />
                     </div>
-                    <div className="flex flex-col mt-1">
+                    <div className="flex flex-col mt-4">
                         <Label htmlFor="timeline" className="font-semibold">
                             Timeline
                         </Label>
@@ -81,7 +81,7 @@ function CheckPointsModal() {
                             placeholder="Write Topic Name"
                         />
                     </div>
-                    <div className="flex flex-col mt-1">
+                    <div className="flex flex-col mt-4">
                         <Label htmlFor="timeline" className="font-semibold">
                             Timeline
                         </Label>

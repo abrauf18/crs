@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import Character from '@/app/assets/images/character.svg';
+import { Label } from '@/app/components/ui/label';
 
 interface OpenEndedQuestionProp {
     questionNumber: string;
@@ -31,17 +32,17 @@ function OpenEndedQuestion({
                 </div>
                 <div className="flex flex-col w-full lg:w-[50%]  space-y-2 mt-5 ">
                     <p className="font-semibold mb-2">{questionText}</p>
-                    <label
+                    <Label
                         htmlFor="answer"
                         className="text-start w-full font-medium"
                     >
                         Answer:
-                    </label>
+                    </Label>
                     <textarea
                         id="answer"
                         name="answer"
                         placeholder="Write your answer"
-                        className="w-full h-32 overflow-y-auto resize-none p-4 font-medium rounded-lg border"
+                        className="w-full h-32 overflow-y-auto resize-none p-4 font-medium rounded-lg border focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
                     />
                     <div className=" w-full flex lg:justify-end">
                         <button

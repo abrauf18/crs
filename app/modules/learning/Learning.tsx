@@ -34,7 +34,7 @@ export const LearningRecord: LearningInterface[] = [
         status: 'Play',
         isDone: false,
         isDisabled: false,
-        resourceType: 'video',
+        resourceType: 'openEndedQuiz',
     },
     {
         id: 1,

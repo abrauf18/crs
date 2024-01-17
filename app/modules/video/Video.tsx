@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import videoImage2 from '@/app/assets/images/videoImages/videoImage2.svg';
 import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
@@ -13,6 +15,8 @@ import AddQuestions from './AddQuestions';
 import CheckPointsModal from './CheckPointsModal';
 
 function Video() {
+    const [isShowUploadVideoModal, setIsShowUploadVideoModal] = useState(false);
+
     const cards: Card[] = [
         {
             id: '1',
@@ -64,11 +68,20 @@ function Video() {
         },
     ];
 
+    const handleOpenUploadModal = () => {
+        setIsShowUploadVideoModal(true);
+    };
+
+    const handleCloseUploadModal = () => {
+        setIsShowUploadVideoModal(false);
+    };
+
     return (
         <>
             <Filters
                 text="200 Videos In Total"
                 secondButtonText="Upload Video"
+                handleClick={handleOpenUploadModal}
             />
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
                 {cards.map((card) => (
@@ -77,18 +90,21 @@ function Video() {
             </div>
             {/* Modals for uploading steps */}
 
-            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
-                <UploadResourceModal
-                    isDisplayHeaderIcon
-                    buttonText="Continue"
-                    headerText="Upload Video"
-                    description="let’s Upload Video For Your User"
-                />
-            </div> */}
+            {isShowUploadVideoModal && (
+                <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                    <UploadResourceModal
+                        isDisplayHeaderIcon
+                        buttonText="Continue"
+                        headerText="Upload Video"
+                        description="let’s Upload Video For Your User"
+                        onClose={handleCloseUploadModal}
+                    />
+                </div>
+            )}
 
-            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <AddQuestions />
-            </div>
+            </div> */}
 
             {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <CheckPointsModal />

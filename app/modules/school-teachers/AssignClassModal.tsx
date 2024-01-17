@@ -9,7 +9,9 @@ import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
 
 import Image from 'next/image';
 import AppInput from '@/app/components/common/AppInput';
-import AppDropDown from '@/app/components/common/AppDropDown';
+import AppDropDown, {
+    OptionsInterface,
+} from '@/app/components/common/AppDropDown';
 
 function AssignClassModal({ onClose }: any) {
     const [selectedOption, setSelectedOption] = useState('9th Grade - B');
@@ -20,7 +22,10 @@ function AssignClassModal({ onClose }: any) {
         setSelectedOption(event.target.value);
     };
 
-    const gradeOptions = ['9th Grade - B', '9th Grade - A'];
+    const gradeOptions: OptionsInterface[] = [
+        { label: '9th Grade - B', value: '9th Grade - B' },
+        { label: '9th Grade - A', value: '9th Grade - A' },
+    ];
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
             <div className="h-[90%] overflow-y-auto px-2">
