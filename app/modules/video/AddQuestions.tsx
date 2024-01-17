@@ -1,6 +1,8 @@
 import React from 'react';
 import { FileVideoIcon } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
+import { Label } from '@/app/components/ui/label';
+import AppInput from '@/app/components/common/AppInput';
 import UploadItem from '../../components/common/UploadItem';
 import FileUploading from '../../components/common/FileUploading';
 import { ModalHeader } from '../../components/common/ModalHeader';
@@ -27,69 +29,78 @@ function AddQuestions() {
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="question-2" className="font-semibold">
+                        <Label htmlFor="question-2" className="font-semibold">
                             Question 02
-                        </label>
-                        <div className="flex mt-2 justify-between">
-                            <input
-                                className="bg-gray-100 rounded-lg p-2 border w-full"
+                        </Label>
+                        <div className="flex justify-between">
+                            <AppInput
+                                id="question-2"
                                 placeholder="Write Question"
+                                additionalClasses=" w-full"
                             />
+
                             <select
                                 id="type"
-                                className="border rounded-lg p-2 ml-2"
+                                className="border rounded-lg p-3 ml-2"
                             >
                                 <option value="open">Open</option>
                                 <option value="quiz">Quiz</option>
                             </select>
                         </div>
                     </div>
-                    <div className="flex flex-col mt-4">
-                        <label htmlFor="question-2" className="font-semibold">
+                    <div className="flex flex-col mt-5">
+                        <Label htmlFor="timeline" className="font-semibold">
                             Timeline
-                        </label>
-                        <input
-                            className="bg-gray-100 rounded-lg p-2 border"
+                        </Label>
+
+                        <AppInput
+                            id="timeline"
                             placeholder="Add Timeline"
+                            additionalClasses=" w-full"
                         />
                     </div>
                 </div>
-                <hr className="my-4" />
+                <hr className="my-5" />
                 <div>
                     <div>
-                        <label htmlFor="question-2" className="font-semibold">
+                        <Label htmlFor="question-1" className="font-semibold">
                             Question 01
-                        </label>
-                        <div className="flex mt-2 justify-between">
-                            <input
-                                className="bg-gray-100 rounded-lg p-2 border w-full"
+                        </Label>
+                        <div className="flex justify-between">
+                            <AppInput
+                                id="question-1"
                                 placeholder="Write Question"
+                                additionalClasses=" w-full"
                             />
+
                             <select
                                 id="type"
-                                className="border rounded-lg p-2 ml-2"
+                                className="border rounded-lg p-3 ml-2"
                             >
                                 <option value="open">Open</option>
                                 <option value="quiz">Quiz</option>
                             </select>
                         </div>
                     </div>
-                    <div className="flex flex-col mt-4">
-                        <label htmlFor="question-2" className="font-semibold">
+                    <div className="flex flex-col mt-5">
+                        <Label htmlFor="timeline" className="font-semibold">
                             Timeline
-                        </label>
-                        <input
-                            className="bg-gray-100 rounded-lg p-2 border"
+                        </Label>
+
+                        <AppInput
+                            id="timeline"
                             placeholder="Add Timeline"
+                            additionalClasses=" w-full"
                         />
                     </div>
-                    <div className="flex flex-col mt-4">
-                        <label htmlFor="question-2" className="font-semibold">
+                    <div className="flex flex-col mt-5">
+                        <Label htmlFor="explination" className="font-semibold">
                             Correct Answer Explination
-                        </label>
+                        </Label>
 
                         <textarea
-                            className="bg-gray-100 rounded-lg p-2 border "
+                            id="explination"
+                            className="focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 mt-1 block w-full px-3 py-3 bg-slate-200 border rounded-md text-sm shadow-sm placeholder-slate-400"
                             placeholder="Write Explination"
                         />
                     </div>

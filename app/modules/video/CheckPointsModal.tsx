@@ -1,7 +1,8 @@
 import React from 'react';
 import { FileVideoIcon } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
-import UploadItem from '../../components/common/UploadItem';
+import AppInput from '@/app/components/common/AppInput';
+import { Label } from '@/app/components/ui/label';
 import FileUploading from '../../components/common/FileUploading';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
@@ -29,70 +30,64 @@ function CheckPointsModal() {
 
                 <div>
                     <div className="flex flex-col">
-                        <label htmlFor="question-2" className="font-semibold">
+                        <Label htmlFor="topicName" className="font-semibold">
                             Topic Name
-                        </label>
+                        </Label>
 
-                        <input
+                        {/* <input
                             className="bg-gray-100 rounded-lg p-2 border"
+                            placeholder="Write Topic Name"
+                        /> */}
+                        <AppInput
+                            id="topicName"
                             placeholder="Write Topic Name"
                         />
                     </div>
-                    <div className="flex flex-col mt-4">
-                        <label htmlFor="question-2" className="font-semibold">
+                    <div className="flex flex-col mt-1">
+                        <Label htmlFor="timeline" className="font-semibold">
                             Timeline
-                        </label>
-                        <input
-                            className="bg-gray-100 rounded-lg p-2 border"
-                            placeholder="Add Timeline"
-                        />
+                        </Label>
+                        <AppInput id="timeline" placeholder="Add Timeline" />
                     </div>
                 </div>
                 <hr className="my-4" />
                 <div>
                     <div className="flex flex-col">
-                        <label htmlFor="question-2" className="font-semibold">
+                        <Label htmlFor="topicName" className="font-semibold">
                             Topic Name
-                        </label>
+                        </Label>
 
-                        <input
-                            className="bg-gray-100 rounded-lg p-2 border"
+                        <AppInput
+                            id="topicName"
                             placeholder="Write Topic Name"
                         />
                     </div>
-                    <div className="flex flex-col mt-4">
-                        <label htmlFor="question-2" className="font-semibold">
+                    <div className="flex flex-col mt-1">
+                        <Label htmlFor="timeline" className="font-semibold">
                             Timeline
-                        </label>
-                        <input
-                            className="bg-gray-100 rounded-lg p-2 border"
-                            placeholder="Add Timeline"
-                        />
+                        </Label>
+                        <AppInput id="timeline" placeholder="Add Timeline" />
                     </div>
                 </div>
                 <hr className="my-4" />
                 <div>
                     <div className="flex flex-col">
-                        <label htmlFor="question-2" className="font-semibold">
+                        <Label htmlFor="topicName" className="font-semibold">
                             Topic Name
-                        </label>
+                        </Label>
 
-                        <input
-                            className="bg-gray-100 rounded-lg p-2 border"
+                        <AppInput
+                            id="topicName"
                             placeholder="Write Topic Name"
                         />
                     </div>
-                    <div className="flex flex-col mt-4">
-                        <label htmlFor="question-2" className="font-semibold">
+                    <div className="flex flex-col mt-1">
+                        <Label htmlFor="timeline" className="font-semibold">
                             Timeline
-                        </label>
-                        <input
-                            className="bg-gray-100 rounded-lg p-2 border"
-                            placeholder="Add Timeline"
-                        />
+                        </Label>
+                        <AppInput id="timeline" placeholder="Add Timeline" />
                     </div>
                 </div>
-                <hr className="my-4" />
             </div>
             <ModalFooter text="Upload Video" />
         </section>

@@ -16,7 +16,6 @@ function Signin() {
     };
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">
-            {/* <LeftSide images={images} metaText={metaText} /> */}
             <div className="w-full">
                 <LeftSide images={images} metaText={metaText} />
             </div>

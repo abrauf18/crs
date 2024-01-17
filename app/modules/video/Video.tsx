@@ -83,9 +83,9 @@ function Video() {
                 />
             </div> */}
 
-            {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+            <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <AddQuestions />
-            </div> */}
+            </div>
 
             {/* <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
                 <CheckPointsModal />
