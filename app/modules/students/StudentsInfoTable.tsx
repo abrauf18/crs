@@ -29,6 +29,7 @@ export interface StudentsInfoProp {
     students: StudentInfoInterface[];
     fontSize?: string;
     isClassroomTable?: boolean;
+    isTeacherDashboardTable?: boolean;
 }
 
 const poppins = Poppins({
@@ -40,6 +41,7 @@ function StudentsInfoTable({
     students,
     fontSize,
     isClassroomTable,
+    isTeacherDashboardTable,
 }: StudentsInfoProp) {
     const [isShowStudentModal, setIsShowStudentModal] = useState(false);
     const { push } = useRouter();
@@ -64,7 +66,7 @@ function StudentsInfoTable({
             >
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px] text-dark-gray font-bold">
+                        <TableHead className=" text-dark-gray font-bold">
                             SNO.
                         </TableHead>
                         <TableHead className="text-dark-gray font-bold">
@@ -73,9 +75,11 @@ function StudentsInfoTable({
                         <TableHead className="text-dark-gray font-bold">
                             Email
                         </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
-                            Grade
-                        </TableHead>
+                        {!isTeacherDashboardTable && (
+                            <TableHead className="text-dark-gray font-bold">
+                                Grade
+                            </TableHead>
+                        )}
                         <TableHead className="text-dark-gray font-bold">
                             Performance
                         </TableHead>
@@ -96,10 +100,10 @@ function StudentsInfoTable({
                                 <span className="rounded flex gap-x-2 items-center">
                                     <Image
                                         src={Avatar}
-                                        alt="crs logo"
+                                        alt="user"
                                         style={{
-                                            width: '40px',
-                                            height: '40px',
+                                            width: '30px',
+                                            height: '30px',
                                             objectFit: 'fill',
                                         }}
                                     />
@@ -110,9 +114,11 @@ function StudentsInfoTable({
                             <TableCell className="text-dark-gray">
                                 {resource.email}
                             </TableCell>
-                            <TableCell className="text-dark-gray">
-                                {resource.grade}
-                            </TableCell>
+                            {!isTeacherDashboardTable && (
+                                <TableCell className="text-dark-gray">
+                                    {resource.grade}
+                                </TableCell>
+                            )}
                             <TableCell className="text-dark-gray">
                                 {resource.performance}
                             </TableCell>
@@ -131,20 +137,22 @@ function StudentsInfoTable({
                                         height={18}
                                     />
                                 </div>
-                                <div className="bg-red-100 rounded-md p-1">
-                                    <Trash
-                                        color="#D34645"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
+                                {!isTeacherDashboardTable && (
+                                    <div className="bg-red-100 rounded-md p-1">
+                                        <Trash
+                                            color="#D34645"
+                                            width={18}
+                                            height={18}
+                                        />
+                                    </div>
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             {isShowStudentModal && (
-                <div className="absolute right-0 top-0 z-50 w-[95%] lg:w-[25%] ">
+                <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%] ">
                     <ClassroomModal onClose={handleCloseStudentModal} />
                 </div>
             )}

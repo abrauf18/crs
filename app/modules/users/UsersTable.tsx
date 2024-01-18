@@ -16,6 +16,7 @@ import {
 import Image from 'next/image';
 import Avatar from '@/app/assets/images/UserImage.svg';
 import Profile from '../setting/Profile';
+import ProfileModal from './ProfileModal';
 
 export interface User {
     id: number;
@@ -131,11 +132,8 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                 </TableBody>
             </Table>
             {isShowProfileModal && (
-                <div className="absolute right-0 top-0 z-50 bg-white shadow-md p-4 md:p-10 md:h-screen h-auto">
-                    <div className="absolute right-5 top-8 p-2 border rounded-full cursor-pointer">
-                        <X size={15} onClick={handleCloseProfileModal} />
-                    </div>
-                    <Profile />
+                <div className="absolute right-0 top-0 z-50 lg:w-[30%] w-full">
+                    <ProfileModal onClose={handleCloseProfileModal} />
                 </div>
             )}
         </section>

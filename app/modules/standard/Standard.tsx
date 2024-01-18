@@ -93,7 +93,7 @@ export const standards = [
     },
 ];
 
-function Standard() {
+function Standard({ isShownFromTeacher }: { isShownFromTeacher?: boolean }) {
     const Icons = {
         FirstIcon: PlayIcon,
         SecondIcon: File,
@@ -111,6 +111,7 @@ function Standard() {
                 text="40 Standards In Total"
                 secondButtonText="Create New"
                 handleClick={() => handleClick()}
+                isHideFirstBtn={isShownFromTeacher}
             />
             <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
                 {standards.map((standard, index) => (
@@ -120,12 +121,13 @@ function Standard() {
                     >
                         <CardContent
                             id={standard.id}
-                            route="/admin/standard"
+                            route="/teacher/learning-plans"
                             heading={standard.heading}
                             first={standard.first}
                             second={standard.second}
                             third={standard.third}
                             Icons={Icons}
+                            isHideEditIcon={isShownFromTeacher}
                         />
                     </div>
                 ))}

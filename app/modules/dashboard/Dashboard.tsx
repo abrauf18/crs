@@ -15,8 +15,74 @@ import ResourcesTable from '../resources/ResourcesTable';
 import Filters from '../../components/common/Filters';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
+import StudentsInfoTable from '../students/StudentsInfoTable';
+import { Studentinfo } from '../students/Students';
+import LearningPlanTable, { LearningInterface } from './LearningPlanTable';
 
-function Dashboard() {
+export const learningPlans: LearningInterface[] = [
+    {
+        id: 1,
+        name: 'XYZ Resources',
+        grade: '5th grade',
+        topic: 'Topic xyz',
+    },
+    {
+        id: 2,
+        name: 'XYZ Resources',
+        grade: '5th grade',
+        topic: 'Topic 2',
+    },
+    {
+        id: 3,
+        name: 'XYZ Resources',
+        grade: '6th Grade',
+        topic: 'Topic 2',
+    },
+    {
+        id: 4,
+        name: 'XYZ Resources',
+        grade: '6th Grade',
+        topic: 'Topic 2',
+    },
+    {
+        id: 5,
+        name: 'XYZ Resources',
+        grade: '10th Grade',
+        topic: 'Topic 3',
+    },
+    {
+        id: 6,
+        name: 'XYZ Resources',
+        grade: '2nd Grade',
+        topic: 'Topic 3',
+    },
+    {
+        id: 8,
+        name: 'XYZ Resources',
+        grade: '2nd Grade',
+        topic: 'Topic 3',
+    },
+    {
+        id: 9,
+        name: 'XYZ Resources',
+        grade: '10th Grade',
+        topic: 'Topic 3',
+    },
+    {
+        id: 10,
+        name: 'XYZ Resources',
+        grade: '2nd Grade',
+        topic: 'Topic 3',
+    },
+    {
+        id: 11,
+        name: 'XYZ Resources',
+        grade: '2nd Grade',
+        topic: 'Topic 3',
+    },
+];
+
+function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-12">
             <Searchbar
@@ -24,45 +90,104 @@ function Dashboard() {
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
-            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 mobile:place-items-center mb-4">
-                <Card
-                    Icon={UserIcon}
-                    cardText="Total User’s"
-                    count="20K"
-                    currentPath="/admin/users"
-                />
-                <Card
-                    Icon={SlideShowIcon}
-                    cardText="Video Uploads"
-                    count={200}
-                    currentPath="/admin/video"
-                />
-                <Card
-                    Icon={ResourceIcon}
-                    cardText="Total Resources"
-                    count={150}
-                    currentPath="/admin/resources"
-                />
-                <Card
-                    Icon={DataIcon}
-                    cardText="Data Insights"
-                    count="70%"
-                    currentPath="#"
-                />
+            <div
+                className={`grid grid-col-1 sm:grid-cols-2  gap-4 mt-4 mobile:place-items-center mb-4 ${
+                    isTeacher ? 'lg:grid-cols-3' : 'lg:grid-cols-4'
+                }`}
+            >
+                {!isTeacher ? (
+                    <>
+                        <Card
+                            Icon={UserIcon}
+                            cardText="Total User’s"
+                            count="20K"
+                            currentPath="/admin/users"
+                        />
+                        <Card
+                            Icon={SlideShowIcon}
+                            cardText="Video Uploads"
+                            count={200}
+                            currentPath="/admin/video"
+                        />
+                        <Card
+                            Icon={ResourceIcon}
+                            cardText="Total Resources"
+                            count={150}
+                            currentPath="/admin/resources"
+                        />
+                        <Card
+                            Icon={DataIcon}
+                            cardText="Data Insights"
+                            count="70%"
+                            currentPath="#"
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Card
+                            Icon={UserIcon}
+                            cardText="Total Students"
+                            count="20K"
+                            currentPath="/teacher/students"
+                        />
+                        <Card
+                            Icon={SlideShowIcon}
+                            cardText="Your Assigned Classroom"
+                            count={200}
+                            currentPath="/teacher/classroom"
+                        />
+
+                        <Card
+                            Icon={DataIcon}
+                            cardText="Overall Performance"
+                            count="70%"
+                            currentPath="#"
+                        />
+                    </>
+                )}
             </div>
             <Filters text="Overall Performance" />
             <div className="w-auto ">
                 <Image src={graph as string} alt="icon" className="w-full" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 mt-5">
-                <div className="border rounded-lg p-5">
-                    <h1 className="text-[20px] font-semibold">User’s</h1>
-                    <UsersTable users={usersData} fontSize="12" />
-                </div>
-                <div className="border rounded-lg p-5">
-                    <h1 className="text-[20px] font-semibold">Resources</h1>
-                    <ResourcesTable resources={ResourcesData} fontSize="12" />
-                </div>
+                {!isTeacher ? (
+                    <div className="border rounded-lg p-5">
+                        <h1 className="text-[20px] font-semibold">User’s</h1>
+                        <UsersTable users={usersData} fontSize="12" />
+                    </div>
+                ) : (
+                    <div className="border rounded-lg p-5">
+                        <h1 className="text-[20px] font-semibold">
+                            All Student’s
+                        </h1>
+                        <StudentsInfoTable
+                            students={Studentinfo}
+                            isTeacherDashboardTable
+                            fontSize="12"
+                        />
+                    </div>
+                )}
+
+                {!isTeacher ? (
+                    <div className="border rounded-lg p-5">
+                        <h1 className="text-[20px] font-semibold">Resources</h1>
+                        <ResourcesTable
+                            resources={ResourcesData}
+                            fontSize="12"
+                        />
+                    </div>
+                ) : (
+                    <div className="border rounded-lg p-5">
+                        <h1 className="text-[20px] font-semibold">
+                            Learning Plan
+                        </h1>
+                        <LearningPlanTable
+                            learnings={learningPlans}
+                            fontSize="12"
+                        />
+                    </div>
+                )}
             </div>
         </section>
     );

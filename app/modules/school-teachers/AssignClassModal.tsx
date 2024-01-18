@@ -26,7 +26,7 @@ function AssignClassModal({ onClose }: any) {
         { label: '9th Grade - A', value: '9th Grade - A' },
     ];
     return (
-        <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
+        <section className="w-full bg-white md:h-screen py-4 px-6 shadow-lg">
             <div className="h-[90%] overflow-y-auto px-2">
                 <ModalHeader
                     headerText={{
@@ -122,16 +122,16 @@ function AssignClassModal({ onClose }: any) {
                     <AppInput placeholder="Subject" />
                 </div>
             </div>
-            <div className="lg:flex lg:justify-between lg:items-center  w-full py-2 gap-1">
+            <div className="lg:flex lg:justify-between lg:items-center  w-full  space-y-2 lg:space-y-0  py-2 gap-1">
                 <button
                     type="button"
-                    className="text-dark-gray font-semibold  w-fit px-5 py-3 border rounded-xl"
+                    className="text-dark-gray font-semibold  w-full px-5 py-3 border rounded-xl"
                 >
                     Discard Changes
                 </button>
                 <button
                     type="button"
-                    className="text-white bg-primary-color font-semibold w-fit px-5 py-3  border rounded-xl"
+                    className="text-white bg-primary-color font-semibold w-full px-5 py-3  border rounded-xl"
                 >
                     Save Changes
                 </button>

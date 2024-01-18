@@ -19,7 +19,7 @@ const cards = [
     },
 ];
 
-function QuizModal() {
+function QuizModal({ onClose }: any) {
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-md">
             <ModalHeader
@@ -28,6 +28,7 @@ function QuizModal() {
                     tagline: 'Select Quiz For your plan',
                 }}
                 Icon={FileEditIcon}
+                onClose={onClose}
             />
             <div className="mb-5">
                 <SearchInput />

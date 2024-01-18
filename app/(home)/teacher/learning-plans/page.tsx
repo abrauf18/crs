@@ -1,7 +1,7 @@
 import Standard from '@/app/modules/standard/Standard';
 
 function StandardPage() {
-    return <Standard />;
+    return <Standard isShownFromTeacher />;
 }
 
 export default StandardPage;

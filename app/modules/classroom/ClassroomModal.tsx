@@ -25,7 +25,7 @@ function ClassroomModal({ onClose }: any) {
     ];
     return (
         <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg">
-            <div className="h-[85%] overflow-y-auto w-full px-2">
+            <div className="h-[80%] lg:h-[85%] overflow-y-auto w-full px-2">
                 <div className="flex justify-between items-center">
                     <div className="flex  my-7">
                         <div className="flex flex-col ml-2">

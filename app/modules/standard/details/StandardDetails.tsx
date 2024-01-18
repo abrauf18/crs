@@ -1,14 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { File } from 'lucide-react';
 import StandardCard, { Data } from '@/app/modules/standard/StandardCard';
 import { standards } from '../Standard';
+import AssignCourseModal from './AssignCourseModal';
 
 type StandardDetailsProps = {
     params: {
         id: string;
     };
+    isShownFromTeacher?: boolean;
 };
 
 export const data: Data[] = [
@@ -32,22 +34,43 @@ export const data: Data[] = [
     },
 ];
 
-function StandardDetails({ params: { id } }: StandardDetailsProps) {
+function StandardDetails({
+    params: { id },
+    isShownFromTeacher,
+}: StandardDetailsProps) {
+    const [isShowModal, setIsShowModal] = useState(false);
     const selectedStandard = standards.find((standard) => standard.id === id);
 
     if (!selectedStandard) {
         // Handle the case when no matching standard is found for the given id
         return <p>Standard not found</p>;
     }
+    const handleOpenModal = () => {
+        setIsShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsShowModal(false);
+    };
 
     return (
         <>
             <div key={selectedStandard.id} className="mt-5">
-                <div className="flex gap-2 items-center mb-1">
-                    <File color="#7AA43E" size={30} />
-                    <h1 className="text-3xl font-semibold">
-                        {selectedStandard.heading}
-                    </h1>
+                <div className="flex justify-between items-center mb-1">
+                    <div className="flex  gap-2  items-center ">
+                        <File color="#7AA43E" size={30} />
+                        <h1 className="text-3xl font-semibold">
+                            {selectedStandard.heading}
+                        </h1>
+                    </div>
+                    {isShownFromTeacher && (
+                        <div
+                            onClick={handleOpenModal}
+                            className="cursor-pointer w-fit mx-1 p-3 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-medium"
+                        >
+                            <button type="button">Assign Course</button>
+                        </div>
+                    )}
                 </div>
                 <p className="text-sm text-dark-gray">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -56,6 +79,12 @@ function StandardDetails({ params: { id } }: StandardDetailsProps) {
             <StandardCard data={data} />
             <StandardCard data={data} />
             <StandardCard data={data} />
+
+            {isShowModal && (
+                <div className="absolute right-0 top-0 z-50 lg:w-[30%] w-full">
+                    <AssignCourseModal onClose={handleCloseModal} />
+                </div>
+            )}
         </>
     );
 }

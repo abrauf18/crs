@@ -25,7 +25,7 @@ const cards: Card[] = [
     },
 ];
 
-function VideoModal() {
+function VideoModal({ onClose }: any) {
     return (
         <section className="w-full bg-white h-screen py-4 px-6 shadow-md">
             <ModalHeader
@@ -34,6 +34,7 @@ function VideoModal() {
                     tagline: 'let’s Upload Video For Your User',
                 }}
                 Icon={FileVideoIcon}
+                onClose={onClose}
             />
             <div className="mb-5">
                 <SearchInput />

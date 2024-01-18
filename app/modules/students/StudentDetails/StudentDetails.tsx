@@ -1,4 +1,8 @@
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import Searchbar from '@/app/components/common/Searchbar';
 import { StudentRecordInterface } from '../StudentsRecordTable';
 import StudentProfile from './StudentProfile';
 import StudentOverallReport from './StudentOverallReport';

@@ -2,6 +2,7 @@ import React from 'react';
 import { Filter, ChevronDown, Upload } from 'lucide-react';
 
 interface FiltersInterface {
+    isHideFirstBtn?: boolean;
     text: string;
     secondButtonText?: string;
     handleClick?: () => void;
@@ -11,6 +12,7 @@ function Filters({
     text,
     secondButtonText,
     handleClick,
+    isHideFirstBtn,
 }: FiltersInterface): JSX.Element {
     const makeFirstNumberBold = (inputText: string) => {
         const match = inputText.match(/^\d+/);
@@ -38,12 +40,14 @@ function Filters({
         <div className="flex mobile:flex-col justify-between items-center my-3">
             {renderHeaderText()}
             <div className="flex">
-                <div className="cursor-pointer mr-2 px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-                    <Filter width={15} height={15} />
-                    <button className="ml-2" type="button">
-                        Filters
-                    </button>
-                </div>
+                {!isHideFirstBtn && (
+                    <div className="cursor-pointer mr-2 px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
+                        <Filter width={15} height={15} />
+                        <button className="ml-2" type="button">
+                            Filters
+                        </button>
+                    </div>
+                )}
                 <div
                     onClick={handleClick}
                     className={`px-4 py-3 cursor-pointer border text-sm rounded-lg flex items-center justify-between ${

@@ -76,14 +76,16 @@ function QuestionDetailModal({ onClose }: any) {
                     </div>
                 </div>
                 <div className="mt-5">
-                    {StudentsList.map((student: StudentCardInterface) => (
-                        <>
-                            <div className="py-4" key={student.id}>
-                                <StudentCard student={student} />
-                            </div>
-                            <hr />
-                        </>
-                    ))}
+                    {StudentsList.map(
+                        (student: StudentCardInterface, index) => (
+                            <>
+                                <div className="py-4" key={student.id}>
+                                    <StudentCard student={student} />
+                                </div>
+                                {StudentsList.length !== index + 1 && <hr />}
+                            </>
+                        )
+                    )}
                 </div>
             </div>
         </section>

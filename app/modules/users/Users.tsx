@@ -5,6 +5,7 @@ import Pagintaion from '@/app/components/common/Pagintaion';
 import Profile from '@/app/modules/setting/Profile';
 import { X } from 'lucide-react';
 import UsersTable, { User } from './UsersTable';
+import ProfileModal from './ProfileModal';
 
 export const usersData: User[] = [
     {

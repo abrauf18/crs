@@ -17,6 +17,7 @@ interface CardContentProps {
     third: string;
     Icons: IconProps;
     isModal?: boolean;
+    isHideEditIcon?: boolean;
 }
 
 function CardContent({
@@ -28,6 +29,7 @@ function CardContent({
     third,
     Icons,
     isModal,
+    isHideEditIcon,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
     return (
@@ -66,9 +68,11 @@ function CardContent({
                     >
                         Details
                     </Link>
-                    <div className="bg-orange-100 p-2 rounded-md">
-                        <EditIcon height={20} width={20} color="#F59A3B" />
-                    </div>
+                    {!isHideEditIcon && (
+                        <div className="bg-orange-100 p-2 rounded-md">
+                            <EditIcon height={20} width={20} color="#F59A3B" />
+                        </div>
+                    )}
                 </div>
             )}
         </div>

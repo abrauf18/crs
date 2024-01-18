@@ -39,7 +39,7 @@ function InviteTeacher() {
         },
     ];
     return (
-        <div className=" p-10 w-[95%] lg:w-[75%] h-screen flex flex-col ">
+        <div className=" p-10 w-[95%] lg:w-[75%]  flex flex-col ">
             <Steps step={3} totalSteps={3} />
 
             <div className="flex items-center lg:items-start flex-col">
@@ -66,7 +66,7 @@ function InviteTeacher() {
                     />
                 </div>
 
-                <div className="text-center mt-5">
+                <div className="text-center my-5">
                     <Button
                         type="button"
                         className="w-full border bg-transparent text-dark-gray hover:bg-gray-400 hover:text-white mb-3"
@@ -87,7 +87,7 @@ function InviteTeacher() {
                     ))}
                 </div>
 
-                <div className="text-center mt-4">
+                <div className="text-center mt-6">
                     <Button
                         type="button"
                         className="w-full bg-primary-color hover:bg-orange-400 mb-3"

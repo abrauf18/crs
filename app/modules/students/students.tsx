@@ -147,14 +147,6 @@ export const Studentinfo: StudentInfoInterface[] = [
         performance: '43%',
         image: '/app/assets/images/Avtar.jpg',
     },
-    {
-        id: 1,
-        name: 'Ali',
-        email: 'abcdef@gmail.com',
-        grade: '8th',
-        performance: '43%',
-        image: '/app/assets/images/Avtar.jpg',
-    },
 ];
 function Students() {
     const [isAddStudentModalOpen, setAddStudentModalOpen] = useState(false);
