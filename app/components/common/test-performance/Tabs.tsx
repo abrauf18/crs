@@ -24,7 +24,7 @@ function Tabs() {
             </button>
             <button
                 type="button"
-                className={`py-2 px-4 border-2 rounded-lg ${
+                className={`py-2 px-4 border-2 rounded-xl ${
                     activeTab === 'quiz'
                         ? ' border-primary-color  bg-orange-50'
                         : ''
