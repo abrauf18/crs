@@ -1,7 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
-import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
 import ClassroomIcon from '@/app/assets/icons/ClassroomIcon';
 import { Label } from '@/app/components/ui/label';
 import AppInput from '@/app/components/common/AppInput';

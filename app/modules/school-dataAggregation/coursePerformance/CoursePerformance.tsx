@@ -1,4 +1,3 @@
-import Bars from '@/app/assets/icons/Bars';
 import Filters from '@/app/components/common/Filters';
 import Tabs from '@/app/components/common/test-performance/Tabs';
 import React from 'react';

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Eye } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
     Table,

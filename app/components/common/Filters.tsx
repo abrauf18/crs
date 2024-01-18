@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, ChevronDown, LucideIcon, Upload } from 'lucide-react';
+import { Filter, ChevronDown, Upload } from 'lucide-react';
 
 interface FiltersInterface {
     text: string;

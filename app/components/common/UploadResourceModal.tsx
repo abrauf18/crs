@@ -4,7 +4,6 @@ import ModalFooter from '@/app/components/common/ModalFooter';
 import UploadItem from '@/app//components/common/UploadItem';
 import FileUploading from '@/app/components/common/FileUploading';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 interface UploadResourceModalProp {
     headerText: string;

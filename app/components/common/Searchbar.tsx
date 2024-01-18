@@ -1,5 +1,5 @@
 import React from 'react';
-import { LucideIcon, SearchIcon, BellIcon } from 'lucide-react';
+import { LucideIcon, BellIcon } from 'lucide-react';
 import SearchInput from './SearchInput';
 
 interface SearchbarProp {

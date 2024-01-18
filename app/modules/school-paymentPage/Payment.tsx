@@ -30,18 +30,7 @@ function Payment() {
                         >
                             Card Number
                         </label>
-                        {/* <div className="border flex items-center justify-between p-2 rounded-lg w-full bg-white">
-                            <input
-                                type="text"
-                                id="card_number"
-                                name="card_number"
-                                className="bg-gray-50  rounded-lg outline-none w-full"
-                                placeholder="Enter Card Number"
-                            />
-                            <div>
-                                <VisaIcon />
-                            </div>
-                        </div> */}
+
                         <div
                             className={`border ${
                                 isFocused

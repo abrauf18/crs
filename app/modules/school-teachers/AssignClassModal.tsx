@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Trash, Trash2, X } from 'lucide-react';
-import ModalFooter from '@/app/components/common/ModalFooter';
+import { Trash2 } from 'lucide-react';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import Avatar from '@/app/assets/images/UserImage.svg';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
@@ -123,7 +122,6 @@ function AssignClassModal({ onClose }: any) {
                     <AppInput placeholder="Subject" />
                 </div>
             </div>
-            {/* <ModalFooter text="Invite" /> */}
             <div className="lg:flex lg:justify-between lg:items-center  w-full py-2 gap-1">
                 <button
                     type="button"

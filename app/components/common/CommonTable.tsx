@@ -7,7 +7,6 @@ import RecorderIcon from '@/app/assets/icons/RecorderIcon';
 import TicketIcon from '@/app/assets/icons/TicketIcon';
 import XlsIcon from '@/app/assets/icons/XlsIcon';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
-import QuestionIcon from '@/app/assets/icons/QuestionIcon';
 import {
     Table,
     TableHeader,

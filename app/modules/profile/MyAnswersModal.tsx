@@ -1,7 +1,5 @@
 import React from 'react';
-import { Check, FileLineChart, Trash2, X } from 'lucide-react';
-import Image from 'next/image';
-import Avatar from '@/app/assets/images/UserImage.svg';
+import { Check, X } from 'lucide-react';
 
 function MyAnswersModal() {
     return (

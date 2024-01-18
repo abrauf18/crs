@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Trash } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
     Table,
@@ -36,11 +36,11 @@ function TicketsTable({
     function getStatusColorClass(status: string) {
         switch (status.toLocaleLowerCase()) {
             case 'active':
-                return 'text-green-500'; // Replace with the actual green class
+                return 'text-green-500';
             case 'inprogress':
-                return 'text-sky-400'; // Replace with the actual blue class
+                return 'text-sky-400';
             case 'closed':
-                return 'text-red-500'; // Replace with the actual red class
+                return 'text-red-500';
             default:
                 return '';
         }
@@ -83,9 +83,7 @@ function TicketsTable({
                         <TableCell className="text-dark-gray">
                             {ticket.date}
                         </TableCell>
-                        {/* <TableCell className="text-dark-gray">
-                            {ticket.status}
-                        </TableCell> */}
+
                         <TableCell
                             className={`text-dark-gray font-medium ${getStatusColorClass(
                                 ticket.status
