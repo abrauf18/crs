@@ -43,7 +43,12 @@ function Dashboard() {
                     count={150}
                     currentPath="/admin/resources"
                 />
-                <Card Icon={DataIcon} cardText="Data Insights" count="70%" />
+                <Card
+                    Icon={DataIcon}
+                    cardText="Data Insights"
+                    count="70%"
+                    currentPath="#"
+                />
             </div>
             <Filters text="Overall Performance" />
             <div className="w-auto ">

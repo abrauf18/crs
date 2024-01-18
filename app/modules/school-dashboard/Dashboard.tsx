@@ -7,11 +7,9 @@ import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import Image from 'next/image';
 import schoolGraph from '@/app/assets/images/schoolGraph.svg';
 import { usersData } from '@/app/modules/users/Users';
-import { ResourcesData } from '@/app/modules/resources/Resources';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
-import Bars from '@/app/assets/icons/Bars';
+import Link from 'next/link';
 import UsersTable from '../users/UsersTable';
-import ResourcesTable from '../resources/ResourcesTable';
 import Filters from '../../components/common/Filters';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
@@ -122,9 +120,11 @@ function SchoolDashboard() {
                         <h1 className="text-[20px] font-semibold">
                             Teacher&apos;s
                         </h1>
-                        <div className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium">
-                            Show All
-                        </div>
+                        <Link href="/school/teachers">
+                            <div className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium">
+                                Show All
+                            </div>
+                        </Link>
                     </div>
                     <UsersTable users={usersData} fontSize="12" isDashboard />
                 </div>
