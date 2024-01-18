@@ -76,7 +76,7 @@ function SchoolDashboard() {
         setIsDisplayTicketModal(false);
     };
     return (
-        <section className="flex flex-col w-full scroll-smooth mt-4 lg:mt-12   lg:px-4">
+        <section className="flex flex-col w-full scroll-smooth  lg:px-4">
             <Searchbar
                 headerText="Hello John Doe!"
                 tagline="Here’s a Quick Overview"
