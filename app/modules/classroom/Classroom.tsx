@@ -74,7 +74,7 @@ function Classroom() {
             </div>
 
             <div className="border rounded-lg p-5 mt-5">
-                <h1 className="text-[20px] font-semibold">7th Class</h1>
+                <h1 className="text-[20px] font-semibold">6th Class</h1>
                 <StudentsInfoTable students={Studentinfo} isClassroomTable />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
