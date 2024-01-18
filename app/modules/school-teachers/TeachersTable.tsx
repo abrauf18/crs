@@ -100,7 +100,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                             <TableCell className="text-dark-gray pl-10 ">
                                 {teacher.assignedClasses}
                             </TableCell>
-                            <TableCell className="flex justify-start items-center p-0 mt-6 ml-3 ">
+                            <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 ">
                                 <div className="mr-2 rounded-md cursor-pointer">
                                     <EditIcon
                                         width={28}

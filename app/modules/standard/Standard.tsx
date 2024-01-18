@@ -121,7 +121,11 @@ function Standard({ isShownFromTeacher }: { isShownFromTeacher?: boolean }) {
                     >
                         <CardContent
                             id={standard.id}
-                            route="/teacher/learning-plans"
+                            route={
+                                isShownFromTeacher
+                                    ? '/teacher/learning-plans'
+                                    : '/admin/standard'
+                            }
                             heading={standard.heading}
                             first={standard.first}
                             second={standard.second}

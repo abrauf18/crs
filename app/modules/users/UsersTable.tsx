@@ -100,7 +100,7 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                             <TableCell className="text-dark-gray">
                                 {user.role}
                             </TableCell>
-                            <TableCell className="flex  items-center p-0 ml-2 mt-3 ">
+                            <TableCell className="flex  items-center p-0 ml-2 mt-4 ">
                                 {isDashboard ? (
                                     <div className="mr-2 rounded-md flex justify-center w-full h-fulls">
                                         <Eye
