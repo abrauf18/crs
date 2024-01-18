@@ -17,6 +17,7 @@ import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
 import StudentsInfoTable from '../students/StudentsInfoTable';
 import { Studentinfo } from '../students/Students';
+
 import LearningPlanTable, { LearningInterface } from './LearningPlanTable';
 
 export const learningPlans: LearningInterface[] = [
