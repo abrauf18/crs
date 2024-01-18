@@ -1,10 +1,8 @@
 import React from 'react';
 import Filters from '@/app/components/common/Filters';
-import { User, ArrowLeft, ChevronDown } from 'lucide-react';
-import Searchbar from '@/app/components/common/Searchbar';
-import { Button } from '@/app/components/ui/button';
+import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
-import graphImage from '@/app/assets/images/Graph.png';
+import graphImage from '@/app/assets/images/graph.png';
 import StudentsRecordTable, {
     StudentRecordInterface,
 } from '../StudentsRecordTable';
