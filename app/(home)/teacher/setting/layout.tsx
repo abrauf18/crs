@@ -1,6 +1,6 @@
 import { Settings } from 'lucide-react';
-import Searchbar from '@/app/components/common/Searchbar';
 import { Metadata } from 'next';
+import Searchbar from '@/app/components/common/Searchbar';
 
 export const metadata: Metadata = {
     title: 'Settings',
