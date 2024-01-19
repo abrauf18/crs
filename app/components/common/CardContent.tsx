@@ -18,6 +18,7 @@ interface CardContentProps {
     Icons: IconProps;
     isModal?: boolean;
     isHideEditIcon?: boolean;
+    isShownFromStudent?: boolean;
 }
 
 function CardContent({
@@ -30,6 +31,7 @@ function CardContent({
     Icons,
     isModal,
     isHideEditIcon,
+    isShownFromStudent,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
     return (
@@ -66,7 +68,7 @@ function CardContent({
                         href={route && id ? `${route}/${id}` : '#'}
                         className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 hover:bg-primary-color hover:text-white"
                     >
-                        Details
+                        {isShownFromStudent ? 'Start Course' : 'Details'}
                     </Link>
                     {!isHideEditIcon && (
                         <div className="bg-orange-100 p-2 rounded-md">

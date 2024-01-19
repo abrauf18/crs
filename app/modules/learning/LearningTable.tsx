@@ -22,6 +22,7 @@ export interface LearningInterface {
     resourceType: string;
     isDone: boolean;
     isDisabled: boolean;
+    route?: string;
 }
 
 interface LearningTableProps {
@@ -90,7 +91,9 @@ function LearningTable({
                                 }`}
                                 onClick={() =>
                                     push(
-                                        `${pathName}/${learning.id}/${learning.resourceType}`
+                                        learning.route
+                                            ? learning.route
+                                            : `${pathName}/${learning.id}/${learning.resourceType}`
                                     )
                                 }
                             >

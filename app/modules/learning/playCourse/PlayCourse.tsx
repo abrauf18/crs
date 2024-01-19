@@ -19,6 +19,7 @@ export const LearningRecord: LearningInterface[] = [
         isDone: true,
         isDisabled: false,
         resourceType: 'video',
+        route: '#',
     },
     {
         id: 1,
@@ -29,6 +30,7 @@ export const LearningRecord: LearningInterface[] = [
         isDone: true,
         isDisabled: false,
         resourceType: 'video',
+        route: '#',
     },
     {
         id: 1,
@@ -39,6 +41,7 @@ export const LearningRecord: LearningInterface[] = [
         isDone: false,
         isDisabled: false,
         resourceType: 'video',
+        route: '#',
     },
     {
         id: 1,
@@ -49,6 +52,7 @@ export const LearningRecord: LearningInterface[] = [
         isDone: false,
         isDisabled: false,
         resourceType: 'quiz',
+        route: '#',
     },
 ];
 

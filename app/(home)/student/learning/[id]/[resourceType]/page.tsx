@@ -1,5 +1,5 @@
-import PlayCourse from '@/app/modules/learning/playCourse/PlayCourse';
 import React from 'react';
+import PlayCourse from '@/app/modules/learning/playCourse/PlayCourse';
 
 function PlayCoursePage({ params }: any) {
     return <PlayCourse params={params} />;

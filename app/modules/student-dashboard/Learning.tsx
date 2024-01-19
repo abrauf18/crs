@@ -1,6 +1,6 @@
 import React from 'react';
-import CardContent from '@/app/components/common/CardContent';
 import { CalendarDays, File, PlayIcon } from 'lucide-react';
+import CardContent from '@/app/components/common/CardContent';
 
 export const learnings = [
     {
@@ -47,6 +47,8 @@ async function Learning() {
                         second={learning.second}
                         third={learning.third}
                         Icons={Icons}
+                        isHideEditIcon
+                        isShownFromStudent
                     />
                 </div>
             ))}

@@ -42,12 +42,6 @@ export const ResourcesData: Resource[] = [
         type: 'SlideShow',
         topic: 'Topic 3',
     },
-    {
-        id: 7,
-        name: 'XYZ Resources',
-        type: 'SlideShow',
-        topic: 'Topic 3',
-    },
 ];
 function Resoures() {
     return (

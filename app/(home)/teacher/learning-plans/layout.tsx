@@ -1,5 +1,11 @@
+import { Metadata } from 'next';
 import StandardIcon from '@/app/assets/icons/StandardIcon';
 import Searchbar from '@/app/components/common/Searchbar';
+
+export const metadata: Metadata = {
+    title: 'Learning Plan',
+    description: 'Here;s Your All Assigned Classroom',
+};
 
 export default function StandardLayout({
     children,
@@ -9,8 +15,8 @@ export default function StandardLayout({
     return (
         <section>
             <Searchbar
-                headerText="Standards"
-                tagline="All Standards here"
+                headerText="Learning Plan"
+                tagline="Here’s All Your Created Plans"
                 Icon={StandardIcon}
             />
             {children}

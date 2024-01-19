@@ -1,5 +1,11 @@
-import Searchbar from '@/app/components/common/Searchbar';
 import React from 'react';
+import { Metadata } from 'next';
+import Searchbar from '@/app/components/common/Searchbar';
+
+export const metadata: Metadata = {
+    title: 'Data Aggregation',
+    description: 'Class Performance on the Basis of Standards',
+};
 
 function layout({ children }: { children: React.ReactNode }) {
     return (

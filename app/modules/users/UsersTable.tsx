@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import EditIcon from '@/app/assets/icons/EditIcon';
 import { Eye, Trash, X } from 'lucide-react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { Poppins } from 'next/font/google';
+import Image from 'next/image';
+import EditIcon from '@/app/assets/icons/EditIcon';
 import {
     Table,
     TableBody,
@@ -13,7 +14,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import Image from 'next/image';
 import Avatar from '@/app/assets/images/UserImage.svg';
 import Profile from '../setting/Profile';
 import ProfileModal from './ProfileModal';
@@ -55,10 +55,10 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
             >
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px] text-dark-gray font-bold">
+                        <TableHead className=" text-dark-gray font-bold">
                             SNO.
                         </TableHead>
-                        <TableHead className="w-[300px] text-dark-gray font-bold">
+                        <TableHead className=" text-dark-gray font-bold">
                             NAME
                         </TableHead>
                         <TableHead className="text-dark-gray font-bold">

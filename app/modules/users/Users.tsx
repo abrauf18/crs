@@ -1,9 +1,9 @@
 import React from 'react';
+import { X } from 'lucide-react';
 import userImage from '@/app/assets/images/UserImage.svg';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import Profile from '@/app/modules/setting/Profile';
-import { X } from 'lucide-react';
 import UsersTable, { User } from './UsersTable';
 import ProfileModal from './ProfileModal';
 
@@ -42,20 +42,6 @@ export const usersData: User[] = [
         name: 'Charlie',
         email: 'charlie.brown@example.com',
         role: 'Admin',
-    },
-    {
-        id: 6,
-        imageUrl: userImage as string,
-        name: 'Eva',
-        email: 'eva.williams@example.com',
-        role: 'Moderator',
-    },
-    {
-        id: 7,
-        imageUrl: userImage as string,
-        name: 'Eva',
-        email: 'eva.williams@example.com',
-        role: 'Moderator',
     },
 ];
 function Users() {

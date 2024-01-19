@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
-import Image from 'next/image';
 import graph from '@/app/assets/images/graph.svg';
 import { usersData } from '@/app/modules/users/Users';
 import { ResourcesData } from '@/app/modules/resources/Resources';

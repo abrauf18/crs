@@ -1,11 +1,12 @@
+import React from 'react';
+import { LibraryBig, ShieldAlert } from 'lucide-react';
+import Link from 'next/link';
 import ClassroomIcon from '@/app/assets/icons/ClassroomIcon';
 import StatsIcon from '@/app/assets/icons/StatsIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import Searchbar from '@/app/components/common/Searchbar';
 import Card from '@/app/modules/student-dashboard/Card';
 import Learning from '@/app/modules/student-dashboard/Learning';
-import { LibraryBig, ShieldAlert } from 'lucide-react';
-import React from 'react';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import videoImage2 from '@/app/assets/images/videoImages/videoImage2.svg';
 import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
@@ -13,7 +14,6 @@ import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
 import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
 import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
 import VideoCard, { Card as Video } from '@/app/components/common/VideoCard';
-import Link from 'next/link';
 
 const cards: Video[] = [
     {

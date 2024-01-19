@@ -1,5 +1,11 @@
-import Searchbar from '@/app/components/common/Searchbar';
+import { Metadata } from 'next';
 import React from 'react';
+import Searchbar from '@/app/components/common/Searchbar';
+
+export const metadata: Metadata = {
+    title: 'Profile',
+    description: 'Track Of Performance & Progress',
+};
 
 function layout({ children }: { children: React.ReactNode }) {
     return (

@@ -1,5 +1,11 @@
-import Searchbar from '@/app/components/common/Searchbar';
 import { UserIcon } from 'lucide-react';
+import { Metadata } from 'next';
+import Searchbar from '@/app/components/common/Searchbar';
+
+export const metadata: Metadata = {
+    title: 'Users',
+    description: 'Manage Your All User’s',
+};
 
 export default function DashboardLayout({
     children,

@@ -1,5 +1,5 @@
-import Learning from '@/app/modules/learning/Learning';
 import React from 'react';
+import Learning from '@/app/modules/learning/Learning';
 
 function LearningPage() {
     return <Learning />;

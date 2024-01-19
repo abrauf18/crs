@@ -54,7 +54,7 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
         >
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px] text-dark-gray font-bold">
+                    <TableHead className=" text-dark-gray font-bold">
                         SNO.
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
