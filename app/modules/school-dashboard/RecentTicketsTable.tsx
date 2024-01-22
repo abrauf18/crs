@@ -58,7 +58,7 @@ function TicketsTable({
                         SNO.
                     </TableHead>
                     <TableHead className=" text-dark-gray font-bold">
-                        NAME
+                        Name
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
                         Date

@@ -53,7 +53,7 @@ function TestDetailTable({ test, fontSize }: TestDetailProp) {
                 <TableHeader>
                     <TableRow>
                         <TableHead className=" text-dark-gray font-semibold">
-                            Q NO.
+                            Q#
                         </TableHead>
                         <TableHead className="w-[500px] text-dark-gray font-semibold">
                             Question
@@ -195,7 +195,7 @@ function TestDetailTable({ test, fontSize }: TestDetailProp) {
                 </TableBody>
             </Table>
             {isShowDetailModal && (
-                <div className=" right-0 top-0 z-50 w-full lg:w-[30%] fixed">
+                <div className="fixed right-0 top-0 z-50 w-full lg:w-[30%]">
                     <QuestionDetailModal onClose={handleCloseModal} />
                 </div>
             )}

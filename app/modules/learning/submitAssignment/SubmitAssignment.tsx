@@ -80,7 +80,7 @@ function SubmitAssignment() {
             ))}
 
             {isShowUploadModal && (
-                <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[25%]">
                     <UploadResourceModal
                         headerText="Upload Assignment"
                         buttonText="Submit Assignment"

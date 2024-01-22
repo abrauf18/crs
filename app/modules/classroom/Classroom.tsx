@@ -75,7 +75,7 @@ function Classroom() {
                 />
             </div>
 
-            <div className="border rounded-lg p-5 mt-5">
+            <div className="border rounded-lg p-4 px-6 mt-5">
                 <h1 className="text-[20px] font-semibold">6th Class</h1>
                 <StudentsInfoTable students={Studentinfo} isClassroomTable />
             </div>

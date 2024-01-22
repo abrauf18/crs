@@ -22,7 +22,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
                     My profile
                 </h1>
-                <div className="md:flex justify-between items-center  mobile:w-full mobile:mb-2">
+                <div className="md:flex justify-between lg:space-x-4 items-center  mobile:w-full mobile:mb-2">
                     <div className="flex justify-center">
                         <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
                             <div className="border-2 border-light-gray rounded-full h-36 w-36 flex justify-center items-center">

@@ -83,7 +83,7 @@ function Teachers() {
                 headerText="All Teachers"
                 tagline="All Teacher in your School"
             />
-            <div className="border rounded-lg p-5  lg:px-4 ">
+            <div className="border rounded-lg p-4 px-6   ">
                 <div className="flex mobile:flex-col justify-between px-1 mb-6 mobile:items-start items-center">
                     <h1 className="text-[20px] font-semibold">All Teachers</h1>
                     <div
@@ -100,7 +100,7 @@ function Teachers() {
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>
-            {/* <div className="absolute right-0 top-0 z-50 w-full lg:w-[25%]">
+            {/* <div className="fixed right-0 top-0 z-50 w-full lg:w-[25%]">
                 <AssignClassModal />
             </div> */}
             {isAddTeacherModalVisible && (

@@ -17,7 +17,7 @@ function MyAnswersModal({ onClose }: any) {
                         </div>
                     </div>
                     <div className="rounded-full bg-white border p-1">
-                        <X size={20} onClick={onClose} />
+                        <X size={15} onClick={onClose} />
                     </div>
                 </div>
 

@@ -51,7 +51,7 @@ function QuestionDetailModal({ onClose }: any) {
                         </p>
                     </div>
                     <div className="rounded-full bg-white border p-1 cursor-pointer h-fit my-7">
-                        <X size={20} onClick={onClose} />
+                        <X size={15} onClick={onClose} />
                     </div>
                 </div>
 

@@ -5,7 +5,7 @@ import StandardCard from './StandardCard';
 function Standards() {
     return (
         <section>
-            <Filters text="40 Learning Plans In Total" />
+            <Filters text="40 Learning Plans In Total" btnFontSize="text-xs" />
             <StandardCard />
         </section>
     );

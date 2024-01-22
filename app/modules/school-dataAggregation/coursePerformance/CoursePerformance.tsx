@@ -61,6 +61,7 @@ function CoursePerformance() {
             <Filters
                 text="Course Performance - Coronavirus"
                 secondButtonText="Student"
+                btnFontSize="text-xs"
             />
             <Tabs />
             <p className="text-dark-gray font-medium text-lg mt-5">

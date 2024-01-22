@@ -110,7 +110,7 @@ function Profile() {
             <div>
                 <h1 className="font-semibold text-2xl mb-4 mt-8">My Answers</h1>
 
-                <div className="border rounded-lg p-5 flex flex-col items-end">
+                <div className="border rounded-lg p-4 px-6 flex flex-col items-end">
                     <Filters text="" btnFontSize="text-xs" />
                     <MyAnswersTable myRecord={MyAnswersRecord} />
                 </div>

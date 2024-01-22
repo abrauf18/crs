@@ -46,7 +46,7 @@ function TopicsList() {
         <div>
             <div className="w-full ">
                 <div className="border rounded-lg p-5 mt-10">
-                    <Filters text="All topic's" />
+                    <Filters text="All topic's" btnFontSize="text-xs" />
                     <TopicsTable topics={topicsList} />
                 </div>
                 <div className="flex justify-center items-center mt-5">

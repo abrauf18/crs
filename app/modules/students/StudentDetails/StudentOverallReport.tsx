@@ -1,7 +1,7 @@
 import React from 'react';
-import Filters from '@/app/components/common/Filters';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
+import Filters from '@/app/components/common/Filters';
 import graphImage from '@/app/assets/images/graph.png';
 import StudentsRecordTable, {
     StudentRecordInterface,
@@ -16,7 +16,7 @@ function StudentOverallReport({
         // student overall performance and student report
         <div className="mt-8 font-semibold text-xl flex flex-col lg:flex-row">
             <div className="w-full lg:w-[50%] lg:mr-8 ">
-                <Filters text="Overall Performance" />
+                <Filters text="Overall Performance" btnFontSize="text-xs" />
                 <div className="mt-5">
                     <Image
                         src={graphImage}

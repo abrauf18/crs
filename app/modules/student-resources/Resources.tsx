@@ -49,8 +49,8 @@ function Resources() {
                 headerText="All Resources"
                 tagline="Your All Resources Allocated to Topics"
             />
-            <div className="border rounded-lg p-5 mt-5">
-                <Filters text="All topic's" />
+            <div className="border rounded-lg p-3 px-6">
+                <Filters text="All topic's" btnFontSize="text-xs" />
                 <ResourcesTable resources={resourcesList} />
             </div>
             <div className="flex justify-center items-center mt-5">

@@ -1,10 +1,8 @@
 import React from 'react';
-import { Label } from '@/app/components/ui/label';
 import { CalendarDays } from 'lucide-react';
+import { Label } from '@/app/components/ui/label';
 import CreateTopic from '../CreateTopic';
 import StandardCard, { Data } from '../StandardCard';
-import VideoModal from '../VideoModal';
-import QuizModal from '../QuizModal';
 
 export const data: Data[] = [
     {
@@ -88,7 +86,7 @@ function CreateStandard() {
                 </div>
             </div>
             <StandardCard data={data} />
-            <div className="absolute right-0 top-0 z-50">
+            <div className="fixed right-0 top-0 z-50">
                 {/* <VideoModal /> */}
                 {/* <QuizModal /> */}
             </div>

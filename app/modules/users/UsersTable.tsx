@@ -59,7 +59,7 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                             SNO.
                         </TableHead>
                         <TableHead className=" text-dark-gray font-bold">
-                            NAME
+                            Name
                         </TableHead>
                         <TableHead className="text-dark-gray font-bold">
                             Email
@@ -132,7 +132,7 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                 </TableBody>
             </Table>
             {isShowProfileModal && (
-                <div className="absolute right-0 top-0 z-50 lg:w-[30%] w-full">
+                <div className="fixed right-0 top-0 z-50 lg:w-[30%] w-full">
                     <ProfileModal onClose={handleCloseProfileModal} />
                 </div>
             )}

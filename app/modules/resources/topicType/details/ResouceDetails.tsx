@@ -1,8 +1,8 @@
+import React from 'react';
 import CommonTable from '@/app/components/common/CommonTable';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import { convertDashesToSpaces } from '@/lib/utils';
-import React from 'react';
 
 function ResourceDetails({ params }: any) {
     const ModifiedTopicName = convertDashesToSpaces(params.typeName); // adding space after Topic

@@ -40,7 +40,7 @@ function SubmitTicketModal({ onClose }: any) {
                         </div>
                     </div>
                     <div className="rounded-full bg-white border p-1 cursor-pointer">
-                        <X size={20} onClick={onClose} />
+                        <X size={15} onClick={onClose} />
                     </div>
                 </div>
 

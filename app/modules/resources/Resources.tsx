@@ -46,7 +46,7 @@ function Resoures() {
                 tagline="Your All Resources Here"
             />
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
-                <Filters text="Resources" />
+                <Filters text="Resources" btnFontSize="text-xs" />
                 <ResourcesTable resources={ResourcesData} />
             </div>
             <div className="flex items-center w-full justify-center mt-5">

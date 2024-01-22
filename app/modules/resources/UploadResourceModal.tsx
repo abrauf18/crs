@@ -5,7 +5,7 @@ import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import FileUploading from '@/app/components/common/FileUploading';
 import UploadItem from '@/app/components/common/UploadItem';
 
-function UploadResourceModal() {
+function UploadResourceModal({ onClose }: any) {
     return (
         <section className="w-full bg-white h-screen py-4 px-8 shadow-lg">
             <div className="h-[90%] overflow-y-auto w-full px-2">
@@ -15,6 +15,7 @@ function UploadResourceModal() {
                         tagline: 'Upload Resource For Your User',
                     }}
                     Icon={ResourceIcon}
+                    onClose={onClose}
                 />
                 <div className="flex flex-col space-y-2 mt-5">
                     <label className="font-semibold" htmlFor="invite">

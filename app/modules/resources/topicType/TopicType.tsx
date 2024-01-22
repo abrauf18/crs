@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { HelpCircle, TicketIcon } from 'lucide-react';
 import Filters from '@/app/components/common/Filters';
@@ -12,12 +12,22 @@ import UploadResourceModal from '../UploadResourceModal';
 
 function TopicPage() {
     const path = usePathname();
+    const [isShowUploadModal, setIsShowUploadModal] = useState(false);
+
+    const handleOpenUploadModal = () => {
+        setIsShowUploadModal(true);
+    };
+
+    const handleCloseUploadModal = () => {
+        setIsShowUploadModal(false);
+    };
 
     return (
         <section>
             <Filters
                 text="500 Resources In Total"
                 secondButtonText="Upload Video"
+                handleClick={handleOpenUploadModal}
             />
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card Icon={VideoIcon} cardText="Total Video's" count="20K" />
@@ -32,9 +42,11 @@ function TopicPage() {
                 />
                 <Card Icon={HelpCircle} cardText="Quizzes" count={150} />
             </div>
-            {/* <div className="absolute right-0 top-0 z-50 ">
-                <UploadResourceModal />
-            </div> */}
+            {isShowUploadModal && (
+                <div className="fixed right-0 top-0 z-50 ">
+                    <UploadResourceModal onClose={handleCloseUploadModal} />
+                </div>
+            )}
         </section>
     );
 }

@@ -48,14 +48,14 @@ function Users() {
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
-                <Filters text="User’s" />
+                <Filters text="User’s" btnFontSize="text-xs" />
                 <UsersTable users={usersData} />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>
-            {/* <div className="absolute right-0 top-0 z-50 bg-white shadow-md p-4 md:p-10 md:h-screen h-auto">
-                <div className="absolute right-5 top-8 p-2 border rounded-full">
+            {/* <div className="fixed right-0 top-0 z-50 bg-white shadow-md p-4 md:p-10 md:h-screen h-auto">
+                <div className="fixed right-5 top-8 p-2 border rounded-full">
                     <X size={15} />
                 </div>
                 <Profile />
