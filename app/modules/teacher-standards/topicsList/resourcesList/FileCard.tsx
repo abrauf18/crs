@@ -3,10 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { HelpCircle } from 'lucide-react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import PptIcon from '@/app/assets/icons/PptIcon';
 import XlsIcon from '@/app/assets/icons/XlsIcon';
-import { HelpCircle } from 'lucide-react';
 
 interface FileCardProps {
     id: string;
@@ -24,7 +24,7 @@ function FileCard({ id, imageUrl, resourceType, text }: FileCardProps) {
                     alt="resource"
                     className="w-full h-full "
                 />
-                <div className="bg-sky-400 w-fit p-2 absolute left-0 top-0 z-10 rounded-lg">
+                <div className="bg-sky-400 w-fit p-2 absolute left-3 top-3 z-10 rounded-lg">
                     {resourceType.toLowerCase() === 'slideshow' && <PptIcon />}
                     {resourceType.toLowerCase() === 'worksheet' && <XlsIcon />}
                     {resourceType.toLowerCase() !== 'slideshow' &&

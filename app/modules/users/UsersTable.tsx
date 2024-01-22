@@ -86,8 +86,8 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                                         src={Avatar}
                                         alt="crs logo"
                                         style={{
-                                            width: '25px',
-                                            height: '25px',
+                                            width: '26px',
+                                            height: '26px',
                                             objectFit: 'fill',
                                         }}
                                     />
@@ -95,7 +95,7 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                                 </span>
                             </TableCell>
                             <TableCell className="text-dark-gray">
-                                {user.email}
+                                <span className="truncate">{user.email}</span>
                             </TableCell>
                             <TableCell className="text-dark-gray">
                                 {user.role}

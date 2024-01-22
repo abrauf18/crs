@@ -104,7 +104,7 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
                 </TableBody>
             </Table>
             {isShowDownloadModal && (
-                <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 lg:w-[25%]">
                     <ResourceDownloadModal onClose={handleCloseDownloadModal} />
                 </div>
             )}

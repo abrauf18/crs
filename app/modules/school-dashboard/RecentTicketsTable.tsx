@@ -79,7 +79,13 @@ function TicketsTable({
                                 {index + 1}
                             </span>
                         </TableCell>
-                        <TableCell className="">{ticket.name}</TableCell>
+                        <TableCell className="">
+                            <span className="rounded flex gap-x-2 items-center ">
+                                <span className="truncate h-[26px]">
+                                    {ticket.name}
+                                </span>
+                            </span>
+                        </TableCell>
                         <TableCell className="text-dark-gray">
                             {ticket.date}
                         </TableCell>

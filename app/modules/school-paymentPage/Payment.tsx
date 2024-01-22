@@ -1,10 +1,10 @@
 'use client';
 
+import React, { useState } from 'react';
 import Searchbar from '@/app/components/common/Searchbar';
 import VisaIcon from '@/app/assets/icons/VisaIcon';
 import StripeIcon from '@/app/assets/icons/StripeIcon';
 import PayPalIcon from '@/app/assets/icons/PayPalIcon';
-import React, { useState } from 'react';
 import AppInput from '@/app/components/common/AppInput';
 import { Label } from '@/app/components/ui/label';
 
@@ -17,7 +17,7 @@ function Payment() {
                 tagline="Here’s Your Payment Information"
             />
             <div className="flex flex-col justify-center items-center mt-10  ">
-                <div className="h-fit px-3 py-6 lg:px-8 lg:py-8  rounded-lg shadow-md">
+                <div className="h-fit px-3 py-6 lg:px-8 lg:py-8  rounded-lg shadow-[0px_4px_20px_0px_rgb(0,0,0,0.05)] ">
                     <h1 className="font-semibold text-xl">Card Information</h1>
                     <p className="text-sm text-dark-gray font-medium">
                         Don’t Worry your Information Is Completely Secure
@@ -97,17 +97,17 @@ function Payment() {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-primary-color text-center font-semibold cursor-pointer hover:bg-orange-400 rounded-xl py-2 text-white mt-5 ">
+                    <div className="bg-primary-color text-center font-semibold cursor-pointer lg:hover:bg-orange-400 rounded-xl py-2 text-white mt-5 ">
                         <span>Pay Now</span>
                     </div>
 
                     <div className="text-center font-semibold mt-5">Or</div>
                     <div>
-                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2 hover:bg-gray-100 mt-5">
+                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2 lg:hover:bg-gray-100 mt-5">
                             <StripeIcon />
                             <span>Pay With Stripe</span>
                         </div>
-                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2  hover:bg-gray-100 mt-5">
+                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2  lg:hover:bg-gray-100 mt-5">
                             <PayPalIcon />
                             <span>Pay With Paypal</span>
                         </div>

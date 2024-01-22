@@ -1,8 +1,8 @@
-import TestPerformance from '@/app/components/common/test-performance/TestPerformance';
 import React from 'react';
+import TestPerformance from '@/app/components/common/test-performance/TestPerformance';
 
 function TestPerformacePage() {
-    return <TestPerformance />;
+    return <TestPerformance isShownFromTeacher />;
 }
 
 export default TestPerformacePage;

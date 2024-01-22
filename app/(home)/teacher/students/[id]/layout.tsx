@@ -1,8 +1,8 @@
 'use client';
 
-import Searchbar from '@/app/components/common/Searchbar';
 import { User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Searchbar from '@/app/components/common/Searchbar';
 
 export default function StandardLayout({
     children,

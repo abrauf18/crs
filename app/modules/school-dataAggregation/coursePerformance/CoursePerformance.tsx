@@ -1,6 +1,6 @@
+import React from 'react';
 import Filters from '@/app/components/common/Filters';
 import Tabs from '@/app/components/common/test-performance/Tabs';
-import React from 'react';
 import PerformanceCard, { PerformanceCardInterface } from './PerformanceCard';
 
 function CoursePerformance() {

@@ -36,12 +36,6 @@ export const ResourcesData: Resource[] = [
         type: 'WorkSheet',
         topic: 'Topic 3',
     },
-    {
-        id: 6,
-        name: 'XYZ Resources',
-        type: 'SlideShow',
-        topic: 'Topic 3',
-    },
 ];
 function Resoures() {
     return (

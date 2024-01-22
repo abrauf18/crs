@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
-import Image from 'next/image';
 import schoolGraph from '@/app/assets/images/schoolGraph.svg';
 import { usersData } from '@/app/modules/users/Users';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
-import Link from 'next/link';
 import UsersTable from '../users/UsersTable';
 import Filters from '../../components/common/Filters';
 import Card from '../../components/common/Card';
@@ -43,24 +43,6 @@ export const tickets: TicketsInterface[] = [
     },
     {
         id: 5,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Closed',
-    },
-    {
-        id: 6,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Closed',
-    },
-    {
-        id: 7,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Active',
-    },
-    {
-        id: 8,
         name: 'John',
         date: 'December 10,2023',
         status: 'Closed',
@@ -106,8 +88,9 @@ function SchoolDashboard() {
             <Filters
                 text="Overall Performance"
                 secondButtonText="Average Time Spent"
+                btnFontSize="text-xs"
             />
-            <div className="w-auto ">
+            <div className="w-auto">
                 <Image
                     src={schoolGraph as string}
                     alt="icon"
@@ -116,12 +99,12 @@ function SchoolDashboard() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 mt-5">
                 <div className="border rounded-lg p-5 px-2 lg:px-5">
-                    <div className="flex justify-between px-1 mb-2 items-center">
+                    <div className="flex  justify-between px-1 mb-2   items-center">
                         <h1 className="text-[20px] font-semibold">
                             Teacher&apos;s
                         </h1>
                         <Link href="/school/teachers">
-                            <div className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium">
+                            <div className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium mobile:mt-2">
                                 Show All
                             </div>
                         </Link>
@@ -129,12 +112,12 @@ function SchoolDashboard() {
                     <UsersTable users={usersData} fontSize="12" isDashboard />
                 </div>
                 <div className="border rounded-lg p-5 px-2 lg:px-5 mt-2 lg:mt-0">
-                    <div className="flex justify-between px-1 mb-2 items-center">
+                    <div className="flex  justify-between px-1 mb-2   items-center">
                         <h1 className="text-[20px] font-semibold">
                             Recent Tickets
                         </h1>
                         <div
-                            className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium"
+                            className="cursor-pointer border rounded-lg px-3 py-1 mobile:mt-2 text-dark-gray font-medium"
                             onClick={handleDisplayTicketModal}
                         >
                             New Ticket
@@ -145,7 +128,7 @@ function SchoolDashboard() {
             </div>
 
             {isDisplayTicketModal && (
-                <div className="absolute right-0 top-0 z-50 w-full lg:w-[25%]">
+                <div className="fixed top-0 right-0 z-50 w-full lg:w-[25%]">
                     <SubmitTicketModal onClose={handleCloseModal} />
                 </div>
             )}

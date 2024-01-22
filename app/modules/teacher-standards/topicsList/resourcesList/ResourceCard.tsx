@@ -3,11 +3,11 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { EditIcon, PlayIcon } from 'lucide-react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import QuestionIcon from '@/app/assets/icons/QuestionIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import CheckPointIcon from '@/app/assets/icons/CheckPointIcon';
-import { EditIcon, PlayIcon } from 'lucide-react';
 import CardContent, { IconProps } from '@/app/components/common/CardContent';
 import VideoCard from './VideoCard';
 import FileCard from './FileCard';
@@ -58,7 +58,7 @@ function ResourceCard({ card }: ResourceCardProp) {
                 <button
                     type="button"
                     // href={route && id ? `${route}/${id}` : '#'}
-                    className={`border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 hover:bg-primary-color hover:text-white ${
+                    className={`border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 lg:hover:bg-primary-color lg:hover:text-white ${
                         card.isSelected && 'bg-primary-color text-white'
                     }`}
                 >

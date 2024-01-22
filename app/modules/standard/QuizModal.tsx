@@ -1,8 +1,8 @@
+import { FileEditIcon } from 'lucide-react';
+import React from 'react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import SearchInput from '@/app/components/common/SearchInput';
-import { FileEditIcon } from 'lucide-react';
-import React from 'react';
 import QuizCard from '@/app/components/common/QuizCard';
 import quizImage from '@/app/assets/images/quizImage.svg';
 

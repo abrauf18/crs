@@ -1,5 +1,5 @@
-import Searchbar from '@/app/components/common/Searchbar';
 import React from 'react';
+import Searchbar from '@/app/components/common/Searchbar';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import ResourcesTable, { ResourcesInterface } from './ResourcesTable';
@@ -49,7 +49,7 @@ function Resources() {
                 headerText="All Resources"
                 tagline="Your All Resources Allocated to Topics"
             />
-            <div className="border rounded-lg p-5 mt-10">
+            <div className="border rounded-lg p-5 mt-5">
                 <Filters text="All topic's" />
                 <ResourcesTable resources={resourcesList} />
             </div>

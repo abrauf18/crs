@@ -67,14 +67,14 @@ function StandardCard() {
             {standards.map((standard, index) => (
                 <div
                     key={standard.id || index}
-                    className="rounded-lg border lg:flex  lg:justify-between items-center p-4 mt-6"
+                    className="rounded-lg border md:flex  md:justify-between items-center p-4 mt-6"
                 >
                     <div className="mt-2 ">
                         <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-900">
                             {standard.heading}
                         </h5>
                         <div>
-                            <div className="flex flex-col lg:flex-row gap-2 mb-2">
+                            <div className="flex flex-col md:flex-row gap-2 mb-2">
                                 <div className="flex gap-1 items-center text-dark-gray text-sm">
                                     <PlayIcon
                                         height={17}
@@ -102,11 +102,16 @@ function StandardCard() {
                             </div>
                         </div>
                     </div>
-                    <div
-                        onClick={() => handleClick(standard.id)}
-                        className={`border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mt-5 lg:mt-0 lg:mr-2 cursor-pointer hover:bg-primary-color hover:text-white `}
-                    >
-                        Details
+
+                    <div className="flex justify-end w-full md:w-fit">
+                        <div
+                            onClick={() => handleClick(standard.id)}
+                            className={`
+                        
+                        border rounded-lg text-dark-gray w-fit px-4 py-2 text-sm font-medium text-center mt-5 lg:mt-0 lg:mr-2 cursor-pointer lg:hover:bg-primary-color lg:hover:text-white `}
+                        >
+                            Details
+                        </div>
                     </div>
                 </div>
             ))}

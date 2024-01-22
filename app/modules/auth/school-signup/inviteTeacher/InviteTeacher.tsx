@@ -5,7 +5,6 @@ import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import AppInput from '@/app/components/common/AppInput';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
-import Link from 'next/link';
 import { CheckBox } from '../../Checkbox';
 import Steps from '../Steps';
 import TeacherCard, { TeacherCardInterface } from './TeacherCard';
@@ -42,7 +41,7 @@ function InviteTeacher() {
         <div className=" p-10 w-[95%] lg:w-[75%]  flex flex-col ">
             <Steps step={3} totalSteps={3} />
 
-            <div className="flex items-center lg:items-start flex-col">
+            <div className="flex lg:items-start flex-col">
                 <h1 className="text-2xl font-semibold mt-6">Invite Teachers</h1>
                 <p className="text-sm font-medium text-dark-gray mb-6">
                     Enter Teacher Details
@@ -69,7 +68,7 @@ function InviteTeacher() {
                 <div className="text-center my-5">
                     <Button
                         type="button"
-                        className="w-full border bg-transparent text-dark-gray hover:bg-gray-400 hover:text-white mb-3"
+                        className="w-full border bg-transparent text-dark-gray lg:hover:bg-gray-400 lg:hover:text-white mb-3"
                     >
                         Add
                     </Button>
@@ -90,7 +89,7 @@ function InviteTeacher() {
                 <div className="text-center mt-6">
                     <Button
                         type="button"
-                        className="w-full bg-primary-color hover:bg-orange-400 mb-3"
+                        className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                     >
                         Next
                     </Button>

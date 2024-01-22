@@ -1,7 +1,7 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
 
-function MyAnswersModal() {
+function MyAnswersModal({ onClose }: any) {
     return (
         <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg items-center">
             <div className="h-[100%] overflow-y-auto w-full px-2">
@@ -17,7 +17,7 @@ function MyAnswersModal() {
                         </div>
                     </div>
                     <div className="rounded-full bg-white border p-1">
-                        <X size={20} />
+                        <X size={20} onClick={onClose} />
                     </div>
                 </div>
 

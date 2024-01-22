@@ -81,8 +81,8 @@ function CommonTable({
                         <TableCell className="text-dark-gray">
                             {resource.topic}
                         </TableCell>
-                        <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
-                            <div className="bg-light-orange mr-2 p-1 rounded-md">
+                        <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 gap-2">
+                            <div className="bg-light-orange p-1 rounded-md">
                                 <Eye color="#F59A3B" width={18} height={18} />
                             </div>
                             <EditIcon width={28} height={28} />

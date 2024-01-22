@@ -79,12 +79,18 @@ function LearningPlanTable({ learnings, fontSize }: LearningPlanProp) {
                                 {index + 1}
                             </span>
                         </TableCell>
-                        <TableCell>{learning.name}</TableCell>
+                        <TableCell>
+                            <span className="flex gap-x-2 items-center ">
+                                <span className="truncate h-[30px]">
+                                    {learning.name}
+                                </span>
+                            </span>
+                        </TableCell>
                         <TableCell className="text-dark-gray">
                             {learning.grade}
                         </TableCell>
                         <TableCell
-                            className="text-dark-gray cursor-pointer hover:text-gray-700 hover:underline"
+                            className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
                             onClick={(
                                 e: React.MouseEvent<
                                     HTMLTableCellElement,

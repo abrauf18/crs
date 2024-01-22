@@ -40,7 +40,7 @@ function QuizResult({ correctAnswer }: QuizResultProp) {
                     <div className=" w-full flex lg:justify-end">
                         <button
                             type="button"
-                            className="lg:mr-4 bg-primary-color hover:bg-orange-400 text-white my-2 px-10 py-2 w-full lg:w-fit rounded-xl"
+                            className="lg:mr-4 bg-primary-color lg:hover:bg-orange-400 text-white my-2 px-10 py-2 w-full lg:w-fit rounded-xl"
                         >
                             Continue
                         </button>

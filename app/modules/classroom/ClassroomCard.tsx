@@ -40,7 +40,7 @@ function ClassroomCard({
 
             {/* <button
                 type="button"
-                className="absolute top-6 right-7 bg-primary-color text-white py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-6 right-7 bg-primary-color text-white py-2 px-4 rounded-lg opacity-0 group-lg:hover:opacity-100 transition-opacity"
             >
                 Details
             </button> */}

@@ -54,37 +54,37 @@ function StatsTable({ statsList, fontSize }: StatsTableProps) {
         >
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px] text-dark-gray font-bold text-center">
+                    <TableHead className="w-[100px] text-dark-gray font-bold ">
                         Avg
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         80%+
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         #
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         0-67%
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         #
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         68-79%
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         #
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         90-92%
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         #
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         93-100%
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         #
                     </TableHead>
                 </TableRow>
@@ -92,38 +92,38 @@ function StatsTable({ statsList, fontSize }: StatsTableProps) {
             <TableBody>
                 {statsList.map((item, index) => (
                     <TableRow className="border-none " key={item.id}>
-                        <TableCell className="text-dark-gray font-bold text-center ">
+                        <TableCell className="text-dark-gray font-bold  ">
                             {item.name}
                         </TableCell>
 
-                        <TableCell className="text-dark-gray text-center ">
+                        <TableCell className="text-dark-gray  ">
                             {item.first}%
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.firstNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.second}%
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.secondNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.third}%
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.thirdNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.forth}%
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.forthNum}
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.fifth}%
                         </TableCell>
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {item.fifthNum}
                         </TableCell>
                     </TableRow>

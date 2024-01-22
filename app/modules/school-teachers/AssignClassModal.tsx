@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import Avatar from '@/app/assets/images/UserImage.svg';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
 
-import Image from 'next/image';
 import AppInput from '@/app/components/common/AppInput';
 import AppDropDown, {
     OptionsInterface,
@@ -26,7 +26,7 @@ function AssignClassModal({ onClose }: any) {
         { label: '9th Grade - A', value: '9th Grade - A' },
     ];
     return (
-        <section className="w-full bg-white md:h-screen py-4 px-6 shadow-lg">
+        <section className="w-full bg-white md:h-screen py-4 pb-12 lg:pb-4 px-6 shadow-lg">
             <div className="h-[90%] overflow-y-auto px-2">
                 <ModalHeader
                     headerText={{
@@ -122,18 +122,18 @@ function AssignClassModal({ onClose }: any) {
                     <AppInput placeholder="Subject" />
                 </div>
             </div>
-            <div className="lg:flex lg:justify-between lg:items-center  w-full  space-y-2 lg:space-y-0  py-2 gap-1">
+            <div className="lg:flex lg:justify-between lg:items-center  w-full  space-y-2 lg:space-y-0 mt-2  py-2 gap-1">
                 <button
                     type="button"
-                    className="text-dark-gray font-semibold  w-full px-5 py-3 border rounded-xl"
+                    className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
                 >
-                    Discard Changes
+                    Discard
                 </button>
                 <button
                     type="button"
-                    className="text-white bg-primary-color font-semibold w-full px-5 py-3  border rounded-xl"
+                    className="text-white bg-primary-color font-semibold w-full px-5 py-2  border rounded-xl"
                 >
-                    Save Changes
+                    Save
                 </button>
             </div>
         </section>

@@ -1,8 +1,8 @@
 'use client';
 
-import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import { ArrowLeftCircleIcon, ArrowRightCircle, Dot } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import WavingHandIcon from '@/app/assets/icons/WavingHand';
 
 interface MetaText {
     title: string;
@@ -16,11 +16,11 @@ interface LeftSideProp {
 function LeftSide({ images, metaText }: LeftSideProp) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const prevSlide = () => {
-        const isFirstSlide = currentIndex === 0;
-        const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
-        setCurrentIndex(newIndex);
-    };
+    // const prevSlide = () => {
+    //     const isFirstSlide = currentIndex === 0;
+    //     const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
+    //     setCurrentIndex(newIndex);
+    // };
 
     const nextSlide = () => {
         const isLastSlide = currentIndex === images.length - 1;
@@ -51,12 +51,12 @@ function LeftSide({ images, metaText }: LeftSideProp) {
                     }}
                     className="w-full h-full rounded-2xl bg-center bg-contain lg:bg-auto bg-no-repeat duration-500"
                 />
-                <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+                {/* <div className="hidden group-lg:hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
                     <ArrowLeftCircleIcon onClick={prevSlide} size={30} />
                 </div>
-                <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+                <div className="hidden group-lg:hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
                     <ArrowRightCircle onClick={nextSlide} size={30} />
-                </div>
+                </div> */}
             </div>
             <div className="flex justify-center items-center flex-col ">
                 <h1 className="flex space-x-3 ">

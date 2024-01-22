@@ -1,6 +1,6 @@
-import Searchbar from '@/app/components/common/Searchbar';
-import { CalendarDays } from 'lucide-react';
 import React from 'react';
+import { CalendarDays } from 'lucide-react';
+import Searchbar from '@/app/components/common/Searchbar';
 import VideoCard, { Card as Video } from '@/app/components/common/VideoCard';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import videoImage2 from '@/app/assets/images/videoImages/videoImage2.svg';
@@ -75,7 +75,7 @@ function SavedVideos() {
                     <p className="font-semibold text-lg">Day 01</p>
                 </div>
                 <div className="">
-                    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6">
                         {day1Videos.map((card) => (
                             <VideoCard card={card} key={card.Questions} />
                         ))}

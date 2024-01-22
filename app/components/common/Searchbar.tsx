@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import { LucideIcon, BellIcon, ArrowLeft } from 'lucide-react';
 import SearchInput from './SearchInput';
 
@@ -22,9 +21,9 @@ function Searchbar({
     onBackClick,
 }: SearchbarProp) {
     return (
-        <div className="flex lg:justify-between lg:items-center flex-col lg:flex-row mb-4  ">
-            <div className="flex flex-col justify-start items-start ">
-                <div className="flex space-x-3 ">
+        <div className="flex lg:justify-between lg:items-center flex-col lg:flex-row mb-4 md:sticky md:top-0 bg-white z-30 shrink-0 py-2">
+            <div className="flex flex-col justify-start items-start  ">
+                <div className="flex space-x-3 items-center ">
                     {isShowBackArrow && (
                         <div className="cursor-pointer">
                             <ArrowLeft onClick={onBackClick} />

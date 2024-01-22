@@ -121,7 +121,7 @@ function ResourcesList() {
             />
             <Filters text="SB1 Cell Structure - Functtion" />
             <div className="mt-8 ">
-                <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
+                <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
                     {filteredResources.map((card) => (
                         <ResourceCard card={card} key={card.Questions} />
                     ))}

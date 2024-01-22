@@ -51,10 +51,10 @@ function TopicsTable({ topics, fontSize }: TopicsProp) {
                     <TableHead className="text-dark-gray font-bold">
                         Topic
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold ">
                         Assigned Resource
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold lg:flex lg:justify-end lg:pr-16">
+                    <TableHead className="text-dark-gray items-center font-bold lg:flex lg:justify-end lg:pr-16">
                         Action
                     </TableHead>
                 </TableRow>
@@ -71,7 +71,7 @@ function TopicsTable({ topics, fontSize }: TopicsProp) {
                             <span>{resource.topic}</span>
                         </TableCell>
 
-                        <TableCell className="text-dark-gray text-center">
+                        <TableCell className="text-dark-gray ">
                             {resource.assignedResources}
                         </TableCell>
 

@@ -6,6 +6,7 @@ interface FiltersInterface {
     text: string;
     secondButtonText?: string;
     handleClick?: () => void;
+    btnFontSize?: string;
 }
 
 function Filters({
@@ -13,6 +14,7 @@ function Filters({
     secondButtonText,
     handleClick,
     isHideFirstBtn,
+    btnFontSize = 'text-sm',
 }: FiltersInterface): JSX.Element {
     const makeFirstNumberBold = (inputText: string) => {
         const match = inputText.match(/^\d+/);
@@ -37,20 +39,32 @@ function Filters({
     );
 
     return (
-        <div className="flex mobile:flex-col justify-between items-center my-3">
+        <div
+            className={`flex mobile:flex-col justify-between items-center  my-3 ${
+                secondButtonText?.startsWith('Upload') ||
+                secondButtonText?.startsWith('Create New')
+                    ? 'mobile:items-center'
+                    : 'mobile:items-start'
+            }`}
+        >
             {renderHeaderText()}
             <div className="flex">
                 {!isHideFirstBtn && (
-                    <div className="cursor-pointer mr-2 px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-                        <Filter width={15} height={15} />
-                        <button className="ml-2" type="button">
+                    <div
+                        className={`cursor-pointer mr-2 px-4 py-2 border text-dark-gray rounded-lg flex items-center justify-between ${btnFontSize}`}
+                    >
+                        <Filter
+                            width={btnFontSize === 'text-xs' ? 12 : 15}
+                            height={btnFontSize === 'text-xs' ? 12 : 15}
+                        />
+                        <button className="ml-2 " type="button">
                             Filters
                         </button>
                     </div>
                 )}
                 <div
                     onClick={handleClick}
-                    className={`px-4 py-3 cursor-pointer border text-sm rounded-lg flex items-center justify-between ${
+                    className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between ${btnFontSize} ${
                         secondButtonText?.startsWith('Create New') ||
                         secondButtonText?.startsWith('Upload')
                             ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition

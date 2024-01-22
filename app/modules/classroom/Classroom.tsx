@@ -1,7 +1,7 @@
-import StudentIcon from '@/app/assets/icons/StudentIcon';
-import Pagintaion from '@/app/components/common/Pagintaion';
 import { VideoIcon } from 'lucide-react';
 import React from 'react';
+import StudentIcon from '@/app/assets/icons/StudentIcon';
+import Pagintaion from '@/app/components/common/Pagintaion';
 import StudentsInfoTable from '../students/StudentsInfoTable';
 import { Studentinfo } from '../students/Students';
 import ClassroomModal from './ClassroomModal';
@@ -10,7 +10,7 @@ import ClassroomCard from './ClassroomCard';
 function Classroom() {
     return (
         <div>
-            <div className="grid  lg:grid-cols-3 gap-4 mt-4 ">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 ">
                 <ClassroomCard
                     Icon={StudentIcon}
                     periods="10th Period"
@@ -28,16 +28,18 @@ function Classroom() {
                     iconBg="bg-green-100"
                     activeColor="bg-green-50"
                 />
-                <ClassroomCard
-                    Icon={StudentIcon}
-                    periods="8th Period"
-                    students="40 Students"
-                    iconColor="#A03ADB"
-                    iconBg="bg-purple-100"
-                    activeColor="bg-purple-50"
-                />
+                <div className="md:col-span-full lg:col-span-1">
+                    <ClassroomCard
+                        Icon={StudentIcon}
+                        periods="8th Period"
+                        students="40 Students"
+                        iconColor="#A03ADB"
+                        iconBg="bg-purple-100"
+                        activeColor="bg-purple-50"
+                    />
+                </div>
             </div>
-            <div className="grid  lg:grid-cols-4 gap-4 mt-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                 <ClassroomCard
                     Icon={StudentIcon}
                     periods="7th Period"

@@ -1,5 +1,5 @@
-import Video from '@/app/modules/video/Video';
 import React from 'react';
+import Video from '@/app/modules/video/Video';
 
 function VideoPage() {
     return <Video />;

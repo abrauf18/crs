@@ -1,6 +1,6 @@
-import { Label } from '@/app/components/ui/label';
 import Image from 'next/image';
 import React from 'react';
+import { Label } from '@/app/components/ui/label';
 import Avatar from '@/app/assets/images/UserImage.svg';
 import AppInput from '@/app/components/common/AppInput';
 
@@ -15,14 +15,14 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             }`}
         >
             <div
-                className={`flex flex-col  mobile:items-center  ${
+                className={`flex flex-col  mobile:items-center mobile:w-full mobile:px-2 ${
                     !isSchoolProfile ? 'm-auto mobile:h-screen' : 'w-full'
                 }`}
             >
-                <h1 className="text-2xl font-semibold mb-2 mobile:mb-4">
+                <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
                     My profile
                 </h1>
-                <div className="md:flex justify-between items-center mobile:w-full mobile:mb-2">
+                <div className="md:flex justify-between items-center  mobile:w-full mobile:mb-2">
                     <div className="flex justify-center">
                         <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
                             <div className="border-2 border-light-gray rounded-full h-36 w-36 flex justify-center items-center">
@@ -51,12 +51,12 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                         </button>
                     </div>
                 </div>
-                <div className="mb-2 w-full">
+                <div className="mb-5 w-full">
                     <Label htmlFor="email">Username</Label>
 
                     <AppInput type="email" id="email" placeholder="User Name" />
                 </div>
-                <div className="mb-2 w-full">
+                <div className="mb-5 w-full">
                     <Label htmlFor="email">Email Address</Label>
 
                     <AppInput type="email" id="email" placeholder="Email" />
@@ -71,18 +71,18 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     />
                 </div>
                 {!isSchoolProfile && (
-                    <div className="md:flex md:justify-between w-full mt-2 gap-1">
+                    <div className="md:flex md:justify-between w-full mt-5 gap-2">
                         <button
                             type="button"
-                            className="text-dark-gray font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg"
+                            className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-3 border rounded-lg"
                         >
-                            Discard Changes
+                            Cancel
                         </button>
                         <button
                             type="button"
-                            className="text-white bg-primary-color font-semibold mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg"
+                            className="text-white bg-primary-color font-semibold w-full p-2 md:px-6 md:py-3 border rounded-lg"
                         >
-                            Save Changes
+                            Save
                         </button>
                     </div>
                 )}

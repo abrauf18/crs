@@ -55,19 +55,19 @@ function Settings() {
                             />
                         </div>
                     </div>
-                    <div className="lg:absolute lg:bottom-3 w-full">
+                    <div className="lg:absolute lg:bottom-2 w-full">
                         <div className="md:flex md:justify-between w-full mt-2 gap-1">
                             <button
                                 type="button"
                                 className="text-dark-gray w-[90%] font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg"
                             >
-                                Discard Changes
+                                Cancel
                             </button>
                             <button
                                 type="button"
                                 className="text-white w-[90%] bg-primary-color font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg"
                             >
-                                Save Changes
+                                Save
                             </button>
                         </div>
                     </div>

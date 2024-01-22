@@ -19,8 +19,7 @@ function SubmitTicketModal({ onClose }: any) {
     };
 
     const gradeOptions: OptionsInterface[] = [
-        { label: '9th Grade - B', value: '9th Grade - B' },
-        { label: '9th Grade - A', value: '9th Grade - A' },
+        { label: 'Payment Problem', value: 'Payment Problem' },
     ];
 
     return (
@@ -47,7 +46,7 @@ function SubmitTicketModal({ onClose }: any) {
 
                 <div className="flex flex-col space-y-2">
                     <Label className="font-semibold" htmlFor="invite">
-                        Complaint type
+                        Complaint Type
                     </Label>
 
                     <AppDropDown

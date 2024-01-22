@@ -196,7 +196,7 @@ function Students() {
                 <h1 className="font-bold text-dlg">All Students</h1>
 
                 <Button
-                    className="bg-primary-color mobile:px-3 hover:bg-orange-400"
+                    className="bg-primary-color mobile:px-3 lg:hover:bg-orange-400"
                     variant="default"
                     size="default"
                     onClick={handleOpenAddStudentModal}
@@ -211,7 +211,7 @@ function Students() {
                 <StudentsInfoTable students={filteredStudents} />
             </div>
             {isAddStudentModalOpen && (
-                <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 lg:w-[25%] w-full">
                     <AddStudentModal onClose={handleCloseAddStudentModal} />
                 </div>
             )}

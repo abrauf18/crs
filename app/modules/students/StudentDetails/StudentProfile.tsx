@@ -1,21 +1,21 @@
 import React from 'react';
-import Avatar from '@/app/assets/images/UserImage.svg';
 import Image from 'next/image';
+import Avatar from '@/app/assets/images/UserImage.svg';
 
 function StudentProfile() {
     return (
         <>
             {/* student profile */}
-            <section className="flex flex-col mt-8 lg:flex-row lg:items-center justify-between">
+            <section className="flex  mt-8 flex-row lg:items-center justify-between">
                 <h1 className="font-semibold text-xl mb-4 lg:mb-0 lg:mr-4">
                     Kathryn Murphy Overview
                 </h1>
 
-                <div className="border rounded-xl px-5 py-3">
+                <div className="border rounded-xl px-5 py-3 text-center">
                     <p className="text-dark-gray font-bold">Drop Out</p>
                 </div>
             </section>
-            <div className="flex flex-col lg:flex-row items-center shadow-md rounded-lg py-5 mt-8">
+            <div className="flex flex-col lg:flex-row items-center shadow-[0px_4px_20px_0px_rgb(0,0,0,0.05)] rounded-lg py-5 mt-8">
                 {/* Image */}
                 <div className="ml-0 lg:ml-8 mb-6 lg:mb-0">
                     <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
@@ -35,7 +35,7 @@ function StudentProfile() {
                 </div>
 
                 {/* Information */}
-                <div className="lg:ml-8 w-full lg:w-[45%] lg:justify-between lg:flex">
+                <div className="lg:ml-8 mobile:pl-4 w-full lg:w-[45%] md:w-[85%] md:justify-between md:flex">
                     <div className="flex-col mb-4 lg:mb-0">
                         <div>
                             <h1 className="text-dark-gray font-medium">Name</h1>

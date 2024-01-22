@@ -1,8 +1,8 @@
+import { LucideMoveUpRight } from 'lucide-react';
+import React from 'react';
 import StatsTable, { StatsInterface } from '@/app/components/common/StatsTable';
 import Tabs from '@/app/components/common/test-performance/Tabs';
 
-import { LucideMoveUpRight } from 'lucide-react';
-import React from 'react';
 import TestDetailTable, { TestDetailInterface } from './TestDetailTable';
 
 function TestPerformance() {
@@ -133,7 +133,7 @@ function TestPerformance() {
     return (
         <section>
             <div className="border px-2 py-5 lg:py-5 lg:px-5 rounded-lg mt-10">
-                <div className="flex flex-col mb-4 lg:flex-row justify-between items-center">
+                <div className="flex flex-col mb-4 lg:flex-row justify-between items-center ">
                     <h1 className="text-lg font-semibold mb-4 lg:mb-0">
                         Test Performance - HealthTech
                     </h1>

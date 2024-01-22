@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import crsLogo from '@/app/assets/images/crsclogo.svg';
 import {
     User as UserIcon,
     Settings,
@@ -16,6 +15,7 @@ import {
     GraduationCap,
     CreditCard,
 } from 'lucide-react';
+import crsLogo from '@/app/assets/images/crsclogo.svg';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import QueryIcon from '@/app/assets/icons/QueryIcon';
@@ -255,7 +255,7 @@ export default function SideBar() {
                                 itemText={item.itemText}
                             />
                         ))}
-                        <NavigationItem
+                        {/* <NavigationItem
                             to="/admin/setting"
                             ItemIcon={Settings}
                             itemText="Settings"
@@ -264,7 +264,7 @@ export default function SideBar() {
                             to="#"
                             ItemIcon={LogOut}
                             itemText="Logout"
-                        />
+                        /> */}
                     </div>
                 )}
             </ul>

@@ -14,7 +14,7 @@ function CourseCard({ name, id }: CourseCardInterface) {
             <h1 className="font-semibold text-lg">{name}</h1>
             <div className="flex justify-end  mt-4">
                 <p
-                    className="border px-4 py-3 rounded-lg cursor-pointer hover:bg-primary-color hover:text-white"
+                    className="border px-4 py-3 rounded-lg cursor-pointer lg:hover:bg-primary-color lg:hover:text-white"
                     onClick={() => push(`/school/data-aggregation/${id}`)}
                 >
                     Details

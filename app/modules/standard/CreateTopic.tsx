@@ -63,7 +63,7 @@ function CreateTopic() {
                     </div>
                 </div>
             </div>
-            <div className="absolute right-0 top-0 z-50">
+            <div className="fixed right-0 top-0 z-50">
                 {isDisplayModal && selectedType.toLowerCase() === 'video' && (
                     <VideoModal onClose={handleCloseModal} />
                 )}

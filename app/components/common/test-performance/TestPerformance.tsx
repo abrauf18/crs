@@ -56,11 +56,17 @@ export const TestRecord: TestRecordInterface[] = [
     },
 ];
 
-function TestPerformance() {
+function TestPerformance({
+    isShownFromStudent,
+    isShownFromTeacher,
+}: {
+    isShownFromStudent?: boolean;
+    isShownFromTeacher?: boolean;
+}) {
     return (
         <div>
             <div className="border rounded-lg p-5 mt-10">
-                <div className="flex flex-col mb-4 lg:flex-row justify-between items-center">
+                <div className="flex flex-col mb-4 lg:flex-row justify-between items-center ">
                     <h1 className="text-2xl lg:text-3xl font-semibold mb-4 lg:mb-0">
                         Test Performance - HealthTech
                     </h1>
@@ -76,7 +82,11 @@ function TestPerformance() {
                     </div>
                 </div>
                 <Tabs />
-                <TestPerformanceTable test={TestRecord} />
+                <TestPerformanceTable
+                    test={TestRecord}
+                    isShownFromStudent={isShownFromStudent}
+                    isShownFromTeacher={isShownFromTeacher}
+                />
             </div>
             {/* <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[25%]">
                 <MyAnswersModal />

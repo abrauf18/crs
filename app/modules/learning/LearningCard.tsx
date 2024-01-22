@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { CalendarDays, File, PlayIcon } from 'lucide-react';
 
 export const standards = [
@@ -51,6 +51,8 @@ export const standards = [
 ];
 
 function LearningCard() {
+    const [activeStandard, setActiveStandard] = useState<string | null>('4');
+
     const Icons = {
         FirstIcon: PlayIcon,
         SecondIcon: File,
@@ -59,17 +61,21 @@ function LearningCard() {
     const { push } = useRouter();
     const pathname = usePathname();
 
-    function handleClick(): void {
-        push(`${pathname}/create`);
+    function handleClick(standardId: string): void {
+        setActiveStandard(standardId);
+        // push(`${pathname}/create`);
     }
     return (
         <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
-            {standards.map((standard, index) => (
+            {standards.map((standard: any, index: any) => (
                 <div
                     key={standard.id || index}
-                    className={`rounded-lg border p-4 ${
-                        standard?.isActive && 'border border-primary-color'
-                    }`}
+                    className={`rounded-lg border p-4 `}
+
+                    // className={`rounded-lg border p-4 ${
+                    //     standard.id === activeStandard &&
+                    //     'border border-primary-color'
+                    // }`}
                 >
                     <div className="mt-2">
                         <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-900">
@@ -106,11 +112,14 @@ function LearningCard() {
 
                         <div className="flex items-end justify-end">
                             <div
-                                // href={route && id ? `${route}/${id}` : '#'}
-                                className={`border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 cursor-pointer hover:bg-primary-color hover:text-white ${
-                                    standard?.isActive &&
-                                    'bg-primary-color text-white'
-                                }`}
+                                onClick={() => handleClick(standard.id)}
+                                className={`border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 cursor-pointer lg:hover:bg-primary-color lg:hover:text-white
+                                ${
+                                    // standard.id === activeStandard &&
+                                    // 'bg-primary-color text-white'
+                                    standard.id === activeStandard && ''
+                                }
+                                `}
                             >
                                 View
                             </div>

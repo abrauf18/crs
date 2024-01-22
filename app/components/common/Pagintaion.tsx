@@ -8,7 +8,7 @@ function Pagintaion() {
                 <li>
                     <Link
                         href="#"
-                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         <span className="sr-only">Previous</span>
                         <svg
@@ -31,7 +31,7 @@ function Pagintaion() {
                 <li>
                     <Link
                         href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         1
                     </Link>
@@ -39,7 +39,7 @@ function Pagintaion() {
                 <li>
                     <Link
                         href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         2
                     </Link>
@@ -48,7 +48,7 @@ function Pagintaion() {
                     <Link
                         href="#"
                         aria-current="page"
-                        className="z-10 flex items-center justify-center px-3 h-8 leading-tight text-white border border-blue-300 bg-primary-color hover:bg-orange-400"
+                        className="z-10 flex items-center justify-center px-3 h-8 leading-tight text-white border border-blue-300 bg-primary-color lg:hover:bg-orange-400"
                     >
                         3
                     </Link>
@@ -56,7 +56,7 @@ function Pagintaion() {
                 <li>
                     <Link
                         href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         ...
                     </Link>
@@ -64,7 +64,7 @@ function Pagintaion() {
                 <li>
                     <Link
                         href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         8
                     </Link>
@@ -72,7 +72,7 @@ function Pagintaion() {
                 <li>
                     <Link
                         href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         <span className="sr-only">Next</span>
                         <svg

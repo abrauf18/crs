@@ -4,7 +4,7 @@ import Searchbar from '@/app/components/common/Searchbar';
 
 export const metadata: Metadata = {
     title: 'Settings',
-    description: 'MManage your profile',
+    description: 'Manage your profile',
 };
 
 export default function DashboardLayout({

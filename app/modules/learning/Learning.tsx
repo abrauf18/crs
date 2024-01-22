@@ -90,15 +90,58 @@ export const LearningRecord2: LearningInterface[] = [
     },
 ];
 
+export const standards = [
+    {
+        id: '1',
+        heading: 'JavaScript Basics',
+        first: 'Videos (15)',
+        second: 'Exercises (10)',
+        third: 'Course Length (2 Weeks)',
+    },
+    {
+        id: '2',
+        heading: 'HTML Fundamentals',
+        first: 'Videos (12)',
+        second: 'Exercises (8)',
+        third: 'Course Length (1.5 Weeks)',
+    },
+    {
+        key: '3',
+        heading: 'CSS Essentials',
+        first: 'Videos (18)',
+        second: 'Exercises (12)',
+        third: 'Course Length (2.5 Weeks)',
+    },
+    {
+        id: '4',
+        heading: 'Artificial Intelligence - AI',
+        first: 'Videos (20)',
+        second: 'Exercises (15)',
+        third: 'Course Length (3 Weeks)',
+        isActive: true,
+    },
+    {
+        id: '5',
+        heading: 'Node.js Basics',
+        first: 'Videos (10)',
+        second: 'Exercises (7)',
+        third: 'Course Length (1.5 Weeks)',
+    },
+    {
+        id: '6',
+        heading: 'Python for Beginners',
+        first: 'Videos (14)',
+        second: 'Exercises (9)',
+        third: 'Course Length (2 Weeks)',
+    },
+];
+
 function Learning() {
     return (
         <div>
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between items-center mt-8">
                 <p className="font-semibold text-2xl ">
                     Your Assigned Learnings
-                </p>
-                <p className="border lg:py-2 px-2 w-[40%] lg:px-4  cursor-pointerrounded-lg lg:w-fit font-semibold text-dark-gray ">
-                    Show All
                 </p>
             </div>
 
@@ -119,7 +162,7 @@ function Learning() {
                         sed do eiusmod tempor incididunt ut labore
                     </p>
                 </div>
-                <p className="border py-3 px-4 mt-2 lg:mt-0 text-center rounded-lg h-fit lg:w-fit font-semibold bg-sky-400 hover:bg-sky-500 text-white ">
+                <p className="border py-3 px-4 mt-2 lg:mt-0 text-center rounded-lg h-fit lg:w-fit font-semibold bg-sky-400 lg:hover:bg-sky-500 text-white ">
                     Continue Learning
                 </p>
             </div>

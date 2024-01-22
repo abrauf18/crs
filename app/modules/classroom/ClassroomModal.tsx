@@ -116,11 +116,11 @@ function ClassroomModal({ onClose }: any) {
                 </div>
             </div>
             <div className="absolute bottom-0 left-0 w-full p-4 border bg-white lg:flex lg:justify-between ">
-                <div className="cursor-pointer w-full mx-1 p-3 rounded-lg border-2 text-dark-gray text-center mt-1 font-bold">
-                    <button type="button">Discard Changes</button>
+                <div className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg border-2 text-dark-gray text-center mt-1 font-bold">
+                    <button type="button">Discard</button>
                 </div>
-                <div className="cursor-pointer w-full mx-1 p-3 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-bold">
-                    <button type="button">Save Changes</button>
+                <div className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-bold">
+                    <button type="button">Save</button>
                 </div>
             </div>
         </section>

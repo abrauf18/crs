@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+import { Check } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import AppInput from '@/app/components/common/AppInput';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
-import Link from 'next/link';
-import { Check } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
 import { CheckBox } from '../../Checkbox';
 import Steps from '../Steps';
 
@@ -18,7 +18,7 @@ function SchoolProfile() {
         <div className=" p-10 w-[95%] lg:w-[75%] flex flex-col ">
             <Steps step={2} totalSteps={3} />
 
-            <div className="flex items-center lg:items-start flex-col">
+            <div className="flex lg:items-start flex-col">
                 <h1 className="text-2xl font-semibold mt-6">
                     Create School Profile
                 </h1>
@@ -61,7 +61,7 @@ function SchoolProfile() {
                     <CheckBox label="Remember Me" />
                     <Link
                         href="#"
-                        className="text-xs text-black ml-auto hover:text-sky-400"
+                        className="text-xs text-black ml-auto lg:hover:text-sky-400"
                     >
                         Forgot Password?
                     </Link>
@@ -69,7 +69,7 @@ function SchoolProfile() {
                 <div className="text-center">
                     <Button
                         type="button"
-                        className="w-full bg-primary-color hover:bg-orange-400 mb-3"
+                        className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         onClick={() => push(`${pathName}/invite-teacher`)}
                     >
                         Next

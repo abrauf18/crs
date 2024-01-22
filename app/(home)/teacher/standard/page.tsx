@@ -1,5 +1,5 @@
-import Standards from '@/app/modules/teacher-standards/Standards';
 import React from 'react';
+import Standards from '@/app/modules/teacher-standards/Standards';
 
 function StandardPage() {
     return <Standards />;

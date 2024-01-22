@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import AppInput from '@/app/components/common/AppInput';
 import { Label } from '@/app/components/ui/label';
 import Avatar from '@/app/assets/images/UserImage.svg';
@@ -9,7 +10,6 @@ import AppDropDown, {
     OptionsInterface,
 } from '@/app/components/common/AppDropDown';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
-import Image from 'next/image';
 
 function ProfileModal({ onClose }: any) {
     const [selectedOption, setSelectedOption] = useState('9th Grade - B');
@@ -95,15 +95,15 @@ function ProfileModal({ onClose }: any) {
             <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between lg:items-center  w-full py-2 gap-1 absolute bottom-0 left-0  p-3 border bg-white">
                 <button
                     type="button"
-                    className="text-dark-gray font-semibold  w-full px-5 py-3 border rounded-xl"
+                    className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
                 >
-                    Discard Changes
+                    Discard
                 </button>
                 <button
                     type="button"
-                    className="text-white bg-primary-color font-semibold w-full px-5 py-3  border rounded-xl"
+                    className="text-white bg-primary-color font-semibold w-full px-5 py-2  border rounded-xl"
                 >
-                    Save Changes
+                    Save
                 </button>
             </div>
         </section>

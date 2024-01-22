@@ -58,25 +58,13 @@ export const learningPlans: LearningInterface[] = [
         topic: 'Topic 3',
     },
     {
+        id: 7,
+        name: 'XYZ Resources',
+        grade: '2nd Grade',
+        topic: 'Topic 3',
+    },
+    {
         id: 8,
-        name: 'XYZ Resources',
-        grade: '2nd Grade',
-        topic: 'Topic 3',
-    },
-    {
-        id: 9,
-        name: 'XYZ Resources',
-        grade: '10th Grade',
-        topic: 'Topic 3',
-    },
-    {
-        id: 10,
-        name: 'XYZ Resources',
-        grade: '2nd Grade',
-        topic: 'Topic 3',
-    },
-    {
-        id: 11,
         name: 'XYZ Resources',
         grade: '2nd Grade',
         topic: 'Topic 3',
@@ -147,7 +135,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                     </>
                 )}
             </div>
-            <Filters text="Overall Performance" />
+            <Filters text="Overall Performance" btnFontSize="text-xs" />
             <div className="w-auto ">
                 <Image src={graph as string} alt="icon" className="w-full" />
             </div>

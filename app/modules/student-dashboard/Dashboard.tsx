@@ -74,7 +74,7 @@ function Dashboard() {
                 Icon={WavingHandIcon}
             />
 
-            <div className="grid lg:grid-cols-4 gap-5 my-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
                 <Card
                     Icon={LibraryBig}
                     header="Subjects"
@@ -110,32 +110,32 @@ function Dashboard() {
                 />
             </div>
 
-            <div className="flex justify-between mt-8">
-                <p className="font-semibold text-2xl ">
+            <div className="flex mobile:flex-col  md:justify-between mt-8 w-full">
+                <p className="font-semibold text-2xl w-fit ">
                     Your Assigned Learnings
                 </p>
-                <Link href="/student/learning">
-                    <p className="border cursor-pointer lg:py-2 px-2 w-[40%] lg:px-4 rounded-lg lg:w-fit font-semibold text-dark-gray ">
-                        Show All
+                <div className="mobile:flex mobile:justify-end mobile:mt-2">
+                    <p className="border cursor-pointer py-2 px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray ">
+                        <Link href="/student/learning">Show All</Link>
                     </p>
-                </Link>
+                </div>
             </div>
 
             <div className="my-8">
                 <Learning />
             </div>
 
-            <div className="flex justify-between mt-8">
+            <div className="flex mobile:flex-col  md:justify-between mt-8">
                 <p className="font-semibold text-2xl ">Saved Videos</p>
-                <Link href="/student/resources">
-                    <p className="border cursor-pointer py-2 px-4 text-center rounded-lg h-fit lg:w-fit font-semibold text-dark-gray ">
-                        Show All
+                <div className="mobile:flex mobile:justify-end">
+                    <p className=" border cursor-pointer py-2  px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray ">
+                        <Link href="/student/saved-videos">Show All</Link>
                     </p>
-                </Link>
+                </div>
             </div>
 
             <div className="mt-8">
-                <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
+                <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
                     {cards.map((card) => (
                         <VideoCard card={card} key={card.Questions} />
                     ))}

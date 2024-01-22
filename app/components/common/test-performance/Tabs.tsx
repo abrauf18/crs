@@ -31,7 +31,7 @@ function Tabs() {
                 }`}
                 onClick={() => handleTabClick('quiz')}
             >
-                Quizes
+                Quizzes
             </button>
         </div>
     );

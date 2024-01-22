@@ -83,7 +83,7 @@ function Video() {
                 secondButtonText="Upload Video"
                 handleClick={handleOpenUploadModal}
             />
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
+            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
                 {cards.map((card) => (
                     <VideoCard card={card} key={card.Questions} />
                 ))}
@@ -91,7 +91,7 @@ function Video() {
             {/* Modals for uploading steps */}
 
             {isShowUploadVideoModal && (
-                <div className="absolute right-0 top-0 z-50 lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 lg:w-[25%]">
                     <UploadResourceModal
                         isDisplayHeaderIcon
                         buttonText="Continue"

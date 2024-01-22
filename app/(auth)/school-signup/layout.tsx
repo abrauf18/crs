@@ -1,5 +1,5 @@
-import LeftSide from '@/app/modules/auth/common/LeftSide';
 import React from 'react';
+import LeftSide from '@/app/modules/auth/common/LeftSide';
 import loginimage1 from '@/app/assets/images/leftside1.svg';
 import loginimage2 from '@/app/assets/images/leftside2.svg';
 import loginimage3 from '@/app/assets/images/leftside3.svg';
@@ -19,7 +19,7 @@ export default function DashboardLayout({
     return (
         <section className="flex lg:flex-row flex-col justify-between ">
             {/* <LeftSide images={images} metaText={metaText} /> */}
-            <div className="w-full">
+            <div className="w-full hidden lg:block">
                 <LeftSide images={images} metaText={metaText} />
             </div>
             <div className="w-full  flex flex-col  items-center mt-5 ">

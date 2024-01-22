@@ -4,6 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
+import Image from 'next/image';
 import {
     Table,
     TableBody,
@@ -12,7 +13,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import Image from 'next/image';
 import Avatar from '@/app/assets/images/UserImage.svg';
 import ClassroomModal from '../classroom/ClassroomModal';
 
@@ -152,7 +152,7 @@ function StudentsInfoTable({
                 </TableBody>
             </Table>
             {isShowStudentModal && (
-                <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%] ">
+                <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[25%] ">
                     <ClassroomModal onClose={handleCloseStudentModal} />
                 </div>
             )}

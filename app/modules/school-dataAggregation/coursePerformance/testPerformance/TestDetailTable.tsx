@@ -82,8 +82,8 @@ function TestDetailTable({ test, fontSize }: TestDetailProp) {
                             </TableCell>
 
                             <TableCell className="relative">
-                                <div className="flex flex-col lg:flex-row ">
-                                    <span className="text-center lg:text-left px-2 lg:mb-0 mb-1 ">
+                                <div className="flex flex-col lg:flex-row lg:space-x-2 ">
+                                    <span className="text-center lg:text-left  lg:mb-0 mb-1 ">
                                         {testItem.rightAnswers}
                                     </span>
                                     <div className="flex relative bg-red-100">
@@ -131,8 +131,8 @@ function TestDetailTable({ test, fontSize }: TestDetailProp) {
                             </TableCell>
 
                             <TableCell className="relative">
-                                <div className="flex flex-col lg:flex-row ">
-                                    <span className="text-center lg:text-left px-2  lg:mb-0 mb-1 ">
+                                <div className="flex flex-col  lg:flex-row lg:space-x-2 ">
+                                    <span className="text-center lg:text-left  lg:mb-0 mb-1 ">
                                         {testItem.wrongAnswers}
                                     </span>
                                     <div className="flex relative bg-red-100">
@@ -195,7 +195,7 @@ function TestDetailTable({ test, fontSize }: TestDetailProp) {
                 </TableBody>
             </Table>
             {isShowDetailModal && (
-                <div className="absolute right-0 top-0 z-50 w-full lg:w-[30%]">
+                <div className=" right-0 top-0 z-50 w-full lg:w-[30%] fixed">
                     <QuestionDetailModal onClose={handleCloseModal} />
                 </div>
             )}

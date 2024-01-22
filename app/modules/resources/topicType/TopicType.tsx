@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
+import { HelpCircle, TicketIcon } from 'lucide-react';
 import Filters from '@/app/components/common/Filters';
 import Card from '@/app/components/common/Card';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
-import { HelpCircle, TicketIcon } from 'lucide-react';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
-import { usePathname } from 'next/navigation';
 import UploadResourceModal from '../UploadResourceModal';
 
 function TopicPage() {

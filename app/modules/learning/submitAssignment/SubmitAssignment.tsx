@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import DocxIcon from '@/app/assets/icons/DocxIcon';
 import UploadResourceModal from '@/app/components/common/UploadResourceModal';
-import { usePathname, useRouter } from 'next/navigation';
 import AssignmentCard, { AssignmentInterface } from './AssignmentCard';
 
 const uploadedAssignment: AssignmentInterface[] = [
@@ -32,6 +32,7 @@ const referenceMaterial: AssignmentInterface[] = [
 function SubmitAssignment() {
     const { push } = useRouter();
     const pathname = usePathname();
+    const [isShowUploadModal, setIsShowUploadModal] = useState(false);
 
     return (
         <section>
@@ -44,6 +45,7 @@ function SubmitAssignment() {
                     <button
                         type="button"
                         className="py-3 px-4 border h-fit border-primary-color text-dark-gray rounded-xl font-semibold cursor-pointer"
+                        onClick={() => setIsShowUploadModal(true)}
                     >
                         Upload File
                     </button>
@@ -77,14 +79,17 @@ function SubmitAssignment() {
                 />
             ))}
 
-            {/* <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%]">
-                <UploadResourceModal
-                    headerText="Upload Assignment"
-                    buttonText="Submit Assignment"
-                    Icon={DocxIcon}
-                    description="Upload Your Assignment"
-                />
-            </div> */}
+            {isShowUploadModal && (
+                <div className="absolute right-0 top-0 z-50 w-[100%] lg:w-[25%]">
+                    <UploadResourceModal
+                        headerText="Upload Assignment"
+                        buttonText="Submit Assignment"
+                        Icon={DocxIcon}
+                        description="Upload Your Assignment"
+                        onClose={() => setIsShowUploadModal(false)}
+                    />
+                </div>
+            )}
         </section>
     );
 }

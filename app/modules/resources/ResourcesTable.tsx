@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
+import Image from 'next/image';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
@@ -13,6 +14,7 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 import { convertSpacesToDashes } from '@/lib/utils';
+import Avatar from '@/app/assets/images/UserImage.svg';
 
 export interface Resource {
     id: number;
@@ -74,17 +76,24 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
             <TableBody>
                 {resources.map((resource, index) => (
                     <TableRow className="border-none" key={resource.id}>
-                        <TableCell className="font-medium">
+                        <TableCell className="font-medium ">
                             <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
                                 {index + 1}
                             </span>
                         </TableCell>
-                        <TableCell>{resource.name}</TableCell>
+                        <TableCell className="">
+                            <span className="flex gap-x-2 items-center ">
+                                <span className="truncate h-[26px]">
+                                    {resource.name}
+                                </span>
+                            </span>
+                        </TableCell>
+                        {/* <TableCell>{resource.name}</TableCell> */}
                         <TableCell className="text-dark-gray">
                             {resource.type}
                         </TableCell>
                         <TableCell
-                            className="text-dark-gray cursor-pointer hover:text-gray-700 hover:underline"
+                            className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
                             onClick={(
                                 e: React.MouseEvent<
                                     HTMLTableCellElement,

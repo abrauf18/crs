@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import crscLogo from '@/app/assets/images/crsclogo.svg';
+import Link from 'next/link';
+import { Check } from 'lucide-react';
 import Image from 'next/image';
+import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
-import Link from 'next/link';
-import { Check } from 'lucide-react';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
@@ -36,7 +36,7 @@ function SigninForm() {
     };
     return (
         <div className=" p-10 w-[95%] lg:w-[75%] flex flex-col ">
-            <div className="flex items-center lg:items-start flex-col">
+            <div className="flex lg:items-start flex-col">
                 <Image
                     height={100}
                     width={100}
@@ -114,7 +114,7 @@ function SigninForm() {
                     <CheckBox label="Remember Me" />
                     <Link
                         href="#"
-                        className="text-xs text-black ml-auto hover:text-sky-400"
+                        className="text-xs text-black ml-auto lg:hover:text-sky-400"
                     >
                         Forgot Password?
                     </Link>
@@ -122,12 +122,12 @@ function SigninForm() {
                 <div className="text-center">
                     <Button
                         type="submit"
-                        className="w-full bg-primary-color hover:bg-orange-400 mb-3"
+                        className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                     >
                         Sign In
                     </Button>
                     <span className="text-black text-[12px]">Or</span>
-                    <Button className="w-full bg-slate-200 text-black mt-3 hover:bg-slate-300">
+                    <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
                         <GoogleIcon width={20} height={20} className="mr-2" />
                         Sign In With Google
                     </Button>

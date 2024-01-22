@@ -3,8 +3,8 @@
 import { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import { convertSpacesToDashes } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { convertSpacesToDashes } from '@/lib/utils';
 
 interface CardProps {
     Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
@@ -29,7 +29,7 @@ function Card({ Icon, cardText, count, currentPath, isSchool }: CardProps) {
                 <div className="flex items-end justify-end">
                     <Link
                         href={currentPath ? `${currentPath}` : `${path}/${URL}`}
-                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 w-24 hover:bg-primary-color hover:text-white"
+                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 w-24 lg:hover:bg-primary-color lg:hover:text-white"
                     >
                         Details
                     </Link>

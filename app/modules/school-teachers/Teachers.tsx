@@ -1,12 +1,11 @@
 'use client';
 
-import Searchbar from '@/app/components/common/Searchbar';
 import React, { useState } from 'react';
+import Searchbar from '@/app/components/common/Searchbar';
 
 import Pagintaion from '@/app/components/common/Pagintaion';
 import userImage from '@/app/assets/images/UserImage.svg';
 import TeachersTable, { TeacherInterface } from './TeachersTable';
-import AssignClassModal from './AssignClassModal';
 import AddTeacherModal from './AddTeacherModal';
 
 export const teachersData: TeacherInterface[] = [
@@ -85,10 +84,10 @@ function Teachers() {
                 tagline="All Teacher in your School"
             />
             <div className="border rounded-lg p-5  lg:px-4 ">
-                <div className="flex justify-between px-1 mb-6 items-center">
+                <div className="flex mobile:flex-col justify-between px-1 mb-6 mobile:items-start items-center">
                     <h1 className="text-[20px] font-semibold">All Teachers</h1>
                     <div
-                        className="cursor-pointer border rounded-lg px-3 py-1 text-white bg-primary-color font-medium"
+                        className="cursor-pointer border rounded-lg px-3 py-1 text-white bg-primary-color font-medium mobile:mt-2"
                         onClick={handleAddTeacherClick}
                     >
                         Add Teacher
@@ -105,7 +104,7 @@ function Teachers() {
                 <AssignClassModal />
             </div> */}
             {isAddTeacherModalVisible && (
-                <div className="absolute right-0 top-0 z-50 w-full lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 w-full lg:w-[25%]">
                     <AddTeacherModal onClose={handleCloseModal} />
                 </div>
             )}

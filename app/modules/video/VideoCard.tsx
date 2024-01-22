@@ -1,5 +1,6 @@
 'use client';
 
+import { PlayIcon } from 'lucide-react';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,7 +8,6 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import QuestionIcon from '@/app/assets/icons/QuestionIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import CheckPointIcon from '@/app/assets/icons/CheckPointIcon';
-import { PlayIcon } from 'lucide-react';
 import CardContent, { IconProps } from '@/app/components/common/CardContent';
 
 export interface Card {

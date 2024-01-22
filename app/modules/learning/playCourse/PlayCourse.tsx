@@ -2,6 +2,7 @@
 
 import { ArrowLeft, CalendarDays } from 'lucide-react';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import LearningTable, { LearningInterface } from '../LearningTable';
 import OpenEndedQuestion from './OpenEndedQuestion';
 import OpenEndedResult from './OpenEndedResult';
@@ -57,11 +58,12 @@ export const LearningRecord: LearningInterface[] = [
 ];
 
 function PlayCourse({ params }: any) {
+    const { back } = useRouter();
     return (
         <section>
             <div className="flex flex-col justify-between items-center lg:flex-row space-y-2  mt-8">
                 <div className="flex lg:space-x-2 items-center w-full justify-start mb-4 lg:mb-0 ">
-                    <ArrowLeft />
+                    <ArrowLeft onClick={() => back()} />
                     <h1 className="text-black ml-2 font-semibold text-lg">
                         Artificial Intelligence - AI
                     </h1>

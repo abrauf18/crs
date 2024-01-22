@@ -15,7 +15,7 @@ function Signin() {
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">
             {/* <LeftSide images={images} metaText={metaText} /> */}
-            <div className="w-full">
+            <div className="w-full hidden lg:block">
                 <LeftSide images={images} metaText={metaText} />
             </div>
             <div className="w-full  flex flex-col justify-center items-center ">

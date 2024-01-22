@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
 import { CheckBox } from '../Checkbox';
 import Steps from './Steps';
 
@@ -17,7 +17,7 @@ function SchoolSignup1() {
         <div className=" p-10 w-[95%] lg:w-[75%] flex flex-col ">
             <Steps step={1} totalSteps={3} />
 
-            <div className="flex items-center lg:items-start flex-col">
+            <div className="flex lg:items-start flex-col">
                 <h1 className="text-2xl font-semibold mt-6">Create Account</h1>
                 <p className="text-sm font-medium text-dark-gray mb-6">
                     Enter Details to Create your Account
@@ -51,7 +51,7 @@ function SchoolSignup1() {
                     <CheckBox label="Remember Me" />
                     <Link
                         href="#"
-                        className="text-xs text-black ml-auto hover:text-sky-400"
+                        className="text-xs text-black ml-auto lg:hover:text-sky-400"
                     >
                         Forgot Password?
                     </Link>
@@ -59,13 +59,13 @@ function SchoolSignup1() {
                 <div className="text-center">
                     <Button
                         type="button"
-                        className="w-full bg-primary-color hover:bg-orange-400 mb-3"
+                        className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         onClick={() => push(`${pathName}/school-profile`)}
                     >
                         Sign In
                     </Button>
                     <span className="text-black text-[12px]">Or</span>
-                    <Button className="w-full bg-slate-200 text-black mt-3 hover:bg-slate-300">
+                    <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
                         <GoogleIcon width={20} height={20} className="mr-2" />
                         Sign In With Google
                     </Button>

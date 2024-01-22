@@ -1,5 +1,5 @@
-import Card from '@/app/modules/profile/ProfileCard';
 import React from 'react';
+import Card from '@/app/modules/profile/ProfileCard';
 import ClassroomIcon from '@/app/assets/icons/ClassroomIcon';
 import StatsIcon from '@/app/assets/icons/StatsIcon';
 import MyAnswersTable, {
@@ -10,6 +10,7 @@ import Resource1 from '@/app/assets/images/resourceImages/Resource1.svg';
 import Resource2 from '@/app/assets/images/resourceImages/Resource2.svg';
 import Resource3 from '@/app/assets/images/resourceImages/Resource3.svg';
 import FileCard, { FileInterface } from '@/app/components/common/FileCard';
+import Searchbar from '@/app/components/common/Searchbar';
 
 export const MyAnswersRecord: MyAnswers[] = [
     {
@@ -75,7 +76,11 @@ const resources: FileInterface[] = [
 function Profile() {
     return (
         <div>
-            <div className="grid lg:grid-cols-3 gap-5 my-5">
+            <Searchbar
+                headerText="My Profile"
+                tagline="Track Of Performance & Progress"
+            />
+            <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-5 my-5">
                 <Card
                     Icon={ClassroomIcon}
                     description="10th Grade"
@@ -106,7 +111,7 @@ function Profile() {
                 <h1 className="font-semibold text-2xl mb-4 mt-8">My Answers</h1>
 
                 <div className="border rounded-lg p-5 flex flex-col items-end">
-                    <Filters text="" />
+                    <Filters text="" btnFontSize="text-xs" />
                     <MyAnswersTable myRecord={MyAnswersRecord} />
                 </div>
             </div>

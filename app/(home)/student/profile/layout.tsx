@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 function layout({ children }: { children: React.ReactNode }) {
     return (
         <section>
-            <Searchbar
+            {/* <Searchbar
                 headerText="My Profile"
                 tagline="Track Of Performance & Progress"
-            />
+            /> */}
             <div className="lg:basis-full ">{children}</div>
         </section>
     );

@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import EditIcon from '@/app/assets/icons/EditIcon';
+import Image from 'next/image';
 import { Eye, Trash } from 'lucide-react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { Poppins } from 'next/font/google';
+import EditIcon from '@/app/assets/icons/EditIcon';
 import {
     Table,
     TableBody,
@@ -13,7 +14,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import Image from 'next/image';
 import Avatar from '@/app/assets/images/UserImage.svg';
 import AssignClassModal from './AssignClassModal';
 
@@ -97,7 +97,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                             <TableCell className="text-dark-gray ">
                                 {teacher.email}
                             </TableCell>
-                            <TableCell className="text-dark-gray pl-10 ">
+                            <TableCell className="text-dark-gray ">
                                 {teacher.assignedClasses}
                             </TableCell>
                             <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 ">
@@ -121,7 +121,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                 </TableBody>
             </Table>
             {isEditTeacherModalVisible && (
-                <div className="absolute right-0 top-0 z-50 w-full lg:w-[30%]">
+                <div className="fixed right-0 top-0 z-50 w-full lg:w-[30%]">
                     <AssignClassModal onClose={handleCloseModal} />
                 </div>
             )}
