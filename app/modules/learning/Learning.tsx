@@ -3,6 +3,7 @@ import React from 'react';
 
 import LearningCard from './LearningCard';
 import LearningTable, { LearningInterface } from './LearningTable';
+import Searchbar from '@/app/components/common/Searchbar';
 
 export const LearningRecord: LearningInterface[] = [
     {
@@ -139,6 +140,10 @@ export const standards = [
 function Learning() {
     return (
         <div>
+            <Searchbar
+                headerText="My Learnings"
+                tagline="Here’s Your All Learning Assigned to You"
+            />
             <div className="flex justify-between items-center mt-8">
                 <p className="font-semibold text-2xl ">
                     Your Assigned Learnings

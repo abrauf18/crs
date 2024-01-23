@@ -1,5 +1,5 @@
-import SubmitAssignment from '@/app/modules/learning/submitAssignment/SubmitAssignment';
 import React from 'react';
+import SubmitAssignment from '@/app/modules/learning/submitAssignment/SubmitAssignment';
 
 function SubmitAssignmentPage() {
     return <SubmitAssignment />;

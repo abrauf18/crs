@@ -87,7 +87,7 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
                         <TableCell className="text-dark-gray text-center">
                             {record.score}
                         </TableCell>
-                        <TableCell className="flex justify-center items-center p-0 mt-5 ml-3 text-center">
+                        <TableCell className="flex justify-center items-center p-0 mt-5 ml-3 md:mt-6 lg:mt-4 text-center">
                             <div
                                 className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
                                 onClick={() => handleClick(index)}

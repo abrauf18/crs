@@ -83,8 +83,8 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
                                 {resource.assignedResources}
                             </TableCell>
 
-                            <TableCell className="flex lg:justify-end items-center p-0 mt-5  lg:pr-10 space-x-2 font-medium">
-                                <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
+                            <TableCell className="flex lg:justify-end items-center p-0  lg:pr-10 space-x-2 font-medium mt-6 md:mt-5 lg:mt-2 ">
+                                <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer ">
                                     <Eye
                                         color="#F59A3B"
                                         width={18}
