@@ -8,37 +8,37 @@ import ResourceDownloadModal from './ResourceDownloadModal';
 export const resourcesList: ResourcesInterface[] = [
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'Data Privacy & Protection',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'Data Privacy & Protection',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'Data Privacy & Protection',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'Data Privacy & Protection',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'Data Privacy & Protection',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'Data Privacy & Protection',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'Data Privacy & Protection',
         assignedResources: '5',
     },
 ];

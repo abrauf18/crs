@@ -38,8 +38,8 @@ function QuestionDetailModal({ onClose }: any) {
         },
     ];
     return (
-        <section className="w-full bg-white h-screen  py-4 px-8 shadow-lg items-center">
-            <div className="h-[100%] overflow-y-auto w-full px-2">
+        <section className="w-full bg-white h-screen  py-4  shadow-lg items-center">
+            <div className="h-[100%] overflow-y-auto w-full px-6">
                 <div className="flex justify-between ">
                     <div className="flex  my-7 mr-3">
                         <p className=" text-dark-gray mb-2 font-semibold text-base">

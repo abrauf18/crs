@@ -19,35 +19,35 @@ export const usersData: User[] = [
         id: 2,
         imageUrl: userImage as string,
         name: 'Jane',
-        email: 'jane.doe@example.com',
+        email: 'jane@example.com',
         role: 'User',
     },
     {
         id: 3,
         imageUrl: userImage as string,
         name: 'Bob',
-        email: 'bob.smith@example.com',
+        email: 'bob@example.com',
         role: 'Moderator',
     },
     {
         id: 4,
         imageUrl: userImage as string,
         name: 'Alice',
-        email: 'alice.johnson@example.com',
+        email: 'alice@example.com',
         role: 'User',
     },
     {
         id: 5,
         imageUrl: userImage as string,
         name: 'Charlie',
-        email: 'charlie.brown@example.com',
+        email: 'charlie@example.com',
         role: 'Admin',
     },
 ];
 function Users() {
     return (
         <>
-            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
+            <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
                 <Filters text="User’s" btnFontSize="text-xs" />
                 <UsersTable users={usersData} />
             </div>

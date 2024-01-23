@@ -39,13 +39,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     <div className="flex flex-col justify-between items-center mobile:w-full mb-4 lg:mb-0">
                         <button
                             type="button"
-                            className="text-white bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-3 border rounded-lg mt-2"
+                            className="text-white bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-2 border rounded-lg mt-2"
                         >
                             Change Photo
                         </button>
                         <button
                             type="button"
-                            className="text-dark-gray  font-semibold mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg mt-2"
+                            className="text-dark-gray  font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg mt-2"
                         >
                             Remove Photo
                         </button>
@@ -74,13 +74,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     <div className="md:flex md:justify-between w-full mt-5 gap-2">
                         <button
                             type="button"
-                            className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-3 border rounded-lg"
+                            className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-2 border rounded-lg"
                         >
                             Cancel
                         </button>
                         <button
                             type="button"
-                            className="text-white bg-primary-color font-semibold w-full p-2 md:px-6 md:py-3 border rounded-lg"
+                            className="text-white bg-primary-color font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg"
                         >
                             Save
                         </button>

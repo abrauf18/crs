@@ -21,7 +21,7 @@ function Searchbar({
     onBackClick,
 }: SearchbarProp) {
     return (
-        <div className="flex lg:justify-between lg:items-center flex-col lg:flex-row mb-4 md:sticky md:top-0 bg-white z-30 shrink-0 py-2">
+        <div className="flex md:justify-between md:items-center flex-col md:flex-row mb-4 lg:sticky md:top-0 bg-white z-30 shrink-0 py-2">
             <div className="flex flex-col justify-start items-start  ">
                 <div className="flex space-x-3 items-center ">
                     {isShowBackArrow && (
@@ -36,7 +36,7 @@ function Searchbar({
                                 <Icon width={25} height={25} color="black" />
                             )}
                         </div>
-                        <p className="text-dark-gray text-sm mb-3 lg:mb-0">
+                        <p className="text-dark-gray text-sm mb-3 md:mb-0">
                             {tagline}
                         </p>
                     </div>

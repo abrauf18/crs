@@ -38,7 +38,7 @@ function InviteTeacher() {
         },
     ];
     return (
-        <div className=" p-10 w-[95%] lg:w-[75%]  flex flex-col ">
+        <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <Steps step={3} totalSteps={3} />
 
             <div className="flex lg:items-start flex-col">

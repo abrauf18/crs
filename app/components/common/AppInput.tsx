@@ -13,7 +13,7 @@ interface AppInputProps {
 function AppInput({
     type = 'text',
     id,
-    placeholder = 'Enter Text',
+    placeholder = '',
     onChange,
     additionalClasses = '',
     name,

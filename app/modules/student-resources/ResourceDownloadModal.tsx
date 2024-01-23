@@ -30,8 +30,8 @@ function ResourceDownloadModal({ onClose }: any) {
         },
     ];
     return (
-        <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
-            <div className="h-[100%] overflow-y-auto px-2">
+        <section className="w-full bg-white h-screen py-4 shadow-lg">
+            <div className="h-[100%] overflow-y-auto px-6">
                 <ModalHeader
                     headerText={{
                         heading: 'Future of Work',

@@ -195,7 +195,7 @@ function TestDetailTable({ test, fontSize }: TestDetailProp) {
                 </TableBody>
             </Table>
             {isShowDetailModal && (
-                <div className="fixed right-0 top-0 z-50 w-full lg:w-[30%]">
+                <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <QuestionDetailModal onClose={handleCloseModal} />
                 </div>
             )}

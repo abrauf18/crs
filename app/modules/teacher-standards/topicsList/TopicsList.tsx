@@ -7,37 +7,37 @@ import TopicsTable, { TopicsInterface } from './TopicsTable';
 export const topicsList: TopicsInterface[] = [
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'SB1 Cell Structure - Function',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'SB1 Cell Structure - Function',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'SB1 Cell Structure - Function',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'SB1 Cell Structure - Function',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'SB1 Cell Structure - Function',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'SB1 Cell Structure - Function',
         assignedResources: '5',
     },
     {
         id: 1,
-        topic: 'ABC',
+        topic: 'SB1 Cell Structure - Function',
         assignedResources: '5',
     },
 ];

@@ -14,7 +14,7 @@ function SchoolSignup1() {
     const { push } = useRouter();
     const pathName = usePathname();
     return (
-        <div className=" p-10 w-[95%] lg:w-[75%] flex flex-col ">
+        <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <Steps step={1} totalSteps={3} />
 
             <div className="flex lg:items-start flex-col">
@@ -49,12 +49,6 @@ function SchoolSignup1() {
 
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
-                    <Link
-                        href="#"
-                        className="text-xs text-black ml-auto lg:hover:text-sky-400"
-                    >
-                        Forgot Password?
-                    </Link>
                 </div>
                 <div className="text-center">
                     <Button
@@ -69,6 +63,14 @@ function SchoolSignup1() {
                         <GoogleIcon width={20} height={20} className="mr-2" />
                         Sign In With Google
                     </Button>
+                </div>
+                <div className="flex space-x-2 mt-4 justify-center">
+                    <p>Not Registered Yet?</p>
+                    <Link href="/signin">
+                        <p className="underline text-primary-color font-semibold">
+                            Signin
+                        </p>
+                    </Link>
                 </div>
             </form>
         </div>

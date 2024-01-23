@@ -1,5 +1,5 @@
-import SchoolProfile from '@/app/modules/auth/school-signup/schoolProfile/SchoolProfile';
 import React from 'react';
+import SchoolProfile from '@/app/modules/auth/school-signup/schoolProfile/SchoolProfile';
 
 function page() {
     return <SchoolProfile />;

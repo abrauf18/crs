@@ -162,9 +162,9 @@ function Learning() {
                         sed do eiusmod tempor incididunt ut labore
                     </p>
                 </div>
-                <p className="border py-3 px-4 mt-2 lg:mt-0 text-center rounded-lg h-fit lg:w-fit font-semibold bg-sky-400 lg:hover:bg-sky-500 text-white ">
+                {/* <p className="border py-3 px-4 mt-2 lg:mt-0 text-center rounded-lg h-fit lg:w-fit font-semibold bg-sky-400 lg:hover:bg-sky-500 text-white ">
                     Continue Learning
-                </p>
+                </p> */}
             </div>
 
             <div className="border rounded-lg p-5 mt-5">

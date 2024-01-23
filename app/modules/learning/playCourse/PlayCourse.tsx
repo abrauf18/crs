@@ -58,7 +58,7 @@ export const LearningRecord: LearningInterface[] = [
 ];
 
 function PlayCourse({ params }: any) {
-    const { back } = useRouter();
+    const { back, push } = useRouter();
     return (
         <section>
             <div className="flex flex-col justify-between items-center lg:flex-row space-y-2  mt-8">
@@ -68,7 +68,10 @@ function PlayCourse({ params }: any) {
                         Artificial Intelligence - AI
                     </h1>
                 </div>
-                <div className="bg-primary-color text-white w-full text-center lg:w-fit px-4 py-3 rounded-xl cursor-pointer">
+                <div
+                    className="bg-primary-color text-white w-full text-center lg:w-fit px-4 py-3 rounded-xl cursor-pointer"
+                    onClick={() => push('/student/resources')}
+                >
                     Resources
                 </div>
             </div>

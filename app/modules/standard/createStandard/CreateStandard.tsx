@@ -86,7 +86,7 @@ function CreateStandard() {
                 </div>
             </div>
             <StandardCard data={data} />
-            <div className="fixed right-0 top-0 z-50">
+            <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                 {/* <VideoModal /> */}
                 {/* <QuizModal /> */}
             </div>

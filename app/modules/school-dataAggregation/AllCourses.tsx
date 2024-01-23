@@ -45,7 +45,7 @@ const courses: CourseCardInterface[] = [
 ];
 function AllCourses() {
     return (
-        <section>
+        <section className="pb-5">
             <h1 className="font-semibold text-lg">All Courses</h1>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
                 {courses.map((course) => (

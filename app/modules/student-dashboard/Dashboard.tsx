@@ -67,7 +67,7 @@ const cards: Video[] = [
 ];
 function Dashboard() {
     return (
-        <div>
+        <div className="pb-4">
             <Searchbar
                 headerText="Hello Dany"
                 tagline="Here’s a Quick Overview"

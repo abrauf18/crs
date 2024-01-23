@@ -24,8 +24,8 @@ function ClassroomModal({ onClose }: any) {
         { label: '9th Grade - A', value: '9th Grade - A' },
     ];
     return (
-        <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg">
-            <div className="h-[80%] lg:h-[85%] overflow-y-auto w-full px-2">
+        <section className="w-full bg-white h-screen  py-4  shadow-lg">
+            <div className="h-[80%] lg:h-[90%] overflow-y-auto px-6 w-full">
                 <div className="flex justify-between items-center">
                     <div className="flex  my-7">
                         <div className="flex flex-col ml-2">

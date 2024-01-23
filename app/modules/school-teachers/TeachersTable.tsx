@@ -121,7 +121,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                 </TableBody>
             </Table>
             {isEditTeacherModalVisible && (
-                <div className="fixed right-0 top-0 z-50 w-full lg:w-[30%]">
+                <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <AssignClassModal onClose={handleCloseModal} />
                 </div>
             )}

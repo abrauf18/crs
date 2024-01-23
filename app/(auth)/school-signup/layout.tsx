@@ -13,8 +13,7 @@ export default function DashboardLayout({
     const images = [loginimage1, loginimage2, loginimage3, loginimage4];
     const metaText = {
         title: 'Welcome To CRS!',
-        description:
-            'Your Teacher invited you to Class, Enter details to Create your Account!',
+        description: 'Enter details to Create your Account!',
     };
     return (
         <section className="flex lg:flex-row flex-col justify-between ">
