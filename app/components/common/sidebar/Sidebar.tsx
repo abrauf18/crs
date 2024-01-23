@@ -47,11 +47,11 @@ export default function SideBar() {
                 ItemIcon: ResourceIcon,
                 itemText: 'Resources',
             },
-            {
-                to: '#',
-                ItemIcon: QueryIcon,
-                itemText: 'Query',
-            },
+            // {
+            //     to: '#',
+            //     ItemIcon: QueryIcon,
+            //     itemText: 'Query',
+            // },
             {
                 to: '/admin/standard',
                 ItemIcon: StandardIcon,

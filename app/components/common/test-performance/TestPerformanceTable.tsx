@@ -88,7 +88,7 @@ function TestPerformanceTable({
 
                             <TableCell className="flex justify-center items-center">
                                 <div
-                                    className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
+                                    className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer md:mt-5 lg:mt-0"
                                     onClick={() =>
                                         isShownFromStudent
                                             ? setIsShowModal(true)

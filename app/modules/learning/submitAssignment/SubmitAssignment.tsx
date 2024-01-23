@@ -6,6 +6,7 @@ import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import DocxIcon from '@/app/assets/icons/DocxIcon';
 import UploadResourceModal from '@/app/components/common/UploadResourceModal';
 import AssignmentCard, { AssignmentInterface } from './AssignmentCard';
+import Searchbar from '@/app/components/common/Searchbar';
 
 const uploadedAssignment: AssignmentInterface[] = [
     {
@@ -30,13 +31,19 @@ const referenceMaterial: AssignmentInterface[] = [
 ];
 
 function SubmitAssignment() {
-    const { push } = useRouter();
+    const { push, back } = useRouter();
     const pathname = usePathname();
     const [isShowUploadModal, setIsShowUploadModal] = useState(false);
 
     return (
         <section>
-            <div className="flex justify-between flex-col lg:flex-row">
+            <Searchbar
+                headerText="My Learnings"
+                tagline="Here’s Your All Learning Assigned to You"
+                isShowBackArrow
+                onBackClick={() => back()}
+            />
+            <div className="flex justify-between flex-col lg:flex-row mt-8">
                 <div className="flex space-x-2">
                     <AssignmentIcon />
                     <p className="text-xl font-semibold">Assignment - XYZ</p>
@@ -44,7 +51,7 @@ function SubmitAssignment() {
                 <div className="flex lg:space-x-2 flex-col lg:flex-row mobile:space-y-4 mobile:my-4 lg:my-0">
                     <button
                         type="button"
-                        className="py-3 px-4 border h-fit border-primary-color text-dark-gray rounded-xl font-semibold cursor-pointer"
+                        className="py-3 px-4 border h-fit border-primary-color text-dark-gray rounded-xl font-semibold cursor-pointer hover:bg-primary-color hover:text-white"
                         onClick={() => setIsShowUploadModal(true)}
                     >
                         Upload File

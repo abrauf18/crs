@@ -101,7 +101,7 @@ function PlayCourse({ params }: any) {
                             { id: 4, value: 'Option 04' },
                         ]}
                     />
-                    {/* <QuizResult correctAnswer="If you could visit one planet, which would it be?" /> */}
+                    {/* <QuizResult correctAnswer="Option 02" /> */}
                 </>
             )}
 

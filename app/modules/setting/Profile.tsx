@@ -2,7 +2,9 @@ import Image from 'next/image';
 import React from 'react';
 import { Label } from '@/app/components/ui/label';
 import Avatar from '@/app/assets/images/UserImage.svg';
+import PictureIcon from '@/app/assets/icons/PictureIcon';
 import AppInput from '@/app/components/common/AppInput';
+import { Trash2 } from 'lucide-react';
 
 interface MyProfileProps {
     isSchoolProfile?: boolean;
@@ -39,15 +41,17 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     <div className="flex flex-col justify-between items-center mobile:w-full mb-4 lg:mb-0">
                         <button
                             type="button"
-                            className="text-white bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-2 border rounded-lg mt-2"
+                            className="text-white flex space-x-2 items-center bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-2 border rounded-lg mt-2"
                         >
-                            Change Photo
+                            <PictureIcon width={18} height={18} />{' '}
+                            <span>Change Photo</span>
                         </button>
                         <button
                             type="button"
-                            className="text-dark-gray  font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg mt-2"
+                            className="text-dark-gray flex space-x-2 items-center font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg mt-2"
                         >
-                            Remove Photo
+                            <Trash2 size={18} color="#E6500D" />{' '}
+                            <span>Remove Photo</span>
                         </button>
                     </div>
                 </div>
