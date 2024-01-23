@@ -14,11 +14,11 @@ export default function StandardLayout({
 }) {
     return (
         <section>
-            <Searchbar
+            {/* <Searchbar
                 headerText="Learning Standards"
                 tagline="Here’s All Your Learning Standards"
                 Icon={TeacherStandardIcon}
-            />
+            /> */}
             {children}
         </section>
     );

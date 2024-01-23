@@ -1,21 +1,25 @@
-import React from 'react';
-import Filters from '@/app/components/common/Filters';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import Searchbar from '@/app/components/common/Searchbar';
 import TeacherStandardIcon from '@/app/assets/icons/TeacherStandardIcon';
-import StandardCard from './StandardCard';
 
-function Standards() {
+export default function StandardLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    const { back } = useRouter();
     return (
         <section>
             <Searchbar
                 headerText="Learning Standards"
                 tagline="Here’s All Your Learning Standards"
                 Icon={TeacherStandardIcon}
+                isShowBackArrow
+                onBackClick={() => back()}
             />
-            <Filters text="40 Learning Plans In Total" btnFontSize="text-xs" />
-            <StandardCard />
+            {children}
         </section>
     );
 }
-
-export default Standards;
