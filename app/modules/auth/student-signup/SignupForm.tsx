@@ -13,7 +13,7 @@ import { CheckBox } from '../Checkbox';
 
 function SignupForm() {
     return (
-        <div className=" p-10 w-[95%] lg:w-[75%] flex flex-col ">
+        <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex  lg:items-start flex-col">
                 <Image
                     height={100}
@@ -56,12 +56,12 @@ function SignupForm() {
 
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
-                    <Link
+                    {/* <Link
                         href="#"
                         className="text-xs text-black ml-auto lg:hover:text-sky-400"
                     >
                         Forgot Password?
-                    </Link>
+                    </Link> */}
                 </div>
                 <div className="text-center">
                     <Button

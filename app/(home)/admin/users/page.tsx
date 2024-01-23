@@ -1,5 +1,5 @@
-import Users from '@/app/modules/users/Users';
 import React from 'react';
+import Users from '@/app/modules/users/Users';
 
 function UsersPage() {
     return <Users />;

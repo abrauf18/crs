@@ -43,7 +43,7 @@ function TopicPage() {
                 <Card Icon={HelpCircle} cardText="Quizzes" count={150} />
             </div>
             {isShowUploadModal && (
-                <div className="fixed right-0 top-0 z-50 ">
+                <div className="fixed right-0 top-0 z-50 w-[100%] md:w-[60%] lg:w-[30%]">
                     <UploadResourceModal onClose={handleCloseUploadModal} />
                 </div>
             )}

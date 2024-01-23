@@ -48,7 +48,7 @@ function StatsTable({ statsList, fontSize }: StatsTableProps) {
 
     return (
         <Table
-            className={`text-[${fontSize || '18'}px] mobile:text-[14px] ${
+            className={`text-[${fontSize || '18'}px] mobile:text-[14px]   ${
                 poppins.className
             }`}
         >

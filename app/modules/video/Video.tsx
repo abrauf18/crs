@@ -91,7 +91,7 @@ function Video() {
             {/* Modals for uploading steps */}
 
             {isShowUploadVideoModal && (
-                <div className="fixed right-0 top-0 z-50 lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <UploadResourceModal
                         isDisplayHeaderIcon
                         buttonText="Continue"
@@ -102,11 +102,11 @@ function Video() {
                 </div>
             )}
 
-            {/* <div className="fixed right-0 top-0 z-50 lg:w-[25%]">
+            {/* <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                 <AddQuestions />
             </div> */}
 
-            {/* <div className="fixed right-0 top-0 z-50 lg:w-[25%]">
+            {/* <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                 <CheckPointsModal />
             </div> */}
         </>

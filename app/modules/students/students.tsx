@@ -204,14 +204,14 @@ function Students() {
                     Add Student
                 </Button>
             </div>
-            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
+            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3 ">
                 <StatsTable statsList={StatsList} />
             </div>
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <StudentsInfoTable students={filteredStudents} />
             </div>
             {isAddStudentModalOpen && (
-                <div className="fixed right-0 top-0 z-50 lg:w-[25%] w-full">
+                <div className="fixed right-0 top-0 z-50 lg:w-[25%] w-full md:w-[60%]">
                     <AddStudentModal onClose={handleCloseAddStudentModal} />
                 </div>
             )}

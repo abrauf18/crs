@@ -8,7 +8,7 @@ import { LucideIcon } from 'lucide-react';
 export interface NavigationItemProps {
     to: string;
     ItemIcon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
-    itemText: string;
+    itemText?: string;
 }
 
 function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
@@ -21,7 +21,8 @@ function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
     return (
         <Link
             href={to}
-            className={`flex justify-start items-center w-52 p-3 mb-2 rounded-lg font-semibold text-sm ${
+            // w-52
+            className={`flex justify-start items-center w-52 md:w-fit lg:w-52 p-3 mb-2 rounded-lg font-semibold text-sm ${
                 isActive ? 'text-white bg-primary-color' : 'text-black'
             }`}
         >

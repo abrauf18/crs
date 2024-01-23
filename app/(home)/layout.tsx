@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import '@/app/globals.css';
 import React from 'react';
@@ -14,11 +13,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={montserrat.className}>
-                <section className="flex flex-col lg:flex-row">
-                    <div className="lg:basis-[280px]">
+                <section className="flex flex-col md:flex-row">
+                    <div className="md:basis-[100px] lg:basis-[280px]  ">
                         <SideBar />
                     </div>
-                    <div className="lg:basis-full p-6">{children}</div>
+                    <div className="lg:basis-full md:w-10/12 md:mx-2 p-6 md:p-4 lg:p-6 ">
+                        {children}
+                    </div>
                 </section>
             </body>
         </html>

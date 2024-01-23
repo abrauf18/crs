@@ -139,7 +139,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
             <div className="w-auto ">
                 <Image src={graph as string} alt="icon" className="w-full" />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 mt-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mt-5">
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
                         <h1 className="text-[20px] font-semibold">User’s</h1>

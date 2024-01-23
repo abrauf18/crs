@@ -111,13 +111,13 @@ function TestPerformanceTable({
                 </TableBody>
             </Table>
             {isShowModal && (
-                <div className="fixed right-0 top-0 z-50  text-sm  lg:w-[30%]">
+                <div className="fixed right-0 top-0 z-50  text-sm md:w-[60%] lg:w-[30%]">
                     <MyAnswersModal onClose={() => setIsShowModal(false)} />
                 </div>
             )}
 
             {isDisplayCourseModalOpen && (
-                <div className="fixed right-0 top-0 z-50  text-sm lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50  text-sm md:w-[60%] lg:w-[25%]">
                     <TestReportModal
                         onClose={() => setIsDisplayCourseModalOpen(false)}
                     />

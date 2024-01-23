@@ -185,7 +185,8 @@ export default function SideBar() {
     }
 
     return (
-        <section className="bg-light-gray lg:p-3 lg:fixed">
+        <section className="bg-light-gray md:p-3 md:fixed">
+            {/* Desktop Navbar */}
             <ul className="lg:flex flex-col w-full items-center justify-center hidden  pt-5 h-screen">
                 <Image
                     src={crsLogo as string}
@@ -224,9 +225,51 @@ export default function SideBar() {
                         ))}
                 </div>
             </ul>
+
+            {/* Tab View NavBar */}
+            <ul className="md:flex lg:hidden flex-col w-full items-center justify-center hidden  pt-5 h-screen">
+                <Image
+                    src={crsLogo as string}
+                    alt="crs logo"
+                    style={{
+                        width: '50px',
+                        height: '50px',
+                        objectFit: 'contain',
+                        marginBottom: '35px',
+                    }}
+                />
+                <div className="flex flex-col justify-start items-center h-full">
+                    {navItems
+                        .slice(0, navItems.length - 2)
+                        .map((item, index) => (
+                            <NavigationItem
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={index + 1}
+                                to={item.to}
+                                ItemIcon={item.ItemIcon}
+                                // itemText={item.itemText}
+                            />
+                        ))}
+                </div>
+                <div className="mb-5">
+                    {navItems
+                        .slice(navItems.length - 2, navItems.length)
+                        .map((item, index) => (
+                            <NavigationItem
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={index + 1}
+                                to={item.to}
+                                ItemIcon={item.ItemIcon}
+                                // itemText={item.itemText}
+                            />
+                        ))}
+                </div>
+            </ul>
+
+            {/* Mobile Navbar */}
             <ul
                 onClick={() => SetMenu(!menu)}
-                className="lg:hidden bg-light-gray w-screen p-2"
+                className="md:hidden bg-light-gray w-screen p-2"
             >
                 <div className="flex justify-between items-center">
                     <Image

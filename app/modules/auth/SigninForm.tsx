@@ -35,7 +35,7 @@ function SigninForm() {
         setFormSubmitted(true);
     };
     return (
-        <div className=" p-10 w-[95%] lg:w-[75%] flex flex-col ">
+        <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex lg:items-start flex-col">
                 <Image
                     height={100}
@@ -113,7 +113,7 @@ function SigninForm() {
                 <div className="flex mb-12">
                     <CheckBox label="Remember Me" />
                     <Link
-                        href="#"
+                        href="/forgot-password"
                         className="text-xs text-black ml-auto lg:hover:text-sky-400"
                     >
                         Forgot Password?

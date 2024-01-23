@@ -10,7 +10,75 @@ import ClassroomCard from './ClassroomCard';
 function Classroom() {
     return (
         <div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 ">
+            <div className="hidden lg:block">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 ">
+                    <ClassroomCard
+                        Icon={StudentIcon}
+                        periods="10th Period"
+                        students="40 Students"
+                        iconColor="#54C3F4"
+                        iconBg="bg-sky-100"
+                        activeColor="bg-sky-50"
+                    />
+
+                    <ClassroomCard
+                        Icon={StudentIcon}
+                        periods="9th Period"
+                        students="40 Students"
+                        iconColor="#7AA43E"
+                        iconBg="bg-green-100"
+                        activeColor="bg-green-50"
+                    />
+                    <div className="md:hidden lg:block">
+                        <ClassroomCard
+                            Icon={StudentIcon}
+                            periods="8th Period"
+                            students="40 Students"
+                            iconColor="#A03ADB"
+                            iconBg="bg-purple-100"
+                            activeColor="bg-purple-50"
+                        />
+                    </div>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                    <ClassroomCard
+                        Icon={StudentIcon}
+                        periods="7th Period"
+                        students="40 Students"
+                        iconColor="#A03ADB"
+                        iconBg="bg-purple-100"
+                        activeColor="bg-purple-50"
+                    />
+                    <ClassroomCard
+                        Icon={StudentIcon}
+                        periods="6th Period"
+                        students="40 Students"
+                        iconColor="#F59A3B"
+                        iconBg="bg-orange-200"
+                        activeColor="bg-orange-50"
+                        // isActive
+                    />
+                    <ClassroomCard
+                        Icon={StudentIcon}
+                        periods="5th Period"
+                        students="40 Students"
+                        iconColor="#E6500D"
+                        iconBg="bg-pink-100"
+                        activeColor="bg-pink-50"
+                    />
+                    <ClassroomCard
+                        Icon={StudentIcon}
+                        periods="4th Period"
+                        students="40 Students"
+                        iconColor="#54C3F4"
+                        iconBg="bg-sky-100"
+                        activeColor="bg-sky-50"
+                    />
+                </div>
+            </div>
+
+            {/* Tab/Mobile View */}
+            <div className="grid md:grid-cols-2 lg:hidden gap-4 mt-4">
                 <ClassroomCard
                     Icon={StudentIcon}
                     periods="10th Period"
@@ -28,18 +96,14 @@ function Classroom() {
                     iconBg="bg-green-100"
                     activeColor="bg-green-50"
                 />
-                <div className="md:col-span-full lg:col-span-1">
-                    <ClassroomCard
-                        Icon={StudentIcon}
-                        periods="8th Period"
-                        students="40 Students"
-                        iconColor="#A03ADB"
-                        iconBg="bg-purple-100"
-                        activeColor="bg-purple-50"
-                    />
-                </div>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                <ClassroomCard
+                    Icon={StudentIcon}
+                    periods="8th Period"
+                    students="40 Students"
+                    iconColor="#A03ADB"
+                    iconBg="bg-purple-100"
+                    activeColor="bg-purple-50"
+                />
                 <ClassroomCard
                     Icon={StudentIcon}
                     periods="7th Period"
@@ -55,7 +119,7 @@ function Classroom() {
                     iconColor="#F59A3B"
                     iconBg="bg-orange-200"
                     activeColor="bg-orange-50"
-                    isActive
+                    // isActive
                 />
                 <ClassroomCard
                     Icon={StudentIcon}
