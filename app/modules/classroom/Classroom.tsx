@@ -3,7 +3,7 @@ import React from 'react';
 import StudentIcon from '@/app/assets/icons/StudentIcon';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import StudentsInfoTable from '../students/StudentsInfoTable';
-import { Studentinfo } from '../students/Students';
+import { Studentinfo } from '../students/students';
 import ClassroomModal from './ClassroomModal';
 import ClassroomCard from './ClassroomCard';
 

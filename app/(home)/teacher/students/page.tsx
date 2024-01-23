@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import React from 'react';
-import Students from '@/app/modules/students/Students';
+import Students from '@/app/modules/students/students';
 
 export const metadata: Metadata = {
     title: 'Students',

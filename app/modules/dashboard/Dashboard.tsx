@@ -16,7 +16,7 @@ import Filters from '../../components/common/Filters';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
 import StudentsInfoTable from '../students/StudentsInfoTable';
-import { Studentinfo } from '../students/Students';
+import { Studentinfo } from '../students/students';
 
 import LearningPlanTable, { LearningInterface } from './LearningPlanTable';
 
