@@ -25,8 +25,8 @@ function AssignCourseModal({ onClose }: any) {
         { label: '10th Grade (B)', value: '10th Grade (B)' },
     ];
     return (
-        <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
-            <div className="h-[95%] overflow-y-auto px-2">
+        <section className="w-full bg-white h-screen py-4 shadow-lg">
+            <div className="h-[95%] overflow-y-auto px-6">
                 <ModalHeader
                     headerText={{
                         heading: 'Assign Course',

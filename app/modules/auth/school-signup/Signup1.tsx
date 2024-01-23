@@ -64,6 +64,14 @@ function SchoolSignup1() {
                         Sign In With Google
                     </Button>
                 </div>
+                <div className="flex space-x-2 mt-4 justify-center">
+                    <p>Not Registered Yet?</p>
+                    <Link href="/signin">
+                        <p className="underline text-primary-color font-semibold">
+                            Signin
+                        </p>
+                    </Link>
+                </div>
             </form>
         </div>
     );

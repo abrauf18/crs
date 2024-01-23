@@ -55,7 +55,7 @@ function Settings() {
                             />
                         </div>
                     </div>
-                    <div className="lg:absolute lg:bottom-2 w-full">
+                    <div className="lg:absolute lg:bottom-2 w-full my-5 md:my-8 lg:my-0">
                         <div className="md:flex md:justify-between w-full mt-2 gap-1">
                             <button
                                 type="button"

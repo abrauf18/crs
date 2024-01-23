@@ -73,7 +73,7 @@ export const learningPlans: LearningInterface[] = [
 
 function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
     return (
-        <section className="flex flex-col w-full scroll-smooth mobile:mt-12">
+        <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
             <Searchbar
                 headerText="Hello John Doe!"
                 tagline="Here’s a Quick Overview"
@@ -139,15 +139,17 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
             <div className="w-auto ">
                 <Image src={graph as string} alt="icon" className="w-full" />
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mt-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mobile:gap-8 mt-5">
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold">User’s</h1>
+                        <h1 className="text-[20px] font-semibold mb-2">
+                            User’s
+                        </h1>
                         <UsersTable users={usersData} fontSize="12" />
                     </div>
                 ) : (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold">
+                        <h1 className="text-[20px] font-semibold mb-2">
                             All Student’s
                         </h1>
                         <StudentsInfoTable
@@ -160,7 +162,9 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
 
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold">Resources</h1>
+                        <h1 className="text-[20px] font-semibold mb-2">
+                            Resources
+                        </h1>
                         <ResourcesTable
                             resources={ResourcesData}
                             fontSize="12"
@@ -168,7 +172,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                     </div>
                 ) : (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold">
+                        <h1 className="text-[20px] font-semibold mb-2">
                             Learning Plan
                         </h1>
                         <LearningPlanTable

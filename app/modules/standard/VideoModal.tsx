@@ -27,7 +27,7 @@ const cards: Card[] = [
 
 function VideoModal({ onClose }: any) {
     return (
-        <section className="w-full bg-white h-screen py-4 px-6 shadow-md">
+        <section className="w-full bg-white h-screen py-4  shadow-md">
             <ModalHeader
                 headerText={{
                     heading: 'Select Video',
@@ -39,7 +39,7 @@ function VideoModal({ onClose }: any) {
             <div className="mb-5">
                 <SearchInput />
             </div>
-            <div className="md:h-96 h-72  overflow-y-auto">
+            <div className="md:h-96 h-72  overflow-y-auto px-6">
                 {' '}
                 {/* Added container with fixed height and scrolling */}
                 {cards.map((card) => (

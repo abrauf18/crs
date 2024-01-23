@@ -31,7 +31,7 @@ function Pagintaion() {
                 <li>
                     <Link
                         href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
+                        className="z-10 flex items-center justify-center px-3 h-8 leading-tight text-white border border-blue-300 bg-primary-color lg:hover:bg-orange-400"
                     >
                         1
                     </Link>
@@ -48,7 +48,7 @@ function Pagintaion() {
                     <Link
                         href="#"
                         aria-current="page"
-                        className="z-10 flex items-center justify-center px-3 h-8 leading-tight text-white border border-blue-300 bg-primary-color lg:hover:bg-orange-400"
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         3
                     </Link>

@@ -185,7 +185,7 @@ export default function SideBar() {
     }
 
     return (
-        <section className="bg-light-gray md:p-3 md:fixed">
+        <section className="bg-light-gray md:w-[90px] lg:w-fit md:p-3 md:fixed">
             {/* Desktop Navbar */}
             <ul className="lg:flex flex-col w-full items-center justify-center hidden  pt-5 h-screen">
                 <Image
@@ -269,7 +269,7 @@ export default function SideBar() {
             {/* Mobile Navbar */}
             <ul
                 onClick={() => SetMenu(!menu)}
-                className="md:hidden bg-light-gray w-screen p-2"
+                className="md:hidden bg-light-gray w-screen p-4"
             >
                 <div className="flex justify-between items-center">
                     <Image

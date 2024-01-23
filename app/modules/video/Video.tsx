@@ -78,11 +78,14 @@ function Video() {
 
     return (
         <>
-            <Filters
-                text="200 Videos In Total"
-                secondButtonText="Upload Video"
-                handleClick={handleOpenUploadModal}
-            />
+            {/* flex justify-start */}
+            <div className="mobile:mb-4">
+                <Filters
+                    text="200 Videos In Total"
+                    secondButtonText="Upload Video"
+                    handleClick={handleOpenUploadModal}
+                />
+            </div>
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
                 {cards.map((card) => (
                     <VideoCard card={card} key={card.Questions} />

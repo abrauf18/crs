@@ -3,8 +3,8 @@ import { Check, X } from 'lucide-react';
 
 function MyAnswersModal({ onClose }: any) {
     return (
-        <section className="w-full bg-white h-screen  py-4 px-6 shadow-lg items-center">
-            <div className="h-[100%] overflow-y-auto w-full px-2">
+        <section className="w-full bg-white h-screen  py-4  shadow-lg items-center">
+            <div className="h-[100%] overflow-y-auto w-full px-6">
                 <div className="flex justify-between items-center">
                     <div className="flex  my-7">
                         <div className="flex flex-col ml-2">

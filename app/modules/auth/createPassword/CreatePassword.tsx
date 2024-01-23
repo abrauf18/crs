@@ -1,6 +1,6 @@
 import React from 'react';
-import LeftSide from '../common/LeftSide';
 import CreatePasswordForm from '@/app/components/common/auth/CreatePasswordForm';
+import LeftSide from '../common/LeftSide';
 
 function CreatePassword({ images, metaText }: any) {
     return (

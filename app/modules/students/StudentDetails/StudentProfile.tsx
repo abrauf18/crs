@@ -6,13 +6,15 @@ function StudentProfile() {
     return (
         <>
             {/* student profile */}
-            <section className="flex  mt-8 flex-row lg:items-center justify-between">
+            <section className="flex mobile:flex-col mt-8 flex-row lg:items-center justify-between">
                 <h1 className="font-semibold text-xl mb-4 lg:mb-0 lg:mr-4">
                     Kathryn Murphy Overview
                 </h1>
 
-                <div className="border rounded-xl px-5 py-3 text-center">
-                    <p className="text-dark-gray font-bold">Drop Out</p>
+                <div className="mobile:w-full mobile:justify-end mobile:flex">
+                    <div className="border rounded-xl px-5 py-3 text-center  mobile:w-fit ">
+                        <p className="text-dark-gray font-bold">Drop Out</p>
+                    </div>
                 </div>
             </section>
             <div className="flex flex-col lg:flex-row items-center shadow-[0px_4px_20px_0px_rgb(0,0,0,0.05)] rounded-lg py-5 mt-8">
@@ -62,7 +64,7 @@ function StudentProfile() {
                             </h1>
                         </div>
                         <div className="mt-4">
-                            <h1 className="text-dark-gray font-semibold">
+                            <h1 className="text-dark-gray font-medium">
                                 Overall Performance
                             </h1>
                             <h1 className="font-semibold text-lg">75%</h1>

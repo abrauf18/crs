@@ -17,7 +17,7 @@ function Payment() {
                 tagline="Here’s Your Payment Information"
             />
             <div className="flex flex-col justify-center items-center mt-10  ">
-                <div className="h-fit px-3 py-6 lg:px-8 lg:py-8  rounded-lg shadow-[0px_4px_20px_0px_rgb(0,0,0,0.05)] ">
+                <div className="h-fit px-5 py-5 md:px-7 md:py-7 lg:px-8 lg:py-8  rounded-lg shadow-[0px_4px_20px_0px_rgb(0,0,0,0.05)] ">
                     <h1 className="font-semibold text-xl">Card Information</h1>
                     <p className="text-sm text-dark-gray font-medium">
                         Don’t Worry your Information Is Completely Secure
@@ -64,7 +64,7 @@ function Payment() {
                         />
                     </div>
 
-                    <div className="flex mt-5 justify-between ">
+                    <div className="flex mt-5 justify-between w-[100%]">
                         <div className="flex flex-col">
                             <Label
                                 htmlFor="expiry"
@@ -73,7 +73,7 @@ function Payment() {
                                 Expiry
                             </Label>
 
-                            <div className="w-[90%]">
+                            <div className="w-[100%]">
                                 <AppInput
                                     type="text"
                                     id="expiry"
@@ -82,12 +82,12 @@ function Payment() {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col ml-3">
                             <Label htmlFor="cvv" className="font-medium mb-2">
                                 CVV
                             </Label>
 
-                            <div className="w-[90%]">
+                            <div className="w-[100%]">
                                 <AppInput
                                     type="text"
                                     id="cvv"

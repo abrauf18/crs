@@ -26,8 +26,8 @@ function AssignClassModal({ onClose }: any) {
         { label: '9th Grade - A', value: '9th Grade - A' },
     ];
     return (
-        <section className="w-full bg-white md:h-screen py-4 pb-12 lg:pb-4 px-6 shadow-lg">
-            <div className="h-[90%] overflow-y-auto px-2">
+        <section className="w-full bg-white md:h-screen py-4 pb-12 lg:pb-4 shadow-lg">
+            <div className="h-[90%] overflow-y-auto px-6">
                 <ModalHeader
                     headerText={{
                         heading: 'Bessie Cooper',

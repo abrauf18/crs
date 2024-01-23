@@ -8,11 +8,11 @@ import loginimage2 from '@/app/assets/images/leftside2.svg';
 import loginimage3 from '@/app/assets/images/leftside3.svg';
 import loginimage4 from '@/app/assets/images/leftside4.svg';
 import signupImage from '@/app/assets/images/signup1.svg';
-import LeftSide from '../../common/LeftSide';
 import { Button } from '@/app/components/ui/button';
 import AppInput from '@/app/components/common/AppInput';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
+import LeftSide from '../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
 function VerifyOTP() {
@@ -41,7 +41,8 @@ function VerifyOTP() {
                             Forgot Password
                         </h1>
                         <p className="text-sm font-medium text-dark-gray">
-                            Enter Email to Send Verification Code
+                            Enter the code we sent to your email below, so that
+                            we can verify that you are who you say you are.
                         </p>
                         <div className="text-sm font-medium text-dark-gray my-6">
                             <p>We Have Send Verification Code On</p>

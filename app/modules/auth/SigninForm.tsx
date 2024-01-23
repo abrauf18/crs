@@ -58,12 +58,14 @@ function SigninForm() {
                     <Label htmlFor="password ">Password</Label>
 
                     <input
-                        className={`mt-1 block w-full px-3 py-3 bg-slate-100 border rounded-md text-sm shadow-sm placeholder-slate-400
-                    focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 ${
-                        password && isUpperCase && isLowerCase && hasSpecialChar
-                            ? 'border-green-500'
-                            : 'border-red-400'
-                    }`}
+                        className="mt-1 block w-full px-3 py-3 bg-slate-100 border rounded-md text-sm shadow-sm placeholder-slate-400
+                    focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+                        //  ${
+                        //     password && isUpperCase && isLowerCase && hasSpecialChar
+                        //         ? 'border-green-500'
+                        //         : 'border-red-400'
+                        // }
+
                         type="password"
                         id="password"
                         placeholder="Password"
@@ -74,7 +76,7 @@ function SigninForm() {
 
                 {/* If error occour */}
 
-                <div className="flex space-y-2 lg:space-y-0 lg:flex-row flex-col lg:space-x-3 mb-4 mt-2">
+                {/* <div className="flex space-y-2 lg:space-y-0 lg:flex-row flex-col lg:space-x-3 mb-4 mt-2">
                     <div
                         className={`flex space-x-1 items-center ${
                             isUpperCase ? 'text-green-500' : 'text-red-500'
@@ -108,9 +110,9 @@ function SigninForm() {
                         />
                         <p className="text-xs">At Least 1 Special Character</p>
                     </div>
-                </div>
+                </div> */}
 
-                <div className="flex mb-12">
+                <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
                     <Link
                         href="/forgot-password"

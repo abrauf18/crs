@@ -58,13 +58,13 @@ function SchoolDashboard() {
         setIsDisplayTicketModal(false);
     };
     return (
-        <section className="flex flex-col w-full scroll-smooth  lg:px-4">
+        <section className="flex flex-col w-full scroll-smooth  lg:px-4 ">
             <Searchbar
                 headerText="Hello John Doe!"
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
-            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center mb-4">
+            <div className="grid mobile:grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 mobile:place-items-center mb-4">
                 <Card
                     Icon={UserIcon}
                     cardText="Total Students"
@@ -97,7 +97,7 @@ function SchoolDashboard() {
                     className="w-full lg:h-full lg:object-contain h-56 object-cover"
                 />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 items-start gap-4 mt-5">
+            <div className=" grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mt-5 ">
                 <div className="border rounded-lg p-5 px-2 lg:px-5">
                     <div className="flex  justify-between px-1 mb-2   items-center">
                         <h1 className="text-[20px] font-semibold">

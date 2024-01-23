@@ -22,11 +22,11 @@ function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
         <Link
             href={to}
             // w-52
-            className={`flex justify-start items-center w-52 md:w-fit lg:w-52 p-3 mb-2 rounded-lg font-semibold text-sm ${
+            className={`flex justify-start items-center w-52 md:w-[48px] md:h-[48px]   lg:w-52 p-3 mb-2 rounded-lg font-semibold text-sm ${
                 isActive ? 'text-white bg-primary-color' : 'text-black'
             }`}
         >
-            <div className="mx-4">
+            <div className="lg:mx-4 md:mx-0 mx-4">
                 {isActive ? (
                     <ItemIcon color="white" />
                 ) : (

@@ -26,8 +26,8 @@ function ProfileModal({ onClose }: any) {
         { label: 'Teacher', value: 'Teacher' },
     ];
     return (
-        <section className="w-full bg-white h-screen py-4 px-6 shadow-lg">
-            <div className="h-[80%] lg:h-[95%] overflow-y-auto px-2">
+        <section className="w-full bg-white h-screen py-4 shadow-lg">
+            <div className="h-[80%] lg:h-[95%] overflow-y-auto px-6">
                 <ModalHeader
                     headerText={{
                         heading: 'Kathryn Murphy',
@@ -54,13 +54,13 @@ function ProfileModal({ onClose }: any) {
                         <div className="flex flex-col lg:flex-row space-x-2 justify-center items-center  mobile:w-full mb-5">
                             <button
                                 type="button"
-                                className="text-white bg-primary-color font-semibold mobile:w-full px-5 py-3 border rounded-lg mt-2"
+                                className="text-white bg-primary-color font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
                             >
                                 Change Photo
                             </button>
                             <button
                                 type="button"
-                                className="text-dark-gray  font-semibold mobile:w-full px-5 py-3 border rounded-lg mt-2"
+                                className="text-dark-gray  font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
                             >
                                 Remove Photo
                             </button>

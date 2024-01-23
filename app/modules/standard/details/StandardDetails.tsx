@@ -56,19 +56,21 @@ function StandardDetails({
     return (
         <>
             <div key={selectedStandard.id} className="mt-5">
-                <div className="flex justify-between items-center mb-1">
-                    <div className="flex  gap-2  items-center ">
+                <div className="flex justify-between items-center mobile:items-start mb-1 mobile:flex-col">
+                    <div className="flex  gap-2  items-center mobile:items-start">
                         <File color="#7AA43E" size={30} />
                         <h1 className="text-3xl font-semibold">
                             {selectedStandard.heading}
                         </h1>
                     </div>
                     {isShownFromTeacher && (
-                        <div
-                            onClick={handleOpenModal}
-                            className="cursor-pointer w-fit mx-1 p-3 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-medium"
-                        >
-                            <button type="button">Assign Course</button>
+                        <div className="mobile:flex mobile:justify-end mobile:w-full mobile:mb-4">
+                            <div
+                                onClick={handleOpenModal}
+                                className="cursor-pointer w-fit mx-1 px-3 py-2 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-medium"
+                            >
+                                <button type="button">Assign Course</button>
+                            </div>
                         </div>
                     )}
                 </div>

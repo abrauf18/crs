@@ -61,7 +61,7 @@ function LearningPlanTable({ learnings, fontSize }: LearningPlanProp) {
                         Plan Name
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
-                        For Grade
+                        Grade
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
                         Assign Topic
