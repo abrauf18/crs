@@ -5,8 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import DocxIcon from '@/app/assets/icons/DocxIcon';
 import UploadResourceModal from '@/app/components/common/UploadResourceModal';
-import AssignmentCard, { AssignmentInterface } from './AssignmentCard';
 import Searchbar from '@/app/components/common/Searchbar';
+import AssignmentCard, { AssignmentInterface } from './AssignmentCard';
 
 const uploadedAssignment: AssignmentInterface[] = [
     {
