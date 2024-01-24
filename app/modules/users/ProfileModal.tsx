@@ -56,14 +56,14 @@ function ProfileModal({ onClose }: any) {
                         <div className="flex flex-col lg:flex-row space-x-2 justify-center items-center  mobile:w-full mb-5">
                             <button
                                 type="button"
-                                className="text-white flex space-x-2 bg-primary-color font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
+                                className="text-white flex items-center space-x-2 bg-primary-color font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
                             >
                                 <PictureIcon width={18} height={18} />
                                 <span>Change Photo</span>
                             </button>
                             <button
                                 type="button"
-                                className="text-dark-gray flex space-x-2  font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
+                                className="text-dark-gray items-center flex space-x-2  font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
                             >
                                 <Trash2 size={18} color="#E6500D" />
                                 <span>Remove Photo</span>
