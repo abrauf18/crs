@@ -145,7 +145,11 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                         <h1 className="text-[20px] font-semibold mb-2">
                             User’s
                         </h1>
-                        <UsersTable users={usersData} fontSize="12" />
+                        <UsersTable
+                            users={usersData}
+                            fontSize="12"
+                            isDashboard
+                        />
                     </div>
                 ) : (
                     <div className="border rounded-lg p-4 px-6">

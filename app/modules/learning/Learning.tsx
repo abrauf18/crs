@@ -1,8 +1,8 @@
 import { CalendarDays, File } from 'lucide-react';
 import React from 'react';
 
-import LearningCard from './LearningCard';
 import Searchbar from '@/app/components/common/Searchbar';
+import LearningCard from './LearningCard';
 import LearningTable, { LearningInterface } from './LearningTable';
 
 export const LearningRecord: LearningInterface[] = [

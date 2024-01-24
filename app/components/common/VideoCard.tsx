@@ -76,13 +76,15 @@ function VideoCard({ card, isModal }: VideoCardProps) {
                 </div>
 
                 <div className="flex items-end justify-end">
-                    <button
-                        type="button"
-                        // href={route && id ? `${route}/${id}` : '#'}
-                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 lg:hover:bg-primary-color lg:hover:text-white"
-                    >
-                        Continue
-                    </button>
+                    <Link href="/student/learning/1/video" className="relative">
+                        <button
+                            type="button"
+                            // href={route && id ? `${route}/${id}` : '#'}
+                            className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 lg:hover:bg-primary-color lg:hover:text-white"
+                        >
+                            Continue
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

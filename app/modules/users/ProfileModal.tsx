@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { Trash2 } from 'lucide-react';
 import AppInput from '@/app/components/common/AppInput';
 import { Label } from '@/app/components/ui/label';
 import Avatar from '@/app/assets/images/UserImage.svg';
@@ -10,6 +11,7 @@ import AppDropDown, {
     OptionsInterface,
 } from '@/app/components/common/AppDropDown';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
+import PictureIcon from '@/app/assets/icons/PictureIcon';
 
 function ProfileModal({ onClose }: any) {
     const [selectedOption, setSelectedOption] = useState('9th Grade - B');
@@ -54,15 +56,17 @@ function ProfileModal({ onClose }: any) {
                         <div className="flex flex-col lg:flex-row space-x-2 justify-center items-center  mobile:w-full mb-5">
                             <button
                                 type="button"
-                                className="text-white bg-primary-color font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
+                                className="text-white flex items-center space-x-2 bg-primary-color font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
                             >
-                                Change Photo
+                                <PictureIcon width={18} height={18} />
+                                <span>Change Photo</span>
                             </button>
                             <button
                                 type="button"
-                                className="text-dark-gray  font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
+                                className="text-dark-gray items-center flex space-x-2  font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
                             >
-                                Remove Photo
+                                <Trash2 size={18} color="#E6500D" />
+                                <span>Remove Photo</span>
                             </button>
                         </div>
                     </div>

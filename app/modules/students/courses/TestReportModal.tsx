@@ -5,15 +5,14 @@ import StarsIcon from '@/app/assets/icons/StarsIcon';
 
 function TestReportModal({ onClose }: any) {
     return (
-        <section className="w-full bg-white h-screen py-4 px-8 shadow-lg">
-            <div>
+        <section className="w-full bg-white h-screen py-4 shadow-lg">
+            <div className='h-[100%] overflow-y-auto px-6 w-full"'>
                 <ModalHeader
                     headerText={{
                         heading: 'Cloud Computing',
                         tagline: 'Student Answer’s Report',
                     }}
                     onClose={onClose}
-                    Icon={BookOpenCheck}
                 />
 
                 <div className="border-2 border-primary-color rounded-lg flex space-x-4 p-3 items-center">

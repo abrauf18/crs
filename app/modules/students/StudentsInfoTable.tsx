@@ -14,6 +14,7 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 import Avatar from '@/app/assets/images/UserImage.svg';
+import EditIcon from '@/app/assets/icons/EditIcon';
 import ClassroomModal from '../classroom/ClassroomModal';
 
 export interface StudentInfoInterface {
@@ -122,9 +123,9 @@ function StudentsInfoTable({
                             <TableCell className="text-dark-gray">
                                 {resource.performance}
                             </TableCell>
-                            <TableCell className="flex justify-start items-center p-0 mt-5 ml-3">
+                            <TableCell className="flex justify-start space-x-2 items-center p-0 mt-5 ml-3">
                                 <div
-                                    className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
+                                    className=" bg-light-orange rounded-md p-1 cursor-pointer"
                                     onClick={() =>
                                         !isClassroomTable
                                             ? handleClick(index)
@@ -137,6 +138,11 @@ function StudentsInfoTable({
                                         height={18}
                                     />
                                 </div>
+                                {!isTeacherDashboardTable && (
+                                    <div className="bg-green-100 rounded-md p-1">
+                                        <EditIcon width={22} height={22} />
+                                    </div>
+                                )}
                                 {!isTeacherDashboardTable && (
                                     <div className="bg-red-100 rounded-md p-1">
                                         <Trash

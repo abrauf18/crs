@@ -19,13 +19,37 @@ function ResourceDetails({ params }: any) {
         { id: 9, title: 'User Research', topic: ModifiedTopicName },
         { id: 10, title: 'Figma Design', topic: ModifiedTopicName },
     ];
+
     return (
         <div>
-            <Filters text={ModifiedTopicName} />
-            <CommonTable
-                resources={resources}
-                resourcesType={params.typeName}
+            <Filters
+                text={`150  ${
+                    params.typeName.startsWith('Total-Video')
+                        ? ' Videos'
+                        : params.typeName.startsWith('Exit-Ticket-Test')
+                          ? 'Exit Ticket'
+                          : `${params.typeName}`
+                }   in total`}
+                secondButtonText={
+                    params.typeName.startsWith('Total-Video')
+                        ? 'Upload Videos'
+                        : params.typeName.startsWith('Exit-Ticket-Test')
+                          ? 'Upload Exit Ticket'
+                          : `Upload ${params.typeName}`
+                }
             />
+
+            <div className="py-2 px-4 border rounded-lg mt-4">
+                <Filters
+                    text={ModifiedTopicName}
+                    secondButtonText="Newest First"
+                />
+                <CommonTable
+                    resources={resources}
+                    resourcesType={params.typeName}
+                />
+            </div>
+
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />
             </div>
