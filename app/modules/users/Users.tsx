@@ -48,7 +48,7 @@ function Users() {
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
-                <Filters text="User’s" btnFontSize="text-xs" />
+                <Filters text="Users" btnFontSize="text-xs" />
                 <UsersTable users={usersData} />
             </div>
             <div className="flex items-center w-full justify-center mt-5">

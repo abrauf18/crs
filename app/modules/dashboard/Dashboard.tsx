@@ -88,7 +88,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                     <>
                         <Card
                             Icon={UserIcon}
-                            cardText="Total User’s"
+                            cardText="Total Users"
                             count="20K"
                             currentPath="/admin/users"
                         />
@@ -143,7 +143,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
                         <h1 className="text-[20px] font-semibold mb-2">
-                            User’s
+                            Users
                         </h1>
                         <UsersTable
                             users={usersData}
