@@ -60,7 +60,7 @@ export default function SideBar() {
             {
                 to: '/admin/users',
                 ItemIcon: UserIcon,
-                itemText: 'User’s',
+                itemText: 'Users',
             },
             {
                 to: '/admin/setting',
@@ -83,7 +83,7 @@ export default function SideBar() {
             {
                 to: '/teacher/standard',
                 ItemIcon: TeacherStandardIcon,
-                itemText: "Standard's",
+                itemText: 'Standards',
             },
             {
                 to: '/teacher/students',
@@ -126,7 +126,7 @@ export default function SideBar() {
             {
                 to: '/student/saved-videos',
                 ItemIcon: Bookmark,
-                itemText: "Saved Video's",
+                itemText: 'Saved Videos',
             },
             {
                 to: '/student/profile',
