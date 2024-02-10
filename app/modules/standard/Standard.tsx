@@ -108,8 +108,8 @@ function Standard({ isShownFromTeacher }: { isShownFromTeacher?: boolean }) {
     return (
         <>
             <Filters
-                text="40 Standards In Total"
-                secondButtonText="Create New"
+                text="40 Learning Plans In Total"
+                secondButtonText="Create New Plan"
                 handleClick={() => handleClick()}
                 isHideFirstBtn={isShownFromTeacher}
             />
