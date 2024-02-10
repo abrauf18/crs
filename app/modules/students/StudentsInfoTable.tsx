@@ -158,7 +158,7 @@ function StudentsInfoTable({
                 </TableBody>
             </Table>
             {isShowStudentModal && (
-                <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[25%] md:w-[60%] ">
+                <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[40%] md:w-[60%] lg:max-w-[400px] xl:max-w-[400px] 2xl:max-w-[400px]">
                     <ClassroomModal onClose={handleCloseStudentModal} />
                 </div>
             )}

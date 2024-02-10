@@ -19,7 +19,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             <div
                 className={`flex flex-col  mobile:items-center mobile:w-full mobile:px-2 ${
                     !isSchoolProfile ? 'm-auto mobile:h-screen' : 'w-full'
-                }`}
+                } w-[400px]`}
             >
                 <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
                     My profile
@@ -80,13 +80,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                             type="button"
                             className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-2 border rounded-lg"
                         >
-                            Cancel
+                            Discard Changes
                         </button>
                         <button
                             type="button"
                             className="text-white bg-primary-color font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg"
                         >
-                            Save
+                            Save Changes
                         </button>
                     </div>
                 )}
