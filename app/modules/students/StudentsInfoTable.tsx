@@ -124,22 +124,27 @@ function StudentsInfoTable({
                                 {resource.performance}
                             </TableCell>
                             <TableCell className="flex justify-start space-x-2 items-center p-0 mt-5 ml-3">
-                                <div
-                                    className=" bg-light-orange rounded-md p-1 cursor-pointer"
-                                    onClick={() =>
-                                        !isClassroomTable
-                                            ? handleClick(index)
-                                            : handleOpenStudentModal()
-                                    }
-                                >
-                                    <Eye
-                                        color="#F59A3B"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
+                                {!isClassroomTable && (
+                                    <div
+                                        className=" bg-light-orange rounded-md p-1 cursor-pointer"
+                                        onClick={() =>
+                                            !isClassroomTable
+                                                ? handleClick(index)
+                                                : handleOpenStudentModal()
+                                        }
+                                    >
+                                        <Eye
+                                            color="#F59A3B"
+                                            width={18}
+                                            height={18}
+                                        />
+                                    </div>
+                                )}
                                 {!isTeacherDashboardTable && (
-                                    <div className="bg-green-100 rounded-md p-1">
+                                    <div
+                                        className="bg-green-100 rounded-md p-1 cursor-pointer"
+                                        onClick={() => handleOpenStudentModal()}
+                                    >
                                         <EditIcon width={22} height={22} />
                                     </div>
                                 )}
