@@ -7,6 +7,7 @@ interface FiltersInterface {
     secondButtonText?: string;
     handleClick?: () => void;
     btnFontSize?: string;
+    textColor?: string; 
 }
 
 function Filters({
@@ -15,6 +16,7 @@ function Filters({
     handleClick,
     isHideFirstBtn,
     btnFontSize = 'text-sm',
+    textColor = 'text-dark-gray',
 }: FiltersInterface): JSX.Element {
     const makeFirstNumberBold = (inputText: string) => {
         const match = inputText.match(/^\d+/);
@@ -33,7 +35,7 @@ function Filters({
     };
 
     const renderHeaderText = () => (
-        <h3 className="text-xl font-semibold text-dark-gray mobile:mb-2">
+        <h3 className={`text-xl font-semibold ${textColor} mobile:mb-2`}>
             {makeFirstNumberBold(text)}
         </h3>
     );

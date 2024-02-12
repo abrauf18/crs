@@ -16,7 +16,7 @@ function StudentOverallReport({
         // student overall performance and student report
         <div className="mt-8 font-semibold text-xl flex flex-col lg:flex-row">
             <div className="w-full lg:w-[50%] lg:mr-8 ">
-                <Filters text="Overall Performance" btnFontSize="text-xs" />
+                <Filters text="Overall Performance" btnFontSize="text-xs" textColor="text-black"/>
                 <div className="mt-5">
                     <Image
                         src={graphImage}
