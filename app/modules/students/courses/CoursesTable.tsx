@@ -90,7 +90,7 @@ function CoursesTable({ courses, fontSize }: CoursesTableProps) {
                                 {course.result}
                             </TableCell>
                             <TableCell className="text-dark-gray font-normal text-center">
-                                {course.score}
+                                {course.score}%
                             </TableCell>
 
                             <TableCell className="flex justify-center items-center text-center">

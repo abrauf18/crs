@@ -12,37 +12,37 @@ export const studentRecord: StudentRecordInterface[] = [
         id: 1,
         testName: 'Computer',
         result: '10',
-        score: '10th',
+        score: '10',
     },
     {
         id: 1,
         testName: 'Computer',
         result: '10',
-        score: '10th',
+        score: '10',
     },
     {
         id: 1,
         testName: 'Computer',
         result: '10',
-        score: '10th',
+        score: '10',
     },
     {
         id: 1,
         testName: 'Computer',
         result: '10',
-        score: '10th',
+        score: '10',
     },
     {
         id: 1,
         testName: 'Computer',
         result: '10',
-        score: '10th',
+        score: '10',
     },
     {
         id: 1,
         testName: 'Computer',
         result: '10',
-        score: '10th',
+        score: '10',
     },
 ];
 function StudentDetails() {
