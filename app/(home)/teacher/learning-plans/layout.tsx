@@ -1,23 +1,23 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import StandardIcon from '@/app/assets/icons/StandardIcon';
 import Searchbar from '@/app/components/common/Searchbar';
-
-export const metadata: Metadata = {
-    title: 'Learning Plan',
-    description: 'Here;s Your All Assigned Classroom',
-};
 
 export default function StandardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const { back } = useRouter();
     return (
         <section>
             <Searchbar
                 headerText="Learning Plan"
                 tagline="Here’s All Your Created Plans"
                 Icon={StandardIcon}
+                isShowBackArrow
+                onBackClick={() => back()}
             />
             {children}
         </section>
