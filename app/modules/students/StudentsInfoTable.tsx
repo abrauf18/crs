@@ -45,6 +45,7 @@ function StudentsInfoTable({
     isTeacherDashboardTable,
 }: StudentsInfoProp) {
     const [isShowStudentModal, setIsShowStudentModal] = useState(false);
+    const [studentList, setStudentList] = useState(students);
     const { push } = useRouter();
     const pathname = usePathname();
 
@@ -57,6 +58,9 @@ function StudentsInfoTable({
 
     const handleCloseStudentModal = () => {
         setIsShowStudentModal(false);
+    };
+    const handleDeleteStudents = (indexToRemove: number) => {
+        setStudentList(students.splice(indexToRemove, 1));
     };
     return (
         <section>
@@ -94,7 +98,7 @@ function StudentsInfoTable({
                         <TableRow className="border-none" key={resource.id}>
                             <TableCell className="font-medium">
                                 <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {index + 1}
+                                    {resource.id}
                                 </span>
                             </TableCell>
                             <TableCell>
@@ -149,7 +153,10 @@ function StudentsInfoTable({
                                     </div>
                                 )}
                                 {!isTeacherDashboardTable && (
-                                    <div className="bg-red-100 rounded-md p-1">
+                                    <div
+                                        className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                        onClick={() => handleDeleteStudents(index)}
+                                    >
                                         <Trash
                                             color="#D34645"
                                             width={18}

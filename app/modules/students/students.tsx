@@ -92,7 +92,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         image: '/app/assets/images/Avtar.jpg',
     },
     {
-        id: 1,
+        id: 2,
         name: 'Ali',
         email: 'abcdef@gmail.com',
         grade: '6th',
@@ -100,7 +100,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         image: '/app/assets/images/Avtar.jpg',
     },
     {
-        id: 1,
+        id: 3,
         name: 'Ali',
         email: 'abcdef@gmail.com',
         grade: '9th',
@@ -108,7 +108,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         image: '/app/assets/images/Avtar.jpg',
     },
     {
-        id: 1,
+        id: 4,
         name: 'Ali',
         email: 'abcdef@gmail.com',
         grade: '9th',
@@ -116,7 +116,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         image: '/app/assets/images/Avtar.jpg',
     },
     {
-        id: 1,
+        id: 5,
         name: 'Ali',
         email: 'abcdef@gmail.com',
         grade: '8th',
@@ -124,7 +124,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         image: '/app/assets/images/Avtar.jpg',
     },
     {
-        id: 1,
+        id: 6,
         name: 'Ali',
         email: 'abcdef@gmail.com',
         grade: '8th',
@@ -132,7 +132,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         image: '/app/assets/images/Avtar.jpg',
     },
     {
-        id: 1,
+        id: 7,
         name: 'Ali',
         email: 'abcdef@gmail.com',
         grade: '10th',
@@ -140,7 +140,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         image: '/app/assets/images/Avtar.jpg',
     },
     {
-        id: 1,
+        id: 8,
         name: 'Ali',
         email: 'abcdef@gmail.com',
         grade: '10th',
