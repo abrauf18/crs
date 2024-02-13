@@ -13,7 +13,7 @@ import { CheckBox } from '../Checkbox';
 
 function SignupForm() {
     return (
-        <div className=" px-8 pt-4 md:px-10 md:pt-5 w-[100%] lg:w-[75%] flex flex-col ">
+        <div className=" px-8 py-2 md:px-10 md:py-2 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex  lg:items-start flex-col">
                 <Image
                     height={100}
