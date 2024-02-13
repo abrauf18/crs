@@ -68,12 +68,12 @@ function SignupForm() {
                         type="submit"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                     >
-                        Sign In
+                        Sign Up
                     </Button>
                     <span className="text-black text-[12px]">Or</span>
                     <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
                         <GoogleIcon width={20} height={20} className="mr-2" />
-                        Sign In With Google
+                        Sign Up With Google
                     </Button>
                 </div>
             </form>
