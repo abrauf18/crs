@@ -9,6 +9,7 @@ interface ClassroomCardProps {
     iconColor?: string;
     iconBg?: string;
     activeColor?: string;
+    onClick?: (period: string) => void;
 }
 
 function ClassroomCard({
@@ -18,6 +19,7 @@ function ClassroomCard({
     iconColor,
     iconBg,
     activeColor,
+    onClick,
 }: ClassroomCardProps) {
     const borderColorClass = iconColor ? `border-[${iconColor}]` : '';
     const [isActive, setIsActive] = useState(false);
@@ -28,6 +30,7 @@ function ClassroomCard({
             } ${isActive ? `${activeColor}` : ''}`}
             onMouseEnter={() => setIsActive(true)}
             onMouseLeave={() => setIsActive(false)}
+            onClick={() => onClick?.(periods)}
         >
             <div
                 className={`bg-green-100 px-3 h-fit py-3 rounded-full w-fit ${
