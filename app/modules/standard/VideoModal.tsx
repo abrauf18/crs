@@ -31,7 +31,7 @@ function VideoModal({ onClose }: any) {
             <ModalHeader
                 headerText={{
                     heading: 'Select Video',
-                    tagline: 'let’s Upload Video For Your User',
+                    tagline: 'Select Video For your plan',
                 }}
                 Icon={FileVideoIcon}
                 onClose={onClose}
