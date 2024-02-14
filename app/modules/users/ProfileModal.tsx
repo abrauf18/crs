@@ -85,7 +85,7 @@ function ProfileModal({ onClose }: any) {
                         <AppInput type="email" id="email" placeholder="Email" />
                     </div>
                     <div className="mb-2 w-full">
-                        <Label htmlFor="password ">Password</Label>
+                        <Label htmlFor="password ">Role</Label>
 
                         <AppDropDown
                             name="invite"
@@ -101,13 +101,13 @@ function ProfileModal({ onClose }: any) {
                     type="button"
                     className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
                 >
-                    Discard
+                    Discard Changes
                 </button>
                 <button
                     type="button"
                     className="text-white bg-primary-color font-semibold w-full px-5 py-2  border rounded-xl"
                 >
-                    Save
+                    Save Changes
                 </button>
             </div>
         </section>
