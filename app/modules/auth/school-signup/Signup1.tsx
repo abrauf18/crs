@@ -56,16 +56,16 @@ function SchoolSignup1() {
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         onClick={() => push(`${pathName}/school-profile`)}
                     >
-                        Sign In
+                        Sign Up
                     </Button>
                     <span className="text-black text-[12px]">Or</span>
                     <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
                         <GoogleIcon width={20} height={20} className="mr-2" />
-                        Sign In With Google
+                        Sign Up With Google
                     </Button>
                 </div>
                 <div className="flex space-x-2 mt-4 justify-center">
-                    <p>Not Registered Yet?</p>
+                    <p>Already have an Account?</p>
                     <Link href="/signin">
                         <p className="underline text-primary-color font-semibold">
                             Signin
