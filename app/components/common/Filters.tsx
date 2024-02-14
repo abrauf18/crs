@@ -7,7 +7,7 @@ interface FiltersInterface {
     secondButtonText?: string;
     handleClick?: () => void;
     btnFontSize?: string;
-    textColor?: string; 
+    textColor?: string;
 }
 
 function Filters({
@@ -76,10 +76,9 @@ function Filters({
                     <button className="mr-1" type="button">
                         {secondButtonText || 'This year'}
                     </button>
-                    {secondButtonText?.startsWith('Upload') ||
-                    secondButtonText?.startsWith('Create New') ? (
+                    {secondButtonText?.startsWith('Upload') ? (
                         <Upload width={15} height={15} />
-                    ) : (
+                    ) : secondButtonText?.startsWith('Create New') ? null : (
                         <ChevronDown width={15} height={15} />
                     )}
                 </div>
