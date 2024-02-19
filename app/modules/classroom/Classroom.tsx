@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { VideoIcon } from 'lucide-react';
 import React, {useState} from 'react';
 import StudentIcon from '@/app/assets/icons/StudentIcon';

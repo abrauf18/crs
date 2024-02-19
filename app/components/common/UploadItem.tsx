@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 'use client';
+
 import React from 'react';
 import axios from 'axios';
 import { Upload } from 'lucide-react';
@@ -17,7 +20,10 @@ function UploadItem({ itemName }: { itemName: string }) {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
 
-                const response = await axios.post('http://localhost:3000/api/uploadData', formData);
+                const response = await axios.post(
+                    'http://localhost:3000/api/uploadData',
+                    formData
+                );
 
                 if (response.status === 200) {
                     console.log('File uploaded successfully');
@@ -31,7 +37,10 @@ function UploadItem({ itemName }: { itemName: string }) {
     };
     return (
         <section className="flex justify-between items-center flex-col md:p-12 sm:p-10 p-6 border-4 border-dotted rounded-lg text-center">
-            <label htmlFor="fileInput" className=" rounded-full bg-green-50 p-2 mb-2 cursor-pointer">
+            <label
+                htmlFor="fileInput"
+                className=" rounded-full bg-green-50 p-2 mb-2 cursor-pointer"
+            >
                 <input
                     type="file"
                     id="fileInput"
@@ -42,7 +51,10 @@ function UploadItem({ itemName }: { itemName: string }) {
                 <Upload size={30} color="#7AA43E" />
             </label>
             <div className="upload-video__text">
-                <h3 className="text-lg font-semibold mb-2"  onClick={handleUpload}>
+                <h3
+                    className="text-lg font-semibold mb-2"
+                    onClick={handleUpload}
+                >
                     Upload {itemName}
                 </h3>
                 <p>

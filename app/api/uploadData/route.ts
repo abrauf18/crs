@@ -7,13 +7,13 @@ interface CustomFile extends File {
 }
 
 const s3 = new AWS.S3({
-  accessKeyId: process.env.ACCESS_KEY_ID,//.NEXT_PUBLIC_AWS_S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,//.NEXT_PUBLIC_AWS_S3_SECRET_ACCESS_KEY,
-  region: process.env.REGION//.NEXT_PUBLIC_AWS_S3REGION,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  region: process.env.REGION
   //   signatureVersion: "v4",
 });
 
-async function uploadFileToS3(file: Buffer, fileName: string) { //, fileSaveDirectory, contentType) {
+async function uploadFileToS3(file: Buffer, fileName: string) {// , fileSaveDirectory, contentType) {
   const fileBuffer = file;
   fileName = fileName.replace(/ /g, "");
 
@@ -21,7 +21,7 @@ async function uploadFileToS3(file: Buffer, fileName: string) { //, fileSaveDire
 
   const params: PutObjectRequest = {
     Bucket: process.env.BUCKET_NAME || "default-bucket",
-    Key: fileName,//${fileSaveDirectory}/${fileName},
+    Key: fileName,//  ${fileSaveDirectory}/${fileName},
     Body: fileBuffer,
     // ContentType: contentType,
   };
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      url: url,
+      url,
     });
   } catch (err: any) {
     console.log("ERROR", err.message);
