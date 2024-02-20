@@ -1,11 +1,12 @@
-import React from 'react';
-import { X } from 'lucide-react';
+'use client';
+
+import { Plus } from 'lucide-react';
+import React, { useState } from 'react';
 import userImage from '@/app/assets/images/UserImage.svg';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
-import Profile from '@/app/modules/setting/Profile';
+import AddUserModal from '@/app/modules/users/AddUserModal';
 import UsersTable, { User } from './UsersTable';
-import ProfileModal from './ProfileModal';
 
 export const usersData: User[] = [
     {
@@ -45,10 +46,34 @@ export const usersData: User[] = [
     },
 ];
 function Users() {
+    const [showAddUserModal, setShowProfileModal] = useState(false);
+    const handleOpenAddUserModal = () => {
+        setShowProfileModal(true);
+    };
+
+    const handleCloseAddUserModal = () => {
+        setShowProfileModal(false);
+    };
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
-                <Filters text="Users" btnFontSize="text-xs" />
+                <div className="flex justify-between items-center">
+                    <div className="flex-grow">
+                        <Filters text="Users" isHideSecondBtn />
+                    </div>
+                    <div
+                        className="cursor-pointer text-white bg-primary-color font-semibold px-3 py-2 border rounded-lg flex justify-between items-center"
+                        onClick={handleOpenAddUserModal}
+                    >
+                        <Plus size={20} />
+                        <button
+                            type="button"
+                            className="ml-2 text-sm font-medium"
+                        >
+                            Add User
+                        </button>
+                    </div>
+                </div>
                 <UsersTable users={usersData} />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
@@ -60,6 +85,11 @@ function Users() {
                 </div>
                 <Profile />
             </div> */}
+            {showAddUserModal && (
+                <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
+                    <AddUserModal onClose={handleCloseAddUserModal} />
+                </div>
+            )}
         </>
     );
 }
