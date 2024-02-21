@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
+import StoreProvider from '@/lib/storeProvider';
 import './globals.css';
 import React from 'react';
 
@@ -17,7 +18,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={montserrat.className}>{children}</body>
+            <StoreProvider>
+                <body className={montserrat.className}>{children}</body>
+            </StoreProvider>
         </html>
     );
 }

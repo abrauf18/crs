@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import login from './authAction';
 
 type User = {
     id: string,
@@ -19,14 +20,14 @@ const initialState = {
     error: "",
 }
 
-export const login = createAsyncThunk('user/login', (email, password) => {
-    return axios
-        .post('http://localhost:8000/auth/login', {
-            email: email,
-            password: password
-        })
-        .then((response) => response.data)
-})
+// export const login = createAsyncThunk('user/login', (email, password) => {
+//     return axios
+//         .post('http://localhost:8000/auth/login', {
+//             email: email,
+//             password: password
+//         })
+//         .then((response) => response.data)
+// })
 
 const userSlice = createSlice({
     name: "user",

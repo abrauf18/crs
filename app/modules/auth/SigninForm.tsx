@@ -9,19 +9,29 @@ import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import login from '@/lib/features/auth/authAction';
+import axios from 'axios';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const [isUpperCase, setIsUpperCase] = useState(false);
     const [isLowerCase, setIsLowerCase] = useState(false);
     const [hasSpecialChar, setHasSpecialChar] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const dispatch = useAppDispatch();
 
     const handlePasswordChange = (event: any) => {
         const newPassword = event.target.value;
         setPassword(newPassword);
         validatePassword(newPassword);
+    };
+
+    const handleEmailChange = (event: any) => {
+        const newEmail = event.target.value;
+        setEmail(newEmail);
     };
 
     const validatePassword = (newPassword: any) => {
@@ -30,8 +40,9 @@ function SigninForm() {
         setHasSpecialChar(/[!@#$%^&*(),.?":{}|<>]/.test(newPassword));
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = (event: any) => {
         event.preventDefault();
+        dispatch(login({ email, password }));
         setFormSubmitted(true);
     };
     return (
@@ -51,7 +62,12 @@ function SigninForm() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <Label htmlFor="email">Email Address</Label>
-                    <AppInput type="email" id="email" placeholder="Email" />
+                    <AppInput
+                        type="email"
+                        id="email"
+                        placeholder="Email"
+                        onChange={handleEmailChange}
+                    />
                 </div>
 
                 <div className="mt-2">
@@ -76,7 +92,7 @@ function SigninForm() {
 
                 {/* If error occour */}
 
-                {/* <div className="flex space-y-2 lg:space-y-0 lg:flex-row flex-col lg:space-x-3 mb-4 mt-2">
+                <div className="flex space-y-2 lg:space-y-0 lg:flex-row flex-col lg:space-x-3 mb-4 mt-2">
                     <div
                         className={`flex space-x-1 items-center ${
                             isUpperCase ? 'text-green-500' : 'text-red-500'
@@ -110,7 +126,7 @@ function SigninForm() {
                         />
                         <p className="text-xs">At Least 1 Special Character</p>
                     </div>
-                </div> */}
+                </div>
 
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
