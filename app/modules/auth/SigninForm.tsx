@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Check } from 'lucide-react';
 import Image from 'next/image';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
@@ -11,22 +10,19 @@ import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import login from '@/lib/features/auth/authAction';
-import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [isUpperCase, setIsUpperCase] = useState(false);
-    const [isLowerCase, setIsLowerCase] = useState(false);
-    const [hasSpecialChar, setHasSpecialChar] = useState(false);
-    const [formSubmitted, setFormSubmitted] = useState(false);
     const dispatch = useAppDispatch();
-
+    const { loading } = useAppSelector((state) => state.user);
+    const { push } = useRouter();
     const handlePasswordChange = (event: any) => {
         const newPassword = event.target.value;
         setPassword(newPassword);
-        validatePassword(newPassword);
     };
 
     const handleEmailChange = (event: any) => {
@@ -34,16 +30,17 @@ function SigninForm() {
         setEmail(newEmail);
     };
 
-    const validatePassword = (newPassword: any) => {
-        setIsUpperCase(/[A-Z]/.test(newPassword));
-        setIsLowerCase(/[a-z]/.test(newPassword));
-        setHasSpecialChar(/[!@#$%^&*(),.?":{}|<>]/.test(newPassword));
-    };
-
-    const handleSubmit = (event: any) => {
+    // eslint-disable-next-line consistent-return
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
-        dispatch(login({ email, password }));
-        setFormSubmitted(true);
+        const response = await dispatch(login({ email, password }));
+        if (response.type === 'user/login/rejected') {
+            return toast.error(response.payload);
+        }
+        toast.success('Login Successful');
+        localStorage.setItem('userToken', response?.payload?.data?.accessToken);
+        const route = response?.payload?.data?.role;
+        push(`/${route}`);
     };
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
@@ -76,12 +73,6 @@ function SigninForm() {
                     <input
                         className="mt-1 block w-full px-3 py-3 bg-slate-100 border rounded-md text-sm shadow-sm placeholder-slate-400
                     focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                        //  ${
-                        //     password && isUpperCase && isLowerCase && hasSpecialChar
-                        //         ? 'border-green-500'
-                        //         : 'border-red-400'
-                        // }
-
                         type="password"
                         id="password"
                         placeholder="Password"
@@ -89,45 +80,6 @@ function SigninForm() {
                         onChange={handlePasswordChange}
                     />
                 </div>
-
-                {/* If error occour */}
-
-                <div className="flex space-y-2 lg:space-y-0 lg:flex-row flex-col lg:space-x-3 mb-4 mt-2">
-                    <div
-                        className={`flex space-x-1 items-center ${
-                            isUpperCase ? 'text-green-500' : 'text-red-500'
-                        }`}
-                    >
-                        <Check
-                            size={20}
-                            color={isUpperCase ? '#7AA43E' : '#E6500D'}
-                        />
-                        <p className="text-xs">At Least 1 Uppercase</p>
-                    </div>
-                    <div
-                        className={`flex space-x-1 items-center ${
-                            isLowerCase ? 'text-green-500' : 'text-red-500'
-                        }`}
-                    >
-                        <Check
-                            size={20}
-                            color={isLowerCase ? '#7AA43E' : '#E6500D'}
-                        />
-                        <p className="text-xs">At Least 1 Lowercase</p>
-                    </div>
-                    <div
-                        className={`flex space-x-1 items-center ${
-                            hasSpecialChar ? 'text-green-500' : 'text-red-500'
-                        }`}
-                    >
-                        <Check
-                            size={20}
-                            color={hasSpecialChar ? '#7AA43E' : '#E6500D'}
-                        />
-                        <p className="text-xs">At Least 1 Special Character</p>
-                    </div>
-                </div>
-
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
                     <Link
@@ -142,7 +94,7 @@ function SigninForm() {
                         type="submit"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                     >
-                        Sign In
+                        {loading ? 'Loading...' : 'Sign In'}
                     </Button>
                     <span className="text-black text-[12px]">Or</span>
                     <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">

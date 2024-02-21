@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import StoreProvider from '@/lib/storeProvider';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import './globals.css';
 import React from 'react';
 
@@ -19,6 +21,18 @@ export default function RootLayout({
     return (
         <html lang="en">
             <StoreProvider>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                />
                 <body className={montserrat.className}>{children}</body>
             </StoreProvider>
         </html>
