@@ -1,21 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import login from './authAction';
+import { login, forgotPassword } from './authAction';
 
 type User = {
     id: string;
     name: string;
     email: string;
+    role: string;
 };
 
-type initialState = {
+type state = {
     loading: boolean;
     data: User;
     error: string;
 };
 
-const initialState = {
+const initialState: state = {
     loading: false,
-    data: {},
+    data: {
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+    },
     error: '',
 };
 
@@ -24,6 +30,7 @@ const userSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
+        //login action
         builder.addCase(login.pending, (state) => {
             state.loading = true;
         });
@@ -31,13 +38,34 @@ const userSlice = createSlice({
             login.fulfilled,
             (state, action: PayloadAction<User>) => {
                 state.loading = false;
-                state.data = action.payload;
+                state.data.id = action.payload.id;
+                state.data.name = action.payload.name;
+                state.data.email = action.payload.email;
+                state.data.role = action.payload.role;
                 state.error = '';
             }
         );
         builder.addCase(login.rejected, (state, action) => {
             state.loading = false;
-            state.data = {};
+            state.data = initialState.data;
+            state.error = action.error.message || 'Something went wrong';
+        });
+        //forgot password action
+        builder.addCase(forgotPassword.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(
+            forgotPassword.fulfilled,
+            (state, action: PayloadAction<User>) => {
+                state.loading = false;
+                state.data.id = action.payload.id;
+                state.data.email = action.payload.email;
+                state.error = '';
+            }
+        );
+        builder.addCase(forgotPassword.rejected, (state, action) => {
+            state.loading = false;
+            state.data = initialState.data;
             state.error = action.error.message || 'Something went wrong';
         });
     },

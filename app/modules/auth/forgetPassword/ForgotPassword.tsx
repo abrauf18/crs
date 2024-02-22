@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import loginimage1 from '@/app/assets/images/leftside1.svg';
@@ -12,15 +12,36 @@ import { Button } from '@/app/components/ui/button';
 import AppInput from '@/app/components/common/AppInput';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { forgotPassword } from '@/lib/features/auth/authAction';
+import { toast } from 'react-toastify';
 import LeftSide from '../common/LeftSide';
 
 function ForgotPassword() {
     const { push } = useRouter();
+    const dispatch = useAppDispatch();
+    const [email, setEmail] = useState('');
+    const { loading } = useAppSelector((state) => state.user);
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
+
     const metaText = {
         title: 'Reset Password!',
         description: 'Forgot Your Password Don’t worry lets Recover It',
     };
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+    };
+    // eslint-disable-next-line consistent-return
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        const response = await dispatch(forgotPassword({ email }));
+        if (response.type === 'user/forgotPassword/rejected') {
+            return toast.error(response.payload);
+        }
+        toast.success('Successfully sent the OTP');
+        push('/forgot-password/verify-otp');
+    };
+
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">
             <div className="w-full hidden lg:block">
@@ -50,6 +71,7 @@ function ForgotPassword() {
                                 type="email"
                                 id="email"
                                 placeholder="Enter Email"
+                                onChange={handleEmailChange}
                             />
                         </div>
 
@@ -57,11 +79,11 @@ function ForgotPassword() {
                             <Button
                                 type="button"
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
-                                onClick={() =>
-                                    push('/forgot-password/verify-otp')
-                                }
+                                onClick={handleSubmit}
                             >
-                                Get Verification Code
+                                {loading
+                                    ? 'Loading...'
+                                    : 'Get Verification Code'}
                             </Button>
                         </div>
                     </form>

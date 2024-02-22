@@ -8,3 +8,14 @@ export const loginAPI = async (email: string, password: string) => {
 
     return result;
 };
+
+export const forgotPasswordAPI = async (email: string) => {
+    const result = await axios.post(
+        'http://localhost:8000/auth/forgot-password',
+        {
+            email,
+        }
+    );
+
+    return result;
+};

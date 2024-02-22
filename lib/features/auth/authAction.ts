@@ -1,4 +1,4 @@
-import { loginAPI } from '@/app/api/auth';
+import { loginAPI,forgotPasswordAPI } from '@/app/api/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 interface LoginPayload {
@@ -6,12 +6,13 @@ interface LoginPayload {
     password: string;
 }
 
-const login = createAsyncThunk(
+export const login = createAsyncThunk(
     'user/login',
     async ({ email, password }: LoginPayload, { rejectWithValue }) => {
         try {
             const response = await loginAPI(email, password);
-            return response.data;
+            const emailResponse = response.data;
+            return emailResponse.data;
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
@@ -22,4 +23,23 @@ const login = createAsyncThunk(
     }
 );
 
-export default login;
+interface ForgotPasswordPayload {
+    email: string;
+}
+
+export const forgotPassword = createAsyncThunk(
+    'user/forgotPassword',
+    async ({ email }: ForgotPasswordPayload, { rejectWithValue }) => {
+        try {
+            const response = await forgotPasswordAPI(email);
+            const emailResponse = response.data;
+            return emailResponse.data;
+        } catch (error: Error | any) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);

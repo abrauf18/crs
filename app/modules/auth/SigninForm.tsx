@@ -9,7 +9,7 @@ import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import login from '@/lib/features/auth/authAction';
+import { login } from '@/lib/features/auth/authAction';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { CheckBox } from './Checkbox';
@@ -38,8 +38,8 @@ function SigninForm() {
             return toast.error(response.payload);
         }
         toast.success('Login Successful');
-        localStorage.setItem('userToken', response?.payload?.data?.accessToken);
-        const route = response?.payload?.data?.role;
+        localStorage.setItem('userToken', response?.payload?.accessToken);
+        const route = response?.payload?.role;
         push(`/${route}`);
     };
     return (
