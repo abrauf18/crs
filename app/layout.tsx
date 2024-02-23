@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <StoreProvider>
+            <body className={montserrat.className}>
                 <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -33,8 +33,10 @@ export default function RootLayout({
                     pauseOnHover
                     theme="colored"
                 />
-                <body className={montserrat.className}>{children}</body>
-            </StoreProvider>
+                <StoreProvider>
+                    <main>{children}</main>
+                </StoreProvider>
+            </body>
         </html>
     );
 }

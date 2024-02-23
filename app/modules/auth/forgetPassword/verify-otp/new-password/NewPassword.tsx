@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import loginimage2 from '@/app/assets/images/leftside2.svg';

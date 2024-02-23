@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
@@ -38,10 +38,21 @@ function SigninForm() {
             return toast.error(response.payload);
         }
         toast.success('Login Successful');
+        console.log('userToken', response?.payload?.accessToken);
         localStorage.setItem('userToken', response?.payload?.accessToken);
         const route = response?.payload?.role;
         push(`/${route}`);
     };
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, []);
+    if (!isLoading) {
+        return <div>Loading...</div>;
+    }
+    
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex lg:items-start flex-col">

@@ -21,7 +21,7 @@ function ForgotPassword() {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const [email, setEmail] = useState('');
-    const { loading } = useAppSelector((state) => state.user);
+    const { loading, data } = useAppSelector((state) => state.user);
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
 
     const metaText = {
@@ -31,7 +31,7 @@ function ForgotPassword() {
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
     };
-    // eslint-disable-next-line consistent-return
+
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         const response = await dispatch(forgotPassword({ email }));
@@ -39,8 +39,17 @@ function ForgotPassword() {
             return toast.error(response.payload);
         }
         toast.success('Successfully sent the OTP');
-        push('/forgot-password/verify-otp');
+        return push('/forgot-password/verify-otp');
     };
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, []);
+    if (!isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">

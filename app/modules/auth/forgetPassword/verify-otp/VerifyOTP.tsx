@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import loginimage1 from '@/app/assets/images/leftside1.svg';
@@ -47,6 +47,15 @@ function VerifyOTP() {
         toast.success('Successfully Verified');
         return push('/forgot-password/verify-otp/new-password');
     };
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, []);
+    if (!isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">
