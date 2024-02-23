@@ -12,6 +12,9 @@ import { Button } from '@/app/components/ui/button';
 import AppInput from '@/app/components/common/AppInput';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { verifyOTP } from '@/lib/features/auth/authAction';
+import { toast } from 'react-toastify';
 import LeftSide from '../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
@@ -23,6 +26,28 @@ function VerifyOTP() {
         title: 'Reset Password!',
         description: 'Forgot Your Password Don’t worry lets Recover It',
     };
+
+    const [otpArray, setOtpArray] = useState(['', '', '', '']);
+    const handleOtpChange = (index: number, value: string) => {
+        const updatedOtpArray = [...otpArray];
+        updatedOtpArray[index] = value;
+        setOtpArray(updatedOtpArray);
+    };
+
+    const dispatch = useAppDispatch();
+    const state = useAppSelector((state) => state.user);
+    const handleSubmit = async () => {
+        const OTP = otpArray.join('');
+        const { id } = state.data;
+        const response = await dispatch(verifyOTP({ id, OTP }));
+        if (response.type === 'user/verifyOTP/rejected') {
+            toast.error(response.payload);
+            return push('/forgot-password');
+        }
+        toast.success('Successfully Verified');
+        return push('/forgot-password/verify-otp/new-password');
+    };
+
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">
             <div className="w-full hidden lg:block">
@@ -46,7 +71,9 @@ function VerifyOTP() {
                         </p>
                         <div className="text-sm font-medium text-dark-gray my-6">
                             <p>We Have Send Verification Code On</p>
-                            <p className="text-primary-color">abc@zyx.com</p>
+                            <p className="text-primary-color">
+                                {state.data.email}
+                            </p>
                         </div>
                     </div>
                     <form>
@@ -54,10 +81,15 @@ function VerifyOTP() {
                             <Label htmlFor="email">Verification Code</Label>
 
                             <div className="grid grid-cols-4 gap-4">
-                                <OTPInput />
-                                <OTPInput />
-                                <OTPInput />
-                                <OTPInput />
+                                {[0, 1, 2, 3].map((index) => (
+                                    <OTPInput
+                                        key={index}
+                                        value={otpArray[index]}
+                                        onChange={(value) =>
+                                            handleOtpChange(index, value)
+                                        }
+                                    />
+                                ))}
                             </div>
                         </div>
 
@@ -65,11 +97,7 @@ function VerifyOTP() {
                             <Button
                                 type="button"
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
-                                onClick={() =>
-                                    push(
-                                        '/forgot-password/verify-otp/new-password'
-                                    )
-                                }
+                                onClick={handleSubmit}
                             >
                                 Verify Now
                             </Button>

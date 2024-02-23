@@ -2,12 +2,18 @@
 
 import { useState } from 'react';
 
-export function OTPInput({ maxLength = 1 }: { maxLength?: number }) {
-    const [value, setValue] = useState('');
-
-    const handleInput = (e: any) => {
+export function OTPInput({
+    maxLength = 1,
+    value,
+    onChange,
+}: {
+    maxLength?: number;
+    value: string;
+    onChange: (value: string) => void;
+}) {
+    const handleInputValue = (e: any) => {
         const inputValue = e.target.value.replace(/\D/g, '');
-        setValue(inputValue.slice(0, maxLength));
+        onChange(inputValue.slice(0, maxLength));
     };
 
     return (
@@ -16,7 +22,7 @@ export function OTPInput({ maxLength = 1 }: { maxLength?: number }) {
             type="text"
             value={value}
             maxLength={maxLength}
-            onInput={handleInput}
+            onInput={handleInputValue}
         />
     );
 }
