@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 export const loginAPI = async (email: string, password: string) => {
     const result = await axios.post('http://localhost:8000/auth/login', {
         email,
@@ -35,6 +37,23 @@ export const resetPasswordAPI = async (userId: string, newPassword: string) => {
         {
             userId,
             newPassword,
+        }
+    );
+
+    return result;
+};
+
+export const signupInviteAPI = async (
+    name: string,
+    email: string,
+    role: string
+) => {
+    const result = await axios.post(
+        'http://localhost:8000/auth/emailBasedInvite',
+        {
+            name,
+            email,
+            role,
         }
     );
 

@@ -38,7 +38,6 @@ function SigninForm() {
             return toast.error(response.payload);
         }
         toast.success('Login Successful');
-        console.log('userToken', response?.payload?.accessToken);
         localStorage.setItem('userToken', response?.payload?.accessToken);
         const route = response?.payload?.role;
         push(`/${route}`);

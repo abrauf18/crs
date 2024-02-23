@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, forgotPassword, verifyOTP, resetPassword } from './authAction';
+import { login, forgotPassword, verifyOTP, resetPassword, signupInvite } from './authAction';
 
 type User = {
     id: string;
@@ -98,6 +98,21 @@ const userSlice = createSlice({
         builder.addCase(resetPassword.rejected, (state, action) => {
             state.loading = false;
             state.data = initialState.data;
+            state.error = action.error.message || 'Something went wrong';
+        });
+         //signup Invite action
+         builder.addCase(signupInvite.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(
+            signupInvite.fulfilled,
+            (state) => {
+                state.loading = false;
+                state.error = '';
+            }
+        );
+        builder.addCase(signupInvite.rejected, (state, action) => {
+            state.loading = false;
             state.error = action.error.message || 'Something went wrong';
         });
     },

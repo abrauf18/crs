@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppInput from '@/app/components/common/AppInput';
 import { Label } from '@/app/components/ui/label';
 
@@ -8,22 +8,54 @@ import AppDropDown, {
     OptionsInterface,
 } from '@/app/components/common/AppDropDown';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
+import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { signupInvite } from '@/lib/features/auth/authAction';
 
 function ProfileModal({ onClose }: any) {
-    const [selectedOption, setSelectedOption] = useState('--');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [role, setRole] = useState('student');
+    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useAppDispatch();
+    const state = useAppSelector((state) => state.user);
+    const allRoles: OptionsInterface[] = [
+        { label: 'student', value: 'Student' },
+        { label: 'teacher', value: 'Teacher' },
+        { label: 'school', value: 'School' },
+        { label: 'admin', value: 'Admin' },
+    ];
 
-    const handleSelectChange = (
-        event: React.ChangeEvent<HTMLSelectElement>
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+    };
+    const handleUsernameChange = (
+        event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        setSelectedOption(event.target.value);
+        setUsername(event.target.value);
+    };
+    const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setRole(event.target.value);
     };
 
-    const roles: OptionsInterface[] = [
-        { label: 'Student', value: 'Student' },
-        { label: 'Teacher', value: 'Teacher' },
-        { label: 'School', value: 'School' },
-        { label: 'Admin', value: 'Admin' },
-    ];
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        const response = await dispatch(
+            signupInvite({ email, username, role })
+        );
+        if (response.type === 'user/signupInvite/rejected') {
+            return toast.error(response.payload);
+        }
+        return toast.success('Successfully sent the Invitation');
+    };
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, []);
+    if (!isLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
             <div className="h-[80%] lg:h-[95%] overflow-y-auto px-6">
@@ -37,27 +69,32 @@ function ProfileModal({ onClose }: any) {
 
                 <div className="flex flex-col  mobile:items-center w-full">
                     <div className="mb-2 w-full mt-4">
-                        <Label htmlFor="email">Username</Label>
+                        <Label htmlFor="username">Username</Label>
 
                         <AppInput
-                            type="email"
-                            id="email"
+                            id="username"
                             placeholder="User Name"
+                            onChange={handleUsernameChange}
                         />
                     </div>
                     <div className="mb-2 w-full">
                         <Label htmlFor="email">Email Address</Label>
 
-                        <AppInput type="email" id="email" placeholder="Email" />
+                        <AppInput
+                            type="email"
+                            id="email"
+                            placeholder="Email"
+                            onChange={handleEmailChange}
+                        />
                     </div>
                     <div className="mb-2 w-full">
                         <Label htmlFor="password ">Role</Label>
 
                         <AppDropDown
                             name="role"
-                            options={roles}
-                            value={selectedOption}
-                            onChange={handleSelectChange}
+                            options={allRoles}
+                            value={role}
+                            onChange={handleRoleChange}
                         />
                     </div>
                 </div>
@@ -66,8 +103,9 @@ function ProfileModal({ onClose }: any) {
                 <button
                     type="button"
                     className="text-white bg-primary-color font-semibold w-full px-5 py-2  border rounded-xl"
+                    onClick={handleSubmit}
                 >
-                    Invite
+                    {state.loading ? 'Loading...' : 'Invite'}
                 </button>
             </div>
         </section>
