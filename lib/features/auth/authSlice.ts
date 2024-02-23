@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, forgotPassword, verifyOTP } from './authAction';
+import { login, forgotPassword, verifyOTP, resetPassword } from './authAction';
 
 type User = {
     id: string;
@@ -80,6 +80,22 @@ const userSlice = createSlice({
             }
         );
         builder.addCase(verifyOTP.rejected, (state, action) => {
+            state.loading = false;
+            state.data = initialState.data;
+            state.error = action.error.message || 'Something went wrong';
+        });
+        //Reset Password action
+        builder.addCase(resetPassword.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(
+            resetPassword.fulfilled,
+            (state, action: PayloadAction<User>) => {
+                state.loading = false;
+                state.error = '';
+            }
+        );
+        builder.addCase(resetPassword.rejected, (state, action) => {
             state.loading = false;
             state.data = initialState.data;
             state.error = action.error.message || 'Something went wrong';

@@ -28,3 +28,15 @@ export const verifyOTPAPI = async (userId: string, OTP: string) => {
 
     return result;
 };
+
+export const resetPasswordAPI = async (userId: string, newPassword: string) => {
+    const result = await axios.post(
+        'http://localhost:8000/auth/reset-password',
+        {
+            userId,
+            newPassword,
+        }
+    );
+
+    return result;
+};
