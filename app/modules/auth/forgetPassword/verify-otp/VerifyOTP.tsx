@@ -19,8 +19,6 @@ import LeftSide from '../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
 function VerifyOTP() {
-    const { push } = useRouter();
-
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
     const metaText = {
         title: 'Reset Password!',
@@ -34,6 +32,52 @@ function VerifyOTP() {
         setOtpArray(updatedOtpArray);
     };
 
+    const handleBackspace = (currentIndex: number) => {
+        const updatedOtpArray = [...otpArray];
+        updatedOtpArray[currentIndex] = '';
+        setOtpArray(updatedOtpArray);
+        if (currentIndex >= 0) {
+            const prevInput = document.getElementById(
+                `otpInput_${currentIndex - 1}`
+            );
+            if (prevInput) {
+                prevInput.focus();
+            }
+        }
+    };
+
+    const handleFocusNext = (currentIndex: number) => {
+        if (currentIndex < 3) {
+            const nextInput = document.getElementById(
+                `otpInput_${currentIndex + 1}`
+            );
+            if (nextInput) {
+                nextInput.focus();
+            }
+        }
+    };
+
+    const handlePaste = (pastedOTP: string) => {
+        if (pastedOTP) {
+            const sanitizedArray = pastedOTP.replace(/\D/g, '');
+            const otpSepratedArray = sanitizedArray.split('');
+            setOtpArray(otpSepratedArray);
+            // otpSepratedArray.forEach((item: string, index: number) => {
+            //     const otpFieldElement = document.getElementById(
+            //         `otpInput_${index}`
+            //     ) as HTMLInputElement;
+            //     if (otpFieldElement) {
+            //         otpFieldElement.value = item;
+            //     }
+            // });
+            const lastInput = document.getElementById('otpInput_3');
+            if (lastInput) {
+                lastInput.focus();
+            }
+        }
+    };
+
+    const { push } = useRouter();
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
     const handleSubmit = async () => {
@@ -49,7 +93,6 @@ function VerifyOTP() {
     };
 
     const [isLoading, setIsLoading] = useState(false);
-
     useEffect(() => {
         setIsLoading(true);
     }, []);
@@ -92,11 +135,19 @@ function VerifyOTP() {
                             <div className="grid grid-cols-4 gap-4">
                                 {[0, 1, 2, 3].map((index) => (
                                     <OTPInput
+                                        index={index}
                                         key={index}
                                         value={otpArray[index]}
                                         onChange={(value) =>
                                             handleOtpChange(index, value)
                                         }
+                                        onBackspace={() =>
+                                            handleBackspace(index)
+                                        }
+                                        onFocusNext={() =>
+                                            handleFocusNext(index)
+                                        }
+                                        onPaste={handlePaste}
                                     />
                                 ))}
                             </div>
