@@ -12,8 +12,8 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { login } from '@/lib/features/auth/authAction';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { CheckBox } from './Checkbox';
 import Loader from '@/app/components/common/Loader';
+import { CheckBox } from './Checkbox';
 
 function SigninForm() {
     const [password, setPassword] = useState('');
@@ -51,7 +51,7 @@ function SigninForm() {
     if (!isPageLoading) {
         return <Loader />;
     }
-    
+
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex lg:items-start flex-col">
