@@ -17,7 +17,7 @@ import { forgotPassword } from '@/lib/features/auth/authAction';
 import { toast } from 'react-toastify';
 import LeftSide from '../common/LeftSide';
 
-function ForgotPassword() {
+function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const [email, setEmail] = useState('');
@@ -39,7 +39,8 @@ function ForgotPassword() {
             return toast.error(response.payload);
         }
         toast.success('Successfully sent the OTP');
-        return push('/forgot-password/verify-otp');
+        return handleNextStep();
+        // return push('/forgot-password/verify-otp');
     };
 
     const [isLoading, setIsLoading] = useState(false);

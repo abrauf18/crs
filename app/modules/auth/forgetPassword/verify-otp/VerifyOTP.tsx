@@ -18,7 +18,13 @@ import { toast } from 'react-toastify';
 import LeftSide from '../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
-function VerifyOTP() {
+function VerifyOTP({
+    handleNextStep,
+    handlePreviousStep,
+}: {
+    handleNextStep: () => void;
+    handlePreviousStep: () => void;
+}) {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
     const metaText = {
         title: 'Reset Password!',
@@ -86,10 +92,12 @@ function VerifyOTP() {
         const response = await dispatch(verifyOTP({ id, OTP }));
         if (response.type === 'user/verifyOTP/rejected') {
             toast.error(response.payload);
-            return push('/forgot-password');
+            return handlePreviousStep();
+            // return push('/forgot-password');
         }
         toast.success('Successfully Verified');
-        return push('/forgot-password/verify-otp/new-password');
+        return handleNextStep();
+        // return push('/forgot-password/verify-otp/new-password');
     };
 
     const [isLoading, setIsLoading] = useState(false);
