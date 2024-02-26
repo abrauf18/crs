@@ -7,7 +7,7 @@ import loginimage3 from '@/app/assets/images/leftside3.svg';
 import loginimage4 from '@/app/assets/images/leftside4.svg';
 import signupImage from '@/app/assets/images/signup1.svg';
 import CreatePasswordForm from '@/app/components/common/auth/CreatePasswordForm';
-import LeftSide from '../../../common/LeftSide';
+import LeftSide from '../../../../common/LeftSide';
 
 function ForgotPassword() {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];

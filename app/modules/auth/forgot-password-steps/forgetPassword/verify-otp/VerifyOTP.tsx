@@ -15,7 +15,7 @@ import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { verifyOTP } from '@/lib/features/auth/authAction';
 import { toast } from 'react-toastify';
-import LeftSide from '../../common/LeftSide';
+import LeftSide from '../../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
 function VerifyOTP({

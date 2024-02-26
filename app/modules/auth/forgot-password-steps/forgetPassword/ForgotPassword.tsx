@@ -15,7 +15,7 @@ import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { forgotPassword } from '@/lib/features/auth/authAction';
 import { toast } from 'react-toastify';
-import LeftSide from '../common/LeftSide';
+import LeftSide from '../../common/LeftSide';
 
 function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
     const { push } = useRouter();

@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import ForgotPassword from '@/app/modules/auth/forgetPassword/ForgotPassword';
-import VerifyOTP from '@/app/modules/auth/forgetPassword/verify-otp/VerifyOTP';
-import NewPassword from '@/app/modules/auth/forgetPassword/verify-otp/new-password/NewPassword';
+import ForgotPassword from '@/app/modules/auth/forgot-password-steps/forgetPassword/ForgotPassword';
+import VerifyOTP from '@/app/modules/auth/forgot-password-steps/forgetPassword/verify-otp/VerifyOTP';
+import NewPassword from '@/app/modules/auth/forgot-password-steps/forgetPassword/verify-otp/new-password/NewPassword';
 
 function Steps() {
     const [step, setStep] = useState(0);
