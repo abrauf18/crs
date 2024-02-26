@@ -10,6 +10,7 @@ import { resetPassword } from '@/lib/features/auth/authAction';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import Loader from '../Loader';
 
 function CreatePasswordForm({ description }: { description: string }) {
     const { push } = useRouter();
@@ -38,13 +39,12 @@ function CreatePasswordForm({ description }: { description: string }) {
         return push('/signin');
     };
 
-    const [isLoading, setIsLoading] = useState(false);
-
+    const [isPageLoading, setIsPageLoading] = useState(false);
     useEffect(() => {
-        setIsLoading(true);
+        setIsPageLoading(true);
     }, []);
-    if (!isLoading) {
-        return <div>Loading...</div>;
+    if (!isPageLoading) {
+        return <Loader />;
     }
     
     return (

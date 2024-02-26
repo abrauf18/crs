@@ -13,6 +13,7 @@ import { login } from '@/lib/features/auth/authAction';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { CheckBox } from './Checkbox';
+import Loader from '@/app/components/common/Loader';
 
 function SigninForm() {
     const [password, setPassword] = useState('');
@@ -43,13 +44,12 @@ function SigninForm() {
         push(`/${route}`);
     };
 
-    const [isLoading, setIsLoading] = useState(false);
-
+    const [isPageLoading, setIsPageLoading] = useState(false);
     useEffect(() => {
-        setIsLoading(true);
+        setIsPageLoading(true);
     }, []);
-    if (!isLoading) {
-        return <div>Loading...</div>;
+    if (!isPageLoading) {
+        return <Loader />;
     }
     
     return (

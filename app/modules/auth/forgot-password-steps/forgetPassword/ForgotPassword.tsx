@@ -15,6 +15,7 @@ import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { forgotPassword } from '@/lib/features/auth/authAction';
 import { toast } from 'react-toastify';
+import Loader from '@/app/components/common/Loader';
 import LeftSide from '../../common/LeftSide';
 
 function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
@@ -40,16 +41,14 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
         }
         toast.success('Successfully sent the OTP');
         return handleNextStep();
-        // return push('/forgot-password/verify-otp');
     };
 
-    const [isLoading, setIsLoading] = useState(false);
-
+    const [isPageLoading, setIsPageLoading] = useState(false);
     useEffect(() => {
-        setIsLoading(true);
+        setIsPageLoading(true);
     }, []);
-    if (!isLoading) {
-        return <div>Loading...</div>;
+    if (!isPageLoading) {
+        return <Loader />;
     }
 
     return (

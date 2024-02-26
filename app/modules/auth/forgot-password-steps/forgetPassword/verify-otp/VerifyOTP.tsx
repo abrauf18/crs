@@ -15,6 +15,7 @@ import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { verifyOTP } from '@/lib/features/auth/authAction';
 import { toast } from 'react-toastify';
+import Loader from '@/app/components/common/Loader';
 import LeftSide from '../../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
@@ -68,14 +69,6 @@ function VerifyOTP({
             const sanitizedArray = pastedOTP.replace(/\D/g, '');
             const otpSepratedArray = sanitizedArray.split('');
             setOtpArray(otpSepratedArray);
-            // otpSepratedArray.forEach((item: string, index: number) => {
-            //     const otpFieldElement = document.getElementById(
-            //         `otpInput_${index}`
-            //     ) as HTMLInputElement;
-            //     if (otpFieldElement) {
-            //         otpFieldElement.value = item;
-            //     }
-            // });
             const lastInput = document.getElementById('otpInput_3');
             if (lastInput) {
                 lastInput.focus();
@@ -93,19 +86,17 @@ function VerifyOTP({
         if (response.type === 'user/verifyOTP/rejected') {
             toast.error(response.payload);
             return handlePreviousStep();
-            // return push('/forgot-password');
         }
         toast.success('Successfully Verified');
         return handleNextStep();
-        // return push('/forgot-password/verify-otp/new-password');
     };
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(false);
     useEffect(() => {
-        setIsLoading(true);
+        setIsPageLoading(true);
     }, []);
-    if (!isLoading) {
-        return <div>Loading...</div>;
+    if (!isPageLoading) {
+        return <Loader />;
     }
 
     return (

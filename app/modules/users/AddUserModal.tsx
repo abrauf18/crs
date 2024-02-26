@@ -11,12 +11,12 @@ import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { signupInvite } from '@/lib/features/auth/authAction';
+import Loader from '@/app/components/common/Loader';
 
 function ProfileModal({ onClose }: any) {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [role, setRole] = useState('student');
-    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
     const allRoles: OptionsInterface[] = [
@@ -49,11 +49,12 @@ function ProfileModal({ onClose }: any) {
         return toast.success('Successfully sent the Invitation');
     };
 
+    const [isPageLoading, setIsPageLoading] = useState(false);
     useEffect(() => {
-        setIsLoading(true);
+        setIsPageLoading(true);
     }, []);
-    if (!isLoading) {
-        return <div>Loading...</div>;
+    if (!isPageLoading) {
+        return <Loader />;
     }
 
     return (
