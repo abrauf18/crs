@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
@@ -9,9 +9,51 @@ import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
+import { useAppDispatch } from '@/lib/hooks';
+import { signup } from '@/lib/features/auth/authAction';
+import Loader from '@/app/components/common/Loader';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 import { CheckBox } from '../Checkbox';
 
-function SignupForm() {
+function SignupForm({ token }: { token: string }) {
+    const [email, setEmail] = useState('');
+    const handleEmailChange = (event: any) => {
+        setEmail(event.target.value);
+    };
+
+    const [username, setUsername] = useState('');
+    const handleUsernameChange = (event: any) => {
+        setUsername(event.target.value);
+    };
+
+    const [password, setPassword] = useState('');
+    const handlePasswordChange = (event: any) => {
+        setPassword(event.target.value);
+    };
+
+    const dispatch = useAppDispatch();
+    const { push } = useRouter();
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        const response = await dispatch(
+            signup({ email, username, password, token })
+        );
+        if (response.type === 'user/signup/rejected') {
+            return toast.error(response.payload);
+        }
+        toast.success('signup Successful');
+        return push('/signin');
+    };
+
+    const [isPageLoading, setIsPageLoading] = useState(false);
+    useEffect(() => {
+        setIsPageLoading(true);
+    }, []);
+    if (!isPageLoading) {
+        return <Loader />;
+    }
+
     return (
         <div className=" px-8 py-2 md:px-10 md:py-2 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex  lg:items-start flex-col">
@@ -36,37 +78,38 @@ function SignupForm() {
                         type="email"
                         id="email"
                         placeholder="Enter Email"
+                        onChange={handleEmailChange}
                     />
                 </div>
 
                 <div className="mt-2">
                     <Label htmlFor="name ">User Name</Label>
-                    <AppInput id="name" placeholder="Enter Name" />
+                    <AppInput
+                        id="name"
+                        placeholder="Enter Name"
+                        onChange={handleUsernameChange}
+                    />
                 </div>
 
                 <div className="mt-2">
-                    <Label htmlFor="password ">Password</Label>
+                    <Label htmlFor="password">Password</Label>
 
                     <AppInput
                         type="password"
                         id="password"
                         placeholder="Enter Password"
+                        onChange={handlePasswordChange}
                     />
                 </div>
 
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
-                    {/* <Link
-                        href="#"
-                        className="text-xs text-black ml-auto lg:hover:text-sky-400"
-                    >
-                        Forgot Password?
-                    </Link> */}
                 </div>
                 <div className="text-center">
                     <Button
                         type="submit"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
+                        onClick={handleSubmit}
                     >
                         Sign Up
                     </Button>

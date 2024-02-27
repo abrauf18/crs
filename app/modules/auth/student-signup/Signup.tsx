@@ -7,7 +7,7 @@ import signupImage from '@/app/assets/images/signup1.svg';
 import LeftSide from '../common/LeftSide';
 import SignupForm from './SignupForm';
 
-function Signin() {
+function Signin({ token }: { token: string }) {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
     const metaText = {
         title: 'Welcome To CRS!',
@@ -20,7 +20,7 @@ function Signin() {
                 <LeftSide images={images} metaText={metaText} />
             </div>
             <div className="w-full  flex flex-col justify-center items-center ">
-                <SignupForm />
+                <SignupForm token={token} />
             </div>
         </section>
     );

@@ -7,8 +7,8 @@ import Signup from '@/app/modules/auth/student-signup/Signup';
 
 function SignupPage() {
     const searchParams = useSearchParams();
-    const hasToken = searchParams.has('token');
-    return hasToken ? <Signup /> : <PageNotFound />;
+    const token = searchParams.get('token');
+    return token ? <Signup token={token} /> : <PageNotFound />;
 }
 
 export default SignupPage;
