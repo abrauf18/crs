@@ -3,17 +3,20 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 export const loginAPI = async (email: string, password: string) => {
-    const result = await axios.post('http://localhost:8000/auth/login', {
-        email,
-        password,
-    });
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
+        {
+            email,
+            password,
+        }
+    );
 
     return result;
 };
 
 export const forgotPasswordAPI = async (email: string) => {
     const result = await axios.post(
-        'http://localhost:8000/auth/forgot-password',
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/forgot-password`,
         {
             email,
         }
@@ -23,7 +26,7 @@ export const forgotPasswordAPI = async (email: string) => {
 };
 
 export const verifyOTPAPI = async (userId: string, OTP: string) => {
-    const result = await axios.post('http://localhost:8000/auth/verify-otp', {
+    const result = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-otp`, {
         userId,
         OTP,
     });
@@ -33,7 +36,7 @@ export const verifyOTPAPI = async (userId: string, OTP: string) => {
 
 export const resetPasswordAPI = async (userId: string, newPassword: string) => {
     const result = await axios.post(
-        'http://localhost:8000/auth/reset-password',
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password`,
         {
             userId,
             newPassword,
@@ -49,7 +52,7 @@ export const signupInviteAPI = async (
     role: string
 ) => {
     const result = await axios.post(
-        'http://localhost:8000/auth/emailBasedInvite',
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/emailBasedInvite`,
         {
             name,
             email,
@@ -67,7 +70,7 @@ export const signupAPI = async (
     token: string
 ) => {
     const result = await axios.post(
-        `http://localhost:8000/auth/emailBasedSignup/token/${token}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/emailBasedSignup/token/${token}`,
         {
             name,
             email,
