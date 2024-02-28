@@ -9,18 +9,22 @@ import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { login } from '@/lib/features/auth/authAction';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Loader from '@/app/components/common/Loader';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { getSession, signIn, useSession } from 'next-auth/react';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const dispatch = useAppDispatch();
+    const [isPageLoading, setIsPageLoading] = useState(false);
+
     const { loading } = useAppSelector((state) => state.user);
-    const { push } = useRouter();
+    const router = useRouter();
+    const { data, status } = useSession();
+
     const handlePasswordChange = (event: any) => {
         const newPassword = event.target.value;
         setPassword(newPassword);
@@ -34,17 +38,44 @@ function SigninForm() {
     // eslint-disable-next-line consistent-return
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        const response = await dispatch(login({ email, password }));
-        if (response.type === 'user/login/rejected') {
-            return toast.error(response.payload);
-        }
-        toast.success('Login Successful');
-        localStorage.setItem('userToken', response?.payload?.accessToken);
-        const route = response?.payload?.role;
-        push(`/${route}`);
-    };
+        const result = await signIn('credentials', {
+            email,
+            password,
+            redirect: false,
+        });
+        // if (status === 'authenticated') {
+        //     const role = data?.user?.role;
+        //     if (role) {
+        //         toast.success('Login Successful');
+        //         router.push(`/${role}`);
+        //     } else if (data.user.message && email) {
+        //         toast.error(data?.user?.message);
+        //     }
+        // }
 
-    const [isPageLoading, setIsPageLoading] = useState(false);
+        const session = await getSession();
+        if (session) {
+            const role = session?.user?.role;
+            if (role) {
+                toast.success('Login Successful');
+                return router.push(`/${role}`);
+            }
+            return toast.error(session?.user?.message);
+        }
+    };
+    // console.log('rendering');
+    // useEffect(() => {
+    //     if (status === 'authenticated') {
+    //         const role = data?.user?.role;
+    //         if (role) {
+    //             toast.success('Login Successful');
+    //             router.push(`/${role}`);
+    //         } else if (data.user.message && email) {
+    //             toast.error(data?.user?.message);
+    //         }
+    //     }
+    // }, [data, status]);
+
     useEffect(() => {
         setIsPageLoading(true);
     }, []);

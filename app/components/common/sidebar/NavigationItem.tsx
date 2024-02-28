@@ -9,9 +9,16 @@ export interface NavigationItemProps {
     to: string;
     ItemIcon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
     itemText?: string;
+    // eslint-disable-next-line react/no-unused-prop-types
+    onClick?: () => void;
 }
 
-function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
+function NavigationItem({
+    to,
+    ItemIcon,
+    itemText,
+    onClick,
+}: NavigationItemProps) {
     const pathname = usePathname();
     const role = pathname.split('/')[1];
 
@@ -20,6 +27,7 @@ function NavigationItem({ to, ItemIcon, itemText }: NavigationItemProps) {
 
     return (
         <Link
+            onClick={onClick}
             href={to}
             // w-52
             className={`flex justify-start items-center w-52 md:w-[48px] md:h-[48px]   lg:w-52 p-3 mb-2 rounded-lg font-semibold text-sm ${

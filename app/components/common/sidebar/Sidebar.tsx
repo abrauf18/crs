@@ -1,5 +1,7 @@
 'use client';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useSession, signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -28,6 +30,8 @@ import NavigationItem, { NavigationItemProps } from './NavigationItem';
 export default function SideBar() {
     const [menu, SetMenu] = useState(false);
     const path = usePathname();
+    const { data, status } = useSession();
+    // console.log('data, status:', data, status);
 
     let navItems: NavigationItemProps[] = [];
     if (path.startsWith('/admin')) {
@@ -71,6 +75,7 @@ export default function SideBar() {
                 to: '#',
                 ItemIcon: LogOut,
                 itemText: 'Logout',
+                onClick: () => signOut(),
             },
         ];
     } else if (path.startsWith('/teacher')) {
@@ -109,6 +114,7 @@ export default function SideBar() {
                 to: '#',
                 ItemIcon: LogOut,
                 itemText: 'Logout',
+                onClick: () => signOut(),
             },
         ];
     } else if (path.startsWith('/student')) {
@@ -147,6 +153,7 @@ export default function SideBar() {
                 to: '#',
                 ItemIcon: LogOut,
                 itemText: 'Logout',
+                onClick: () => signOut(),
             },
         ];
     } else if (path.startsWith('/school')) {
@@ -180,6 +187,7 @@ export default function SideBar() {
                 to: '#',
                 ItemIcon: LogOut,
                 itemText: 'Logout',
+                onClick: () => signOut(),
             },
         ];
     }
@@ -221,6 +229,7 @@ export default function SideBar() {
                                 to={item.to}
                                 ItemIcon={item.ItemIcon}
                                 itemText={item.itemText}
+                                onClick={item.onClick}
                             />
                         ))}
                 </div>
@@ -260,6 +269,7 @@ export default function SideBar() {
                                 key={index + 1}
                                 to={item.to}
                                 ItemIcon={item.ItemIcon}
+                                onClick={item.onClick}
                                 // itemText={item.itemText}
                             />
                         ))}
@@ -296,6 +306,7 @@ export default function SideBar() {
                                 to={item.to}
                                 ItemIcon={item.ItemIcon}
                                 itemText={item.itemText}
+                                onClick={item.onClick}
                             />
                         ))}
                         {/* <NavigationItem
