@@ -32,34 +32,22 @@ export const options: NextAuthOptions = {
                     }
                 );
                 const data = await response.json();
-                console.log("data inside authorize: ", data);
+
                 if (data.status === 'success') {
-                    return data.data; // return data.data;
+                    return data.data;
                 }
-                return data; // return null;
+                return data;
             },
         }),
     ],
     callbacks: {
-        // async jwt({ token, user }: any) {
-        //     if (user) {
-        //         token.user = { ...user };
-        //     }
-        //     return token;
-        // },
-        // async session({ session, token }: any) {
-        //     session.user = token;
-        //     return { ...session, ...token };
-        // },
         async jwt({ token, user }: any) {
-            // console.log('jwt -> token, user: ', token, user);
             if (user) {
                 token.user = { ...user };
             }
             return token;
         },
         async session({ session, token }: any) {
-            // console.log('session -> session, token: ', session, token)
             session.user = token;
             return { ...session, ...token };
         },

@@ -43,15 +43,6 @@ function SigninForm() {
             password,
             redirect: false,
         });
-        // if (status === 'authenticated') {
-        //     const role = data?.user?.role;
-        //     if (role) {
-        //         toast.success('Login Successful');
-        //         router.push(`/${role}`);
-        //     } else if (data.user.message && email) {
-        //         toast.error(data?.user?.message);
-        //     }
-        // }
 
         const session = await getSession();
         if (session) {
@@ -63,18 +54,6 @@ function SigninForm() {
             return toast.error(session?.user?.message);
         }
     };
-    // console.log('rendering');
-    // useEffect(() => {
-    //     if (status === 'authenticated') {
-    //         const role = data?.user?.role;
-    //         if (role) {
-    //             toast.success('Login Successful');
-    //             router.push(`/${role}`);
-    //         } else if (data.user.message && email) {
-    //             toast.error(data?.user?.message);
-    //         }
-    //     }
-    // }, [data, status]);
 
     useEffect(() => {
         setIsPageLoading(true);

@@ -1,7 +1,7 @@
 'use client';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -30,8 +30,6 @@ import NavigationItem, { NavigationItemProps } from './NavigationItem';
 export default function SideBar() {
     const [menu, SetMenu] = useState(false);
     const path = usePathname();
-    const { data, status } = useSession();
-    // console.log('data, status:', data, status);
 
     let navItems: NavigationItemProps[] = [];
     if (path.startsWith('/admin')) {

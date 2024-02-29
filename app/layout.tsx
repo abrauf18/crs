@@ -7,8 +7,8 @@ import './globals.css';
 import React from 'react';
 import SessionProvider from '@/lib/SessionProvider';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { getServerSession } from 'next-auth';
-import { options } from '@/app/api/auth/[...nextauth]/options';
+// import { getServerSession } from 'next-auth';
+// import { options } from '@/app/api/auth/[...nextauth]/options';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -22,8 +22,8 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await getServerSession(options);
-    // console.log("Layout session: ", session);
+    // const session = await getServerSession(options);
+    // // console.log("Layout session: ", session);
     return (
         <html lang="en">
             <body className={montserrat.className}>
