@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
@@ -8,19 +8,15 @@ import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import Loader from '@/app/components/common/Loader';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { getSession, signIn, useSession } from 'next-auth/react';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [isPageLoading, setIsPageLoading] = useState(false);
-
     const { loading } = useAppSelector((state) => state.user);
     const router = useRouter();
     const { data, status } = useSession();
@@ -54,13 +50,6 @@ function SigninForm() {
             return toast.error(session?.user?.message);
         }
     };
-
-    useEffect(() => {
-        setIsPageLoading(true);
-    }, []);
-    if (!isPageLoading) {
-        return <Loader />;
-    }
 
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
