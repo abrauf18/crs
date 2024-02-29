@@ -26,10 +26,13 @@ export const forgotPasswordAPI = async (email: string) => {
 };
 
 export const verifyOTPAPI = async (userId: string, OTP: string) => {
-    const result = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-otp`, {
-        userId,
-        OTP,
-    });
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-otp`,
+        {
+            userId,
+            OTP,
+        }
+    );
 
     return result;
 };
