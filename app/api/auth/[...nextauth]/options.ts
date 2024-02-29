@@ -28,6 +28,7 @@ export const options: NextAuthOptions = {
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include',
                         body: JSON.stringify({ email, password }),
                     }
                 );
