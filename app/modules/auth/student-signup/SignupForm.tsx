@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-// import Link from 'next/link';
-// import { Check } from 'lucide-react';
+import React from 'react';
 import Image from 'next/image';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
@@ -15,32 +13,25 @@ import { signup } from '@/lib/features/auth/authAction';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import PasswordErrors from '@/app/components/common/auth/PasswordErrors';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useForm } from 'react-hook-form';
+import Input from '@/app/components/common/Input';
 import { CheckBox } from '../Checkbox';
 
 function SignupForm({ token }: { token: string }) {
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     // const [isPageLoading, setIsPageLoading] = useState(false);
     const dispatch = useAppDispatch();
     const { push } = useRouter();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
-    const handleEmailChange = (event: any) => {
-        setEmail(event.target.value);
-    };
-
-    const handleUsernameChange = (event: any) => {
-        setUsername(event.target.value);
-    };
-
-    const handlePasswordChange = (event: any) => {
-        setPassword(event.target.value);
-    };
-
-    const handleSubmit = async (event: any) => {
-        event.preventDefault();
+    const onFormSubmit = async (data: any) => {
+        const { name, email, password } = data;
         const response = await dispatch(
-            signup({ email, username, password, token })
+            signup({ name, email, password, token })
         );
         if (response.type === 'user/signup/rejected') {
             return toast.error(response.payload);
@@ -58,7 +49,7 @@ function SignupForm({ token }: { token: string }) {
 
     return (
         <div className=" px-8 py-2 md:px-10 md:py-2 w-[100%] lg:w-[75%] flex flex-col ">
-            <div className="flex  lg:items-start flex-col">
+            <div className="flex lg:items-start flex-col">
                 <Image
                     height={100}
                     width={100}
@@ -72,39 +63,74 @@ function SignupForm({ token }: { token: string }) {
                     Enter Details to Create your Account
                 </p>
             </div>
-            <form>
+            <form onSubmit={handleSubmit(onFormSubmit)}>
                 <div className="mt-2">
-                    <Label htmlFor="email">Email Address</Label>
-
-                    <AppInput
-                        type="email"
-                        id="email"
-                        placeholder="Enter Email"
-                        onChange={handleEmailChange}
+                    <Label htmlFor="name">User Name</Label>
+                    <Input
+                        name="name"
+                        placeholder="Enter Name"
+                        type="text"
+                        errors={errors}
+                        register={register('name', {
+                            required: {
+                                value: true,
+                                message: 'This is required',
+                            },
+                        })}
                     />
                 </div>
-
                 <div className="mt-2">
-                    <Label htmlFor="name ">User Name</Label>
-                    <AppInput
-                        id="name"
-                        placeholder="Enter Name"
-                        onChange={handleUsernameChange}
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                        name="email"
+                        placeholder="Enter Email"
+                        type="email"
+                        errors={errors}
+                        register={register('email', {
+                            pattern: {
+                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                message: 'Please enter a valid Email',
+                            },
+                            required: {
+                                value: true,
+                                message: 'This is required',
+                            },
+                        })}
                     />
                 </div>
 
                 <div className="mt-2">
                     <Label htmlFor="password">Password</Label>
-
-                    <AppInput
-                        type="password"
-                        id="password"
+                    <Input
+                        name="password"
                         placeholder="Enter Password"
-                        onChange={handlePasswordChange}
+                        type="password"
+                        errors={errors}
+                        register={register('password', {
+                            required: {
+                                value: true,
+                                message: 'This is required',
+                            },
+                            pattern: {
+                                value:
+                                    // eslint-disable-next-line no-useless-escape
+                                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]])[a-zA-Z\d~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]]{8,}$/,
+                                message:
+                                    'Password must be 8 characters and must contain atleast 1 small alphabet, 1 capital alphabet, 1 numeric value and 1 special character',
+                            },
+                            minLength: {
+                                value: 8,
+                                message:
+                                    'Password should contain minimum 8 characters long',
+                            },
+                            maxLength: {
+                                value: 20,
+                                message:
+                                    'Password should contain maximum 20 characters long',
+                            },
+                        })}
                     />
                 </div>
-
-                <PasswordErrors password={password} />
 
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
@@ -113,7 +139,6 @@ function SignupForm({ token }: { token: string }) {
                     <Button
                         type="submit"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
-                        onClick={handleSubmit}
                     >
                         Sign Up
                     </Button>

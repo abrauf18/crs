@@ -1,4 +1,11 @@
-import { loginAPI,forgotPasswordAPI, verifyOTPAPI, resetPasswordAPI, signupInviteAPI, signupAPI } from '@/app/api/auth';
+import {
+    loginAPI,
+    forgotPasswordAPI,
+    verifyOTPAPI,
+    resetPasswordAPI,
+    signupInviteAPI,
+    signupAPI,
+} from '@/app/api/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 interface LoginPayload {
@@ -90,13 +97,16 @@ export const resetPassword = createAsyncThunk(
 
 interface signupInvitePayload {
     username: string;
-    email: string
+    email: string;
     role: string;
 }
 
 export const signupInvite = createAsyncThunk(
     'user/signupInvite',
-    async ({ username, email, role }: signupInvitePayload, { rejectWithValue }) => {
+    async (
+        { username, email, role }: signupInvitePayload,
+        { rejectWithValue }
+    ) => {
         try {
             const response = await signupInviteAPI(username, email, role);
             const emailResponse = response.data;
@@ -112,17 +122,20 @@ export const signupInvite = createAsyncThunk(
 );
 
 interface signupPayload {
-    username: string;
-    email: string
+    name: string;
+    email: string;
     password: string;
     token: string;
 }
 
 export const signup = createAsyncThunk(
     'user/signup',
-    async ({ username, email, password, token }: signupPayload, { rejectWithValue }) => {
+    async (
+        { name, email, password, token }: signupPayload,
+        { rejectWithValue }
+    ) => {
         try {
-            const response = await signupAPI(username, email, password, token);
+            const response = await signupAPI(name, email, password, token);
             const emailResponse = response.data;
             return emailResponse.data;
         } catch (error: Error | any) {
