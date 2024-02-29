@@ -15,12 +15,11 @@ export default async function RootLayout({
     children: React.ReactNode;
 }) {
     const session = await getServerSession(options);
-    // console.log('Layout session: ', session);
-    if (session && session.user && session.user.role === 'student') {
-        return <main>{children}</main>;
-    }
     if (!session) {
         return redirect('/signin');
+    }
+    if (session && session.user && session.user.role === 'student') {
+        return <main>{children}</main>;
     }
     return redirect(`/${session.user.role}`);
 }
