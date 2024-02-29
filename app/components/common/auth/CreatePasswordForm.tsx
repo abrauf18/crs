@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-
 import { Button } from '@/app/components/ui/button';
 import AppInput from '@/app/components/common/AppInput';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
@@ -10,6 +9,7 @@ import { resetPassword } from '@/lib/features/auth/authAction';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import PasswordErrors from './PasswordErrors';
 import Loader from '../Loader';
 
 function CreatePasswordForm({ description }: { description: string }) {
@@ -18,16 +18,20 @@ function CreatePasswordForm({ description }: { description: string }) {
     const state = useAppSelector((state) => state.user);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [isPageLoading, setIsPageLoading] = useState(false);
+
     const handleNewPasswordChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setNewPassword(event.target.value);
     };
+
     const handleConfirmPasswordChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setConfirmPassword(event.target.value);
     };
+
     const handleSubmit = async () => {
         const { id } = state.data;
         const response = await dispatch(resetPassword({ id, newPassword }));
@@ -35,11 +39,10 @@ function CreatePasswordForm({ description }: { description: string }) {
             toast.error(response.payload);
             return push('/forgot-password');
         }
-        toast.success('Successfully Updated Password, Signin to Continue');
+        toast.success('Successfully Updated Password');
         return push('/signin');
     };
 
-    const [isPageLoading, setIsPageLoading] = useState(false);
     useEffect(() => {
         setIsPageLoading(true);
     }, []);
@@ -72,6 +75,9 @@ function CreatePasswordForm({ description }: { description: string }) {
                         onChange={handleNewPasswordChange}
                     />
                 </div>
+                
+                <PasswordErrors password={newPassword} />
+
                 <div className="mt-4">
                     <Label htmlFor="confirm_password">Confirm Password</Label>
 

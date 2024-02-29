@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Check } from 'lucide-react';
+// import Link from 'next/link';
+// import { Check } from 'lucide-react';
 import Image from 'next/image';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
@@ -14,26 +14,29 @@ import { signup } from '@/lib/features/auth/authAction';
 import Loader from '@/app/components/common/Loader';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import PasswordErrors from '@/app/components/common/auth/PasswordErrors';
 import { CheckBox } from '../Checkbox';
 
 function SignupForm({ token }: { token: string }) {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isPageLoading, setIsPageLoading] = useState(false);
+    const dispatch = useAppDispatch();
+    const { push } = useRouter();
+
     const handleEmailChange = (event: any) => {
         setEmail(event.target.value);
     };
 
-    const [username, setUsername] = useState('');
     const handleUsernameChange = (event: any) => {
         setUsername(event.target.value);
     };
 
-    const [password, setPassword] = useState('');
     const handlePasswordChange = (event: any) => {
         setPassword(event.target.value);
     };
 
-    const dispatch = useAppDispatch();
-    const { push } = useRouter();
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         const response = await dispatch(
@@ -46,7 +49,6 @@ function SignupForm({ token }: { token: string }) {
         return push('/signin');
     };
 
-    const [isPageLoading, setIsPageLoading] = useState(false);
     useEffect(() => {
         setIsPageLoading(true);
     }, []);
@@ -101,6 +103,8 @@ function SignupForm({ token }: { token: string }) {
                         onChange={handlePasswordChange}
                     />
                 </div>
+
+                <PasswordErrors password={password} />
 
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
