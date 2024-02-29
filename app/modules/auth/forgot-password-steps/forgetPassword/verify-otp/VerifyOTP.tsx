@@ -27,12 +27,16 @@ function VerifyOTP({
     handlePreviousStep: () => void;
 }) {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
+    const [otpArray, setOtpArray] = useState(['', '', '', '']);
+    const { push } = useRouter();
+    const dispatch = useAppDispatch();
+    const state = useAppSelector((state) => state.user);
+    // const [isPageLoading, setIsPageLoading] = useState(false);
     const metaText = {
         title: 'Reset Password!',
         description: 'Forgot Your Password Don’t worry lets Recover It',
     };
 
-    const [otpArray, setOtpArray] = useState(['', '', '', '']);
     const handleOtpChange = (index: number, value: string) => {
         const updatedOtpArray = [...otpArray];
         updatedOtpArray[index] = value;
@@ -76,9 +80,6 @@ function VerifyOTP({
         }
     };
 
-    const { push } = useRouter();
-    const dispatch = useAppDispatch();
-    const state = useAppSelector((state) => state.user);
     const handleSubmit = async () => {
         const OTP = otpArray.join('');
         const { id } = state.data;
@@ -91,13 +92,12 @@ function VerifyOTP({
         return handleNextStep();
     };
 
-    const [isPageLoading, setIsPageLoading] = useState(false);
-    useEffect(() => {
-        setIsPageLoading(true);
-    }, []);
-    if (!isPageLoading) {
-        return <Loader />;
-    }
+    // useEffect(() => {
+    //     setIsPageLoading(true);
+    // }, []);
+    // if (!isPageLoading) {
+    //     return <Loader />;
+    // }
 
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">

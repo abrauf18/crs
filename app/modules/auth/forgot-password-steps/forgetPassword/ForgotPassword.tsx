@@ -24,11 +24,12 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
     const [email, setEmail] = useState('');
     const { loading, data } = useAppSelector((state) => state.user);
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
-
+    // const [isPageLoading, setIsPageLoading] = useState(false);
     const metaText = {
         title: 'Reset Password!',
         description: 'Forgot Your Password Don’t worry lets Recover It',
     };
+    
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
     };
@@ -43,13 +44,12 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
         return handleNextStep();
     };
 
-    const [isPageLoading, setIsPageLoading] = useState(false);
-    useEffect(() => {
-        setIsPageLoading(true);
-    }, []);
-    if (!isPageLoading) {
-        return <Loader />;
-    }
+    // useEffect(() => {
+    //     setIsPageLoading(true);
+    // }, []);
+    // if (!isPageLoading) {
+    //     return <Loader />;
+    // }
 
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">

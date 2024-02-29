@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import AppInput from '@/app/components/common/AppInput';
 import { Label } from '@/app/components/ui/label';
-
 import AppDropDown, {
     OptionsInterface,
 } from '@/app/components/common/AppDropDown';
@@ -19,6 +18,7 @@ function ProfileModal({ onClose }: any) {
     const [role, setRole] = useState('student');
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
+    // const [isPageLoading, setIsPageLoading] = useState(false);
     const allRoles: OptionsInterface[] = [
         { label: 'student', value: 'Student' },
         { label: 'teacher', value: 'Teacher' },
@@ -49,13 +49,12 @@ function ProfileModal({ onClose }: any) {
         return toast.success('Successfully sent the Invitation');
     };
 
-    const [isPageLoading, setIsPageLoading] = useState(false);
-    useEffect(() => {
-        setIsPageLoading(true);
-    }, []);
-    if (!isPageLoading) {
-        return <Loader />;
-    }
+    // useEffect(() => {
+    //     setIsPageLoading(true);
+    // }, []);
+    // if (!isPageLoading) {
+    //     return <Loader />;
+    // }
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">

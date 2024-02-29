@@ -11,6 +11,7 @@ import AppInput from '@/app/components/common/AppInput';
 import { useAppSelector } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { getSession, signIn, useSession } from 'next-auth/react';
 import { CheckBox } from './Checkbox';
 
@@ -19,7 +20,7 @@ function SigninForm() {
     const [email, setEmail] = useState('');
     const { loading } = useAppSelector((state) => state.user);
     const router = useRouter();
-    const { data, status } = useSession();
+    // const { data, status } = useSession();
 
     const handlePasswordChange = (event: any) => {
         const newPassword = event.target.value;

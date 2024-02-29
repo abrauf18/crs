@@ -11,7 +11,7 @@ import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import AppInput from '@/app/components/common/AppInput';
 import { useAppDispatch } from '@/lib/hooks';
 import { signup } from '@/lib/features/auth/authAction';
-import Loader from '@/app/components/common/Loader';
+// import Loader from '@/app/components/common/Loader';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import PasswordErrors from '@/app/components/common/auth/PasswordErrors';
@@ -21,7 +21,7 @@ function SignupForm({ token }: { token: string }) {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isPageLoading, setIsPageLoading] = useState(false);
+    // const [isPageLoading, setIsPageLoading] = useState(false);
     const dispatch = useAppDispatch();
     const { push } = useRouter();
 
@@ -49,12 +49,12 @@ function SignupForm({ token }: { token: string }) {
         return push('/signin');
     };
 
-    useEffect(() => {
-        setIsPageLoading(true);
-    }, []);
-    if (!isPageLoading) {
-        return <Loader />;
-    }
+    // useEffect(() => {
+    //     setIsPageLoading(true);
+    // }, []);
+    // if (!isPageLoading) {
+    //     return <Loader />;
+    // }
 
     return (
         <div className=" px-8 py-2 md:px-10 md:py-2 w-[100%] lg:w-[75%] flex flex-col ">

@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import PasswordErrors from './PasswordErrors';
-import Loader from '../Loader';
+// import Loader from '../Loader';
 
 function CreatePasswordForm({ description }: { description: string }) {
     const { push } = useRouter();
@@ -18,7 +18,7 @@ function CreatePasswordForm({ description }: { description: string }) {
     const state = useAppSelector((state) => state.user);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [isPageLoading, setIsPageLoading] = useState(false);
+    // const [isPageLoading, setIsPageLoading] = useState(false);
 
     const handleNewPasswordChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -43,12 +43,12 @@ function CreatePasswordForm({ description }: { description: string }) {
         return push('/signin');
     };
 
-    useEffect(() => {
-        setIsPageLoading(true);
-    }, []);
-    if (!isPageLoading) {
-        return <Loader />;
-    }
+    // useEffect(() => {
+    //     setIsPageLoading(true);
+    // }, []);
+    // if (!isPageLoading) {
+    //     return <Loader />;
+    // }
     
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
