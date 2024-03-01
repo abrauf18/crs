@@ -99,16 +99,17 @@ interface signupInvitePayload {
     username: string;
     email: string;
     role: string;
+    accessToken: string;
 }
 
 export const signupInvite = createAsyncThunk(
     'user/signupInvite',
     async (
-        { username, email, role }: signupInvitePayload,
+        { username, email, role, accessToken }: signupInvitePayload,
         { rejectWithValue }
     ) => {
         try {
-            const response = await signupInviteAPI(username, email, role);
+            const response = await signupInviteAPI(username, email, role, accessToken);
             const emailResponse = response.data;
             return emailResponse.data;
         } catch (error: Error | any) {

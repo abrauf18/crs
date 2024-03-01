@@ -10,7 +10,9 @@ import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { signupInvite } from '@/lib/features/auth/authAction';
-import Loader from '@/app/components/common/Loader';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useSession } from 'next-auth/react';
+// import Loader from '@/app/components/common/Loader';
 
 function ProfileModal({ onClose }: any) {
     const [email, setEmail] = useState('');
@@ -18,6 +20,7 @@ function ProfileModal({ onClose }: any) {
     const [role, setRole] = useState('student');
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
+    const { data, status } = useSession();
     // const [isPageLoading, setIsPageLoading] = useState(false);
     const allRoles: OptionsInterface[] = [
         { label: 'student', value: 'Student' },
@@ -41,7 +44,12 @@ function ProfileModal({ onClose }: any) {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         const response = await dispatch(
-            signupInvite({ email, username, role })
+            signupInvite({
+                email,
+                username,
+                role,
+                accessToken: data?.user.accessToken || '',
+            })
         );
         if (response.type === 'user/signupInvite/rejected') {
             return toast.error(response.payload);

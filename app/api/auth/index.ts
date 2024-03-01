@@ -52,7 +52,8 @@ export const resetPasswordAPI = async (userId: string, newPassword: string) => {
 export const signupInviteAPI = async (
     name: string,
     email: string,
-    role: string
+    role: string,
+    accessToken: string
 ) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/emailBasedInvite`,
@@ -60,6 +61,7 @@ export const signupInviteAPI = async (
             name,
             email,
             role,
+            accessToken,
         }
     );
 
