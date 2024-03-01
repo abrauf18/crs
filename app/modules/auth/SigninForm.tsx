@@ -7,34 +7,30 @@ import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
-import AppInput from '@/app/components/common/AppInput';
+// import AppInput from '@/app/components/common/AppInput';
 import { useAppSelector } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getSession, signIn, useSession } from 'next-auth/react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useForm } from 'react-hook-form';
+import Input from '@/app/components/common/Input';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
     const { loading } = useAppSelector((state) => state.user);
     const router = useRouter();
     // const { data, status } = useSession();
-
-    const handlePasswordChange = (event: any) => {
-        const newPassword = event.target.value;
-        setPassword(newPassword);
-    };
-
-    const handleEmailChange = (event: any) => {
-        const newEmail = event.target.value;
-        setEmail(newEmail);
-    };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
     // eslint-disable-next-line consistent-return
-    const handleSubmit = async (event: any) => {
-        event.preventDefault();
+    const onFormSubmit = async (data: any) => {
+        const { email, password } = data;
         const result = await signIn('credentials', {
             email,
             password,
@@ -66,28 +62,40 @@ function SigninForm() {
                     Enter Your Email & Password
                 </p>
             </div>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form onSubmit={handleSubmit(onFormSubmit)}>
+                <div className="mt-2">
                     <Label htmlFor="email">Email Address</Label>
-                    <AppInput
+                    <Input
+                        name="email"
+                        placeholder="Enter Email"
                         type="email"
-                        id="email"
-                        placeholder="Email"
-                        onChange={handleEmailChange}
+                        errors={errors}
+                        register={register('email', {
+                            required: {
+                                value: true,
+                                message: 'This is required',
+                            },
+                            pattern: {
+                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                message: 'Please enter a valid Email',
+                            },
+                        })}
                     />
                 </div>
 
                 <div className="mt-2">
-                    <Label htmlFor="password ">Password</Label>
-
-                    <input
-                        className="mt-1 block w-full px-3 py-3 bg-slate-100 border rounded-md text-sm shadow-sm placeholder-slate-400
-                    focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                        name="password"
+                        placeholder="Enter Password"
                         type="password"
-                        id="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handlePasswordChange}
+                        errors={errors}
+                        register={register('password', {
+                            required: {
+                                value: true,
+                                message: 'This is required',
+                            },
+                        })}
                     />
                 </div>
                 <div className="flex mb-12 mt-5">

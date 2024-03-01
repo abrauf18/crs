@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import AppInput from '@/app/components/common/AppInput';
+// import AppInput from '@/app/components/common/AppInput';
 import { Label } from '@/app/components/ui/label';
 import AppDropDown, {
     OptionsInterface,
@@ -10,13 +10,15 @@ import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { signupInvite } from '@/lib/features/auth/authAction';
+import { Button } from '@/app/components/ui/button';
+import Input from '@/app/components/common/Input';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useForm } from 'react-hook-form';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useSession } from 'next-auth/react';
 // import Loader from '@/app/components/common/Loader';
 
 function ProfileModal({ onClose }: any) {
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
     const [role, setRole] = useState('student');
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
@@ -28,21 +30,19 @@ function ProfileModal({ onClose }: any) {
         { label: 'school', value: 'School' },
         { label: 'admin', value: 'Admin' },
     ];
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
-    };
-    const handleUsernameChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setUsername(event.target.value);
-    };
     const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setRole(event.target.value);
     };
 
-    const handleSubmit = async (event: any) => {
-        event.preventDefault();
+    const onFormSubmit = async (formData: any) => {
+        // event.preventDefault();
+        const { username, email } = formData;
         const response = await dispatch(
             signupInvite({
                 email,
@@ -75,29 +75,43 @@ function ProfileModal({ onClose }: any) {
                     onClose={onClose}
                 />
 
-                <div className="flex flex-col  mobile:items-center w-full">
-                    <div className="mb-2 w-full mt-4">
-                        <Label htmlFor="username">Username</Label>
-
-                        <AppInput
-                            id="username"
-                            placeholder="User Name"
-                            onChange={handleUsernameChange}
+                <form onSubmit={handleSubmit(onFormSubmit)}>
+                    <div className="mt-2">
+                        <Label htmlFor="username">User Name</Label>
+                        <Input
+                            name="username"
+                            placeholder="Enter Name"
+                            type="text"
+                            errors={errors}
+                            register={register('username', {
+                                required: {
+                                    value: true,
+                                    message: 'This is required',
+                                },
+                            })}
                         />
                     </div>
-                    <div className="mb-2 w-full">
+                    <div className="mt-2">
                         <Label htmlFor="email">Email Address</Label>
-
-                        <AppInput
+                        <Input
+                            name="email"
+                            placeholder="Enter Email"
                             type="email"
-                            id="email"
-                            placeholder="Email"
-                            onChange={handleEmailChange}
+                            errors={errors}
+                            register={register('email', {
+                                required: {
+                                    value: true,
+                                    message: 'This is required',
+                                },
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: 'Please enter a valid Email',
+                                },
+                            })}
                         />
                     </div>
-                    <div className="mb-2 w-full">
+                    <div className="mt-2 w-full">
                         <Label htmlFor="password ">Role</Label>
-
                         <AppDropDown
                             name="role"
                             options={allRoles}
@@ -105,16 +119,15 @@ function ProfileModal({ onClose }: any) {
                             onChange={handleRoleChange}
                         />
                     </div>
-                </div>
-            </div>
-            <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between lg:items-center  w-full py-2 gap-1 absolute bottom-0 left-0  p-3 border bg-white">
-                <button
-                    type="button"
-                    className="text-white bg-primary-color font-semibold w-full px-5 py-2  border rounded-xl"
-                    onClick={handleSubmit}
-                >
-                    {state.loading ? 'Loading...' : 'Invite'}
-                </button>
+                    <div className="text-center mt-8">
+                        <Button
+                            type="submit"
+                            className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
+                        >
+                            {state.loading ? 'Inviting...' : 'Invite'}
+                        </Button>
+                    </div>
+                </form>
             </div>
         </section>
     );
