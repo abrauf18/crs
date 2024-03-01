@@ -110,7 +110,7 @@ function ProfileModal({ onClose }: any) {
                             })}
                         />
                     </div>
-                    <div className="mt-2 w-full">
+                    <div className="flex flex-col space-y-2 mt-3">
                         <Label htmlFor="password ">Role</Label>
                         <AppDropDown
                             name="role"
