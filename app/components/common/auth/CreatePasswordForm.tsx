@@ -3,21 +3,18 @@ import Image from 'next/image';
 import { Button } from '@/app/components/ui/button';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
-import { X } from 'lucide-react';
 import { resetPassword } from '@/lib/features/auth/authAction';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
 import Input from '../Input';
-// import Loader from '../Loader';
 
 function CreatePasswordForm({ description }: { description: string }) {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
-    // const [isPageLoading, setIsPageLoading] = useState(false);
+
     const {
         register,
         handleSubmit,
@@ -36,14 +33,6 @@ function CreatePasswordForm({ description }: { description: string }) {
         toast.success('Successfully Updated Password');
         return push('/signin');
     };
-
-    // useEffect(() => {
-    //     setIsPageLoading(true);
-    // }, []);
-    // if (!isPageLoading) {
-    //     return <Loader />;
-    // }
-
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex  lg:items-start flex-col">
@@ -113,7 +102,7 @@ function CreatePasswordForm({ description }: { description: string }) {
 
                 <div className="text-center mt-8">
                     <Button
-                        type="button"
+                        type="submit"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                     >
                         Create Password
