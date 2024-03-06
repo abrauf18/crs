@@ -32,7 +32,7 @@ function SignupForm({ token }: { token: string }) {
         if (response.type === 'user/signup/rejected') {
             return toast.error(response.payload);
         }
-        toast.success('signup Successful');
+        toast.success('Signup Successful');
         return push('/signin');
     };
     return (
