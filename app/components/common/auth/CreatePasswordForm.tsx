@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { validationError } from '@/lib/utils';
 import Input from '../Input';
 
 function CreatePasswordForm({ description }: { description: string }) {
@@ -58,24 +59,20 @@ function CreatePasswordForm({ description }: { description: string }) {
                         register={register('newPassword', {
                             required: {
                                 value: true,
-                                message: 'This is required',
+                                message: validationError.REQUIRED_FIELD,
                             },
                             pattern: {
-                                value:
-                                    // eslint-disable-next-line no-useless-escape
-                                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]])[a-zA-Z\d~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]]{8,}$/,
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-\\+=:;"'?\\/>.<,{}\\[\]])[a-zA-Z\d~`!@#$%^&*()_\-\\+=:;"'?\\/>.<,{}\\[\]]{8,}$/,
                                 message:
-                                    'Password must be 8 characters and must contain atleast 1 small alphabet, 1 capital alphabet, 1 numeric value and 1 special character',
+                                    validationError.PASSWORD_VALIDATION_INFO_TEXT,
                             },
                             minLength: {
                                 value: 8,
-                                message:
-                                    'Password should contain minimum 8 characters long',
+                                message: validationError.MIN_LENGTH,
                             },
                             maxLength: {
                                 value: 20,
-                                message:
-                                    'Password should contain maximum 20 characters long',
+                                message: validationError.MAX_LENGTH,
                             },
                         })}
                     />
@@ -91,7 +88,7 @@ function CreatePasswordForm({ description }: { description: string }) {
                         register={register('confirmPassword', {
                             required: {
                                 value: true,
-                                message: 'This is required',
+                                message: validationError.REQUIRED_FIELD,
                             },
                             validate: (value) =>
                                 value === getValues('newPassword') ||

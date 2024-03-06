@@ -43,7 +43,7 @@ function Resoures() {
             <Searchbar
                 headerText="All Resources"
                 Icon={ResourceIcon}
-                tagline="Your All Resources Are Here"
+                tagline="Your All Resources Are Listed Here"
             />
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <Filters text="Resources" btnFontSize="text-xs" />

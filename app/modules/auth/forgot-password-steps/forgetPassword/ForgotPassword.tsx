@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import loginimage1 from '@/app/assets/images/leftside1.svg';
 import loginimage2 from '@/app/assets/images/leftside2.svg';
 import loginimage3 from '@/app/assets/images/leftside3.svg';
 import loginimage4 from '@/app/assets/images/leftside4.svg';
@@ -24,12 +23,11 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
     const [email, setEmail] = useState('');
     const { loading, data } = useAppSelector((state) => state.user);
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
-    // const [isPageLoading, setIsPageLoading] = useState(false);
     const metaText = {
         title: 'Reset Password!',
         description: 'Forgot Your Password Don’t worry lets Recover It',
     };
-    
+
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
     };
@@ -43,13 +41,6 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
         toast.success('Successfully sent the OTP');
         return handleNextStep();
     };
-
-    // useEffect(() => {
-    //     setIsPageLoading(true);
-    // }, []);
-    // if (!isPageLoading) {
-    //     return <Loader />;
-    // }
 
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">
@@ -90,9 +81,11 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                                 onClick={handleSubmit}
                             >
-                                {loading
-                                    ? 'Loading...'
-                                    : 'Get Verification Code'}
+                                {loading ? (
+                                    <Loader color="white" size="4" />
+                                ) : (
+                                    'Get Verification Code'
+                                )}
                             </Button>
                         </div>
                     </form>

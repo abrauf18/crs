@@ -6,20 +6,16 @@ import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
-import AppInput from '@/app/components/common/AppInput';
 import { useAppDispatch } from '@/lib/hooks';
 import { signup } from '@/lib/features/auth/authAction';
-// import Loader from '@/app/components/common/Loader';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import PasswordErrors from '@/app/components/common/auth/PasswordErrors';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
 import Input from '@/app/components/common/Input';
+import { validationError } from '@/lib/utils';
 import { CheckBox } from '../Checkbox';
 
 function SignupForm({ token }: { token: string }) {
-    // const [isPageLoading, setIsPageLoading] = useState(false);
     const dispatch = useAppDispatch();
     const { push } = useRouter();
     const {
@@ -39,14 +35,6 @@ function SignupForm({ token }: { token: string }) {
         toast.success('signup Successful');
         return push('/signin');
     };
-
-    // useEffect(() => {
-    //     setIsPageLoading(true);
-    // }, []);
-    // if (!isPageLoading) {
-    //     return <Loader />;
-    // }
-
     return (
         <div className=" px-8 py-2 md:px-10 md:py-2 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex lg:items-start flex-col">
@@ -74,7 +62,7 @@ function SignupForm({ token }: { token: string }) {
                         register={register('name', {
                             required: {
                                 value: true,
-                                message: 'This is required',
+                                message: validationError.REQUIRED_FIELD,
                             },
                         })}
                     />
@@ -89,11 +77,11 @@ function SignupForm({ token }: { token: string }) {
                         register={register('email', {
                             pattern: {
                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                message: 'Please enter a valid Email',
+                                message: validationError.VALID_EMAIL,
                             },
                             required: {
                                 value: true,
-                                message: 'This is required',
+                                message: validationError.REQUIRED_FIELD,
                             },
                         })}
                     />
@@ -109,24 +97,22 @@ function SignupForm({ token }: { token: string }) {
                         register={register('password', {
                             required: {
                                 value: true,
-                                message: 'This is required',
+                                message: validationError.REQUIRED_FIELD,
                             },
                             pattern: {
                                 value:
                                     // eslint-disable-next-line no-useless-escape
                                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]])[a-zA-Z\d~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]]{8,}$/,
                                 message:
-                                    'Password must be 8 characters and must contain atleast 1 small alphabet, 1 capital alphabet, 1 numeric value and 1 special character',
+                                    validationError.PASSWORD_VALIDATION_INFO_TEXT,
                             },
                             minLength: {
                                 value: 8,
-                                message:
-                                    'Password should contain minimum 8 characters long',
+                                message: validationError.MIN_LENGTH,
                             },
                             maxLength: {
                                 value: 20,
-                                message:
-                                    'Password should contain maximum 20 characters long',
+                                message: validationError.MAX_LENGTH,
                             },
                         })}
                     />

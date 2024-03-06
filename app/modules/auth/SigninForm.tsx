@@ -7,21 +7,18 @@ import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
-// import AppInput from '@/app/components/common/AppInput';
-import { useAppSelector } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { getSession, signIn, useSession } from 'next-auth/react';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { getSession, signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Input from '@/app/components/common/Input';
+import Loader from '@/app/components/common/Loader';
+import { validationError } from '@/lib/utils';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
-    const { loading } = useAppSelector((state) => state.user);
     const router = useRouter();
-    // const { data, status } = useSession();
+    const [loading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -30,21 +27,28 @@ function SigninForm() {
 
     // eslint-disable-next-line consistent-return
     const onFormSubmit = async (data: any) => {
-        const { email, password } = data;
-        const result = await signIn('credentials', {
-            email,
-            password,
-            redirect: false,
-        });
+        try {
+            setLoading(true);
+            const { email, password } = data;
+            const result = await signIn('credentials', {
+                email,
+                password,
+                redirect: false,
+            });
 
-        const session = await getSession();
-        if (session) {
-            const role = session?.user?.role;
-            if (role) {
-                toast.success('Login Successful');
-                return router.push(`/${role}`);
+            const session = await getSession();
+            if (session) {
+                const role = session?.user?.role;
+                if (role) {
+                    toast.success('Login Successful');
+                    return router.push(`/${role}`);
+                }
+                return toast.error(session?.user?.message);
             }
-            return toast.error(session?.user?.message);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -73,7 +77,7 @@ function SigninForm() {
                         register={register('email', {
                             required: {
                                 value: true,
-                                message: 'This is required',
+                                message: validationError.REQUIRED_FIELD,
                             },
                             pattern: {
                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -93,7 +97,7 @@ function SigninForm() {
                         register={register('password', {
                             required: {
                                 value: true,
-                                message: 'This is required',
+                                message: validationError.REQUIRED_FIELD,
                             },
                         })}
                     />
@@ -112,7 +116,11 @@ function SigninForm() {
                         type="submit"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                     >
-                        {loading ? 'Loading...' : 'Sign In'}
+                        {loading ? (
+                            <Loader color="white" size="4" />
+                        ) : (
+                            'Sign In'
+                        )}
                     </Button>
                     <span className="text-black text-[12px]">Or</span>
                     <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">

@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-// import AppInput from '@/app/components/common/AppInput';
+import React, { useState } from 'react';
 import { Label } from '@/app/components/ui/label';
 import AppDropDown, {
     OptionsInterface,
@@ -12,18 +11,16 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { signupInvite } from '@/lib/features/auth/authAction';
 import { Button } from '@/app/components/ui/button';
 import Input from '@/app/components/common/Input';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useSession } from 'next-auth/react';
-// import Loader from '@/app/components/common/Loader';
+import { validationError } from '@/lib/utils';
+import Loader from '@/app/components/common/Loader';
 
 function ProfileModal({ onClose }: any) {
     const [role, setRole] = useState('student');
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
     const { data, status } = useSession();
-    // const [isPageLoading, setIsPageLoading] = useState(false);
     const allRoles: OptionsInterface[] = [
         { label: 'student', value: 'Student' },
         { label: 'teacher', value: 'Teacher' },
@@ -41,7 +38,6 @@ function ProfileModal({ onClose }: any) {
     };
 
     const onFormSubmit = async (formData: any) => {
-        // event.preventDefault();
         const { username, email } = formData;
         const response = await dispatch(
             signupInvite({
@@ -56,13 +52,6 @@ function ProfileModal({ onClose }: any) {
         }
         return toast.success('Successfully sent the Invitation');
     };
-
-    // useEffect(() => {
-    //     setIsPageLoading(true);
-    // }, []);
-    // if (!isPageLoading) {
-    //     return <Loader />;
-    // }
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
@@ -86,7 +75,7 @@ function ProfileModal({ onClose }: any) {
                             register={register('username', {
                                 required: {
                                     value: true,
-                                    message: 'This is required',
+                                    message: validationError.REQUIRED_FIELD,
                                 },
                             })}
                         />
@@ -101,11 +90,11 @@ function ProfileModal({ onClose }: any) {
                             register={register('email', {
                                 required: {
                                     value: true,
-                                    message: 'This is required',
+                                    message: validationError.REQUIRED_FIELD,
                                 },
                                 pattern: {
                                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                    message: 'Please enter a valid Email',
+                                    message: validationError.VALID_EMAIL,
                                 },
                             })}
                         />
@@ -124,7 +113,11 @@ function ProfileModal({ onClose }: any) {
                             type="submit"
                             className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         >
-                            {state.loading ? 'Inviting...' : 'Invite'}
+                            {state.loading ? (
+                                <Loader color="white" size="4" />
+                            ) : (
+                                'Invite'
+                            )}
                         </Button>
                     </div>
                 </form>
