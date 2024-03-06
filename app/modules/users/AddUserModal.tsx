@@ -50,7 +50,7 @@ function ProfileModal({ onClose }: any) {
         if (response.type === 'user/signupInvite/rejected') {
             return toast.error(response.payload);
         }
-        return toast.success('Successfully sent the Invitation');
+        return toast.success('Invitation sent successfully');
     };
 
     return (

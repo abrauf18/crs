@@ -38,7 +38,7 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
         if (response.type === 'user/forgotPassword/rejected') {
             return toast.error(response.payload);
         }
-        toast.success('Successfully sent the OTP');
+        toast.success('OTP sent successfully');
         return handleNextStep();
     };
 
