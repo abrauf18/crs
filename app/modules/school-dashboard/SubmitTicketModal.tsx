@@ -68,7 +68,7 @@ function SubmitTicketModal({ onClose }: any) {
                     />
                 </div>
             </div>
-            <ModalFooter text="submit" />
+            <ModalFooter text="Submit" />
         </section>
     );
 }
