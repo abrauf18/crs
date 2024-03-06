@@ -16,7 +16,7 @@ export default function StandardLayout({
         <section>
             <Searchbar
                 headerText="Classroom"
-                tagline="Here;s Your All Assigned Classroom"
+                tagline="Here’s Your All Assigned Classroom"
                 Icon={User}
             />
             {children}

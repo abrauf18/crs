@@ -16,7 +16,7 @@ export default function DashboardLayout({
             <Searchbar
                 headerText="All Videos"
                 Icon={VideoIcon}
-                tagline="Your All Videos Are Here"
+                tagline="Your All Videos Are Listed Here"
             />
             {children}
         </section>

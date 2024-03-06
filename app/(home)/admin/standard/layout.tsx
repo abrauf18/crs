@@ -16,7 +16,7 @@ export default function StandardLayout({
         <section>
             <Searchbar
                 headerText="Standards"
-                tagline="All standards are here"
+                tagline="All Standards Are Listed Here"
                 Icon={StandardIcon}
             />
             {children}
