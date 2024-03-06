@@ -21,5 +21,5 @@ export const validationError = {
     REQUIRED_FIELD: 'This is required',
     MIN_LENGTH: 'Password should contain minimum 8 characters long',
     MAX_LENGTH: 'Password should contain maximum 20 characters long',
-    VALID_EMAIL: 'Please enter a valid Email',
+    VALID_EMAIL: 'Please enter a valid email',
 };
