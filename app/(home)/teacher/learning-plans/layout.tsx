@@ -14,7 +14,7 @@ export default function StandardLayout({
         <section>
             <Searchbar
                 headerText="Learning Plan"
-                tagline="Here’s All Your Created Plans"
+                tagline="All Created Plans"
                 Icon={StandardIcon}
                 isShowBackArrow
                 onBackClick={() => back()}
