@@ -107,8 +107,8 @@ function VerifyOTP({
                             Forgot Password
                         </h1>
                         <p className="text-sm font-medium text-dark-gray">
-                            Enter the code we sent to your email below, so that
-                            we can verify that you are who you say you are.
+                            Please enter the code sent to your email for
+                            verification.
                         </p>
                         <div className="text-sm font-medium text-dark-gray my-6">
                             <p>We Have Send Verification Code On</p>
