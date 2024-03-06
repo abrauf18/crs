@@ -81,7 +81,7 @@ function SigninForm() {
                             },
                             pattern: {
                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                message: 'Please enter a valid Email',
+                                message: validationError.VALID_EMAIL,
                             },
                         })}
                     />
