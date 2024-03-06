@@ -1,14 +1,26 @@
 import React from 'react';
 
-function PageLoader() {
+interface LoaderProps {
+    color?: string;
+    size?: string;
+}
+
+function Loader({ color = 'primaryColor', size = '8' }: LoaderProps) {
     return (
-        <div className="flex space-x-2 justify-center items-center bg-white h-screen">
-            <span className="sr-only">Loading...</span>
-            <div className="h-8 w-8 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
-            <div className="h-8 w-8 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
-            <div className="h-8 w-8 bg-amber-500 rounded-full animate-bounce" />
+        <div className="flex space-x-2 justify-center items-center h-screen">
+            <div
+                className={`h-${size} w-${size} bg-${color} rounded-full animate-bounce`}
+                style={{ animationDelay: '-0.3s' }}
+            />
+            <div
+                className={`h-${size} w-${size} bg-${color} rounded-full animate-bounce`}
+                style={{ animationDelay: '-0.15s' }}
+            />
+            <div
+                className={`h-${size} w-${size} bg-${color} rounded-full animate-bounce`}
+            />
         </div>
     );
 }
 
-export default PageLoader;
+export default Loader;
