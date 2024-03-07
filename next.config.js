@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['crs-data-storage-bucket.s3.ap-southeast-2.amazonaws.com'],
+        remotePatterns: [
+            {
+              protocol: 'https',
+              hostname: 'crs-data-storage-bucket.s3.ap-southeast-2.amazonaws.com',
+              pathname: '/**',
+            },
+        ],
     },
 };
 
