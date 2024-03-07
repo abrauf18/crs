@@ -79,6 +79,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
     };
 
     const onFormSubmit = async (formData: any) => {
+        setLoading(true);
         const s3BucketResponse: any = await UploadProfilePicture({
             selectedFile,
             originalImage,
@@ -114,9 +115,10 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     accessToken: response.data.data.accessToken,
                 },
             });
-
+            setLoading(false);
             return toast.success('Successfully updated profile');
         }
+        setLoading(false);
         return toast.error(s3BucketResponse?.message);
     };
 
@@ -124,7 +126,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         (async () => {
             try {
                 if (data?.user.accessToken) {
-                    setLoading(true);
                     const APIdata = await getUserProfileAPI(
                         data?.user.accessToken
                     );
@@ -145,8 +146,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 }
             } catch (err) {
                 console.log('error: ', err);
-            } finally {
-                setLoading(false);
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -286,14 +285,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                             </button>
                             <button
                                 type="submit"
-                                className="text-white bg-primary-color font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg"
+                                className="text-white bg-primary-color font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12"
                             >
-                                {/* {loading ? (
+                                {loading ? (
                                     <Loader color="white" size="4" />
                                 ) : (
                                     'Save Changes'
-                                )} */}
-                                Save Changes
+                                )}
                             </button>
                         </div>
                     )}
