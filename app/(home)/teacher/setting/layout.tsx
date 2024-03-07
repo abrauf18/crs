@@ -17,7 +17,7 @@ export default function DashboardLayout({
             <Searchbar
                 headerText="Settings"
                 Icon={Settings}
-                tagline="Manage your profile"
+                tagline="Manage Your Profile"
             />
             {children}
         </section>

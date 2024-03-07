@@ -57,7 +57,7 @@ function InviteTeacher() {
                 </div>
 
                 <div className="mt-3">
-                    <Label htmlFor="email">Teacher Emain</Label>
+                    <Label htmlFor="email">Teacher Email</Label>
                     <AppInput
                         placeholder="Email here"
                         id="email"

@@ -68,7 +68,6 @@ function SavedVideos() {
                 headerText="My Saved Videos"
                 tagline="Your All Saved Videos"
             />
-            {/* <p className="text-lg font-semibold">Saved Video’s</p> */}
             <div className="mt-8">
                 <div className="flex space-x-2 items-center mb-4 ">
                     <CalendarDays color="orange" size={20} />

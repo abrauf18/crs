@@ -7,7 +7,6 @@ import { convertDashesToSpaces } from '@/lib/utils';
 function ResourceDetails({ params }: any) {
     const ModifiedTopicName = convertDashesToSpaces(params.typeName); // adding space after Topic
 
-    console.log(params);
     const resources: any = [
         { id: 1, title: 'Design Thinking', topic: ModifiedTopicName },
         { id: 2, title: 'User Research', topic: ModifiedTopicName },

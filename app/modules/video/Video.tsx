@@ -97,7 +97,7 @@ function Video() {
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <UploadResourceModal
                         isDisplayHeaderIcon
-                        buttonText="Continue"
+                        buttonText="Next"
                         headerText="Upload Video"
                         description="let’s Upload Video For Your User"
                         onClose={handleCloseUploadModal}

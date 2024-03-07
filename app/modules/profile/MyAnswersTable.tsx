@@ -34,7 +34,6 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
     const { push } = useRouter();
 
     const handleClick = (id: number) => {
-        console.log(id);
         push(`/student/profile/${id}`);
     };
 

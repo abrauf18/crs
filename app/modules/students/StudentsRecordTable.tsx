@@ -78,7 +78,7 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
                             {resource.result}
                         </TableCell>
                         <TableCell className="text-dark-gray font-normal text-sm text-center">
-                            {resource.score}
+                            {resource.score}%
                         </TableCell>
 
                         <TableCell className="flex justify-center items-center text-center">

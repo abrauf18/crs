@@ -19,7 +19,7 @@ export default function TopicLayout({
             <Searchbar
                 headerText={formattedTitle}
                 Icon={ResourceIcon}
-                tagline={`All Resources Assigned to ${formattedTitle}`}
+                tagline={`All Resources Assigned To ${formattedTitle}`}
                 isShowBackArrow
                 onBackClick={() => back()}
             />

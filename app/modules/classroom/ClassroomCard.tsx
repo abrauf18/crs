@@ -1,6 +1,6 @@
 import { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface ClassroomCardProps {
     Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
@@ -9,7 +9,7 @@ interface ClassroomCardProps {
     iconColor?: string;
     iconBg?: string;
     activeColor?: string;
-    isActive?: boolean;
+    onClick?: (period: string) => void;
 }
 
 function ClassroomCard({
@@ -19,14 +19,18 @@ function ClassroomCard({
     iconColor,
     iconBg,
     activeColor,
-    isActive,
+    onClick,
 }: ClassroomCardProps) {
     const borderColorClass = iconColor ? `border-[${iconColor}]` : '';
+    const [isActive, setIsActive] = useState(false);
     return (
         <div
             className={`col-span-1 mobile:col-span-2 relative group p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border ${
                 isActive && `${borderColorClass}`
             } ${isActive ? `${activeColor}` : ''}`}
+            onMouseEnter={() => setIsActive(true)}
+            onMouseLeave={() => setIsActive(false)}
+            onClick={() => onClick?.(periods)}
         >
             <div
                 className={`bg-green-100 px-3 h-fit py-3 rounded-full w-fit ${
@@ -58,3 +62,7 @@ function ClassroomCard({
 }
 
 export default ClassroomCard;
+function setState(arg0: boolean): [any, any] {
+    throw new Error('Function not implemented.');
+}
+

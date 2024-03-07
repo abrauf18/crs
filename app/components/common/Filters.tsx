@@ -3,10 +3,12 @@ import { Filter, ChevronDown, Upload } from 'lucide-react';
 
 interface FiltersInterface {
     isHideFirstBtn?: boolean;
+    isHideSecondBtn?: boolean;
     text: string;
     secondButtonText?: string;
     handleClick?: () => void;
     btnFontSize?: string;
+    textColor?: string;
 }
 
 function Filters({
@@ -14,7 +16,9 @@ function Filters({
     secondButtonText,
     handleClick,
     isHideFirstBtn,
+    isHideSecondBtn = false,
     btnFontSize = 'text-sm',
+    textColor = 'text-dark-gray',
 }: FiltersInterface): JSX.Element {
     const makeFirstNumberBold = (inputText: string) => {
         const match = inputText.match(/^\d+/);
@@ -33,7 +37,7 @@ function Filters({
     };
 
     const renderHeaderText = () => (
-        <h3 className="text-xl font-semibold text-dark-gray mobile:mb-2">
+        <h3 className={`text-xl font-semibold ${textColor} mobile:mb-2`}>
             {makeFirstNumberBold(text)}
         </h3>
     );
@@ -62,25 +66,28 @@ function Filters({
                         </button>
                     </div>
                 )}
-                <div
-                    onClick={handleClick}
-                    className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between ${btnFontSize} ${
-                        secondButtonText?.startsWith('Create New') ||
-                        secondButtonText?.startsWith('Upload')
-                            ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition
-                            : 'text-dark-gray'
-                    }`}
-                >
-                    <button className="mr-1" type="button">
-                        {secondButtonText || 'This year'}
-                    </button>
-                    {secondButtonText?.startsWith('Upload') ||
-                    secondButtonText?.startsWith('Create New') ? (
-                        <Upload width={15} height={15} />
-                    ) : (
-                        <ChevronDown width={15} height={15} />
-                    )}
-                </div>
+                {!isHideSecondBtn && (
+                    <div
+                        onClick={handleClick}
+                        className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between ${btnFontSize} ${
+                            secondButtonText?.startsWith('Create New') ||
+                            secondButtonText?.startsWith('Upload')
+                                ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition
+                                : 'text-dark-gray'
+                        }`}
+                    >
+                        <button className="mr-1" type="button">
+                            {secondButtonText || 'This year'}
+                        </button>
+                        {secondButtonText?.startsWith('Upload') ? (
+                            <Upload width={15} height={15} />
+                        ) : secondButtonText?.startsWith(
+                              'Create New'
+                          ) ? null : (
+                            <ChevronDown width={15} height={15} />
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );

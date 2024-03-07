@@ -51,13 +51,13 @@ function SchoolProfile() {
                     <Label htmlFor="courses">
                         Courses{' '}
                         <span className="text-sm text-gray-500">
-                            Seprated by (&ldquo;,&ldquo;)
+                            (Seprated by &ldquo;,&ldquo;)
                         </span>
                     </Label>
                     <AppInput placeholder="Type Courses" id="courses" />
                 </div>
 
-                <div className="text-center">
+                <div className="text-center mt-10">
                     <Button
                         type="button"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"

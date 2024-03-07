@@ -60,7 +60,8 @@ function LeftSide({ images, metaText }: LeftSideProp) {
             <div className="flex top-4 justify-center py-2 mt-5 ">
                 {images.map((image, slideIndex) => (
                     <div
-                        key={image}
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={slideIndex}
                         onClick={() => goToSlide(slideIndex)}
                         className={` cursor-pointer  ${
                             currentIndex === slideIndex ? 'text-orange-500' : ''

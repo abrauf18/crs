@@ -31,7 +31,7 @@ function TopicPage() {
             />
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card Icon={VideoIcon} cardText="Total Video's" count="20K" />
-                <Card Icon={SlideShowIcon} cardText="Slideshow" count={200} />
+                <Card Icon={SlideShowIcon} cardText="Slideshows" count={200} />
                 <Card Icon={WorksheetIcon} cardText="Worksheets" count="20" />
             </div>
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-2 gap-4 mt-4 mobile:place-items-center">

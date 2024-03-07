@@ -4,7 +4,7 @@ import Searchbar from '@/app/components/common/Searchbar';
 
 export const metadata: Metadata = {
     title: 'Standards',
-    description: 'All Standards here',
+    description: 'All standards are here',
 };
 
 export default function StandardLayout({
@@ -16,7 +16,7 @@ export default function StandardLayout({
         <section>
             <Searchbar
                 headerText="Standards"
-                tagline="All Standards here"
+                tagline="All Standards Are Listed Here"
                 Icon={StandardIcon}
             />
             {children}

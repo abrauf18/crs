@@ -4,7 +4,7 @@ import VideoIcon from '@/app/assets/icons/VideoIcon';
 
 export const metadata: Metadata = {
     title: 'Videos',
-    description: 'Your All Video’s Here',
+    description: 'Your All Videos Are Here',
 };
 export default function DashboardLayout({
     children,
@@ -14,9 +14,9 @@ export default function DashboardLayout({
     return (
         <section>
             <Searchbar
-                headerText="All Video's"
+                headerText="All Videos"
                 Icon={VideoIcon}
-                tagline="Your All Video’s Here"
+                tagline="Your All Videos Are Listed Here"
             />
             {children}
         </section>

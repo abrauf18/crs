@@ -21,7 +21,7 @@ const cards = [
 
 function QuizModal({ onClose }: any) {
     return (
-        <section className="w-full bg-white h-screen py-4  shadow-md">
+        <section className="w-full bg-white h-screen p-4  shadow-md">
             <ModalHeader
                 headerText={{
                     heading: 'Select Quiz',

@@ -2,38 +2,56 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Check } from 'lucide-react';
 import Image from 'next/image';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
-import AppInput from '@/app/components/common/AppInput';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { getSession, signIn } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
+import Input from '@/app/components/common/Input';
+import Loader from '@/app/components/common/Loader';
+import { validationError } from '@/lib/utils';
 import { CheckBox } from './Checkbox';
 
 function SigninForm() {
-    const [password, setPassword] = useState('');
-    const [isUpperCase, setIsUpperCase] = useState(false);
-    const [isLowerCase, setIsLowerCase] = useState(false);
-    const [hasSpecialChar, setHasSpecialChar] = useState(false);
-    const [formSubmitted, setFormSubmitted] = useState(false);
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
-    const handlePasswordChange = (event: any) => {
-        const newPassword = event.target.value;
-        setPassword(newPassword);
-        validatePassword(newPassword);
+    // eslint-disable-next-line consistent-return
+    const onFormSubmit = async (data: any) => {
+        try {
+            setLoading(true);
+            const { email, password } = data;
+            const result = await signIn('credentials', {
+                email,
+                password,
+                redirect: false,
+            });
+
+            const session = await getSession();
+            if (session) {
+                const role = session?.user?.role;
+                if (role) {
+                    toast.success('Login Successful');
+                    return router.push(`/${role}`);
+                }
+                return toast.error(session?.user?.message);
+            }
+        } catch (error) {
+            return error;
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const validatePassword = (newPassword: any) => {
-        setIsUpperCase(/[A-Z]/.test(newPassword));
-        setIsLowerCase(/[a-z]/.test(newPassword));
-        setHasSpecialChar(/[!@#$%^&*(),.?":{}|<>]/.test(newPassword));
-    };
-
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        setFormSubmitted(true);
-    };
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
             <div className="flex lg:items-start flex-col">
@@ -48,70 +66,42 @@ function SigninForm() {
                     Enter Your Email & Password
                 </p>
             </div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <Label htmlFor="email">Email Address</Label>
-                    <AppInput type="email" id="email" placeholder="Email" />
-                </div>
-
+            <form onSubmit={handleSubmit(onFormSubmit)}>
                 <div className="mt-2">
-                    <Label htmlFor="password ">Password</Label>
-
-                    <input
-                        className="mt-1 block w-full px-3 py-3 bg-slate-100 border rounded-md text-sm shadow-sm placeholder-slate-400
-                    focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                        //  ${
-                        //     password && isUpperCase && isLowerCase && hasSpecialChar
-                        //         ? 'border-green-500'
-                        //         : 'border-red-400'
-                        // }
-
-                        type="password"
-                        id="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handlePasswordChange}
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                        name="email"
+                        placeholder="Enter Email"
+                        type="email"
+                        errors={errors}
+                        register={register('email', {
+                            required: {
+                                value: true,
+                                message: validationError.REQUIRED_FIELD,
+                            },
+                            pattern: {
+                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                message: validationError.VALID_EMAIL,
+                            },
+                        })}
                     />
                 </div>
 
-                {/* If error occour */}
-
-                {/* <div className="flex space-y-2 lg:space-y-0 lg:flex-row flex-col lg:space-x-3 mb-4 mt-2">
-                    <div
-                        className={`flex space-x-1 items-center ${
-                            isUpperCase ? 'text-green-500' : 'text-red-500'
-                        }`}
-                    >
-                        <Check
-                            size={20}
-                            color={isUpperCase ? '#7AA43E' : '#E6500D'}
-                        />
-                        <p className="text-xs">At Least 1 Uppercase</p>
-                    </div>
-                    <div
-                        className={`flex space-x-1 items-center ${
-                            isLowerCase ? 'text-green-500' : 'text-red-500'
-                        }`}
-                    >
-                        <Check
-                            size={20}
-                            color={isLowerCase ? '#7AA43E' : '#E6500D'}
-                        />
-                        <p className="text-xs">At Least 1 Lowercase</p>
-                    </div>
-                    <div
-                        className={`flex space-x-1 items-center ${
-                            hasSpecialChar ? 'text-green-500' : 'text-red-500'
-                        }`}
-                    >
-                        <Check
-                            size={20}
-                            color={hasSpecialChar ? '#7AA43E' : '#E6500D'}
-                        />
-                        <p className="text-xs">At Least 1 Special Character</p>
-                    </div>
-                </div> */}
-
+                <div className="mt-2">
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                        name="password"
+                        placeholder="Enter Password"
+                        type="password"
+                        errors={errors}
+                        register={register('password', {
+                            required: {
+                                value: true,
+                                message: validationError.REQUIRED_FIELD,
+                            },
+                        })}
+                    />
+                </div>
                 <div className="flex mb-12 mt-5">
                     <CheckBox label="Remember Me" />
                     <Link
@@ -126,7 +116,11 @@ function SigninForm() {
                         type="submit"
                         className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                     >
-                        Sign In
+                        {loading ? (
+                            <Loader color="white" size="4" />
+                        ) : (
+                            'Sign In'
+                        )}
                     </Button>
                     <span className="text-black text-[12px]">Or</span>
                     <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
