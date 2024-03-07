@@ -42,11 +42,6 @@ export async function POST(request: Request) {
     try {
         const formData = await request.formData();
         const file = formData.get('file') as CustomFile;
-        // const fileSaveDirectory = formData.get("fileSaveDirectory");
-        // const contentType = formData.get("contentType");
-
-        console.log('FILE', file);
-
         if (!file) {
             return NextResponse.json(
                 {
@@ -72,7 +67,6 @@ export async function POST(request: Request) {
             url,
         });
     } catch (err: any) {
-        console.log('ERROR', err.message);
         return NextResponse.json({
             error: err.message,
         });

@@ -36,7 +36,6 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
     const [isShowDownloadModal, setIsShowDownloadModal] = useState(false);
 
     const handleOpenDownloadModal = () => {
-        console.log('here');
         setIsShowDownloadModal(true);
     };
 

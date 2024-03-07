@@ -46,7 +46,7 @@ function SigninForm() {
                 return toast.error(session?.user?.message);
             }
         } catch (error) {
-            console.log(error);
+            return error;
         } finally {
             setLoading(false);
         }
