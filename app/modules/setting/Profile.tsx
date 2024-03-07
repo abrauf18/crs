@@ -116,7 +116,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 },
             });
             setLoading(false);
-            return toast.success('Successfully updated profile');
+            return toast.success('Profile Updated Successfully');
         }
         setLoading(false);
         return toast.error(s3BucketResponse?.message);
