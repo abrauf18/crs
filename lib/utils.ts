@@ -23,3 +23,6 @@ export const validationError = {
     MAX_LENGTH: 'Password should contain maximum 20 characters long',
     VALID_EMAIL: 'Please enter a valid email',
 };
+
+export const DEFAULT_IMAGE =
+    'https://crs-data-storage-bucket.s3.ap-southeast-2.amazonaws.com/ProfilePictures/defaultImage.JPG';
