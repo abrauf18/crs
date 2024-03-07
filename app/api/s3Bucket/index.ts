@@ -1,3 +1,4 @@
+import { DEFAULT_IMAGE } from '@/lib/utils';
 import axios from 'axios';
 
 export const UploadProfilePicture = async ({
@@ -11,7 +12,9 @@ export const UploadProfilePicture = async ({
 }) => {
     if (selectedFile) {
         try {
-            await DeleteProfilePicture(originalImage);
+            if (originalImage !== DEFAULT_IMAGE) {
+                await DeleteProfilePicture(originalImage);
+            }
             const formData = new FormData();
             formData.append('file', selectedFile);
             formData.append('fileSaveDirectory', 'ProfilePictures');
