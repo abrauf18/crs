@@ -13,14 +13,21 @@ const s3 = new AWS.S3({
     //   signatureVersion: "v4",
 });
 
-async function uploadFileToS3(file: Buffer, fileName: string) {
+async function uploadFileToS3(
+    file: Buffer,
+    fileName: string,
+    fileSaveDirectory: string,
+    userId?: string // Optional user ID
+) {
     // , fileSaveDirectory, contentType) {
     const fileBuffer = file;
     fileName = fileName.replace(/ /g, '');
 
     const params: PutObjectRequest = {
         Bucket: process.env.BUCKET_NAME || 'default-bucket',
-        Key: fileName, //  ${fileSaveDirectory}/${fileName},
+        Key: userId
+            ? `${fileSaveDirectory}/${fileName}-${userId}`
+            : `${fileSaveDirectory}/${fileName}`,
         Body: fileBuffer,
         // ContentType: contentType,
     };
@@ -42,6 +49,9 @@ export async function POST(request: Request) {
     try {
         const formData = await request.formData();
         const file = formData.get('file') as CustomFile;
+        const fileSaveDirectory = formData.get('fileSaveDirectory') as string;
+        const userId = formData.get('userId') as string | undefined;
+
         if (!file) {
             return NextResponse.json(
                 {
@@ -57,14 +67,60 @@ export async function POST(request: Request) {
 
         const url = await uploadFileToS3(
             buffer,
-            file.name
-            // fileSaveDirectory,
+            file.name,
+            fileSaveDirectory,
+            userId
             // contentType
         );
 
         return NextResponse.json({
             success: true,
             url,
+        });
+    } catch (err: any) {
+        return NextResponse.json({
+            error: err.message,
+        });
+    }
+}
+
+async function deleteFileFromS3(url: string) {
+    const keyRegex = /https:\/\/.*?\/(.*)/;
+
+    const keyMatch = url.match(keyRegex);
+
+    if (!keyMatch) {
+        throw new Error('Invalid URL format');
+    }
+
+    const key = keyMatch[1];
+
+    const params = {
+        Bucket: process.env.BUCKET_NAME!,
+        Key: key,
+    };
+
+    await s3.deleteObject(params).promise();
+}
+
+export async function DELETE(request: Request) {
+    try {
+        const { url } = await request.json();
+        if (!url) {
+            return NextResponse.json(
+                {
+                    error: 'URL is required',
+                },
+                {
+                    status: 400,
+                }
+            );
+        }
+
+        await deleteFileFromS3(url);
+
+        return NextResponse.json({
+            success: true,
         });
     } catch (err: any) {
         return NextResponse.json({
