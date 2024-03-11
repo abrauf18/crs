@@ -34,11 +34,10 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         reset,
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isValid },
     } = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
-        // defaultValues: profileData,
     });
 
     const handleClick = (event: React.MouseEvent) => {
@@ -285,7 +284,12 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                             </button>
                             <button
                                 type="submit"
-                                className="text-white bg-primary-color font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12"
+                                disabled={!isValid}
+                                className={`text-white ${
+                                    !isValid
+                                        ? 'bg-gray-300'
+                                        : 'bg-primary-color'
+                                } font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12`}
                             >
                                 {loading ? (
                                     <Loader color="white" size="4" />
