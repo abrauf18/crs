@@ -169,7 +169,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                         <div className="flex justify-center">
                             <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
                                 <div className="border-2 border-light-gray rounded-full h-36 w-36 flex justify-center items-center">
-                                    <div className="border-2 border-light-gray rounded-full h-32 p-2 w-32 flex justify-center items-center">
+                                    <div className="border-2 border-light-gray rounded-full h-32 w-32 flex justify-center items-center">
                                         <Image
                                             src={
                                                 selectedFile
@@ -179,7 +179,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                                     : profileData.image // state.data.image
                                             }
                                             alt="profile Image"
-                                            className="rounded-full"
+                                            className="rounded-full w-full aspect-square object-cover h-32 w-32"
                                             width={176}
                                             height={176}
                                         />
