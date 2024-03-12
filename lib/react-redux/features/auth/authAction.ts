@@ -1,3 +1,4 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
     loginAPI,
     forgotPasswordAPI,
@@ -6,7 +7,6 @@ import {
     signupInviteAPI,
     signupAPI,
 } from '@/app/api/auth';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
 interface LoginPayload {
     email: string;
@@ -23,9 +23,8 @@ export const login = createAsyncThunk(
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
-            } else {
-                return rejectWithValue(error.message);
             }
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -44,9 +43,8 @@ export const forgotPassword = createAsyncThunk(
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
-            } else {
-                return rejectWithValue(error.message);
             }
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -66,9 +64,8 @@ export const verifyOTP = createAsyncThunk(
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
-            } else {
-                return rejectWithValue(error.message);
             }
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -88,9 +85,8 @@ export const resetPassword = createAsyncThunk(
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
-            } else {
-                return rejectWithValue(error.message);
             }
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -109,15 +105,19 @@ export const signupInvite = createAsyncThunk(
         { rejectWithValue }
     ) => {
         try {
-            const response = await signupInviteAPI(username, email, role, accessToken);
+            const response = await signupInviteAPI(
+                username,
+                email,
+                role,
+                accessToken
+            );
             const emailResponse = response.data;
             return emailResponse.data;
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
-            } else {
-                return rejectWithValue(error.message);
             }
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -142,9 +142,8 @@ export const signup = createAsyncThunk(
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
-            } else {
-                return rejectWithValue(error.message);
             }
+            return rejectWithValue(error.message);
         }
     }
 );

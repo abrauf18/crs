@@ -7,8 +7,8 @@ import AppDropDown, {
 } from '@/app/components/common/AppDropDown';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { toast } from 'react-toastify';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { signupInvite } from '@/lib/features/auth/authAction';
+import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
+import { signupInvite } from '@/lib/react-redux/features/auth/authAction';
 import { Button } from '@/app/components/ui/button';
 import Input from '@/app/components/common/Input';
 import { useForm } from 'react-hook-form';

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
-import StoreProvider from '@/lib/storeProvider';
+import StoreProvider from '@/lib/react-redux/storeProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import './globals.css';
 import React from 'react';
-import SessionProvider from '@/lib/SessionProvider';
+import SessionProvider from '@/lib/next-auth/SessionProvider';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 

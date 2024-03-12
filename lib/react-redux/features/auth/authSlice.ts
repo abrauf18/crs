@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, forgotPassword, verifyOTP, resetPassword, signupInvite, signup } from './authAction';
+import {
+    login,
+    forgotPassword,
+    verifyOTP,
+    resetPassword,
+    signupInvite,
+    signup,
+} from './authAction';
 
 type User = {
     id: string;
@@ -27,10 +34,10 @@ const initialState: state = {
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: initialState,
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
-        //login action
+        // login action
         builder.addCase(login.pending, (state) => {
             state.loading = true;
         });
@@ -50,7 +57,7 @@ const userSlice = createSlice({
             state.data = initialState.data;
             state.error = action.error.message || 'Something went wrong';
         });
-        //forgot password action
+        // forgot password action
         builder.addCase(forgotPassword.pending, (state) => {
             state.loading = true;
         });
@@ -68,7 +75,7 @@ const userSlice = createSlice({
             state.data = initialState.data;
             state.error = action.error.message || 'Something went wrong';
         });
-        //verify OTP action
+        // verify OTP action
         builder.addCase(verifyOTP.pending, (state) => {
             state.loading = true;
         });
@@ -84,7 +91,7 @@ const userSlice = createSlice({
             state.data = initialState.data;
             state.error = action.error.message || 'Something went wrong';
         });
-        //Reset Password action
+        // Reset Password action
         builder.addCase(resetPassword.pending, (state) => {
             state.loading = true;
         });
@@ -100,32 +107,26 @@ const userSlice = createSlice({
             state.data = initialState.data;
             state.error = action.error.message || 'Something went wrong';
         });
-        //signup Invite action
-         builder.addCase(signupInvite.pending, (state) => {
+        // signup Invite action
+        builder.addCase(signupInvite.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(
-            signupInvite.fulfilled,
-            (state) => {
-                state.loading = false;
-                state.error = '';
-            }
-        );
+        builder.addCase(signupInvite.fulfilled, (state) => {
+            state.loading = false;
+            state.error = '';
+        });
         builder.addCase(signupInvite.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message || 'Something went wrong';
         });
-        //signup action
+        // signup action
         builder.addCase(signup.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(
-            signup.fulfilled,
-            (state) => {
-                state.loading = false;
-                state.error = '';
-            }
-        );
+        builder.addCase(signup.fulfilled, (state) => {
+            state.loading = false;
+            state.error = '';
+        });
         builder.addCase(signup.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message || 'Something went wrong';
