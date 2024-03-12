@@ -178,7 +178,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                                     : profileData.image // state.data.image
                                             }
                                             alt="profile Image"
-                                            className="rounded-full w-full aspect-square object-cover h-32 w-32"
+                                            className="rounded-full aspect-square object-cover h-32 w-32"
                                             width={176}
                                             height={176}
                                         />
