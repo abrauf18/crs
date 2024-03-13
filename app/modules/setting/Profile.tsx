@@ -305,10 +305,14 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             </div>
             {isSchoolProfile && (
                 <SchoolProfile
-                isProfileFormValid={isValid}
-                selectedImage={selectedFile}
-                profileData={profileData}
-                originalImage={originalImage}
+                    isProfileFormValid={isValid}
+                    selectedImageFile={selectedFile}
+                    originalImage={originalImage}
+                    profileImage={profileData.image}
+                    username={watch('name')}
+                    email={watch('email')}
+                    password={watch('password')}
+                    handleProfileReset={handleReset}
                 />
             )}
         </section>
