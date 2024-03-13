@@ -2,42 +2,50 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { getSchoolProfileAPI, updateSchoolProfileAPI } from '@/app/api/school';
-import { getSchoolProfile } from '@/lib/react-redux/features/schoolProfile/schoolProfileAction';
-import { useAppDispatch } from '@/lib/react-redux/hooks';
 import { UploadProfilePicture } from '@/app/api/s3Bucket';
 import { updateUserProfileAPI } from '@/app/api/user';
+import Loader from '@/app/components/common/Loader';
+
+type Inputs = {
+    schoolName: string;
+    numOfClasses: number;
+    classesStart: number;
+    classesEnd: number;
+};
 
 function SchoolProfile({
     isProfileFormValid,
-    selectedImage,
-    profileData,
+    selectedImageFile,
     originalImage,
+    profileImage,
+    username,
+    email,
+    password,
+    handleProfileReset,
 }: {
     isProfileFormValid: boolean;
-    selectedImage: File | null;
-    profileData: {
-        image: string;
-        name: string;
-        email: string;
-        password: string;
-    };
+    selectedImageFile: File | null;
     originalImage: string;
+    profileImage: string;
+    username: string;
+    email: string;
+    password: string;
+    handleProfileReset: () => void;
 }) {
-    type Inputs = {
-        schoolName: string;
-        numOfClasses: number;
-        classesStart: number;
-        classesEnd: number;
-    };
-    const [loading, setLoading] = useState(false);
-    const dispatch = useAppDispatch();
     const { data } = useSession();
+    const [loading, setLoading] = useState(false);
+    const [schoolProfileData, setSchoolProfileData] = useState({
+        schoolName: '',
+        numOfClasses: 1,
+        classesStart: 0,
+        classesEnd: 0,
+    });
     const {
         reset,
         watch,
@@ -49,17 +57,27 @@ function SchoolProfile({
         reValidateMode: 'onChange',
     });
 
-    const classStartData = watch('classesStart');
+    const classesStartData = watch('classesStart');
+
+    const handleReset = () => {
+        handleProfileReset();
+        reset({
+            schoolName: schoolProfileData.schoolName,
+            numOfClasses: schoolProfileData.numOfClasses,
+            classesStart: schoolProfileData.classesStart,
+            classesEnd: schoolProfileData.classesEnd,
+        });
+    };
 
     const onSubmit = async (formData: any) => {
         setLoading(true);
 
         try {
-            let imageUrl = profileData.image;
+            let imageUrl = profileImage;
 
-            if (selectedImage) {
+            if (selectedImageFile) {
                 const s3BucketResponse: any = await UploadProfilePicture({
-                    selectedFile: selectedImage,
+                    selectedFile: selectedImageFile,
                     originalImage,
                     userId: data?.user.id,
                 });
@@ -74,11 +92,10 @@ function SchoolProfile({
                 imageUrl = s3BucketResponse?.data?.url || imageUrl;
             }
 
-            const { name, email, password } = profileData;
             const updateUserResponse = await updateUserProfileAPI(
                 data?.user.accessToken || '',
                 imageUrl,
-                name,
+                username,
                 email,
                 password
             );
@@ -116,6 +133,7 @@ function SchoolProfile({
     };
 
     useEffect(() => {
+        // eslint-disable-next-line consistent-return
         (async () => {
             try {
                 if (data?.user.accessToken) {
@@ -124,6 +142,12 @@ function SchoolProfile({
                     );
                     const { name, numOfClasses, classesStart, classesEnd } =
                         APIdata.data.data;
+                    setSchoolProfileData({
+                        schoolName: name,
+                        numOfClasses,
+                        classesStart,
+                        classesEnd,
+                    });
                     reset({
                         schoolName: name,
                         numOfClasses,
@@ -131,8 +155,8 @@ function SchoolProfile({
                         classesEnd,
                     });
                 }
-            } catch (err) {
-                console.log('error: ', err);
+            } catch (error: any) {
+                return toast.error(error.message || 'An error occurred');
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -224,7 +248,7 @@ function SchoolProfile({
                                     message: validationError.REQUIRED_FIELD,
                                 },
                                 min: {
-                                    value: classStartData,
+                                    value: classesStartData,
                                     message: validationError.MIN_CLASS_END,
                                 },
                             })}
@@ -236,6 +260,7 @@ function SchoolProfile({
                     <button
                         type="button"
                         className="text-dark-gray w-[90%] font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg"
+                        onClick={handleReset}
                     >
                         Cancel
                     </button>
@@ -248,7 +273,7 @@ function SchoolProfile({
                                 : 'bg-primary-color'
                         } font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg`}
                     >
-                        Save
+                        {loading ? <Loader color="white" size="4" /> : 'Save'}
                     </button>
                 </div>
                 {/* </div> */}
