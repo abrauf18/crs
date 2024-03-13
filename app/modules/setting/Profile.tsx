@@ -13,6 +13,7 @@ import Loader from '@/app/components/common/Loader';
 import PictureIcon from '@/app/assets/icons/PictureIcon';
 import { getUserProfileAPI, updateUserProfileAPI } from '@/app/api/user/index';
 import { UploadProfilePicture } from '@/app/api/s3Bucket';
+import SchoolProfile from './SchoolProfile';
 
 interface MyProfileProps {
     isSchoolProfile?: boolean;
@@ -101,7 +102,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 password
             );
             if (response.data.status !== 'success') {
-                return toast.error(response.data.error);
+                return toast.error(response.data.message);
             }
             const res = await update({
                 ...data,
@@ -226,6 +227,12 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                     message: validationError.REQUIRED_FIELD,
                                 },
                             })}
+                            handleChange={(key: string) => {
+                                setProfileData({
+                                    ...profileData,
+                                    name: key,
+                                });
+                            }}
                         />
                     </div>
                     <div className="mt-2">
@@ -245,6 +252,12 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                     message: validationError.VALID_EMAIL,
                                 },
                             })}
+                            handleChange={(key: string) => {
+                                setProfileData({
+                                    ...profileData,
+                                    email: key,
+                                });
+                            }}
                         />
                     </div>
                     <div className="mt-2">
@@ -271,6 +284,12 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                     message: validationError.MAX_LENGTH,
                                 },
                             })}
+                            handleChange={(key: string) => {
+                                setProfileData({
+                                    ...profileData,
+                                    password: key,
+                                });
+                            }}
                         />
                     </div>
                     {!isSchoolProfile && (
@@ -301,6 +320,14 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     )}
                 </form>
             </div>
+            {isSchoolProfile && (
+                <SchoolProfile
+                    isProfileFormValid={isValid}
+                    selectedImage={selectedFile}
+                    profileData={profileData}
+                    originalImage={originalImage}
+                />
+            )}
         </section>
     );
 }

@@ -7,6 +7,7 @@ interface InputPropsInterface {
     register: any;
     type: string;
     errors?: any;
+    handleChange?: (key: string) => void;
 }
 
 function Input({
@@ -15,6 +16,7 @@ function Input({
     register,
     type,
     errors,
+    handleChange,
 }: InputPropsInterface): JSX.Element {
     return (
         <div className="common-input  my-2 position-relative">
@@ -25,6 +27,9 @@ function Input({
                 name={name}
                 placeholder={placeholder}
                 {...register}
+                onKeyUp={(event) => {
+                    handleChange && handleChange(event.key);
+                }}
             />
             {errors[name]?.type && (
                 <div className="flex items-center gap-1 mt-1">
