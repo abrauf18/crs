@@ -33,6 +33,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
     });
     const {
         reset,
+        watch,
         register,
         handleSubmit,
         formState: { errors, isValid },
@@ -227,12 +228,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                     message: validationError.REQUIRED_FIELD,
                                 },
                             })}
-                            handleChange={(key: string) => {
-                                setProfileData({
-                                    ...profileData,
-                                    name: key,
-                                });
-                            }}
                         />
                     </div>
                     <div className="mt-2">
@@ -252,12 +247,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                     message: validationError.VALID_EMAIL,
                                 },
                             })}
-                            handleChange={(key: string) => {
-                                setProfileData({
-                                    ...profileData,
-                                    email: key,
-                                });
-                            }}
                         />
                     </div>
                     <div className="mt-2">
@@ -284,12 +273,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                     message: validationError.MAX_LENGTH,
                                 },
                             })}
-                            handleChange={(key: string) => {
-                                setProfileData({
-                                    ...profileData,
-                                    password: key,
-                                });
-                            }}
                         />
                     </div>
                     {!isSchoolProfile && (
@@ -322,10 +305,10 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             </div>
             {isSchoolProfile && (
                 <SchoolProfile
-                    isProfileFormValid={isValid}
-                    selectedImage={selectedFile}
-                    profileData={profileData}
-                    originalImage={originalImage}
+                isProfileFormValid={isValid}
+                selectedImage={selectedFile}
+                profileData={profileData}
+                originalImage={originalImage}
                 />
             )}
         </section>
