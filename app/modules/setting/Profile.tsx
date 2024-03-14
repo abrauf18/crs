@@ -189,7 +189,9 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     setOriginalImage(APIdata.data.data.image);
                 }
             } catch (err) {
-                toast.error('An Error Occured, Please Refresh the page');
+                if (!isSchoolProfile) {
+                    toast.error('An Error Occured');
+                }
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -241,7 +243,11 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                 onClick={handleClick}
                                 className="text-white flex space-x-2 items-center bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-2 border rounded-lg mt-2 cursor-pointer"
                             >
-                                <PictureIcon className="shrink-0" width={18} height={18} />
+                                <PictureIcon
+                                    className="shrink-0"
+                                    width={18}
+                                    height={18}
+                                />
                                 <span>Change Photo</span>
                                 <input
                                     type="file"
@@ -257,7 +263,11 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                 onClick={removeImage}
                                 className="text-dark-gray flex space-x-2 items-center font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg mt-2"
                             >
-                                <Trash2 className="shrink-0" size={18} color="#E6500D" />
+                                <Trash2
+                                    className="shrink-0"
+                                    size={18}
+                                    color="#E6500D"
+                                />
                                 <span>Remove Photo</span>
                             </button>
                         </div>
