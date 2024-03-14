@@ -7,7 +7,10 @@ import { toast } from 'react-toastify';
 import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
-import { getSchoolProfileAPI, updateSchoolAndUserProfile } from '@/app/api/school';
+import {
+    getSchoolProfileAPI,
+    updateSchoolAndUserProfile,
+} from '@/app/api/school';
 import { DeleteProfilePicture, UploadProfilePicture } from '@/app/api/s3Bucket';
 import { updateUserProfileAPI } from '@/app/api/user';
 import Loader from '@/app/components/common/Loader';
@@ -173,7 +176,7 @@ function SchoolProfile({
     }, [data?.user.accessToken]);
 
     return (
-        <div className="w-full relative">
+        <div className="w-full relative mobile:px-2">
             <h1 className="text-2xl font-semibold mb-2 mobile:mb-4 text-center lg:text-left">
                 School Profile
             </h1>
@@ -265,8 +268,7 @@ function SchoolProfile({
                         />
                     </div>
                 </div>
-                {/* <div className="lg:absolute lg:bottom-2 w-full my-5 md:my-8 lg:my-0"> */}
-                <div className="md:flex md:justify-between w-full mt-2 gap-1">
+                <div className="md:flex md:justify-between w-full mt-[4.4rem] gap-1">
                     <button
                         type="button"
                         className="text-dark-gray w-[90%] font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg"
