@@ -41,7 +41,7 @@ export const UploadProfilePicture = async ({
     };
 };
 
-const DeleteProfilePicture = async (objectUrl: string) => {
+export const DeleteProfilePicture = async (objectUrl: string) => {
     try {
         const response = await axios.delete(
             'http://localhost:3000/api/s3Bucket',
