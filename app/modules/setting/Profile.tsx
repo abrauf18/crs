@@ -112,7 +112,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         } catch (error: any) {
             setLoading(false);
             return toast.error(
-                error.response.data.message || 'Error Uploading Image'
+                error.response?.data?.message || 'Error Uploading Image'
             );
         }
 
@@ -161,7 +161,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             // Handle update user profile error (and next auth session if occurs)
             setLoading(false);
             return toast.error(
-                error.response.data.message || 'Error Updating Profile'
+                error.response?.data?.message || 'Error Updating Profile'
             );
         }
     };

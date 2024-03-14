@@ -97,7 +97,7 @@ function SchoolProfile({
         } catch (error: any) {
             setLoading(false);
             return toast.error(
-                error.response.data.message || 'Error Uploading Image'
+                error.response?.data?.message || 'Error Uploading Image'
             );
         }
 
@@ -136,7 +136,7 @@ function SchoolProfile({
         } catch (error: any) {
             setLoading(false);
             return toast.error(
-                error.response.data.message || 'Error Updating Profile'
+                error.response?.data?.message || 'Error Updating Profile'
             );
         }
     };
