@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
-import { getSchoolProfileAPI, updateSchoolProfileAPI } from '@/app/api/school';
+import { getSchoolProfileAPI, updateSchoolAndUserProfile } from '@/app/api/school';
 import { DeleteProfilePicture, UploadProfilePicture } from '@/app/api/s3Bucket';
 import { updateUserProfileAPI } from '@/app/api/user';
 import Loader from '@/app/components/common/Loader';
@@ -59,6 +59,7 @@ function SchoolProfile({
 
     const classesStartData = watch('classesStart');
 
+    // Reset school form values and profile form values initial state
     const handleReset = () => {
         handleProfileReset();
         reset({
@@ -69,12 +70,14 @@ function SchoolProfile({
         });
     };
 
+    // Form submission handler
     const onSubmit = async (formData: any) => {
         setLoading(true);
 
-        try {
-            let imageUrl = profileImage;
+        let imageUrl = profileImage;
 
+        // Upload new profile image if selected
+        try {
             if (selectedImageFile) {
                 const s3BucketResponse: any = await UploadProfilePicture({
                     selectedFile: selectedImageFile,
@@ -91,7 +94,15 @@ function SchoolProfile({
 
                 imageUrl = s3BucketResponse?.data?.url || imageUrl;
             }
+        } catch (error: any) {
+            setLoading(false);
+            return toast.error(
+                error.response.data.message || 'Error Uploading Image'
+            );
+        }
 
+        // Delete original profile image if new image not selected and user removed profile picture
+        try {
             if (
                 !selectedImageFile &&
                 originalImage !== DEFAULT_IMAGE &&
@@ -99,47 +110,38 @@ function SchoolProfile({
             ) {
                 await DeleteProfilePicture(originalImage);
             }
+        } catch (error: any) {
+            setLoading(false);
+        }
 
-            const updateUserResponse = await updateUserProfileAPI(
+        // Update school and user profile
+        try {
+            const { schoolName, numOfClasses, classesStart, classesEnd } =
+                formData;
+
+            const response = await updateSchoolAndUserProfile(
                 data?.user.accessToken || '',
                 imageUrl,
                 username,
                 email,
-                password
-            );
-            if (updateUserResponse.data.status !== 'success') {
-                setLoading(false);
-                return toast.error(
-                    updateUserResponse.data.message ||
-                        'Failed to Update User Profile'
-                );
-            }
-
-            const { schoolName, numOfClasses, classesStart, classesEnd } =
-                formData;
-            const updateSchoolResponse = await updateSchoolProfileAPI(
-                data?.user.accessToken || '',
+                password,
                 schoolName,
                 numOfClasses,
                 classesStart,
                 classesEnd
             );
-            if (updateSchoolResponse.data.status !== 'success') {
-                setLoading(false);
-                return toast.error(
-                    updateSchoolResponse.data.message ||
-                        'Failed to Update School Profile'
-                );
-            }
 
             setLoading(false);
             return toast.success('Profile Updated Successfully');
         } catch (error: any) {
             setLoading(false);
-            return toast.error(error.message || 'An error occurred');
+            return toast.error(
+                error.response.data.message || 'Error Updating Profile'
+            );
         }
     };
 
+    // Fetch school profile data on component mount
     useEffect(() => {
         // eslint-disable-next-line consistent-return
         (async () => {
