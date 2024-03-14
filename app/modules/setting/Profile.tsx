@@ -90,69 +90,83 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
         let imageUrl = profileData.image;
 
-        // Upload image to s3Bucket if selected
-        if (selectedFile) {
-            const s3BucketResponse: any = await UploadProfilePicture({
-                selectedFile,
-                originalImage,
-                userId: data?.user.id,
-            });
+        try {
+            // Upload image to s3Bucket if selected
+            if (selectedFile) {
+                const s3BucketResponse: any = await UploadProfilePicture({
+                    selectedFile,
+                    originalImage,
+                    userId: data?.user.id,
+                });
 
-            // Handle image upload error
-            if (s3BucketResponse.status !== 200) {
-                console.log("inside")
-                setLoading(false);
-                return toast.error(
-                    s3BucketResponse?.message || 'Error Uploading Image'
-                );
+                // Handle image upload error
+                if (s3BucketResponse.status !== 200) {
+                    setLoading(false);
+                    return toast.error(
+                        s3BucketResponse?.message || 'Error Uploading Image'
+                    );
+                }
+
+                imageUrl = s3BucketResponse?.data?.url;
+            }
+        } catch (error: any) {
+            setLoading(false);
+            return toast.error(
+                error.response.data.message || 'Error Uploading Image'
+            );
+        }
+
+        try {
+            // Delete old image if images removed all-together
+            if (
+                !selectedFile &&
+                originalImage !== DEFAULT_IMAGE &&
+                profileData.image === DEFAULT_IMAGE
+            ) {
+                await DeleteProfilePicture(originalImage);
             }
 
-            imageUrl = s3BucketResponse?.data?.url;
-        }
-
-        // Delete old image if images removed all-together
-        if (
-            !selectedFile &&
-            originalImage !== DEFAULT_IMAGE &&
-            profileData.image === DEFAULT_IMAGE
-        ) {
-            await DeleteProfilePicture(originalImage);
-        }
-
-        const { name, email, password } = formData;
-
-        // Update user profile
-        const response = await updateUserProfileAPI(
-            data?.user.accessToken || '',
-            imageUrl,
-            name,
-            email,
-            password
-        );
-
-        // Handle update user profile error
-        if (response.data.status !== 'success') {
+        } catch (error: any) {
             setLoading(false);
-            return toast.error(response.data.message);
         }
 
-        // Update next auth session data
-        await update({
-            ...data,
-            name: response.data.data.name,
-            email: response.data.data.email,
-            user: {
-                ...data?.user,
+        try {
+            const { name, email, password } = formData;
+
+            // Update user profile
+            const response = await updateUserProfileAPI(
+                data?.user.accessToken || '',
+                imageUrl,
+                name,
+                email,
+                password
+            );
+
+            // Update next auth session data
+            await update({
+                ...data,
                 name: response.data.data.name,
                 email: response.data.data.email,
-                accessToken: response.data.data.accessToken,
-            },
-        });
+                user: {
+                    ...data?.user,
+                    name: response.data.data.name,
+                    email: response.data.data.email,
+                    accessToken: response.data.data.accessToken,
+                },
+            });
 
-        setLoading(false);
-        return toast.success('Profile Updated Successfully');
+            setLoading(false);
+            return toast.success('Profile Updated Successfully');
+        } catch (error: any) {
+            // Handle update user profile error (and next auth session if occurs)
+            setLoading(false);
+            return toast.error(
+                error.response.data.message || 'Error Updating Profile'
+            );
+        }
     };
 
+    // Fetch profile data on component mount
     useEffect(() => {
         (async () => {
             try {
@@ -176,11 +190,12 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     setOriginalImage(APIdata.data.data.image);
                 }
             } catch (err) {
-                console.log('error: ', err);
+                toast.error('An Error Occured, Please Refresh the page');
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.user.accessToken]);
+    
     return (
         <section
             className={`bg-white  flex h-full w-full mt-8 lg:mt-0 ${
@@ -334,16 +349,16 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 </form>
             </div>
             {isSchoolProfile && (
-                    <SchoolProfile
-                        isProfileFormValid={isValid}
-                        selectedImageFile={selectedFile}
-                        originalImage={originalImage}
-                        profileImage={profileData.image}
-                        username={watch('name')}
-                        email={watch('email')}
-                        password={watch('password')}
-                        handleProfileReset={handleReset}
-                    />
+                <SchoolProfile
+                    isProfileFormValid={isValid}
+                    selectedImageFile={selectedFile}
+                    originalImage={originalImage}
+                    profileImage={profileData.image}
+                    username={watch('name')}
+                    email={watch('email')}
+                    password={watch('password')}
+                    handleProfileReset={handleReset}
+                />
             )}
         </section>
     );
