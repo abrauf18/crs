@@ -12,7 +12,7 @@ import Input from '@/app/components/common/Input';
 import Loader from '@/app/components/common/Loader';
 import PictureIcon from '@/app/assets/icons/PictureIcon';
 import { getUserProfileAPI, updateUserProfileAPI } from '@/app/api/user/index';
-import { UploadProfilePicture } from '@/app/api/s3Bucket';
+import { UploadProfilePicture, DeleteProfilePicture } from '@/app/api/s3Bucket';
 import SchoolProfile from './SchoolProfile';
 
 interface MyProfileProps {
@@ -81,46 +81,63 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
     const onFormSubmit = async (formData: any) => {
         setLoading(true);
-        const s3BucketResponse: any = await UploadProfilePicture({
-            selectedFile,
-            originalImage,
-            userId: data?.user.id,
-        });
+
+        let imageUrl = profileData.image;
+
+        if (selectedFile) {
+            const s3BucketResponse: any = await UploadProfilePicture({
+                selectedFile,
+                originalImage,
+                userId: data?.user.id,
+            });
+
+            if (s3BucketResponse.status !== 200) {
+                setLoading(false);
+                return toast.error(
+                    s3BucketResponse?.message || 'Error Uploading Image'
+                );
+            }
+
+            imageUrl = s3BucketResponse?.data?.url;
+        }
 
         if (
-            !selectedFile ||
-            (selectedFile && s3BucketResponse?.status === 200)
+            !selectedFile &&
+            originalImage !== DEFAULT_IMAGE &&
+            profileData.image === DEFAULT_IMAGE
         ) {
-            const image = selectedFile
-                ? s3BucketResponse?.data?.url
-                : profileData.image;
-            const { name, email, password } = formData;
-            const response = await updateUserProfileAPI(
-                data?.user.accessToken || '',
-                image,
-                name,
-                email,
-                password
-            );
-            if (response.data.status !== 'success') {
-                return toast.error(response.data.message);
-            }
-            const res = await update({
-                ...data,
+            await DeleteProfilePicture(originalImage);
+        }
+
+        const { name, email, password } = formData;
+
+        const response = await updateUserProfileAPI(
+            data?.user.accessToken || '',
+            imageUrl,
+            name,
+            email,
+            password
+        );
+
+        if (response.data.status !== 'success') {
+            setLoading(false);
+            return toast.error(response.data.message);
+        }
+
+        await update({
+            ...data,
+            name: response.data.data.name,
+            email: response.data.data.email,
+            user: {
+                ...data?.user,
                 name: response.data.data.name,
                 email: response.data.data.email,
-                user: {
-                    ...data?.user,
-                    name: response.data.data.name,
-                    email: response.data.data.email,
-                    accessToken: response.data.data.accessToken,
-                },
-            });
-            setLoading(false);
-            return toast.success('Profile Updated Successfully');
-        }
+                accessToken: response.data.data.accessToken,
+            },
+        });
+
         setLoading(false);
-        return toast.error(s3BucketResponse?.message);
+        return toast.success('Profile Updated Successfully');
     };
 
     useEffect(() => {
@@ -130,7 +147,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     const APIdata = await getUserProfileAPI(
                         data?.user.accessToken
                     );
-                    const { name, email, password, image } = APIdata.data.data;
+                    const { name, email, image } = APIdata.data.data;
                     setProfileData({
                         image,
                         name,
@@ -304,16 +321,16 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 </form>
             </div>
             {isSchoolProfile && (
-                <SchoolProfile
-                    isProfileFormValid={isValid}
-                    selectedImageFile={selectedFile}
-                    originalImage={originalImage}
-                    profileImage={profileData.image}
-                    username={watch('name')}
-                    email={watch('email')}
-                    password={watch('password')}
-                    handleProfileReset={handleReset}
-                />
+                    <SchoolProfile
+                        isProfileFormValid={isValid}
+                        selectedImageFile={selectedFile}
+                        originalImage={originalImage}
+                        profileImage={profileData.image}
+                        username={watch('name')}
+                        email={watch('email')}
+                        password={watch('password')}
+                        handleProfileReset={handleReset}
+                    />
             )}
         </section>
     );
