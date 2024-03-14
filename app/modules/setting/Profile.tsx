@@ -42,15 +42,18 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         reValidateMode: 'onChange',
     });
 
+    // Function to handle clicking on the hidden input to access images
     const handleClick = (event: React.MouseEvent) => {
         hiddenFileInput.current?.click();
     };
 
+    // Function to handle image file select on clicking hidden input
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         setSelectedFile(file);
     };
 
+    // Function to remove the selected image and profile picture
     const removeImage = () => {
         setSelectedFile(null);
         setProfileData({
@@ -59,6 +62,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         });
     };
 
+    // Function to undo all changes made on profile image before clicking save
     const undoFileChange = () => {
         setSelectedFile(null);
         if (hiddenFileInput.current) {
@@ -70,6 +74,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         });
     };
 
+    // Function to undo all changes made before clicking save
     const handleReset = () => {
         undoFileChange();
         reset({
@@ -79,11 +84,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         });
     };
 
+    // Function to handle form submission
     const onFormSubmit = async (formData: any) => {
         setLoading(true);
 
         let imageUrl = profileData.image;
 
+        // Upload image to s3Bucket if selected
         if (selectedFile) {
             const s3BucketResponse: any = await UploadProfilePicture({
                 selectedFile,
@@ -91,7 +98,9 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 userId: data?.user.id,
             });
 
+            // Handle image upload error
             if (s3BucketResponse.status !== 200) {
+                console.log("inside")
                 setLoading(false);
                 return toast.error(
                     s3BucketResponse?.message || 'Error Uploading Image'
@@ -101,6 +110,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             imageUrl = s3BucketResponse?.data?.url;
         }
 
+        // Delete old image if images removed all-together
         if (
             !selectedFile &&
             originalImage !== DEFAULT_IMAGE &&
@@ -111,6 +121,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
         const { name, email, password } = formData;
 
+        // Update user profile
         const response = await updateUserProfileAPI(
             data?.user.accessToken || '',
             imageUrl,
@@ -119,11 +130,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             password
         );
 
+        // Handle update user profile error
         if (response.data.status !== 'success') {
             setLoading(false);
             return toast.error(response.data.message);
         }
 
+        // Update next auth session data
         await update({
             ...data,
             name: response.data.data.name,
