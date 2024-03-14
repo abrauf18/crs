@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { validationError } from '@/lib/utils';
+import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { getSchoolProfileAPI, updateSchoolProfileAPI } from '@/app/api/school';
-import { UploadProfilePicture } from '@/app/api/s3Bucket';
+import { DeleteProfilePicture, UploadProfilePicture } from '@/app/api/s3Bucket';
 import { updateUserProfileAPI } from '@/app/api/user';
 import Loader from '@/app/components/common/Loader';
 
@@ -90,6 +90,14 @@ function SchoolProfile({
                 }
 
                 imageUrl = s3BucketResponse?.data?.url || imageUrl;
+            }
+
+            if (
+                !selectedImageFile &&
+                originalImage !== DEFAULT_IMAGE &&
+                profileImage === DEFAULT_IMAGE
+            ) {
+                await DeleteProfilePicture(originalImage);
             }
 
             const updateUserResponse = await updateUserProfileAPI(
