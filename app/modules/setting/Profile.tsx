@@ -125,7 +125,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-
         } catch (error: any) {
             setLoading(false);
         }
@@ -195,22 +194,25 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.user.accessToken]);
-    
+
     return (
         <section
-            className={`bg-white  flex h-full w-full mt-8 lg:mt-0 ${
+            className={`bg-white flex mobile:flex-col mobile:gap-5 h-full w-full mt-8 lg:mt-0 md:gap-10 ${
                 !isSchoolProfile && 'basis-1/2'
             }`}
         >
             <div
-                className={`flex flex-col  mobile:items-center mobile:w-full mobile:px-2 ${
+                className={`flex flex-col mobile:items-center mobile:w-full mobile:px-2 ${
                     !isSchoolProfile ? 'm-auto mobile:h-screen' : 'w-full'
                 } w-[400px]`}
             >
                 <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
                     My profile
                 </h1>
-                <form onSubmit={handleSubmit(onFormSubmit)}>
+                <form
+                    className="mobile:w-full"
+                    onSubmit={handleSubmit(onFormSubmit)}
+                >
                     <div className="md:flex justify-between lg:space-x-4 items-center  mobile:w-full mobile:mb-2">
                         <div className="flex justify-center">
                             <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
@@ -237,7 +239,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                             <button
                                 type="button"
                                 onClick={handleClick}
-                                className="text-white  flex space-x-2 items-center bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-2 border rounded-lg mt-2 cursor-pointer"
+                                className="text-white flex space-x-2 items-center bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-2 border rounded-lg mt-2 cursor-pointer"
                             >
                                 <PictureIcon width={18} height={18} />
                                 <span>Change Photo</span>
