@@ -13,18 +13,26 @@ export const getSchoolProfileAPI = async (accessToken: string) => {
     return result;
 };
 
-export const updateSchoolProfileAPI = async (
+export const updateSchoolAndUserProfile = async (
     accessToken: string,
-    name: string,
+    image: string,
+    username: string,
+    email: string,
+    password: string,
+    schoolName: string,
     numOfClasses: number,
     classesStart: number,
     classesEnd: number
 ) => {
     const result = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/school/updateSchoolProfile`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/updateSchoolAndUserProfile`,
         {
             accessToken,
-            name,
+            image,
+            username,
+            email,
+            password,
+            schoolName,
             numOfClasses,
             classesStart,
             classesEnd,
