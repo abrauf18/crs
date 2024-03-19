@@ -14,7 +14,7 @@ function UserIcon({ ...props }) {
                 cx="19.566"
                 cy="19.566"
                 r="19.566"
-                fill="#A03ADB"
+                fill="white"
                 fillOpacity="0.1"
             ></circle>
             <circle cx="20" cy="14" r="4" stroke="#A03ADB" strokeWidth="1.5"></circle>

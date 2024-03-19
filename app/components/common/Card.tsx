@@ -7,29 +7,50 @@ import { usePathname } from 'next/navigation';
 import { convertSpacesToDashes } from '@/lib/utils';
 
 interface CardProps {
-    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
+    Icon: any;
     cardText: string;
     count: number | string;
     currentPath?: string;
     isSchool?: boolean;
+    iconBackgroundColour?: string;
+    iconViewBox?: string;
+    iconColor?: string;
+    iconWidth?: number;
+    iconHeight?: number;
 }
 
-function Card({ Icon, cardText, count, currentPath, isSchool }: CardProps) {
+function Card({
+    Icon,
+    cardText,
+    count,
+    currentPath,
+    isSchool,
+    iconBackgroundColour, // you can use tailwind here as used outisde svg Icon
+    iconViewBox, // svg props
+    iconColor, // svg props -> give this color in form of hex not tailwind as being used inside svg Icon
+    iconWidth = 40, // svg props
+    iconHeight = 40, // svg props
+}: CardProps) {
     const URL = convertSpacesToDashes(cardText);
     const path = usePathname();
 
     return (
-        <div
-            className={`col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border `}
-        >
-            <Icon width={40} height={40} />
+        <div className="col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border group hover:bg-orange-100 hower:border-amber-700">
+            <div className={`${iconBackgroundColour} w-10 rounded-full`}>
+                <Icon
+                    width={iconWidth}
+                    height={iconHeight}
+                    viewBox={iconViewBox}
+                    color={iconColor}
+                />
+            </div>
             <p className="text-[16px]">{cardText}</p>
             <h1 className="font-semibold text-3xl">{count}</h1>
             {!isSchool && (
                 <div className="flex items-end justify-end">
                     <Link
                         href={currentPath ? `${currentPath}` : `${path}/${URL}`}
-                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 w-24 lg:hover:bg-primary-color lg:hover:text-white"
+                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 w-24 lg:hover:bg-primary-color lg:hover:text-white pointer-events-auto group-hover:bg-primary-color group-hover:text-white"
                     >
                         Details
                     </Link>

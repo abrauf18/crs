@@ -91,24 +91,31 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                             cardText="Total Users"
                             count="20K"
                             currentPath="/admin/users"
+                            iconBackgroundColour="bg-indigo-100"
                         />
                         <Card
                             Icon={SlideShowIcon}
                             cardText="Video Uploads"
                             count={200}
                             currentPath="/admin/video"
+                            iconBackgroundColour="bg-cyan-200"
+                            iconViewBox="-7 1 37 22"
+                            iconColor="#0772d2"
                         />
                         <Card
                             Icon={ResourceIcon}
                             cardText="Total Resources"
                             count={150}
                             currentPath="/admin/resources"
+                            iconBackgroundColour="bg-amber-100"
+                            iconViewBox="-7 1 37 22"
                         />
                         <Card
                             Icon={DataIcon}
                             cardText="Data Insights"
                             count="70%"
                             currentPath="#"
+                            iconBackgroundColour="bg-orange-100"
                         />
                     </>
                 ) : (
@@ -118,12 +125,16 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                             cardText="Total Students"
                             count="20K"
                             currentPath="/teacher/students"
+                            iconBackgroundColour="bg-indigo-100"
                         />
                         <Card
                             Icon={SlideShowIcon}
                             cardText="Your Assigned Classroom"
                             count={200}
                             currentPath="/teacher/classroom"
+                            iconBackgroundColour="bg-cyan-200"
+                            iconViewBox="-7 1 37 22"
+                            iconColor="#0772d2"
                         />
 
                         <Card
@@ -131,11 +142,16 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                             cardText="Overall Performance"
                             count="70%"
                             currentPath="#"
+                            iconBackgroundColour="bg-orange-100"
                         />
                     </>
                 )}
             </div>
-            <Filters text="Overall Performance" btnFontSize="text-xs" />
+            <Filters
+                text="Overall Performance"
+                btnFontSize="text-xs"
+                textColor="text-black"
+            />
             <div className="w-auto ">
                 <Image src={graph as string} alt="icon" className="w-full" />
             </div>

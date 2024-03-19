@@ -13,8 +13,8 @@ function DataIcon({ ...props }) {
             <ellipse
                 cx="19.523"
                 cy="19.566"
-                fill="#F59A3B"
-                fillOpacity="0.1"
+                // fill="#F59A3B"
+                // fillOpacity="0.1"
                 rx="18.783"
                 ry="19.566"
             ></ellipse>
