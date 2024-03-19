@@ -43,10 +43,16 @@ function Resoures() {
             <Searchbar
                 headerText="All Resources"
                 Icon={ResourceIcon}
+                iconColor="#F59A3B"
                 tagline="Your All Resources Are Listed Here"
             />
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
-                <Filters text="Resources" btnFontSize="text-xs" />
+                <Filters
+                    text="Resources"
+                    btnFontSize="text-xs"
+                    textColor="text-black"
+                    secondButtonText="Newest First"
+                />
                 <ResourcesTable resources={ResourcesData} />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
