@@ -39,12 +39,20 @@ const poppins = Poppins({
 
 function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
     const [isShowProfileModal, setIsShowProfileModal] = useState(false);
+    const [usersList, setUsersList] = useState(users);
+
     const handleOpenProfileModal = () => {
         setIsShowProfileModal(true);
     };
 
     const handleCloseProfileModal = () => {
         setIsShowProfileModal(false);
+    };
+
+    const handleDeleteStudents = (indexToRemove: number) => {
+        const updatedUsersList = [...usersList];
+        updatedUsersList.splice(indexToRemove, 1);
+        setUsersList(updatedUsersList);
     };
     return (
         <section>
@@ -73,7 +81,7 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {users.map((user, index) => (
+                    {usersList.map((user, index) => (
                         <TableRow className="border-none" key={user.id}>
                             <TableCell className="font-medium">
                                 <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
@@ -102,7 +110,10 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                             </TableCell>
                             <TableCell className="flex  items-center p-0 ml-2 mt-4 ">
                                 {isDashboard ? (
-                                    <div className="mr-2 rounded-md flex justify-center w-full h-fulls">
+                                    <div
+                                        className="mr-2 rounded-md flex justify-center w-full h-fulls cursor-pointer"
+                                        onClick={handleOpenProfileModal}
+                                    >
                                         <Eye
                                             color="#F59A3B"
                                             width={18}
@@ -117,7 +128,12 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                                         >
                                             <EditIcon width={28} height={28} />
                                         </div>
-                                        <div className="bg-red-100 rounded-md p-1">
+                                        <div
+                                            className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                            onClick={() =>
+                                                handleDeleteStudents(index)
+                                            }
+                                        >
                                             <Trash
                                                 color="#D34645"
                                                 width={18}
@@ -133,7 +149,10 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
             </Table>
             {isShowProfileModal && (
                 <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
-                    <ProfileModal onClose={handleCloseProfileModal} />
+                    <ProfileModal
+                        onClose={handleCloseProfileModal}
+                        isViewOnly={true}
+                    />
                 </div>
             )}
         </section>
