@@ -45,6 +45,7 @@ export function OTPInput({
             className="mt-1 block w-full text-center px-3 py-3 bg-slate-100 border rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             type="text"
             value={value}
+            placeholder="-"
             maxLength={maxLength}
             onInput={handleInputValue}
             onKeyDown={handleKeyDown}
