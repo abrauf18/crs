@@ -22,4 +22,13 @@ export const validationError = {
     MIN_LENGTH: 'Password should contain minimum 8 characters long',
     MAX_LENGTH: 'Password should contain maximum 20 characters long',
     VALID_EMAIL: 'Please enter a valid email',
+    MIN_SCHOOL_NAME_LENGTH: 'School name should contain minimum 3 characters',
+    MAX_SCHOOL_NAME_LENGTH: 'School name should contain maximum 25 characters',
+    MIN_CLASSES_NUM: 'School should contain minimum of 1 class',
+    MIN_CLASS_START: 'Class start should be atleast 0',
+    MIN_CLASS_END:
+        'Classes End should be atleast greater than or equal to Classes Start',
 };
+
+export const DEFAULT_IMAGE =
+    'https://crs-data-storage-bucket.s3.ap-southeast-2.amazonaws.com/ProfilePictures/defaultImage.JPG';

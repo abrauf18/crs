@@ -21,7 +21,7 @@ function UploadItem({ itemName }: { itemName: string }) {
                 formData.append('file', selectedFile);
 
                 const response = await axios.post(
-                    'http://localhost:3000/api/uploadData',
+                    `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/uploadData`,
                     formData
                 );
 

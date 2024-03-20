@@ -7,7 +7,7 @@ interface LoaderProps {
 
 function Loader({ color = 'primaryColor', size = '8' }: LoaderProps) {
     return (
-        <div className="flex space-x-2 justify-center items-center h-screen">
+        <div className="flex space-x-2 justify-center items-center">
             <div
                 className={`h-${size} w-${size} bg-${color} rounded-full animate-bounce`}
                 style={{ animationDelay: '-0.3s' }}
