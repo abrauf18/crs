@@ -21,7 +21,7 @@ export const UploadProfilePicture = async ({
             formData.append('userId', userId);
 
             const response = await axios.post(
-                'http://localhost:3000/api/s3Bucket',
+                `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/s3Bucket`,
                 formData
             );
 
@@ -44,7 +44,7 @@ export const UploadProfilePicture = async ({
 export const DeleteProfilePicture = async (objectUrl: string) => {
     try {
         const response = await axios.delete(
-            'http://localhost:3000/api/s3Bucket',
+            `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/s3Bucket`,
             {
                 data: { url: objectUrl },
             }
