@@ -81,7 +81,7 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {usersList.map((user, index) => (
+                    {usersList?.map((user, index) => (
                         <TableRow className="border-none" key={user.id}>
                             <TableCell className="font-medium">
                                 <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
