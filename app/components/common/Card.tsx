@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { convertSpacesToDashes } from '@/lib/utils';
 
 interface CardProps {
-    Icon: any;
+    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
     cardText: string;
     count: number | string;
     currentPath?: string;
