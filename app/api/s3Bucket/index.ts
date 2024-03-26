@@ -9,36 +9,37 @@ export const UploadProfilePicture = async ({
     selectedFile: any;
     originalImage: string;
     userId: string;
+// eslint-disable-next-line consistent-return
 }) => {
-    if (selectedFile) {
-        try {
-            if (originalImage !== DEFAULT_IMAGE) {
-                await DeleteProfilePicture(originalImage);
-            }
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('fileSaveDirectory', 'ProfilePictures');
-            formData.append('userId', userId);
-
-            const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/s3Bucket`,
-                formData
-            );
-
-            if (response.status === 200) {
-                return response;
-            }
-        } catch (error) {
-            return {
-                status: 500,
-                message: 'Error Uploading Image',
-            };
-        }
+    if (!selectedFile) {
+        return {
+            status: 400,
+            message: 'Image Not Selected',
+        };
     }
-    return {
-        status: 400,
-        message: 'Image Not Selected',
-    };
+    try {
+        if (originalImage !== DEFAULT_IMAGE) {
+            await DeleteProfilePicture(originalImage);
+        }
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('fileSaveDirectory', 'ProfilePictures');
+        formData.append('userId', userId);
+
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/s3Bucket`,
+            formData
+        );
+
+        if (response.status === 200) {
+            return response;
+        }
+    } catch (error) {
+        return {
+            status: 500,
+            message: 'Error Uploading Image',
+        };
+    }
 };
 
 export const DeleteProfilePicture = async (objectUrl: string) => {
