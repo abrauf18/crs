@@ -86,7 +86,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
                 // Handle image upload error
                 if (s3BucketResponse.status !== 200) {
-                    setLoading(false);
                     return toast.error(
                         s3BucketResponse?.message || 'Error Uploading Image'
                     );
@@ -94,14 +93,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
                 imageUrl = s3BucketResponse?.data?.url;
             }
-        } catch (error: any) {
-            setLoading(false);
-            return toast.error(
-                error.response?.data?.message || 'Error Uploading Image'
-            );
-        }
 
-        try {
             // Delete old image if images removed all-together
             if (
                 !selectedFile &&
@@ -110,11 +102,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-        } catch (error: any) {
-            setLoading(false);
-        }
 
-        try {
             const { name, email, password } = formData;
 
             // Update user profile
@@ -142,14 +130,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             // Update original image as it is only updated if email changes
             setOriginalImage(imageUrl);
 
-            setLoading(false);
             return toast.success('Profile Updated Successfully');
         } catch (error: any) {
-            // Handle update user profile error (and next auth session if occurs)
-            setLoading(false);
             return toast.error(
-                error.response?.data?.message || 'Error Updating Profile'
+                error.response?.data?.message || 'Error Uploading Profile'
             );
+        } finally {
+            setLoading(false);
         }
     };
 

@@ -81,8 +81,8 @@ function SchoolProfile({
 
         let imageUrl = profileImage;
 
-        // Upload new profile image if selected
         try {
+            // Upload new profile image if selected
             if (selectedImageFile) {
                 const s3BucketResponse: any = await UploadProfilePicture({
                     selectedFile: selectedImageFile,
@@ -91,7 +91,6 @@ function SchoolProfile({
                 });
 
                 if (s3BucketResponse?.status !== 200) {
-                    setLoading(false);
                     return toast.error(
                         s3BucketResponse?.message || 'Error Uploading Image'
                     );
@@ -99,15 +98,8 @@ function SchoolProfile({
 
                 imageUrl = s3BucketResponse?.data?.url || imageUrl;
             }
-        } catch (error: any) {
-            setLoading(false);
-            return toast.error(
-                error.response?.data?.message || 'Error Uploading Image'
-            );
-        }
 
-        // Delete original profile image if new image not selected and user removed profile picture
-        try {
+            // Delete original profile image if new image not selected and user removed profile picture
             if (
                 !selectedImageFile &&
                 originalImage !== DEFAULT_IMAGE &&
@@ -115,12 +107,8 @@ function SchoolProfile({
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-        } catch (error: any) {
-            setLoading(false);
-        }
 
-        // Update school and user profile
-        try {
+            // Update school and user profile
             const { schoolName, numOfClasses, classesStart, classesEnd } =
                 formData;
 
@@ -138,13 +126,13 @@ function SchoolProfile({
 
             handleUpdateOriginalImage(imageUrl);
 
-            setLoading(false);
             return toast.success('Profile Updated Successfully');
         } catch (error: any) {
-            setLoading(false);
             return toast.error(
                 error.response?.data?.message || 'Error Updating Profile'
             );
+        } finally {
+            setLoading(false);
         }
     };
 
