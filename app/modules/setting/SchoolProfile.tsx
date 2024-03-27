@@ -80,7 +80,6 @@ function SchoolProfile({
         setLoading(true);
 
         let imageUrl = profileImage;
-
         try {
             // Upload new profile image if selected
             if (selectedImageFile) {
@@ -98,7 +97,6 @@ function SchoolProfile({
 
                 imageUrl = s3BucketResponse?.data?.url || imageUrl;
             }
-
             // Delete original profile image if new image not selected and user removed profile picture
             if (
                 !selectedImageFile &&
@@ -107,7 +105,7 @@ function SchoolProfile({
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-
+          
             // Update school and user profile
             const { schoolName, numOfClasses, classesStart, classesEnd } =
                 formData;

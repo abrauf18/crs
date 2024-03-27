@@ -53,7 +53,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         setSelectedFile(null);
         setCurrentImage(DEFAULT_IMAGE);
     };
-
     // Function to undo all changes made on profile image before clicking save
     const undoFileChange = () => {
         setSelectedFile(null);
@@ -72,9 +71,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
     // Function to handle form submission
     const onFormSubmit = async (formData: any) => {
         setLoading(true);
-
         let imageUrl = currentImage;
-
         try {
             // Upload image to s3Bucket if selected
             if (selectedFile) {
@@ -93,7 +90,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
                 imageUrl = s3BucketResponse?.data?.url;
             }
-
             // Delete old image if images removed all-together
             if (
                 !selectedFile &&
@@ -102,7 +98,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-
             const { name, email, password } = formData;
 
             // Update user profile
@@ -126,7 +121,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     accessToken: response.data.data.accessToken,
                 },
             });
-
             // Update original image as it is only updated if email changes
             setOriginalImage(imageUrl);
 

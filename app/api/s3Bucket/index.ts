@@ -41,8 +41,6 @@ export const UploadProfilePicture = async ({
         };
     }
 };
-
-// eslint-disable-next-line consistent-return
 export const DeleteProfilePicture = async (objectUrl: string) => {
     try {
         const response = await axios.delete(
