@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -31,6 +31,7 @@ function SchoolProfile({
     email,
     password,
     handleProfileReset,
+    handleUpdateOriginalImage,
 }: {
     isProfileFormValid: boolean;
     selectedImageFile: File | null;
@@ -40,6 +41,7 @@ function SchoolProfile({
     email: string;
     password: string;
     handleProfileReset: () => void;
+    handleUpdateOriginalImage: Dispatch<SetStateAction<string>>;
 }) {
     const { data } = useSession();
     const [loading, setLoading] = useState(false);
@@ -134,6 +136,8 @@ function SchoolProfile({
                 classesEnd
             );
 
+            handleUpdateOriginalImage(imageUrl);
+
             setLoading(false);
             return toast.success('Profile Updated Successfully');
         } catch (error: any) {
@@ -153,20 +157,37 @@ function SchoolProfile({
                     const APIdata = await getSchoolProfileAPI(
                         data?.user.accessToken
                     );
-                    const { name, numOfClasses, classesStart, classesEnd } =
-                        APIdata.data.data;
-                    setSchoolProfileData({
-                        schoolName: name,
-                        numOfClasses,
-                        classesStart,
-                        classesEnd,
-                    });
-                    reset({
-                        schoolName: name,
-                        numOfClasses,
-                        classesStart,
-                        classesEnd,
-                    });
+                    // Check if APIdata.data.data is not empty
+                    if (APIdata.data.data) {
+                        const { name, numOfClasses, classesStart, classesEnd } =
+                            APIdata.data.data;
+                        setSchoolProfileData({
+                            schoolName: name,
+                            numOfClasses,
+                            classesStart,
+                            classesEnd,
+                        });
+                        reset({
+                            schoolName: name,
+                            numOfClasses,
+                            classesStart,
+                            classesEnd,
+                        });
+                    } else {
+                        // Handle the empty case, e.g., set defaults or show an error
+                        setSchoolProfileData({
+                            schoolName: '',
+                            numOfClasses: 1,
+                            classesStart: 0,
+                            classesEnd: 0,
+                        });
+                        reset({
+                            schoolName: '',
+                            numOfClasses: 1,
+                            classesStart: 0,
+                            classesEnd: 0,
+                        });
+                    }
                 }
             } catch (error: any) {
                 return toast.error(error.message || 'An error occurred');
