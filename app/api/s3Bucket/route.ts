@@ -53,14 +53,6 @@ export async function POST(request: Request) {
         const userId = formData.get('userId') as string | undefined;
 
         if (!file) {
-            // return NextResponse.json(
-            //     {
-            //         error: 'No file selected',
-            //     },
-            //     {
-            //         status: 400,
-            //     }
-            // );
             throw new Error('No file selected');
         }
 
@@ -79,9 +71,6 @@ export async function POST(request: Request) {
             url,
         });
     } catch (err: any) {
-        // return NextResponse.json({
-        //     error: err.message,
-        // });
         throw new Error(err.message);
     }
 }
@@ -125,9 +114,6 @@ export async function DELETE(request: Request) {
             success: true,
         });
     } catch (err: any) {
-        // return NextResponse.json({
-        //     error: err.message,
-        // });
         throw new Error(err.message);
     }
 }
