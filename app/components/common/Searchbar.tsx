@@ -5,10 +5,12 @@ import SearchInput from './SearchInput';
 interface SearchbarProp {
     headerText: string;
     tagline: string;
+    extendedTagline?: string;
     Icon?:
         | React.ComponentType<React.SVGProps<SVGSVGElement>>
         | LucideIcon
         | null;
+    iconColor?: string;
     isShowBackArrow?: boolean;
     onBackClick?: () => void;
 }
@@ -16,7 +18,9 @@ interface SearchbarProp {
 function Searchbar({
     headerText,
     tagline,
+    extendedTagline,
     Icon,
+    iconColor = 'black',
     isShowBackArrow,
     onBackClick,
 }: SearchbarProp) {
@@ -33,11 +37,18 @@ function Searchbar({
                         <div className="flex  items-center font-semibold text-2xl mb-1">
                             <h1 className="mr-1">{headerText}</h1>
                             {Icon && (
-                                <Icon width={25} height={25} color="black" />
+                                <Icon
+                                    width={25}
+                                    height={25}
+                                    color={iconColor}
+                                />
                             )}
                         </div>
                         <p className="text-dark-gray text-sm mb-3 md:mb-0">
                             {tagline}
+                            <span className="text-amber-500">
+                                {extendedTagline}
+                            </span>
                         </p>
                     </div>
                 </div>

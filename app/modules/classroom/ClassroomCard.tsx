@@ -39,7 +39,7 @@ function ClassroomCard({
             >
                 <Icon fill={iconColor ?? '#7AA43E'} width="30" height="30" />
             </div>
-            <p className="text-[16px]">{periods}</p>
+            <p className="text-base">{periods}</p>
             <h1 className="font-semibold text-3xl">{students}</h1>
 
             {/* <button

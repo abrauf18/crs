@@ -17,7 +17,7 @@ export default function StandardLayout({
                 tagline="All Created Plans"
                 Icon={StandardIcon}
                 isShowBackArrow
-                onBackClick={() => back()}
+                onBackClick={back}
             />
             {children}
         </section>

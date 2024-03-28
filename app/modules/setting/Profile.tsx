@@ -25,12 +25,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
     const [loading, setLoading] = useState(false);
     const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
     const [originalImage, setOriginalImage] = useState<string>(DEFAULT_IMAGE);
-    const [profileData, setProfileData] = useState({
-        image: DEFAULT_IMAGE,
-        name: '',
-        email: '',
-        password: '',
-    });
+    const [currentImage, setCurrentImage] = useState<string>(DEFAULT_IMAGE);
     const {
         reset,
         watch,
@@ -56,40 +51,27 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
     // Function to remove the selected image and profile picture
     const removeImage = () => {
         setSelectedFile(null);
-        setProfileData({
-            ...profileData,
-            image: DEFAULT_IMAGE,
-        });
+        setCurrentImage(DEFAULT_IMAGE);
     };
-
     // Function to undo all changes made on profile image before clicking save
     const undoFileChange = () => {
         setSelectedFile(null);
         if (hiddenFileInput.current) {
             hiddenFileInput.current.value = '';
         }
-        setProfileData({
-            ...profileData,
-            image: originalImage,
-        });
+        setCurrentImage(originalImage);
     };
 
     // Function to undo all changes made before clicking save
     const handleReset = () => {
         undoFileChange();
-        reset({
-            name: profileData.name,
-            email: profileData.email,
-            password: '',
-        });
+        reset();
     };
 
     // Function to handle form submission
     const onFormSubmit = async (formData: any) => {
         setLoading(true);
-
-        let imageUrl = profileData.image;
-
+        let imageUrl = currentImage;
         try {
             // Upload image to s3Bucket if selected
             if (selectedFile) {
@@ -101,7 +83,6 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
                 // Handle image upload error
                 if (s3BucketResponse.status !== 200) {
-                    setLoading(false);
                     return toast.error(
                         s3BucketResponse?.message || 'Error Uploading Image'
                     );
@@ -109,27 +90,14 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
                 imageUrl = s3BucketResponse?.data?.url;
             }
-        } catch (error: any) {
-            setLoading(false);
-            return toast.error(
-                error.response?.data?.message || 'Error Uploading Image'
-            );
-        }
-
-        try {
             // Delete old image if images removed all-together
             if (
                 !selectedFile &&
                 originalImage !== DEFAULT_IMAGE &&
-                profileData.image === DEFAULT_IMAGE
+                currentImage === DEFAULT_IMAGE
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-        } catch (error: any) {
-            setLoading(false);
-        }
-
-        try {
             const { name, email, password } = formData;
 
             // Update user profile
@@ -153,15 +121,16 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     accessToken: response.data.data.accessToken,
                 },
             });
+            // Update original image as it is only updated if email changes
+            setOriginalImage(imageUrl);
 
-            setLoading(false);
             return toast.success('Profile Updated Successfully');
         } catch (error: any) {
-            // Handle update user profile error (and next auth session if occurs)
-            setLoading(false);
             return toast.error(
-                error.response?.data?.message || 'Error Updating Profile'
+                error.response?.data?.message || 'Error Uploading Profile'
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -174,19 +143,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                         data?.user.accessToken
                     );
                     const { name, email, image } = APIdata.data.data;
-                    setProfileData({
-                        image,
-                        name,
-                        email,
-                        password: '',
-                    });
                     reset({
-                        image,
                         name,
                         email,
                         password: '',
                     });
                     setOriginalImage(APIdata.data.data.image);
+                    setCurrentImage(APIdata.data.data.image);
                 }
             } catch (err) {
                 if (!isSchoolProfile) {
@@ -226,7 +189,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                                     ? URL.createObjectURL(
                                                           selectedFile
                                                       )
-                                                    : profileData.image // state.data.image
+                                                    : currentImage
                                             }
                                             alt="profile Image"
                                             className="rounded-full aspect-square object-cover h-32 w-32"
@@ -365,11 +328,12 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     isProfileFormValid={isValid}
                     selectedImageFile={selectedFile}
                     originalImage={originalImage}
-                    profileImage={profileData.image}
+                    profileImage={currentImage}
                     username={watch('name')}
                     email={watch('email')}
                     password={watch('password')}
                     handleProfileReset={handleReset}
+                    handleUpdateOriginalImage={setOriginalImage}
                 />
             )}
         </section>

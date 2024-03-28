@@ -13,7 +13,7 @@ import AppDropDown, {
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import PictureIcon from '@/app/assets/icons/PictureIcon';
 
-function ProfileModal({ onClose }: any) {
+function ProfileModal({ onClose, isViewOnly }: any) {
     const [selectedOption, setSelectedOption] = useState('9th Grade - B');
 
     const handleSelectChange = (
@@ -24,8 +24,9 @@ function ProfileModal({ onClose }: any) {
 
     const gradeOptions: OptionsInterface[] = [
         { label: 'Admin', value: 'Admin' },
-        { label: 'Student', value: 'Student' },
+        { label: 'School', value: 'School' },
         { label: 'Teacher', value: 'Teacher' },
+        { label: 'Student', value: 'Student' },
     ];
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
@@ -96,20 +97,22 @@ function ProfileModal({ onClose }: any) {
                     </div>
                 </div>
             </div>
-            <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between lg:items-center  w-full py-2 gap-1 absolute bottom-0 left-0  p-3 border bg-white">
-                <button
-                    type="button"
-                    className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
-                >
-                    Discard Changes
-                </button>
-                <button
-                    type="button"
-                    className="text-white bg-primary-color font-semibold w-full px-5 py-2  border rounded-xl"
-                >
-                    Save Changes
-                </button>
-            </div>
+            {!isViewOnly && (
+                <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between lg:items-center  w-full py-2 gap-1 absolute bottom-0 left-0  p-3 border bg-white">
+                    <button
+                        type="button"
+                        className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
+                    >
+                        Discard Changes
+                    </button>
+                    <button
+                        type="button"
+                        className="text-white bg-primary-color font-semibold w-full px-5 py-2  border rounded-xl"
+                    >
+                        Save Changes
+                    </button>
+                </div>
+            )}
         </section>
     );
 }

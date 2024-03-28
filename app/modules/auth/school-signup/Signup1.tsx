@@ -58,7 +58,7 @@ function SchoolSignup1() {
                     >
                         Sign Up
                     </Button>
-                    <span className="text-black text-[12px]">Or</span>
+                    <span className="text-black text-xs">Or</span>
                     <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
                         <GoogleIcon width={20} height={20} className="mr-2" />
                         Sign Up With Google

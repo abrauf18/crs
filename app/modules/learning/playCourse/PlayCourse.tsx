@@ -63,7 +63,7 @@ function PlayCourse({ params }: any) {
         <section>
             <div className="flex flex-col justify-between items-center lg:flex-row space-y-2  mt-8">
                 <div className="flex lg:space-x-2 items-center w-full justify-start mb-4 lg:mb-0 ">
-                    <ArrowLeft onClick={() => back()} />
+                    <ArrowLeft onClick={back} />
                     <h1 className="text-black ml-2 font-semibold text-lg">
                         Artificial Intelligence - AI
                     </h1>

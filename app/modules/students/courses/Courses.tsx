@@ -47,7 +47,7 @@ function Courses() {
         <div>
             <h1 className="font-bold text-xl my-6">75% Overall Performance</h1>
             <div className="border rounded-lg p-5">
-                <h1 className="text-[20px] font-semibold">
+                <h1 className="text-xl font-semibold">
                     Kathryn Murphy - Report
                 </h1>
                 <CoursesTable courses={CoursesList} />

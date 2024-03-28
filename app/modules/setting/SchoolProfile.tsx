@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -31,6 +31,7 @@ function SchoolProfile({
     email,
     password,
     handleProfileReset,
+    handleUpdateOriginalImage,
 }: {
     isProfileFormValid: boolean;
     selectedImageFile: File | null;
@@ -40,6 +41,7 @@ function SchoolProfile({
     email: string;
     password: string;
     handleProfileReset: () => void;
+    handleUpdateOriginalImage: Dispatch<SetStateAction<string>>;
 }) {
     const { data } = useSession();
     const [loading, setLoading] = useState(false);
@@ -78,9 +80,8 @@ function SchoolProfile({
         setLoading(true);
 
         let imageUrl = profileImage;
-
-        // Upload new profile image if selected
         try {
+            // Upload new profile image if selected
             if (selectedImageFile) {
                 const s3BucketResponse: any = await UploadProfilePicture({
                     selectedFile: selectedImageFile,
@@ -89,7 +90,6 @@ function SchoolProfile({
                 });
 
                 if (s3BucketResponse?.status !== 200) {
-                    setLoading(false);
                     return toast.error(
                         s3BucketResponse?.message || 'Error Uploading Image'
                     );
@@ -97,15 +97,7 @@ function SchoolProfile({
 
                 imageUrl = s3BucketResponse?.data?.url || imageUrl;
             }
-        } catch (error: any) {
-            setLoading(false);
-            return toast.error(
-                error.response?.data?.message || 'Error Uploading Image'
-            );
-        }
-
-        // Delete original profile image if new image not selected and user removed profile picture
-        try {
+            // Delete original profile image if new image not selected and user removed profile picture
             if (
                 !selectedImageFile &&
                 originalImage !== DEFAULT_IMAGE &&
@@ -113,12 +105,8 @@ function SchoolProfile({
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-        } catch (error: any) {
-            setLoading(false);
-        }
-
-        // Update school and user profile
-        try {
+          
+            // Update school and user profile
             const { schoolName, numOfClasses, classesStart, classesEnd } =
                 formData;
 
@@ -134,13 +122,15 @@ function SchoolProfile({
                 classesEnd
             );
 
-            setLoading(false);
+            handleUpdateOriginalImage(imageUrl);
+
             return toast.success('Profile Updated Successfully');
         } catch (error: any) {
-            setLoading(false);
             return toast.error(
                 error.response?.data?.message || 'Error Updating Profile'
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -153,23 +143,40 @@ function SchoolProfile({
                     const APIdata = await getSchoolProfileAPI(
                         data?.user.accessToken
                     );
-                    const { name, numOfClasses, classesStart, classesEnd } =
-                        APIdata.data.data;
-                    setSchoolProfileData({
-                        schoolName: name,
-                        numOfClasses,
-                        classesStart,
-                        classesEnd,
-                    });
-                    reset({
-                        schoolName: name,
-                        numOfClasses,
-                        classesStart,
-                        classesEnd,
-                    });
+                    // Check if APIdata.data.data is not empty
+                    if (APIdata.data.data) {
+                        const { name, numOfClasses, classesStart, classesEnd } =
+                            APIdata.data.data;
+                        setSchoolProfileData({
+                            schoolName: name,
+                            numOfClasses,
+                            classesStart,
+                            classesEnd,
+                        });
+                        reset({
+                            schoolName: name,
+                            numOfClasses,
+                            classesStart,
+                            classesEnd,
+                        });
+                    } else {
+                        // Handle the empty case, e.g., set defaults or show an error
+                        setSchoolProfileData({
+                            schoolName: '',
+                            numOfClasses: 1,
+                            classesStart: 0,
+                            classesEnd: 0,
+                        });
+                        reset({
+                            schoolName: '',
+                            numOfClasses: 1,
+                            classesStart: 0,
+                            classesEnd: 0,
+                        });
+                    }
                 }
             } catch (error: any) {
-                return toast.error(error.message || 'An error occurred');
+                toast.error(error.message || 'An error occurred');
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps

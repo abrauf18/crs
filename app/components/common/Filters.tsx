@@ -69,16 +69,13 @@ function Filters({
                 {!isHideSecondBtn && (
                     <div
                         onClick={handleClick}
-                        className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between ${btnFontSize} ${
+                        className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between gap-x-2.5 ${btnFontSize} ${
                             secondButtonText?.startsWith('Create New') ||
                             secondButtonText?.startsWith('Upload')
                                 ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition
                                 : 'text-dark-gray'
                         }`}
                     >
-                        <button className="mr-1" type="button">
-                            {secondButtonText || 'This year'}
-                        </button>
                         {secondButtonText?.startsWith('Upload') ? (
                             <Upload width={15} height={15} />
                         ) : secondButtonText?.startsWith(
@@ -86,6 +83,9 @@ function Filters({
                           ) ? null : (
                             <ChevronDown width={15} height={15} />
                         )}
+                        <button className="mr-1" type="button">
+                            {secondButtonText || 'This year'}
+                        </button>
                     </div>
                 )}
             </div>
