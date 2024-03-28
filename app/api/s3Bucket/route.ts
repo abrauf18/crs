@@ -98,14 +98,7 @@ export async function DELETE(request: Request) {
     try {
         const { url } = await request.json();
         if (!url) {
-            return NextResponse.json(
-                {
-                    error: 'URL is required',
-                },
-                {
-                    status: 400,
-                }
-            );
+            throw new Error('URL is required');
         }
 
         await deleteFileFromS3(url);
