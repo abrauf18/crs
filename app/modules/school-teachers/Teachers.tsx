@@ -85,7 +85,7 @@ function Teachers() {
             />
             <div className="border rounded-lg p-4 px-6   ">
                 <div className="flex mobile:flex-col justify-between px-1 mb-6 mobile:items-start items-center">
-                    <h1 className="text-[20px] font-semibold">All Teachers</h1>
+                    <h1 className="text-xl font-semibold">All Teachers</h1>
                     <div
                         className="cursor-pointer border rounded-lg px-3 py-1 text-white bg-primary-color font-medium mobile:mt-2"
                         onClick={handleAddTeacherClick}

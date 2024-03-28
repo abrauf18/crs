@@ -44,7 +44,7 @@ function Card({
                     color={iconColor}
                 />
             </div>
-            <p className="text-[16px]">{cardText}</p>
+            <p className="text-base">{cardText}</p>
             <h1 className="font-semibold text-3xl">{count}</h1>
             {!isSchool && (
                 <div className="flex items-end justify-end">

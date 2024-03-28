@@ -100,7 +100,7 @@ function SchoolDashboard() {
             <div className=" grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mt-5 ">
                 <div className="border rounded-lg p-5 px-2 lg:px-5">
                     <div className="flex  justify-between px-1 mb-2   items-center">
-                        <h1 className="text-[20px] font-semibold">
+                        <h1 className="text-xl font-semibold">
                             Teacher&apos;s
                         </h1>
                         <Link href="/school/teachers">
@@ -113,7 +113,7 @@ function SchoolDashboard() {
                 </div>
                 <div className="border rounded-lg p-5 px-2 lg:px-5 mt-2 lg:mt-0">
                     <div className="flex  justify-between px-1 mb-2   items-center">
-                        <h1 className="text-[20px] font-semibold">
+                        <h1 className="text-xl font-semibold">
                             Recent Tickets
                         </h1>
                         <div

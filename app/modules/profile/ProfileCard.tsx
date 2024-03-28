@@ -29,7 +29,7 @@ function ProfileCard({
             >
                 <Icon stroke={iconColor} width="30" height="30" />
             </div>
-            <p className="text-[16px]">{header}</p>
+            <p className="text-base">{header}</p>
             <h1 className="font-semibold text-3xl">{description}</h1>
         </div>
     );

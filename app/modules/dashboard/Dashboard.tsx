@@ -158,7 +158,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mobile:gap-8 mt-5">
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold mb-2">
+                        <h1 className="text-xl font-semibold mb-2">
                             Users
                         </h1>
                         <UsersTable
@@ -169,7 +169,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                     </div>
                 ) : (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold mb-2">
+                        <h1 className="text-xl font-semibold mb-2">
                             All Student’s
                         </h1>
                         <StudentsInfoTable
@@ -182,7 +182,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
 
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold mb-2">
+                        <h1 className="text-xl font-semibold mb-2">
                             Resources
                         </h1>
                         <ResourcesTable
@@ -192,7 +192,7 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                     </div>
                 ) : (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-[20px] font-semibold mb-2">
+                        <h1 className="text-xl font-semibold mb-2">
                             Learning Plan
                         </h1>
                         <LearningPlanTable

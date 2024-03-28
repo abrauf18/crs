@@ -158,7 +158,7 @@ function Classroom() {
             </div>
 
             <div className="border rounded-lg p-4 px-6 mt-5" id='classDetailsSection'>
-                <h1 className="text-[20px] font-semibold">{selectedClass}</h1>
+                <h1 className="text-xl font-semibold">{selectedClass}</h1>
                 <StudentsInfoTable students={Studentinfo} isClassroomTable/>
             </div>
             <div className="flex items-center w-full justify-center mt-5">

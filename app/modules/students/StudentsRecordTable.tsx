@@ -38,7 +38,7 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
 
     return (
         <Table
-            className={`text-[${fontSize || '18'}px] mobile:text-[14px] ${
+            className={`text-[${fontSize || '18'}px] mobile:text-sm ${
                 poppins.className
             }`}
         >
