@@ -176,7 +176,7 @@ function SchoolProfile({
                     }
                 }
             } catch (error: any) {
-                return toast.error(error.message || 'An error occurred');
+                toast.error(error.message || 'An error occurred');
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
