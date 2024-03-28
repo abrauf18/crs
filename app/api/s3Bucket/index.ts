@@ -9,7 +9,6 @@ export const UploadProfilePicture = async ({
     selectedFile: any;
     originalImage: string;
     userId: string;
-// eslint-disable-next-line consistent-return
 }) => {
     if (!selectedFile) {
         return {
@@ -31,9 +30,7 @@ export const UploadProfilePicture = async ({
             formData
         );
 
-        if (response.status === 200) {
-            return response;
-        }
+        return response;
     } catch (error) {
         return {
             status: 500,
@@ -41,6 +38,7 @@ export const UploadProfilePicture = async ({
         };
     }
 };
+
 export const DeleteProfilePicture = async (objectUrl: string) => {
     try {
         const response = await axios.delete(
@@ -49,9 +47,7 @@ export const DeleteProfilePicture = async (objectUrl: string) => {
                 data: { url: objectUrl },
             }
         );
-        if (response.status === 200) {
-            return response;
-        }
+        return response;
     } catch (error) {
         return {
             status: 500,
