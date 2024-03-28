@@ -17,7 +17,7 @@ export default function StandardLayout({
                 tagline="Here’s All Your Learning Standards"
                 Icon={TeacherStandardIcon}
                 isShowBackArrow
-                onBackClick={() => back()}
+                onBackClick={back}
             />
             {children}
         </section>

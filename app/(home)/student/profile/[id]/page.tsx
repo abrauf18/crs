@@ -15,7 +15,7 @@ function Page({ params }: any) {
                 headerText="Kathryn Murphy"
                 tagline="nathan.roberts@example.com"
                 isShowBackArrow
-                onBackClick={() => back()}
+                onBackClick={back}
             />
             <TestPerformance isShownFromStudent />
             {/* <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[30%]">

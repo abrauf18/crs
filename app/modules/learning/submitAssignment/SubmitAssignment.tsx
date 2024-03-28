@@ -41,7 +41,7 @@ function SubmitAssignment() {
                 headerText="My Learnings"
                 tagline="Here’s Your All Learning Assigned to You"
                 isShowBackArrow
-                onBackClick={() => back()}
+                onBackClick={back}
             />
             <div className="flex justify-between flex-col lg:flex-row mt-8">
                 <div className="flex space-x-2">

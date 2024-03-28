@@ -16,7 +16,7 @@ export default function StandardLayout({
                 headerText="Kathryn Murphy"
                 tagline="nathan.roberts@example.com"
                 isShowBackArrow
-                onBackClick={() => back()}
+                onBackClick={back}
             />
             {children}
         </section>

@@ -22,7 +22,7 @@ export default function TopicLayout({
                 tagline="All Resources Assigned To "
                 extendedTagline={formattedTitle}
                 isShowBackArrow
-                onBackClick={() => back()}
+                onBackClick={back}
                 iconColor="#F59A3B"
             />
             {children}
