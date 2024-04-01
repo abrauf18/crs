@@ -21,7 +21,7 @@ function Select({
         <div className="relative w-full">
             <select
                 className="pl-4 p-3 py-3 pr-8 bg-slate-100 border rounded-lg focus:outline-none focus:border-sky-500 
-                focus:ring-1 focus:ring-sky-500 font-medium appearance-none w-full"
+                focus:ring-1 focus:ring-sky-500 font-medium appearance-none w-full text-sm"
                 name={name}
                 placeholder={placeholder}
                 {...register}
