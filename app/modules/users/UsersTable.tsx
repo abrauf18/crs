@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Eye, Trash, X } from 'lucide-react';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { Poppins } from 'next/font/google';
 import Image from 'next/image';
 import EditIcon from '@/app/assets/icons/EditIcon';
@@ -14,13 +13,12 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import Avatar from '@/app/assets/images/UserImage.svg';
-import Profile from '../setting/Profile';
+import { DEFAULT_IMAGE } from '@/lib/utils';
 import ProfileModal from './ProfileModal';
 
 export interface User {
-    id: number;
-    imageUrl?: string | StaticImport;
+    id: string;
+    image: string;
     name: string;
     email: string;
     role: string;
@@ -30,6 +28,7 @@ interface UsersProp {
     users: User[];
     fontSize?: string;
     isDashboard?: boolean;
+    setIsUserUpdated?: (arg0: boolean) => void;
 }
 
 const poppins = Poppins({
@@ -37,16 +36,38 @@ const poppins = Poppins({
     weight: ['100', '400', '700'],
 });
 
-function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
-    const [isShowProfileModal, setIsShowProfileModal] = useState(false);
-    const [usersList, setUsersList] = useState(users);
+const DEFAULT_USER = {
+    id: '',
+    image: DEFAULT_IMAGE,
+    name: '',
+    email: '',
+    role: 'student',
+};
 
-    const handleOpenProfileModal = () => {
+function UsersTable({
+    users,
+    fontSize,
+    isDashboard,
+    setIsUserUpdated,
+}: UsersProp): JSX.Element {
+    const [isShowProfileModal, setIsShowProfileModal] = useState(false);
+
+    // remove this after delete functionality is implemented
+    const [usersList, setUsersList] = useState<User[]>(users);
+    useEffect(() => {
+        setUsersList(users);
+    }, [users]);
+
+    const [selectedUser, setSelectedUser] = useState<User>(DEFAULT_USER);
+
+    const handleOpenProfileModal = (user: User) => {
+        setSelectedUser(user);
         setIsShowProfileModal(true);
     };
 
     const handleCloseProfileModal = () => {
         setIsShowProfileModal(false);
+        setSelectedUser(DEFAULT_USER);
     };
 
     const handleDeleteStudents = (indexToRemove: number) => {
@@ -81,7 +102,8 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {usersList?.map((user, index) => (
+                    {/* replace userList with users after delete functionality is implemented */}
+                    {Array.from(usersList).map((user, index) => (
                         <TableRow className="border-none" key={user.id}>
                             <TableCell className="font-medium">
                                 <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
@@ -89,14 +111,17 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                                 </span>
                             </TableCell>
                             <TableCell className="">
-                                <span className="rounded flex gap-x-2 items-center">
+                                <span className="rounded-full flex gap-x-2 items-center">
                                     <Image
-                                        src={Avatar}
+                                        src={user?.image || DEFAULT_IMAGE}
                                         alt="crs logo"
+                                        width={26}
+                                        height={26}
                                         style={{
                                             width: '26px',
                                             height: '26px',
                                             objectFit: 'fill',
+                                            borderRadius: '50%',
                                         }}
                                     />
                                     <span>{user.name}</span>
@@ -112,7 +137,9 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                                 {isDashboard ? (
                                     <div
                                         className="mr-2 rounded-md flex justify-center w-full h-fulls cursor-pointer"
-                                        onClick={handleOpenProfileModal}
+                                        onClick={() =>
+                                            handleOpenProfileModal(user)
+                                        }
                                     >
                                         <Eye
                                             color="#F59A3B"
@@ -124,7 +151,9 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
                                     <>
                                         <div
                                             className="mr-2 rounded-md cursor-pointer"
-                                            onClick={handleOpenProfileModal}
+                                            onClick={() =>
+                                                handleOpenProfileModal(user)
+                                            }
                                         >
                                             <EditIcon width={28} height={28} />
                                         </div>
@@ -150,8 +179,14 @@ function UsersTable({ users, fontSize, isDashboard }: UsersProp): JSX.Element {
             {isShowProfileModal && (
                 <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
                     <ProfileModal
+                        userId={selectedUser.id}
+                        image={selectedUser.image}
+                        name={selectedUser.name}
+                        email={selectedUser.email}
+                        role={selectedUser.role}
+                        isViewOnly={isDashboard}
                         onClose={handleCloseProfileModal}
-                        isViewOnly
+                        setIsUserUpdated={setIsUserUpdated}
                     />
                 </div>
             )}
