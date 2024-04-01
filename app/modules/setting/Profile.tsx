@@ -14,6 +14,7 @@ import PictureIcon from '@/app/assets/icons/PictureIcon';
 import { getUserProfileAPI, updateUserProfileAPI } from '@/app/api/user/index';
 import { UploadProfilePicture, DeleteProfilePicture } from '@/app/api/s3Bucket';
 import useProfileImage from '@/lib/custom-hooks/useProfileImage';
+import ProfileImage from '@/app/components/common/ProfileImage';
 import SchoolProfile from './SchoolProfile';
 
 interface MyProfileProps {
@@ -159,63 +160,15 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     className="mobile:w-full"
                     onSubmit={handleSubmit(onFormSubmit)}
                 >
-                    <div className="md:flex justify-between lg:space-x-4 items-center  mobile:w-full mobile:mb-2 gap-x-2">
-                        <div className="flex justify-center">
-                            <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
-                                <div className="border-2 border-light-gray rounded-full h-36 w-36 flex justify-center items-center">
-                                    <div className="border-2 border-light-gray rounded-full h-32 w-32 flex justify-center items-center">
-                                        <Image
-                                            src={
-                                                selectedFile
-                                                    ? URL.createObjectURL(
-                                                          selectedFile
-                                                      )
-                                                    : currentImage
-                                            }
-                                            alt="profile Image"
-                                            className="rounded-full aspect-square object-cover h-32 w-32"
-                                            width={176}
-                                            height={176}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-col justify-between items-center mobile:w-full mb-4 lg:mb-0">
-                            <button
-                                type="button"
-                                onClick={handleClick}
-                                className="text-white flex space-x-2 items-center bg-primary-color font-semibold mobile:w-full mobile:p-2 md:px-6 md:py-2 border rounded-lg mt-2 cursor-pointer"
-                            >
-                                <PictureIcon
-                                    className="shrink-0"
-                                    width={18}
-                                    height={18}
-                                />
-                                <span>Change Photo</span>
-                                <input
-                                    type="file"
-                                    id="profilePicInput"
-                                    accept=".pdf, .jpg, .jpeg, .png, .gif, .mp4, .avi, .mov, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
-                                    onChange={handleFileChange}
-                                    ref={hiddenFileInput}
-                                    style={{ display: 'none' }}
-                                />
-                            </button>
-                            <button
-                                type="button"
-                                onClick={removeImage}
-                                className="text-dark-gray flex space-x-2 items-center font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg mt-2"
-                            >
-                                <Trash2
-                                    className="shrink-0"
-                                    size={18}
-                                    color="#E6500D"
-                                />
-                                <span>Remove Photo</span>
-                            </button>
-                        </div>
-                    </div>
+                    <ProfileImage
+                        selectedFile={selectedFile}
+                        currentImage={currentImage}
+                        handleClick={handleClick}
+                        handleFileChange={handleFileChange}
+                        hiddenFileInput={hiddenFileInput}
+                        removeImage={removeImage}
+                        inSettings
+                    />
                     <div className="mt-2">
                         <Label htmlFor="name">User Name</Label>
                         <Input

@@ -16,6 +16,7 @@ import { ModalHeader } from '@/app/components/common/ModalHeader';
 import useProfileImage from '@/lib/custom-hooks/useProfileImage';
 import { updateAnotherUserProfileAPI } from '@/app/api/user';
 import Select from '@/app/components/common/DropDown';
+import ProfileImage from '@/app/components/common/ProfileImage';
 
 // type for the form data
 type ProfileFormData = {
@@ -174,63 +175,14 @@ function ProfileModal({
                         onClose={onClose}
                     />
                     <div className="flex flex-col  mobile:items-center w-full">
-                        <div className="flex flex-col justify-between items-center space-y-2">
-                            <div className="flex justify-center">
-                                <div className="border-2 border-light-gray rounded-full h-44 w-44 flex justify-center items-center">
-                                    <div className="border-2 border-light-gray rounded-full h-40 w-40 flex justify-center items-center">
-                                        <div className="border-2 border-light-gray rounded-full h-36 p-2 w-36 flex justify-center items-center">
-                                            <Image
-                                                src={
-                                                    selectedFile
-                                                        ? URL.createObjectURL(
-                                                              selectedFile
-                                                          )
-                                                        : currentImage
-                                                }
-                                                alt="profile Image"
-                                                className="rounded-full aspect-square object-cover h-32 w-32"
-                                                width={176}
-                                                height={176}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex flex-col lg:flex-row lg:space-x-2 justify-center items-center  mobile:w-full mb-5">
-                                <button
-                                    type="button"
-                                    onClick={handleClick}
-                                    className="text-white flex items-center space-x-2 bg-primary-color font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
-                                >
-                                    <PictureIcon
-                                        className="shrink-0"
-                                        width={18}
-                                        height={18}
-                                    />
-                                    <span>Change Photo</span>
-                                    <input
-                                        type="file"
-                                        id="profilePicInput"
-                                        accept=".pdf, .jpg, .jpeg, .png, .gif, .mp4, .avi, .mov, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
-                                        onChange={handleFileChange}
-                                        ref={hiddenFileInput}
-                                        style={{ display: 'none' }}
-                                    />
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={removeImage}
-                                    className="text-dark-gray items-center flex space-x-2  font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
-                                >
-                                    <Trash2
-                                        className="shrink-0"
-                                        size={18}
-                                        color="#E6500D"
-                                    />
-                                    <span>Remove Photo</span>
-                                </button>
-                            </div>
-                        </div>
+                        <ProfileImage
+                            selectedFile={selectedFile}
+                            currentImage={currentImage}
+                            handleClick={handleClick}
+                            handleFileChange={handleFileChange}
+                            hiddenFileInput={hiddenFileInput}
+                            removeImage={removeImage}
+                        />
                         <div className="mb-2 w-full mt-4">
                             <Label htmlFor="name">User Name</Label>
                             <Input
