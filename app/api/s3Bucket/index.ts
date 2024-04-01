@@ -41,6 +41,12 @@ export const UploadProfilePicture = async ({
 
 export const DeleteProfilePicture = async (objectUrl: string) => {
     try {
+        if (objectUrl === DEFAULT_IMAGE) {
+            return {
+                status: 400,
+                message: 'Default Image Cannot Be Deleted',
+            };
+        }
         const response = await axios.delete(
             `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/s3Bucket`,
             {
