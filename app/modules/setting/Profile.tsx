@@ -13,6 +13,7 @@ import Loader from '@/app/components/common/Loader';
 import PictureIcon from '@/app/assets/icons/PictureIcon';
 import { getUserProfileAPI, updateUserProfileAPI } from '@/app/api/user/index';
 import { UploadProfilePicture, DeleteProfilePicture } from '@/app/api/s3Bucket';
+import useProfileImage from '@/lib/custom-hooks/useProfileImage';
 import SchoolProfile from './SchoolProfile';
 
 interface MyProfileProps {
@@ -21,11 +22,22 @@ interface MyProfileProps {
 
 function Profile({ isSchoolProfile }: MyProfileProps) {
     const { data, update } = useSession();
-    const hiddenFileInput = useRef<HTMLInputElement | null>(null);
     const [loading, setLoading] = useState(false);
-    const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
-    const [originalImage, setOriginalImage] = useState<string>(DEFAULT_IMAGE);
-    const [currentImage, setCurrentImage] = useState<string>(DEFAULT_IMAGE);
+    const {
+        hiddenFileInput,
+        selectedFile,
+        originalImage,
+        currentImage,
+        setOriginalImage,
+        uploadProfilePicture,
+        setCurrentImage,
+        handleClick,
+        handleFileChange,
+        removeImage,
+        undoImageChange,
+        shouldResetProfilePicture,
+        deleteProfilePicture,
+    } = useProfileImage();
     const {
         reset,
         watch,
@@ -37,34 +49,9 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         reValidateMode: 'onChange',
     });
 
-    // Function to handle clicking on the hidden input to access images
-    const handleClick = (event: React.MouseEvent) => {
-        hiddenFileInput.current?.click();
-    };
-
-    // Function to handle image file select on clicking hidden input
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files && event.target.files[0];
-        setSelectedFile(file);
-    };
-
-    // Function to remove the selected image and profile picture
-    const removeImage = () => {
-        setSelectedFile(null);
-        setCurrentImage(DEFAULT_IMAGE);
-    };
-    // Function to undo all changes made on profile image before clicking save
-    const undoFileChange = () => {
-        setSelectedFile(null);
-        if (hiddenFileInput.current) {
-            hiddenFileInput.current.value = '';
-        }
-        setCurrentImage(originalImage);
-    };
-
     // Function to undo all changes made before clicking save
     const handleReset = () => {
-        undoFileChange();
+        undoImageChange();
         reset();
     };
 
@@ -75,29 +62,23 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         try {
             // Upload image to s3Bucket if selected
             if (selectedFile) {
-                const s3BucketResponse: any = await UploadProfilePicture({
-                    selectedFile,
-                    originalImage,
-                    userId: data?.user.id,
-                });
-
+                const uploadResponse: any = await uploadProfilePicture(
+                    data?.user.id
+                );
                 // Handle image upload error
-                if (s3BucketResponse.status !== 200) {
+                if (uploadResponse.status !== 200) {
                     return toast.error(
-                        s3BucketResponse?.message || 'Error Uploading Image'
+                        uploadResponse.message || 'Error Uploading Image'
                     );
                 }
-
-                imageUrl = s3BucketResponse?.data?.url;
+                // It is an axios response so we need to access the data property
+                imageUrl = uploadResponse?.data?.url;
             }
             // Delete old image if images removed all-together
-            if (
-                !selectedFile &&
-                originalImage !== DEFAULT_IMAGE &&
-                currentImage === DEFAULT_IMAGE
-            ) {
-                await DeleteProfilePicture(originalImage);
+            if (shouldResetProfilePicture()) {
+                await deleteProfilePicture();
             }
+
             const { name, email, password } = formData;
 
             // Update user profile
@@ -121,7 +102,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     accessToken: response.data.data.accessToken,
                 },
             });
-            // Update original image as it is only updated if email changes
+            // Manually update original image as it is only updated if form data/ email changes which in turn changes access token
             setOriginalImage(imageUrl);
 
             return toast.success('Profile Updated Successfully');
