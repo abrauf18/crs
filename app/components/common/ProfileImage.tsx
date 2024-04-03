@@ -71,10 +71,10 @@ function ProfileImage({
                 <button
                     type="button"
                     onClick={handleClick}
-                    className="text-white flex items-center space-x-2 bg-primary-color font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
+                    className="text-white flex items-center bg-primary-color font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2"
                 >
                     <PictureIcon className="shrink-0" width={18} height={18} />
-                    <span>Change Photo</span>
+                    <span className="ml-1">Change Photo</span>
                     <input
                         type="file"
                         id="profilePicInput"
@@ -87,10 +87,10 @@ function ProfileImage({
                 <button
                     type="button"
                     onClick={removeImage}
-                    className="text-dark-gray items-center flex space-x-2  font-semibold mobile:w-full px-5 py-2 border rounded-lg mt-2"
+                    className="text-dark-gray items-center flex font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2"
                 >
                     <Trash2 className="shrink-0" size={18} color="#E6500D" />
-                    <span>Remove Photo</span>
+                    <span className="ml-1">Remove Photo</span>
                 </button>
             </div>
         </div>
