@@ -68,7 +68,7 @@ function Users() {
                 .then((response) => {
                     const APIResponse = response.data;
                     const APIdata = APIResponse.data;
-                    setAllUsersData(APIdata);
+                    setAllUsersData(APIdata.users);
                 })
                 .catch((error) =>
                     toast.error(
