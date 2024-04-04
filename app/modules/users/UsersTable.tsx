@@ -103,77 +103,84 @@ function UsersTable({
                 </TableHeader>
                 <TableBody>
                     {/* replace userList with users after delete functionality is implemented */}
-                    {Array.from(usersList).map((user, index) => (
-                        <TableRow className="border-none" key={user.id}>
-                            <TableCell className="font-medium">
-                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {index + 1}
-                                </span>
-                            </TableCell>
-                            <TableCell className="">
-                                <span className="rounded-full flex gap-x-2 items-center">
-                                    <Image
-                                        src={user?.image || DEFAULT_IMAGE}
-                                        alt="crs logo"
-                                        width={26}
-                                        height={26}
-                                        style={{
-                                            width: '26px',
-                                            height: '26px',
-                                            objectFit: 'fill',
-                                            borderRadius: '50%',
-                                        }}
-                                    />
-                                    <span>{user.name}</span>
-                                </span>
-                            </TableCell>
-                            <TableCell className="text-dark-gray">
-                                <span className="truncate">{user.email}</span>
-                            </TableCell>
-                            <TableCell className="text-dark-gray">
-                                {user.role}
-                            </TableCell>
-                            <TableCell className="flex  items-center p-0 ml-2 mt-4 ">
-                                {isDashboard ? (
-                                    <div
-                                        className="mr-2 rounded-md flex justify-center w-full h-fulls cursor-pointer"
-                                        onClick={() =>
-                                            handleOpenProfileModal(user)
-                                        }
-                                    >
-                                        <Eye
-                                            color="#F59A3B"
-                                            width={18}
-                                            height={18}
+                    {Array.from(usersList as User[]).map(
+                        (user: User, index: number) => (
+                            <TableRow className="border-none" key={user?.id}>
+                                <TableCell className="font-medium">
+                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                        {index + 1}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="">
+                                    <span className="rounded-full flex gap-x-2 items-center">
+                                        <Image
+                                            src={user?.image || DEFAULT_IMAGE}
+                                            alt="crs logo"
+                                            width={26}
+                                            height={26}
+                                            style={{
+                                                width: '26px',
+                                                height: '26px',
+                                                objectFit: 'fill',
+                                                borderRadius: '50%',
+                                            }}
                                         />
-                                    </div>
-                                ) : (
-                                    <>
+                                        <span>{user?.name}</span>
+                                    </span>
+                                </TableCell>
+                                <TableCell className="text-dark-gray">
+                                    <span className="truncate">
+                                        {user?.email}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="text-dark-gray">
+                                    {user?.role}
+                                </TableCell>
+                                <TableCell className="flex  items-center p-0 ml-2 mt-4 ">
+                                    {isDashboard ? (
                                         <div
-                                            className="mr-2 rounded-md cursor-pointer"
+                                            className="mr-2 rounded-md flex justify-center w-full h-fulls cursor-pointer"
                                             onClick={() =>
                                                 handleOpenProfileModal(user)
                                             }
                                         >
-                                            <EditIcon width={28} height={28} />
-                                        </div>
-                                        <div
-                                            className="bg-red-100 rounded-md p-1 cursor-pointer"
-                                            onClick={() =>
-                                                handleDeleteStudents(index)
-                                            }
-                                        >
-                                            <Trash
-                                                color="#D34645"
+                                            <Eye
+                                                color="#F59A3B"
                                                 width={18}
                                                 height={18}
                                             />
                                         </div>
-                                    </>
-                                )}
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                                    ) : (
+                                        <>
+                                            <div
+                                                className="mr-2 rounded-md cursor-pointer"
+                                                onClick={() =>
+                                                    handleOpenProfileModal(user)
+                                                }
+                                            >
+                                                <EditIcon
+                                                    width={28}
+                                                    height={28}
+                                                />
+                                            </div>
+                                            <div
+                                                className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                                onClick={() =>
+                                                    handleDeleteStudents(index)
+                                                }
+                                            >
+                                                <Trash
+                                                    color="#D34645"
+                                                    width={18}
+                                                    height={18}
+                                                />
+                                            </div>
+                                        </>
+                                    )}
+                                </TableCell>
+                            </TableRow>
+                        )
+                    )}
                 </TableBody>
             </Table>
             {isShowProfileModal && (
