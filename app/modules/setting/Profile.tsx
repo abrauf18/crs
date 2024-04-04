@@ -1,9 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { Trash2 } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
@@ -39,13 +38,8 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
         shouldResetProfilePicture,
         deleteProfilePicture,
     } = useProfileImage();
-    const {
-        reset,
-        watch,
-        register,
-        handleSubmit,
-        formState: { errors, isValid },
-    } = useForm({
+
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
@@ -53,7 +47,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
     // Function to undo all changes made before clicking save
     const handleReset = () => {
         undoImageChange();
-        reset();
+        methods.reset();
     };
 
     // Function to handle form submission
@@ -125,7 +119,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                         data?.user.accessToken
                     );
                     const { name, email, image } = APIdata.data.data;
-                    reset({
+                    methods.reset({
                         name,
                         email,
                         password: '',
@@ -156,116 +150,115 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
                     My profile
                 </h1>
-                <form
-                    className="mobile:w-full"
-                    onSubmit={handleSubmit(onFormSubmit)}
-                >
-                    <ProfileImage
-                        selectedFile={selectedFile}
-                        currentImage={currentImage}
-                        handleClick={handleClick}
-                        handleFileChange={handleFileChange}
-                        hiddenFileInput={hiddenFileInput}
-                        removeImage={removeImage}
-                        inSettings
-                    />
-                    <div className="mt-2">
-                        <Label htmlFor="name">User Name</Label>
-                        <Input
-                            name="name"
-                            placeholder="Enter Name"
-                            type="text"
-                            errors={errors}
-                            register={register('name', {
-                                required: {
-                                    value: true,
-                                    message: validationError.REQUIRED_FIELD,
-                                },
-                            })}
+                <FormProvider {...methods}>
+                    <form
+                        className="mobile:w-full"
+                        onSubmit={methods.handleSubmit(onFormSubmit)}
+                    >
+                        <ProfileImage
+                            selectedFile={selectedFile}
+                            currentImage={currentImage}
+                            handleClick={handleClick}
+                            handleFileChange={handleFileChange}
+                            hiddenFileInput={hiddenFileInput}
+                            removeImage={removeImage}
+                            inSettings
                         />
-                    </div>
-                    <div className="mt-2">
-                        <Label htmlFor="email">Email Address</Label>
-                        <Input
-                            name="email"
-                            placeholder="Enter Email"
-                            type="email"
-                            errors={errors}
-                            register={register('email', {
-                                required: {
-                                    value: true,
-                                    message: validationError.REQUIRED_FIELD,
-                                },
-                                pattern: {
-                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                    message: validationError.VALID_EMAIL,
-                                },
-                            })}
-                        />
-                    </div>
-                    <div className="mt-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            name="password"
-                            placeholder="Enter Password"
-                            type="password"
-                            errors={errors}
-                            register={register('password', {
-                                pattern: {
-                                    value:
-                                        // eslint-disable-next-line no-useless-escape
-                                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]])[a-zA-Z\d~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]]{8,}$/,
-                                    message:
-                                        validationError.PASSWORD_VALIDATION_INFO_TEXT,
-                                },
-                                minLength: {
-                                    value: 8,
-                                    message: validationError.MIN_LENGTH,
-                                },
-                                maxLength: {
-                                    value: 20,
-                                    message: validationError.MAX_LENGTH,
-                                },
-                            })}
-                        />
-                    </div>
-                    {!isSchoolProfile && (
-                        <div className="md:flex md:justify-between w-full mt-5 gap-2">
-                            <button
-                                type="button"
-                                className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-2 border rounded-lg"
-                                onClick={handleReset}
-                            >
-                                Discard Changes
-                            </button>
-                            <button
-                                type="submit"
-                                disabled={!isValid}
-                                className={`text-white ${
-                                    !isValid
-                                        ? 'bg-gray-300'
-                                        : 'bg-primary-color'
-                                } font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12`}
-                            >
-                                {loading ? (
-                                    <Loader color="white" size="4" />
-                                ) : (
-                                    'Save Changes'
-                                )}
-                            </button>
+                        <div className="mt-2">
+                            <Label htmlFor="name">User Name</Label>
+                            <Input
+                                name="name"
+                                placeholder="Enter Name"
+                                type="text"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                }}
+                            />
                         </div>
-                    )}
-                </form>
+                        <div className="mt-2">
+                            <Label htmlFor="email">Email Address</Label>
+                            <Input
+                                name="email"
+                                placeholder="Enter Email"
+                                type="email"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                        message: validationError.VALID_EMAIL,
+                                    },
+                                }}
+                            />
+                        </div>
+                        <div className="mt-2">
+                            <Label htmlFor="password">Password</Label>
+                            <Input
+                                name="password"
+                                placeholder="Enter Password"
+                                type="password"
+                                rules={{
+                                    pattern: {
+                                        value:
+                                            // eslint-disable-next-line no-useless-escape
+                                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]])[a-zA-Z\d~`!@#$%^&*()_\-\+=:;"'?\/>.<,{}\[\]]{8,}$/,
+                                        message:
+                                            validationError.PASSWORD_VALIDATION_INFO_TEXT,
+                                    },
+                                    minLength: {
+                                        value: 8,
+                                        message: validationError.MIN_LENGTH,
+                                    },
+                                    maxLength: {
+                                        value: 20,
+                                        message: validationError.MAX_LENGTH,
+                                    },
+                                }}
+                            />
+                        </div>
+                        {!isSchoolProfile && (
+                            <div className="md:flex md:justify-between w-full mt-5 gap-2">
+                                <button
+                                    type="button"
+                                    className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-2 border rounded-lg"
+                                    onClick={handleReset}
+                                >
+                                    Discard Changes
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={!methods.formState.isValid}
+                                    className={`text-white ${
+                                        !methods.formState.isValid
+                                            ? 'bg-gray-300'
+                                            : 'bg-primary-color'
+                                    } font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12`}
+                                >
+                                    {loading ? (
+                                        <Loader color="white" size="4" />
+                                    ) : (
+                                        'Save Changes'
+                                    )}
+                                </button>
+                            </div>
+                        )}
+                    </form>
+                </FormProvider>
             </div>
             {isSchoolProfile && (
                 <SchoolProfile
-                    isProfileFormValid={isValid}
+                    isProfileFormValid={methods.formState.isValid}
                     selectedImageFile={selectedFile}
                     originalImage={originalImage}
                     profileImage={currentImage}
-                    username={watch('name')}
-                    email={watch('email')}
-                    password={watch('password')}
+                    username={methods.watch('name')}
+                    email={methods.watch('email')}
+                    password={methods.watch('password')}
                     handleProfileReset={handleReset}
                     handleUpdateOriginalImage={setOriginalImage}
                 />

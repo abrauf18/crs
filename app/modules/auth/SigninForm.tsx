@@ -3,14 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import crscLogo from '@/app/assets/images/crsclogo.svg';
-import { Label } from '@/app/components/ui/label';
-import { Button } from '@/app/components/ui/button';
-import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { getSession, signIn } from 'next-auth/react';
 import { useForm, FormProvider } from 'react-hook-form';
+import crscLogo from '@/app/assets/images/crsclogo.svg';
+import { Label } from '@/app/components/ui/label';
+import { Button } from '@/app/components/ui/button';
+import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import Input from '@/app/components/common/Input';
 import Loader from '@/app/components/common/Loader';
 import { validationError } from '@/lib/utils';

@@ -1,17 +1,20 @@
 'use client';
 
 import Image from 'next/image';
-import { Trash2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
-import { useForm, SubmitHandler, FieldValues, FormProvider } from 'react-hook-form';
+import {
+    useForm,
+    SubmitHandler,
+    FieldValues,
+    FormProvider,
+} from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import { Label } from '@/app/components/ui/label';
 import { validationError } from '@/lib/utils';
 import { OptionsInterface } from '@/app/components/common/AppDropDown';
 import Input from '@/app/components/common/Input';
 import Loader from '@/app/components/common/Loader';
-import PictureIcon from '@/app/assets/icons/PictureIcon';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import useProfileImage from '@/lib/custom-hooks/useProfileImage';
 import { updateAnotherUserProfileAPI } from '@/app/api/user';
@@ -188,7 +191,8 @@ function ProfileModal({
                                     rules={{
                                         required: {
                                             value: true,
-                                            message: validationError.REQUIRED_FIELD,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
                                         },
                                     }}
                                 />
@@ -202,11 +206,13 @@ function ProfileModal({
                                     rules={{
                                         required: {
                                             value: true,
-                                            message: validationError.REQUIRED_FIELD,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
                                         },
                                         pattern: {
                                             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                            message: validationError.VALID_EMAIL,
+                                            message:
+                                                validationError.VALID_EMAIL,
                                         },
                                     }}
                                 />
@@ -219,7 +225,8 @@ function ProfileModal({
                                     rules={{
                                         required: {
                                             value: true,
-                                            message: validationError.REQUIRED_FIELD,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
                                         },
                                     }}
                                 />
