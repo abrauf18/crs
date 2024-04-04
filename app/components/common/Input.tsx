@@ -1,39 +1,32 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { useFormContext } from 'react-hook-form';
+import FormError from './FormError';
 
 interface InputPropsInterface {
     name: string;
     placeholder?: string;
-    register: any;
     type: string;
-    errors?: any;
+    rules?: Record<string, any>;
 }
 
 function Input({
     name,
     placeholder,
-    register,
     type,
-    errors,
+    rules,
 }: InputPropsInterface): JSX.Element {
+    const { register } = useFormContext();
+
     return (
         <div className="common-input  my-2 position-relative">
             <input
                 className={` mt-1 block w-full px-3 py-3 bg-slate-100 border rounded-md text-sm shadow-sm placeholder-slate-400
                              focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-medium`}
                 type={type}
-                name={name}
                 placeholder={placeholder}
-                {...register}
+                {...register(name, rules)}
             />
-            {errors[name]?.type && (
-                <div className="flex items-center gap-1 mt-1">
-                    <X size={20} color="#E6500D" />
-                    <p className={`text-red-500 text-xs `}>
-                        {errors[name]?.message}
-                    </p>
-                </div>
-            )}
+            <FormError name={name} />
         </div>
     );
 }

@@ -1,30 +1,23 @@
 import { SelectHTMLAttributes } from 'react';
-import { UseFormRegister } from 'react-hook-form';
-import { X } from 'lucide-react';
+import { useFormContext } from 'react-hook-form';
+import FormError from './FormError';
 
 interface SelectPropsInterface extends SelectHTMLAttributes<HTMLSelectElement> {
     name: string;
     placeholder?: string;
-    register: any;
-    errors?: any;
+    rules?: Record<string, any>;
     options: { value: string; label: string }[];
 }
 
-function Select({
-    name,
-    placeholder,
-    register,
-    errors,
-    options,
-}: SelectPropsInterface): JSX.Element {
+function Select({ name, rules, options }: SelectPropsInterface): JSX.Element {
+    const { register } = useFormContext();
+
     return (
         <div className="relative w-full">
             <select
                 className="pl-4 p-3 py-3 pr-8 bg-slate-100 border rounded-lg focus:outline-none focus:border-sky-500 
                 focus:ring-1 focus:ring-sky-500 font-medium appearance-none w-full text-sm"
-                name={name}
-                placeholder={placeholder}
-                {...register}
+                {...register(name, rules)}
             >
                 {options.map((option) => (
                     <option key={option.label} value={option.label}>
@@ -45,14 +38,7 @@ function Select({
                     <path d="M19 9l-7 7-7-7" />
                 </svg>
             </div>
-            {errors[name]?.type && (
-                <div className="flex items-center gap-1 mt-1">
-                    <X size={20} color="#E6500D" />
-                    <p className={`text-red-500 text-xs `}>
-                        {errors[name]?.message}
-                    </p>
-                </div>
-            )}
+            <FormError name={name} />
         </div>
     );
 }

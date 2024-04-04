@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { useForm, SubmitHandler, FieldValues, FormProvider } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 import { Label } from '@/app/components/ui/label';
 import { validationError } from '@/lib/utils';
@@ -68,12 +68,7 @@ function ProfileModal({
         shouldResetProfilePicture,
         deleteProfilePicture,
     } = useProfileImage();
-    const {
-        reset,
-        register,
-        handleSubmit,
-        formState: { errors, isValid },
-    } = useForm({
+    const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
@@ -81,7 +76,7 @@ function ProfileModal({
     // Function to undo all changes made before clicking save
     const handleReset = () => {
         undoImageChange();
-        reset();
+        methods.reset();
     };
 
     // Function to handle form submission
@@ -132,7 +127,7 @@ function ProfileModal({
             // Manually trigger update after form submission to prevent discard changes to that of before form submission
             setCurrentImage(imageUrl);
             setOriginalImage(imageUrl);
-            reset({
+            methods.reset({
                 name,
                 email,
                 role,
@@ -151,7 +146,7 @@ function ProfileModal({
     useEffect(() => {
         setOriginalImage(image);
         setCurrentImage(image);
-        reset({
+        methods.reset({
             name,
             email,
             role,
@@ -161,103 +156,104 @@ function ProfileModal({
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-auto">
-            <form
-                onSubmit={handleSubmit(
-                    onFormSubmit as SubmitHandler<FieldValues>
-                )}
-            >
-                <div className="h-[80%] lg:h-[95%] overflow-y-auto px-6">
-                    <ModalHeader
-                        headerText={{
-                            heading,
-                            tagline,
-                        }}
-                        onClose={onClose}
-                    />
-                    <div className="flex flex-col  mobile:items-center w-full">
-                        <ProfileImage
-                            selectedFile={selectedFile}
-                            currentImage={currentImage}
-                            handleClick={handleClick}
-                            handleFileChange={handleFileChange}
-                            hiddenFileInput={hiddenFileInput}
-                            removeImage={removeImage}
+            <FormProvider {...methods}>
+                <form
+                    onSubmit={methods.handleSubmit(
+                        onFormSubmit as SubmitHandler<FieldValues>
+                    )}
+                >
+                    <div className="h-[80%] lg:h-[95%] overflow-y-auto px-6">
+                        <ModalHeader
+                            headerText={{
+                                heading,
+                                tagline,
+                            }}
+                            onClose={onClose}
                         />
-                        <div className="mb-2 w-full mt-4">
-                            <Label htmlFor="name">User Name</Label>
-                            <Input
-                                name="name"
-                                placeholder="Enter Name"
-                                type="text"
-                                errors={errors}
-                                register={register('name', {
-                                    required: {
-                                        value: true,
-                                        message: validationError.REQUIRED_FIELD,
-                                    },
-                                })}
+                        <div className="flex flex-col  mobile:items-center w-full">
+                            <ProfileImage
+                                selectedFile={selectedFile}
+                                currentImage={currentImage}
+                                handleClick={handleClick}
+                                handleFileChange={handleFileChange}
+                                hiddenFileInput={hiddenFileInput}
+                                removeImage={removeImage}
                             />
-                        </div>
-                        <div className="mb-2 w-full">
-                            <Label htmlFor="email">Email Address</Label>
-                            <Input
-                                name="email"
-                                placeholder="Enter Email"
-                                type="email"
-                                errors={errors}
-                                register={register('email', {
-                                    required: {
-                                        value: true,
-                                        message: validationError.REQUIRED_FIELD,
-                                    },
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                        message: validationError.VALID_EMAIL,
-                                    },
-                                })}
-                            />
-                        </div>
-                        <div className="mb-2 w-full">
-                            <Label htmlFor="role ">Role</Label>
-                            <Select
-                                name="role"
-                                options={roleOptions}
-                                errors={errors}
-                                register={register('role', {
-                                    required: {
-                                        value: true,
-                                        message: validationError.REQUIRED_FIELD,
-                                    },
-                                })}
-                            />
+                            <div className="mb-2 w-full mt-4">
+                                <Label htmlFor="name">User Name</Label>
+                                <Input
+                                    name="name"
+                                    placeholder="Enter Name"
+                                    type="text"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
+                            <div className="mb-2 w-full">
+                                <Label htmlFor="email">Email Address</Label>
+                                <Input
+                                    name="email"
+                                    placeholder="Enter Email"
+                                    type="email"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: validationError.REQUIRED_FIELD,
+                                        },
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                            message: validationError.VALID_EMAIL,
+                                        },
+                                    }}
+                                />
+                            </div>
+                            <div className="mb-2 w-full">
+                                <Label htmlFor="role ">Role</Label>
+                                <Select
+                                    name="role"
+                                    options={roleOptions}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                {!isViewOnly && (
-                    <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between w-full py-2 gap-1 bottom-0 left-0  p-3 border bg-white">
-                        <button
-                            type="button"
-                            onClick={handleReset}
-                            className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
-                        >
-                            Discard Changes
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={!isValid}
-                            className={`text-white ${
-                                !isValid ? 'bg-gray-300' : 'bg-primary-color'
-                            } font-semibold w-full px-5 py-2  border rounded-xl`}
-                        >
-                            {loading ? (
-                                <Loader color="white" size="4" />
-                            ) : (
-                                'Save Changes'
-                            )}
-                        </button>
-                    </div>
-                )}
-            </form>
+                    {!isViewOnly && (
+                        <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between w-full py-2 gap-1 bottom-0 left-0  p-3 border bg-white">
+                            <button
+                                type="button"
+                                onClick={handleReset}
+                                className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
+                            >
+                                Discard Changes
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={!methods.formState.isValid}
+                                className={`text-white ${
+                                    !methods.formState.isValid
+                                        ? 'bg-gray-300'
+                                        : 'bg-primary-color'
+                                } font-semibold w-full px-5 py-2  border rounded-xl`}
+                            >
+                                {loading ? (
+                                    <Loader color="white" size="4" />
+                                ) : (
+                                    'Save Changes'
+                                )}
+                            </button>
+                        </div>
+                    )}
+                </form>
+            </FormProvider>
         </section>
     );
 }
