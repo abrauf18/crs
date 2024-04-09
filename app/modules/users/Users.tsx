@@ -1,51 +1,57 @@
 'use client';
 
 import { Plus } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import userImage from '@/app/assets/images/UserImage.svg';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import AddUserModal from '@/app/modules/users/AddUserModal';
+import { useSession } from 'next-auth/react';
+import { getAllUsersProfileAPI } from '@/app/api/user';
+import { toast } from 'react-toastify';
 import UsersTable, { User } from './UsersTable';
 
 export const usersData: User[] = [
     {
-        id: 1,
-        imageUrl: userImage as string,
+        id: '1',
+        image: userImage as string,
         name: 'John',
         email: 'john.doe@example.com',
         role: 'Admin',
     },
     {
-        id: 2,
-        imageUrl: userImage as string,
+        id: '2',
+        image: userImage as string,
         name: 'Jane',
         email: 'jane@example.com',
         role: 'User',
     },
     {
-        id: 3,
-        imageUrl: userImage as string,
+        id: '3',
+        image: userImage as string,
         name: 'Bob',
         email: 'bob@example.com',
         role: 'Moderator',
     },
     {
-        id: 4,
-        imageUrl: userImage as string,
+        id: '4',
+        image: userImage as string,
         name: 'Alice',
         email: 'alice@example.com',
         role: 'User',
     },
     {
-        id: 5,
-        imageUrl: userImage as string,
+        id: '5',
+        image: userImage as string,
         name: 'Charlie',
         email: 'charlie@example.com',
         role: 'Admin',
     },
 ];
 function Users() {
+    const { data } = useSession();
+    const [allUsersData, setAllUsersData] = useState<User[] | []>([]);
+    const [isUserUpdated, setIsUserUpdated] = useState<boolean>(false);
     const [showAddUserModal, setShowProfileModal] = useState(false);
     const handleOpenAddUserModal = () => {
         setShowProfileModal(true);
@@ -54,6 +60,24 @@ function Users() {
     const handleCloseAddUserModal = () => {
         setShowProfileModal(false);
     };
+
+    useEffect(() => {
+        if (data?.user.accessToken) {
+            setIsUserUpdated(false);
+            getAllUsersProfileAPI(data?.user.accessToken)
+                .then((response) => {
+                    const APIResponse = response.data;
+                    const APIdata = APIResponse.data;
+                    setAllUsersData(APIdata.users);
+                })
+                .catch((error) =>
+                    toast.error(
+                        error.response?.data?.message || 'An Error Occured'
+                    )
+                );
+        }
+    }, [data?.user.accessToken, isUserUpdated]);
+
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
@@ -62,7 +86,7 @@ function Users() {
                         <Filters text="Users" isHideSecondBtn />
                     </div>
                     <div
-                        className="cursor-pointer text-white bg-primary-color font-semibold px-3 py-2 border rounded-lg flex justify-between items-center"
+                        className="cursor-pointer text-white bg-primary-color font-semibold px-3 py-2 border rounded-lg flex justify-between items-center mobile:mt-9"
                         onClick={handleOpenAddUserModal}
                     >
                         <Plus size={20} />
@@ -74,7 +98,10 @@ function Users() {
                         </button>
                     </div>
                 </div>
-                <UsersTable users={usersData} />
+                <UsersTable
+                    users={allUsersData}
+                    setIsUserUpdated={setIsUserUpdated}
+                />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />

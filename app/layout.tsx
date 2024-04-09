@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import './globals.css';
 import React from 'react';
 import SessionProvider from '@/lib/next-auth/SessionProvider';
+import AutoLogout from '@/lib/next-auth/AutoLogout';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -36,7 +37,9 @@ export default async function RootLayout({
                 />
                 <StoreProvider>
                     <SessionProvider>
-                        <main>{children}</main>
+                        <AutoLogout>
+                            <main>{children}</main>
+                        </AutoLogout>
                     </SessionProvider>
                 </StoreProvider>
             </body>

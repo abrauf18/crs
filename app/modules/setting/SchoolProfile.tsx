@@ -2,7 +2,7 @@
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
@@ -51,23 +51,17 @@ function SchoolProfile({
         classesStart: 0,
         classesEnd: 0,
     });
-    const {
-        reset,
-        watch,
-        register,
-        handleSubmit,
-        formState: { errors, isValid },
-    } = useForm<Inputs>({
+    const methods = useForm<Inputs>({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
 
-    const classesStartData = watch('classesStart');
+    const classesStartData = methods.watch('classesStart');
 
     // Reset school form values and profile form values initial state
     const handleReset = () => {
         handleProfileReset();
-        reset({
+        methods.reset({
             schoolName: schoolProfileData.schoolName,
             numOfClasses: schoolProfileData.numOfClasses,
             classesStart: schoolProfileData.classesStart,
@@ -105,7 +99,7 @@ function SchoolProfile({
             ) {
                 await DeleteProfilePicture(originalImage);
             }
-          
+
             // Update school and user profile
             const { schoolName, numOfClasses, classesStart, classesEnd } =
                 formData;
@@ -153,7 +147,7 @@ function SchoolProfile({
                             classesStart,
                             classesEnd,
                         });
-                        reset({
+                        methods.reset({
                             schoolName: name,
                             numOfClasses,
                             classesStart,
@@ -167,7 +161,7 @@ function SchoolProfile({
                             classesStart: 0,
                             classesEnd: 0,
                         });
-                        reset({
+                        methods.reset({
                             schoolName: '',
                             numOfClasses: 1,
                             classesStart: 0,
@@ -187,116 +181,125 @@ function SchoolProfile({
             <h1 className="text-2xl font-semibold mb-2 mobile:mb-4 text-center lg:text-left">
                 School Profile
             </h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col mt-5  ">
-                    <Label htmlFor="schoolName">School Name</Label>
-
-                    <Input
-                        name="schoolName"
-                        placeholder="Enter School Name"
-                        type="string"
-                        errors={errors}
-                        register={register('schoolName', {
-                            required: {
-                                value: true,
-                                message: validationError.REQUIRED_FIELD,
-                            },
-                            minLength: {
-                                value: 3,
-                                message: validationError.MIN_SCHOOL_NAME_LENGTH,
-                            },
-                            maxLength: {
-                                value: 25,
-                                message: validationError.MAX_SCHOOL_NAME_LENGTH,
-                            },
-                        })}
-                    />
-                </div>
-                <div className="flex flex-col mt-5 ">
-                    <Label htmlFor="numOfClasses ">No Of Classrooms</Label>
-
-                    <Input
-                        name="numOfClasses"
-                        placeholder="Enter No of Classrooms"
-                        type="number"
-                        errors={errors}
-                        register={register('numOfClasses', {
-                            required: {
-                                value: true,
-                                message: validationError.REQUIRED_FIELD,
-                            },
-                            min: {
-                                value: 1,
-                                message: validationError.MIN_CLASSES_NUM,
-                            },
-                        })}
-                    />
-                </div>
-
-                <div className="flex mt-5 justify-between w-full space-x-4 ">
-                    <div className="flex flex-col w-full">
-                        <Label htmlFor="classesStart">Classes Start</Label>
+            <FormProvider {...methods}>
+                <form onSubmit={methods.handleSubmit(onSubmit)}>
+                    <div className="flex flex-col mt-5  ">
+                        <Label htmlFor="schoolName">School Name</Label>
 
                         <Input
-                            name="classesStart"
-                            placeholder="i.e. 5th Class"
+                            name="schoolName"
+                            placeholder="Enter School Name"
+                            type="string"
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: validationError.REQUIRED_FIELD,
+                                },
+                                minLength: {
+                                    value: 3,
+                                    message:
+                                        validationError.MIN_SCHOOL_NAME_LENGTH,
+                                },
+                                maxLength: {
+                                    value: 25,
+                                    message:
+                                        validationError.MAX_SCHOOL_NAME_LENGTH,
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className="flex flex-col mt-5 ">
+                        <Label htmlFor="numOfClasses ">No Of Classrooms</Label>
+
+                        <Input
+                            name="numOfClasses"
+                            placeholder="Enter No of Classrooms"
                             type="number"
-                            errors={errors}
-                            register={register('classesStart', {
+                            rules={{
                                 required: {
                                     value: true,
                                     message: validationError.REQUIRED_FIELD,
                                 },
                                 min: {
-                                    value: 0,
-                                    message: validationError.MIN_CLASS_START,
+                                    value: 1,
+                                    message: validationError.MIN_CLASSES_NUM,
                                 },
-                            })}
+                            }}
                         />
                     </div>
-                    <div className="flex flex-col w-full">
-                        <Label htmlFor="classesEnd">Classes End</Label>
 
-                        <Input
-                            name="classesEnd"
-                            placeholder="i.e. 10th Class"
-                            type="number"
-                            errors={errors}
-                            register={register('classesEnd', {
-                                required: {
-                                    value: true,
-                                    message: validationError.REQUIRED_FIELD,
-                                },
-                                min: {
-                                    value: classesStartData,
-                                    message: validationError.MIN_CLASS_END,
-                                },
-                            })}
-                        />
+                    <div className="flex mt-5 justify-between w-full space-x-4 ">
+                        <div className="flex flex-col w-full">
+                            <Label htmlFor="classesStart">Classes Start</Label>
+
+                            <Input
+                                name="classesStart"
+                                placeholder="i.e. 5th Class"
+                                type="number"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                    min: {
+                                        value: 0,
+                                        message:
+                                            validationError.MIN_CLASS_START,
+                                    },
+                                }}
+                            />
+                        </div>
+                        <div className="flex flex-col w-full">
+                            <Label htmlFor="classesEnd">Classes End</Label>
+
+                            <Input
+                                name="classesEnd"
+                                placeholder="i.e. 10th Class"
+                                type="number"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                    min: {
+                                        value: classesStartData,
+                                        message: validationError.MIN_CLASS_END,
+                                    },
+                                }}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="md:flex md:justify-between w-full mt-[4.4rem] gap-1">
-                    <button
-                        type="button"
-                        className="text-dark-gray w-[90%] font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg"
-                        onClick={handleReset}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        type="submit"
-                        disabled={!isValid || !isProfileFormValid}
-                        className={`text-white w-[90%] ${
-                            !isValid || !isProfileFormValid
-                                ? 'bg-gray-300'
-                                : 'bg-primary-color'
-                        } font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg`}
-                    >
-                        {loading ? <Loader color="white" size="4" /> : 'Save'}
-                    </button>
-                </div>
-                {/* </div> */}
-            </form>
+                    <div className="md:flex md:justify-between w-full mt-[4.4rem] gap-1">
+                        <button
+                            type="button"
+                            className="text-dark-gray w-[90%] font-semibold mobile:mb-2 mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg"
+                            onClick={handleReset}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={
+                                !methods.formState.isValid ||
+                                !isProfileFormValid
+                            }
+                            className={`text-white w-[90%] ${
+                                !methods.formState.isValid ||
+                                !isProfileFormValid
+                                    ? 'bg-gray-300'
+                                    : 'bg-primary-color'
+                            } font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg`}
+                        >
+                            {loading ? (
+                                <Loader color="white" size="4" />
+                            ) : (
+                                'Save'
+                            )}
+                        </button>
+                    </div>
+                    {/* </div> */}
+                </form>
+            </FormProvider>
         </div>
     );
 }
