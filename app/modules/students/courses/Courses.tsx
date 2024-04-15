@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import Pagintaion from '@/app/components/common/Pagintaion';
@@ -53,7 +55,11 @@ function Courses() {
                 <CoursesTable courses={CoursesList} />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
-                <Pagintaion />
+                <Pagintaion
+                    currentPage={1}
+                    totalPages={4}
+                    onPageChange={(page: number) => {}}
+                />
             </div>
         </div>
     );
