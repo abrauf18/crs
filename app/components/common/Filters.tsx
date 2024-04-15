@@ -9,6 +9,8 @@ interface FiltersInterface {
     handleClick?: () => void;
     btnFontSize?: string;
     textColor?: string;
+    options?: { value: string; label: string }[];
+    handleFilterUpdate?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 function Filters({
@@ -19,6 +21,8 @@ function Filters({
     isHideSecondBtn = false,
     btnFontSize = 'text-sm',
     textColor = 'text-dark-gray',
+    options,
+    handleFilterUpdate,
 }: FiltersInterface): JSX.Element {
     const makeFirstNumberBold = (inputText: string) => {
         const match = inputText.match(/^\d+/);
@@ -61,9 +65,19 @@ function Filters({
                             width={btnFontSize === 'text-xs' ? 12 : 15}
                             height={btnFontSize === 'text-xs' ? 12 : 15}
                         />
-                        <button className="ml-2 " type="button">
-                            Filters
-                        </button>
+                        <select
+                            onChange={handleFilterUpdate}
+                            className="ml-2 focus:outline-none"
+                        >
+                            {options?.map((option) => (
+                                <option
+                                    key={option?.label}
+                                    value={option?.value}
+                                >
+                                    {option?.label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 )}
                 {!isHideSecondBtn && (
