@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Eye, Trash, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import Image from 'next/image';
 import EditIcon from '@/app/assets/icons/EditIcon';
@@ -14,6 +14,11 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 import { DEFAULT_IMAGE } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
+import { deleteUserProfileAPI } from '@/app/api/user';
+import { toast } from 'react-toastify';
+import action from '@/app/action';
+import DialogBox from '@/app/components/common/DialogBox';
 import ProfileModal from './ProfileModal';
 
 export interface User {
@@ -28,7 +33,9 @@ interface UsersProp {
     users: User[];
     fontSize?: string;
     isDashboard?: boolean;
-    setIsUserUpdated?: (arg0: boolean) => void;
+    currentPage?: number;
+    limit?: number;
+    handlePageChange?: (page: number) => void;
 }
 
 const poppins = Poppins({
@@ -36,7 +43,7 @@ const poppins = Poppins({
     weight: ['100', '400', '700'],
 });
 
-const DEFAULT_USER = {
+export const DEFAULT_USER = {
     id: '',
     image: DEFAULT_IMAGE,
     name: '',
@@ -48,16 +55,13 @@ function UsersTable({
     users,
     fontSize,
     isDashboard,
-    setIsUserUpdated,
+    currentPage = 0,
+    limit = 0,
+    handlePageChange,
 }: UsersProp): JSX.Element {
+    const { data } = useSession();
     const [isShowProfileModal, setIsShowProfileModal] = useState(false);
-
-    // remove this after delete functionality is implemented
-    const [usersList, setUsersList] = useState<User[]>(users);
-    useEffect(() => {
-        setUsersList(users);
-    }, [users]);
-
+    const [isShowDialogBox, setIsShowDialogBox] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User>(DEFAULT_USER);
 
     const handleOpenProfileModal = (user: User) => {
@@ -70,11 +74,31 @@ function UsersTable({
         setSelectedUser(DEFAULT_USER);
     };
 
-    const handleDeleteStudents = (indexToRemove: number) => {
-        const updatedUsersList = [...usersList];
-        updatedUsersList.splice(indexToRemove, 1);
-        setUsersList(updatedUsersList);
+    const handleDeleteStudents = async (idToRemove: string) => {
+        if (data?.user?.accessToken) {
+            try {
+                await deleteUserProfileAPI(data?.user?.accessToken, idToRemove);
+                action('getAllUsers');
+                if (users?.length === 1 && currentPage > 1) {
+                    handlePageChange && handlePageChange(currentPage);
+                }
+            } catch (error: any) {
+                toast.error(
+                    error?.response?.data?.message || 'An Error Occured'
+                );
+            }
+        }
     };
+
+    const handleConfirmDelete = () => {
+        setIsShowDialogBox(false);
+        handleDeleteStudents(selectedUser?.id);
+    };
+
+    const handleCancelDelete = () => {
+        setIsShowDialogBox(false);
+    };
+
     return (
         <section>
             <Table
@@ -103,99 +127,119 @@ function UsersTable({
                 </TableHeader>
                 <TableBody>
                     {/* replace userList with users after delete functionality is implemented */}
-                    {Array.from(usersList as User[]).map(
-                        (user: User, index: number) => (
-                            <TableRow className="border-none" key={user?.id}>
-                                <TableCell className="font-medium">
-                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                        {index + 1}
-                                    </span>
-                                </TableCell>
-                                <TableCell className="">
-                                    <span className="rounded-full flex gap-x-2 items-center">
-                                        <Image
-                                            src={user?.image || DEFAULT_IMAGE}
-                                            alt="crs logo"
-                                            width={26}
-                                            height={26}
-                                            style={{
-                                                width: '26px',
-                                                height: '26px',
-                                                objectFit: 'fill',
-                                                borderRadius: '50%',
-                                            }}
-                                        />
-                                        <span>{user?.name}</span>
-                                    </span>
-                                </TableCell>
-                                <TableCell className="text-dark-gray">
-                                    <span className="truncate">
-                                        {user?.email}
-                                    </span>
-                                </TableCell>
-                                <TableCell className="text-dark-gray">
-                                    {user?.role}
-                                </TableCell>
-                                <TableCell className="flex  items-center p-0 ml-2 mt-4 ">
-                                    {isDashboard ? (
-                                        <div
-                                            className="mr-2 rounded-md flex justify-center w-full h-fulls cursor-pointer"
-                                            onClick={() =>
-                                                handleOpenProfileModal(user)
-                                            }
-                                        >
-                                            <Eye
-                                                color="#F59A3B"
-                                                width={18}
-                                                height={18}
+                    {users &&
+                        Array.from(users as User[]).map(
+                            (user: User, index: number) => (
+                                <TableRow
+                                    className="border-none"
+                                    key={user?.id}
+                                >
+                                    <TableCell className="font-medium">
+                                        <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                            {currentPage * limit + index + 1}
+                                        </span>
+                                    </TableCell>
+                                    <TableCell className="">
+                                        <span className="rounded-full flex gap-x-2 items-center">
+                                            <Image
+                                                src={
+                                                    user?.image || DEFAULT_IMAGE
+                                                }
+                                                alt="crs logo"
+                                                width={26}
+                                                height={26}
+                                                style={{
+                                                    width: '26px',
+                                                    height: '26px',
+                                                    objectFit: 'fill',
+                                                    borderRadius: '50%',
+                                                }}
                                             />
-                                        </div>
-                                    ) : (
-                                        <>
+                                            <span>{user?.name}</span>
+                                        </span>
+                                    </TableCell>
+                                    <TableCell className="text-dark-gray">
+                                        <span className="truncate">
+                                            {user?.email}
+                                        </span>
+                                    </TableCell>
+                                    <TableCell className="text-dark-gray">
+                                        {user?.role}
+                                    </TableCell>
+                                    <TableCell className="flex  items-center p-0 ml-2 mt-4 ">
+                                        {isDashboard ? (
                                             <div
-                                                className="mr-2 rounded-md cursor-pointer"
+                                                className="mr-2 rounded-md flex justify-center w-full h-fulls cursor-pointer"
                                                 onClick={() =>
                                                     handleOpenProfileModal(user)
                                                 }
                                             >
-                                                <EditIcon
-                                                    width={28}
-                                                    height={28}
-                                                />
-                                            </div>
-                                            <div
-                                                className="bg-red-100 rounded-md p-1 cursor-pointer"
-                                                onClick={() =>
-                                                    handleDeleteStudents(index)
-                                                }
-                                            >
-                                                <Trash
-                                                    color="#D34645"
+                                                <Eye
+                                                    color="#F59A3B"
                                                     width={18}
                                                     height={18}
                                                 />
                                             </div>
-                                        </>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        )
-                    )}
+                                        ) : (
+                                            <>
+                                                <div
+                                                    className="mr-2 rounded-md cursor-pointer"
+                                                    onClick={() =>
+                                                        handleOpenProfileModal(
+                                                            user
+                                                        )
+                                                    }
+                                                >
+                                                    <EditIcon
+                                                        width={28}
+                                                        height={28}
+                                                    />
+                                                </div>
+                                                <div
+                                                    className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                                    onClick={() => {
+                                                        setSelectedUser(user);
+                                                        setIsShowDialogBox(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
+                                                    <Trash
+                                                        color="#D34645"
+                                                        width={18}
+                                                        height={18}
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        )}
                 </TableBody>
             </Table>
             {isShowProfileModal && (
                 <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
                     <ProfileModal
-                        userId={selectedUser.id}
-                        image={selectedUser.image}
-                        name={selectedUser.name}
-                        email={selectedUser.email}
-                        role={selectedUser.role}
+                        userId={selectedUser?.id}
+                        image={selectedUser?.image}
+                        name={selectedUser?.name}
+                        email={selectedUser?.email}
+                        role={selectedUser?.role}
                         isViewOnly={isDashboard}
                         onClose={handleCloseProfileModal}
-                        setIsUserUpdated={setIsUserUpdated}
                     />
                 </div>
+            )}
+            {isShowDialogBox && (
+                <DialogBox
+                    isOpen={isShowDialogBox}
+                    message={`Are you sure you want to delete ${
+                        selectedUser?.name || 'this user'
+                    }?`}
+                    onYes={handleConfirmDelete}
+                    onNo={handleCancelDelete}
+                />
             )}
         </section>
     );
