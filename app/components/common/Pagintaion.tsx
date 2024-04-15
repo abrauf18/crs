@@ -1,13 +1,39 @@
-import Link from 'next/link';
 import React from 'react';
 
-function Pagintaion() {
+interface PaginationProps {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+}
+
+function Pagination({
+    currentPage,
+    totalPages,
+    onPageChange,
+}: PaginationProps) {
+    const maxPagesToShow = 4; // Adjust this value as needed
+
+    let startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    if (totalPages - startPage + 1 <= maxPagesToShow) {
+        // Adjust the range if there are not enough pages to display
+        startPage = Math.max(1, endPage - maxPagesToShow);
+    }
+
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+    }
+
     return (
         <nav aria-label="Page navigation example">
             <ul className="flex items-center -space-x-px h-8 text-sm">
                 <li>
-                    <Link
-                        href="#"
+                    <button
+                        type="button"
+                        onClick={() => onPageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
                         className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         <span className="sr-only">Previous</span>
@@ -26,52 +52,46 @@ function Pagintaion() {
                                 d="M5 1 1 5l4 4"
                             />
                         </svg>
-                    </Link>
+                    </button>
                 </li>
+                {pages.map((page) => (
+                    <li key={page}>
+                        <button
+                            type="button"
+                            onClick={() => onPageChange(page)}
+                            className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 ${
+                                currentPage === page
+                                    ? 'text-white border-blue-300 bg-orange-400 lg:hover:bg-orange-400'
+                                    : 'lg:hover:bg-gray-100 lg:hover:text-gray-700'
+                            }`}
+                        >
+                            {page}
+                        </button>
+                    </li>
+                ))}
+                {totalPages > endPage + 1 && (
+                    <li>
+                        <span className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300">
+                            ...
+                        </span>
+                    </li>
+                )}
+                {totalPages !== pages[pages.length - 1] && (
+                    <li>
+                        <button
+                            type="button"
+                            onClick={() => onPageChange(totalPages)}
+                            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
+                        >
+                            {totalPages}
+                        </button>
+                    </li>
+                )}
                 <li>
-                    <Link
-                        href="#"
-                        className="z-10 flex items-center justify-center px-3 h-8 leading-tight text-white border border-blue-300 bg-primary-color lg:hover:bg-orange-400"
-                    >
-                        1
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
-                    >
-                        2
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        href="#"
-                        aria-current="page"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
-                    >
-                        3
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
-                    >
-                        ...
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 lg:hover:bg-gray-100 lg:hover:text-gray-700"
-                    >
-                        8
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        href="#"
+                    <button
+                        type="button"
+                        onClick={() => onPageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
                         className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg lg:hover:bg-gray-100 lg:hover:text-gray-700"
                     >
                         <span className="sr-only">Next</span>
@@ -90,11 +110,11 @@ function Pagintaion() {
                                 d="m1 9 4-4-4-4"
                             />
                         </svg>
-                    </Link>
+                    </button>
                 </li>
             </ul>
         </nav>
     );
 }
 
-export default Pagintaion;
+export default Pagination;
