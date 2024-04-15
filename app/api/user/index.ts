@@ -34,12 +34,23 @@ export const updateUserProfileAPI = async (
     return result;
 };
 
-export const getAllUsersProfileAPI = async (accessToken: string) => {
-    const result = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/user/getAllUsersProfile`,
+export const getAllUsersProfileAPI = async (
+    accessToken: string,
+    page: number = 1,
+    limit: number = 10,
+    orderBy: string = '',
+    sortBy: string = '',
+    keyword: string = '',
+    role: string = ''
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/getAllUsersProfile?limit=${limit}&page=${page}&orderBy=${orderBy}&sortBy=${sortBy}&keyword=${keyword}&role=${role}`,
         {
             headers: {
                 accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getAllUsers'],
             },
         }
     );
@@ -64,6 +75,23 @@ export const updateAnotherUserProfileAPI = async (
             email,
             userId,
             role,
+        }
+    );
+
+    return result;
+};
+
+export const deleteUserProfileAPI = async (
+    accessToken: string,
+    userId: string
+) => {
+    const result = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/deleteAnotherUsersProfile`,
+        {
+            headers: {
+                accessToken,
+                userId,
+            },
         }
     );
 
