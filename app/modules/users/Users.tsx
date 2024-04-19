@@ -158,8 +158,10 @@ function Users({
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion
-                    currentPage={Number(page)}
-                    totalPages={APIdata?.totalPages}
+                    currentPage={Number(page) > 0 ? Number(page) : 1}
+                    totalPages={
+                        APIdata?.totalPages > 0 ? APIdata.totalPages : 1
+                    }
                     onPageChange={handlePageChange}
                 />
             </div>
