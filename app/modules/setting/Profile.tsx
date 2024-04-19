@@ -124,12 +124,14 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                         email,
                         password: '',
                     });
-                    setOriginalImage(APIdata.data.data.image);
-                    setCurrentImage(APIdata.data.data.image);
+                    setOriginalImage(image);
+                    setCurrentImage(image);
                 }
-            } catch (err) {
+            } catch (err: any) {
                 if (!isSchoolProfile) {
-                    toast.error('An Error Occured');
+                    toast.error(
+                        err?.response?.data?.message || 'An Error Occured'
+                    );
                 }
             }
         })();

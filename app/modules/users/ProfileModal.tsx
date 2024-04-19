@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { Trash2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 import {
@@ -19,6 +20,7 @@ import { ModalHeader } from '@/app/components/common/ModalHeader';
 import useProfileImage from '@/lib/custom-hooks/useProfileImage';
 import { updateAnotherUserProfileAPI } from '@/app/api/user';
 import Select from '@/app/components/common/DropDown';
+import action from '@/app/action';
 import ProfileImage from '@/app/components/common/ProfileImage';
 
 // type for the form data
@@ -36,7 +38,6 @@ function ProfileModal({
     email,
     role,
     isViewOnly,
-    setIsUserUpdated,
 }: {
     onClose: () => void;
     userId: string;
@@ -45,7 +46,6 @@ function ProfileModal({
     email: string;
     role: string;
     isViewOnly?: boolean;
-    setIsUserUpdated?: (arg0: boolean) => void;
 }) {
     const { data } = useSession();
     const [loading, setLoading] = useState(false);
@@ -93,9 +93,9 @@ function ProfileModal({
                     data?.user.id
                 );
                 // Handle image upload error
-                if (uploadResponse.status !== 200) {
+                if (uploadResponse?.status !== 200) {
                     return toast.error(
-                        uploadResponse.message || 'Error Uploading Image'
+                        uploadResponse?.message || 'Error Uploading Image'
                     );
                 }
                 // It is an axios response so we need to access the data property
@@ -114,18 +114,15 @@ function ProfileModal({
 
             // Update user profile
             await updateAnotherUserProfileAPI(
-                data?.user.accessToken || '',
+                data?.user?.accessToken || '',
                 imageUrl,
                 name,
                 email,
                 userId,
                 role
-                // selectedRole
             );
 
-            if (setIsUserUpdated) {
-                setIsUserUpdated(true);
-            }
+            action('getAllUsers');
 
             // Manually trigger update after form submission to prevent discard changes to that of before form submission
             setCurrentImage(imageUrl);
@@ -139,7 +136,7 @@ function ProfileModal({
             return toast.success('Profile Updated Successfully');
         } catch (error: any) {
             return toast.error(
-                error.response?.data?.message || 'Error Uploading Profile'
+                error?.response?.data?.message || 'Error Uploading Profile'
             );
         } finally {
             setLoading(false);
@@ -154,7 +151,6 @@ function ProfileModal({
             email,
             role,
         });
-        // setOriginalRole(role);
     }, []);
 
     return (
@@ -174,7 +170,7 @@ function ProfileModal({
                             onClose={onClose}
                         />
                         <div className="flex flex-col  mobile:items-center w-full">
-                            <ProfileImage
+                        <ProfileImage
                                 selectedFile={selectedFile}
                                 currentImage={currentImage}
                                 handleClick={handleClick}
