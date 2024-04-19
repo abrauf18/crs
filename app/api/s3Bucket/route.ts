@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import AWS from 'aws-sdk';
+import mime from 'mime-types';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 
 interface CustomFile extends File {
@@ -7,9 +8,9 @@ interface CustomFile extends File {
 }
 
 const s3 = new AWS.S3({
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-    region: process.env.REGION,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_DEFAULT_REGION,
     //   signatureVersion: "v4",
 });
 
@@ -17,19 +18,20 @@ async function uploadFileToS3(
     file: Buffer,
     fileName: string,
     fileSaveDirectory: string,
-    userId?: string // Optional user ID
+    userId?: string, // Optional user ID
+    contentType?: string
 ) {
     // , fileSaveDirectory, contentType) {
     const fileBuffer = file;
     fileName = fileName.replace(/ /g, '');
 
     const params: PutObjectRequest = {
-        Bucket: process.env.BUCKET_NAME || 'default-bucket',
+        Bucket: process.env.AWS_BUCKET || 'default-bucket',
         Key: userId
             ? `${fileSaveDirectory}/${fileName}-${userId}`
             : `${fileSaveDirectory}/${fileName}`,
         Body: fileBuffer,
-        // ContentType: contentType,
+        ContentType: contentType,
     };
 
     const response = await s3.upload(params).promise();
@@ -39,7 +41,7 @@ async function uploadFileToS3(
     }
 
     const url = s3.getSignedUrl('getObject', {
-        Bucket: process.env.BUCKET_NAME,
+        Bucket: process.env.AWS_BUCKET,
         Key: response.Key,
     });
     return url.split('?')[0];
@@ -56,16 +58,28 @@ export async function POST(request: Request) {
             throw new Error('No file selected');
         }
 
+        const contentType = mime.contentType(file.name);
+
         const buffer = Buffer.from(await file.arrayBuffer());
 
-        const url = await uploadFileToS3(
-            buffer,
-            file.name,
-            fileSaveDirectory,
-            userId
-            // contentType
-        );
-
+        let url = '';
+        if (contentType) {
+            url = await uploadFileToS3(
+                buffer,
+                file.name,
+                fileSaveDirectory,
+                userId,
+                contentType
+            );
+        } else {
+            url = await uploadFileToS3(
+                buffer,
+                file.name,
+                fileSaveDirectory,
+                userId
+                // contentType
+            );
+        }
         return NextResponse.json({
             success: true,
             url,
@@ -87,7 +101,7 @@ async function deleteFileFromS3(url: string) {
     const key = keyMatch[1];
 
     const params = {
-        Bucket: process.env.BUCKET_NAME!,
+        Bucket: process.env.AWS_BUCKET!,
         Key: key,
     };
 
