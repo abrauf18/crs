@@ -1,3 +1,6 @@
+'use client';
+
+// component is client beacuse of pagination
 import React from 'react';
 import Searchbar from '@/app/components/common/Searchbar';
 import Filters from '@/app/components/common/Filters';
