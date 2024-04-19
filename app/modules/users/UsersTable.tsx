@@ -78,9 +78,10 @@ function UsersTable({
         if (data?.user?.accessToken) {
             try {
                 await deleteUserProfileAPI(data?.user?.accessToken, idToRemove);
-                action('getAllUsers');
                 if (users?.length === 1 && currentPage > 1) {
                     handlePageChange && handlePageChange(currentPage);
+                } else {
+                    action('getAllUsers');
                 }
             } catch (error: any) {
                 toast.error(
