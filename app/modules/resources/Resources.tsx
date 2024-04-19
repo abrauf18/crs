@@ -1,43 +1,89 @@
-import React from 'react';
+'use client';
+
+// component is client beacuse of pagination
+import React, { useCallback, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Filters from '@/app/components/common/Filters';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import Searchbar from '@/app/components/common/Searchbar';
 import Pagintaion from '@/app/components/common/Pagintaion';
-import ResourcesTable, { Resource } from './ResourcesTable';
+import { Resource, ResourceType, commonFilterQueries, commonFilterOptions } from '@/lib/utils';
+import ResourcesTable from './ResourcesTable';
+import UploadResourceModal from './UploadResourceModal';
 
 export const ResourcesData: Resource[] = [
     {
-        id: 1,
+        id: '1',
         name: 'XYZ Resources',
-        type: 'Video',
+        type: ResourceType.VIDEO,
         topic: 'Topic xyz',
     },
     {
-        id: 2,
+        id: '2',
         name: 'XYZ Resources',
-        type: 'Video',
+        type: ResourceType.VIDEO,
         topic: 'Topic 2',
     },
     {
-        id: 3,
+        id: '3',
         name: 'XYZ Resources',
-        type: 'Quiz',
+        type: ResourceType.QUIZ,
         topic: 'Topic 2',
     },
     {
-        id: 4,
+        id: '4',
         name: 'XYZ Resources',
-        type: 'Quiz',
+        type: ResourceType.QUIZ,
         topic: 'Topic 2',
     },
     {
-        id: 5,
+        id: '5',
         name: 'XYZ Resources',
-        type: 'WorkSheet',
+        type: ResourceType.WORKSHEET,
         topic: 'Topic 3',
     },
 ];
-function Resoures() {
+function Resoures({
+    APIdata,
+}: {
+    APIdata: {
+        resources: Resource[];
+        totalResources: number;
+        totalPages: number;
+    };
+}) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const urlSearchParams = useSearchParams();
+    const page = urlSearchParams.get('page') || 1;
+    const [showAddResourceModal, setShowResourceModal] = useState(false);
+
+    const createQueryString = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(urlSearchParams.toString());
+            params.set(name, value);
+            return params.toString();
+        },
+        [urlSearchParams]
+    );
+
+    const handlePageChange = (page: number) => {
+        router.push(`${pathname}?${createQueryString('page', `${page}`)}`);
+    };
+
+    const handleFilterUpdate = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        const query = commonFilterQueries[event.target.value as keyof typeof commonFilterQueries];
+        if (query) {
+            router.push(
+                `?page=${page}&orderBy=${query.orderBy}&sortBy=${query.sortBy}`
+            );
+        } else {
+            router.push(`?page=${page}`);
+        }
+    };
+
     return (
         <section>
             <Searchbar
@@ -51,13 +97,36 @@ function Resoures() {
                     text="Resources"
                     btnFontSize="text-xs"
                     textColor="text-black"
-                    secondButtonText="Newest First"
+                    secondButtonText="Upload Resources"
+                    options={[
+                        ...commonFilterOptions,
+                    ]}
+                    handleFilterUpdate={handleFilterUpdate}
+                    handleClick={() => setShowResourceModal(true)}
                 />
-                <ResourcesTable resources={ResourcesData} />
+                <ResourcesTable
+                    resources={APIdata.resources}
+                    currentPage={Number(page) - 1}
+                    limit={2}
+                    handlePageChange={handlePageChange}
+                />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
-                <Pagintaion />
+                <Pagintaion
+                    currentPage={Number(page) > 0 ? Number(page) : 1}
+                    totalPages={
+                        APIdata?.totalPages > 0 ? APIdata.totalPages : 1
+                    }
+                    onPageChange={handlePageChange}
+                />
             </div>
+            {showAddResourceModal && (
+                <div className="fixed right-0 top-0 z-50 w-[100%] md:w-[60%] lg:w-[30%]">
+                    <UploadResourceModal
+                        onClose={() => setShowResourceModal(false)}
+                    />
+                </div>
+            )}
         </section>
     );
 }
