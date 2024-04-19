@@ -36,7 +36,7 @@ function UploadResourceModal({
                     itemName="Video"
                     setSelectedFile={(file: File | null) => {}}
                 />
-                <FileUploading Icon={Icon} progress={0}/>
+                <FileUploading Icon={Icon} progress={0} />
                 <div className="p-2 rounded-lg border w-32 text-center mt-3">
                     <button type="button" className="text-dark-gray text-sm">
                         Cancel Upload

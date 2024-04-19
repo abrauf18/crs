@@ -7,7 +7,12 @@ import Filters from '@/app/components/common/Filters';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import Searchbar from '@/app/components/common/Searchbar';
 import Pagintaion from '@/app/components/common/Pagintaion';
-import { Resource, ResourceType, commonFilterQueries, commonFilterOptions } from '@/lib/utils';
+import {
+    Resource,
+    ResourceType,
+    commonFilterQueries,
+    commonFilterOptions,
+} from '@/lib/utils';
 import ResourcesTable from './ResourcesTable';
 import UploadResourceModal from './UploadResourceModal';
 
@@ -74,7 +79,10 @@ function Resoures({
     const handleFilterUpdate = (
         event: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        const query = commonFilterQueries[event.target.value as keyof typeof commonFilterQueries];
+        const query =
+            commonFilterQueries[
+                event.target.value as keyof typeof commonFilterQueries
+            ];
         if (query) {
             router.push(
                 `?page=${page}&orderBy=${query.orderBy}&sortBy=${query.sortBy}`
@@ -98,9 +106,7 @@ function Resoures({
                     btnFontSize="text-xs"
                     textColor="text-black"
                     secondButtonText="Upload Resources"
-                    options={[
-                        ...commonFilterOptions,
-                    ]}
+                    options={[...commonFilterOptions]}
                     handleFilterUpdate={handleFilterUpdate}
                     handleClick={() => setShowResourceModal(true)}
                 />

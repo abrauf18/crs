@@ -4,8 +4,12 @@ import { Session, getServerSession } from 'next-auth';
 import { getResourcesAPI } from '@/app/api/resource';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import { Resource, convertDashesToSpacesSimple, PathToResource } from '@/lib/utils';
 import ResourceDetails from '@/app/modules/resources/topicType/details/ResouceDetails';
+import {
+    Resource,
+    convertDashesToSpacesSimple,
+    PathToResource,
+} from '@/lib/utils';
 
 async function ResourceDetailsPage({
     params,

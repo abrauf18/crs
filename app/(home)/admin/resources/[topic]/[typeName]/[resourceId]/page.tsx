@@ -14,7 +14,7 @@ async function ResourceDetailsPage({
     const data: Session | null = await getServerSession(options);
 
     let APIdata: Resource = {
-        ...DEFAULT_RESOURCE
+        ...DEFAULT_RESOURCE,
     };
 
     if (data) {

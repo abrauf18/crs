@@ -29,7 +29,10 @@ function Select({
                     <option
                         key={option.label}
                         value={option.label}
-                        selected={option.value.toLowerCase() === selectedOption?.toLowerCase()}
+                        selected={
+                            option.value.toLowerCase() ===
+                            selectedOption?.toLowerCase()
+                        }
                     >
                         {option.value}
                     </option>
