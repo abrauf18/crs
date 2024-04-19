@@ -3,38 +3,20 @@
 'use client';
 
 import React from 'react';
-import axios from 'axios';
 import { Upload } from 'lucide-react';
 
-function UploadItem({ itemName }: { itemName: string }) {
-    const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
-
+function UploadItem({
+    itemName,
+    setSelectedFile,
+}: {
+    itemName: string;
+    setSelectedFile: (file: File | null) => void;
+}) {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         setSelectedFile(file);
     };
 
-    const handleUpload = async () => {
-        if (selectedFile) {
-            try {
-                const formData = new FormData();
-                formData.append('file', selectedFile);
-
-                const response = await axios.post(
-                    `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/uploadData`,
-                    formData
-                );
-
-                if (response.status === 200) {
-                    console.log('File uploaded successfully');
-                } else {
-                    console.error('Error uploading file');
-                }
-            } catch (error) {
-                console.error('Error uploading file:', error);
-            }
-        }
-    };
     return (
         <section className="flex justify-between items-center flex-col md:p-12 sm:p-10 p-6 border-4 border-dotted rounded-lg text-center">
             <label
@@ -51,10 +33,7 @@ function UploadItem({ itemName }: { itemName: string }) {
                 <Upload size={30} color="#7AA43E" />
             </label>
             <div className="upload-video__text">
-                <h3
-                    className="text-lg font-semibold mb-2"
-                    onClick={handleUpload}
-                >
+                <h3 className="text-lg font-semibold mb-2">
                     Upload {itemName}
                 </h3>
                 <p>
