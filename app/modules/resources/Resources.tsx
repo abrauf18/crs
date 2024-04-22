@@ -103,7 +103,6 @@ function Resoures({
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <Filters
                     text="Resources"
-                    btnFontSize="text-xs"
                     textColor="text-black"
                     secondButtonText="Upload Resources"
                     options={[...commonFilterOptions]}
@@ -113,7 +112,7 @@ function Resoures({
                 <ResourcesTable
                     resources={APIdata.resources}
                     currentPage={Number(page) - 1}
-                    limit={2}
+                    limit={10}
                     handlePageChange={handlePageChange}
                 />
             </div>

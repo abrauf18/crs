@@ -12,7 +12,7 @@ import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
 import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import Input from '@/app/components/common/Input';
-import Loader from '@/app/components/common/Loader';
+import Loader from '@/app/components/common/ButtonLoader';
 import { validationError } from '@/lib/utils';
 import { CheckBox } from './Checkbox';
 
@@ -111,15 +111,15 @@ function SigninForm() {
                             type="submit"
                             className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         >
-                            {loading ? (
-                                <Loader color="white" size="4" />
-                            ) : (
-                                'Sign In'
-                            )}
+                            {loading ? <Loader /> : 'Sign In'}
                         </Button>
                         <span className="text-black text-xs">Or</span>
                         <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
-                            <GoogleIcon width={20} height={20} className="mr-2" />
+                            <GoogleIcon
+                                width={20}
+                                height={20}
+                                className="mr-2"
+                            />
                             Sign In With Google
                         </Button>
                     </div>

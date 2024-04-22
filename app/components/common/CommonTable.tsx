@@ -71,9 +71,10 @@ function CommonTable({
         }
     };
 
-    const handleConfirmDelete = () => {
+    const handleConfirmDelete = async () => {
+        await handleDeleteResources(selectedResource?.id);
+        toast.success('Resource deleted successfully');
         setIsShowDialogBox(false);
-        handleDeleteResources(selectedResource?.id);
     };
 
     const handleCancelDelete = () => {

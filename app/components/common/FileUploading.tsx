@@ -22,10 +22,8 @@ function FileUploading({
                     <FileVideo size={60} fill="#54C3F4" color="#1976D2" />
                 )}
             </div>
-            <div className="flex flex-col gap-1">
-                <h3 className="md:text-md text-sm font-semibold">
-                    {fileName || 'Master Digital Product Design..'}
-                </h3>
+            <div className="flex flex-col gap-1 w-auto">
+                <h3 className="md:text-md text-sm font-semibold">{fileName}</h3>
                 {progress !== 0 && (
                     <>
                         <div className="flex gap-1">
@@ -36,7 +34,7 @@ function FileUploading({
                                     : 'Uploaded Successfully'}
                             </p>
                         </div>
-                        <div className="w-full bg-white rounded-md">
+                        <div className="w-[16rem] bg-white rounded-md">
                             <div
                                 className="h-2 bg-primary-color rounded-md"
                                 style={{ width: `${progress}%` }}

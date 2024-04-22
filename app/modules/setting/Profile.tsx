@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
-import Loader from '@/app/components/common/Loader';
+import Loader from '@/app/components/common/ButtonLoader';
 import PictureIcon from '@/app/assets/icons/PictureIcon';
 import { getUserProfileAPI, updateUserProfileAPI } from '@/app/api/user/index';
 import { UploadProfilePicture, DeleteProfilePicture } from '@/app/api/s3Bucket';

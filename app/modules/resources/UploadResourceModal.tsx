@@ -25,6 +25,7 @@ import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
 import TicketIcon from '@/app/assets/icons/TicketIcon';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
+import { arrayBuffer } from 'stream/consumers';
 
 // ENUM for the resource type
 export enum ResourceType {
@@ -68,7 +69,7 @@ function UploadResourceModal({ onClose }: any) {
                 userId: data?.user?.id,
                 onUploadProgress: (progressEvent) => {
                     const percentage = Math.round(
-                        (progressEvent.loaded * 50) / progressEvent.total
+                        (progressEvent.loaded * 10) / progressEvent.total
                     );
                     setProgress(percentage); // Update progress state
                 },
@@ -93,7 +94,6 @@ function UploadResourceModal({ onClose }: any) {
                     setProgress(percentage); // Update progress state
                 },
             });
-
             // Handle resource upload error
             if (UploadAtBackend?.status !== 200) {
                 toast.error(
@@ -102,6 +102,8 @@ function UploadResourceModal({ onClose }: any) {
             } else {
                 action('getResources');
                 action('getResourcesCount');
+                onClose();
+                toast.success('Resource Uploaded Successfully');
             }
         } else if (!data?.user.accessToken) {
             toast.error('Token Expire, Please Signin Again');
@@ -133,14 +135,14 @@ function UploadResourceModal({ onClose }: any) {
     }
 
     return (
-        <section className="w-full bg-white h-screen py-4  shadow-lg">
+        <section className="w-full bg-white h-screen py-4 shadow-lg">
             <FormProvider {...methods}>
                 <form
                     onSubmit={methods.handleSubmit(
                         handleUpload as SubmitHandler<FieldValues>
                     )}
                 >
-                    <div className="h-[90%] overflow-y-auto w-full px-6">
+                    <div className="lg:h-[41rem] md:h-[39rem] h-[33rem] overflow-y-auto w-full px-6">
                         <ModalHeader
                             headerText={{
                                 heading: 'Upload Resource',
@@ -220,17 +222,18 @@ function UploadResourceModal({ onClose }: any) {
                                 />
                             )}
                             {/* {progress} */}
-                            {/* <div className="p-2 rounded-lg border w-32 text-center mt-3">
+                            <div className="p-2 rounded-lg border w-32 text-center mt-3">
                                 <button
                                     type="button"
                                     className="text-dark-gray text-sm"
+                                    onClick={() => setSelectedFile(null)}
                                 >
                                     Cancel Upload
                                 </button>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
-                    <ModalFooter text="Upload" buttonType="submit" />
+                    <ModalFooter text="Upload" />
                 </form>
             </FormProvider>
         </section>

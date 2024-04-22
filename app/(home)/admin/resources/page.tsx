@@ -45,7 +45,7 @@ async function ResouresPage({
                 topic: '',
                 type: '',
                 page: parseInt(page, 10),
-                limit: 2,
+                limit: 10,
                 orderBy,
                 sortBy,
             });

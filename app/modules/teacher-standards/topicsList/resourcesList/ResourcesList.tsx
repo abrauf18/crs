@@ -119,10 +119,7 @@ function ResourcesList() {
                 initialSelectedTab="all"
                 onSelectFilter={onSelectFilter}
             />
-            <Filters
-                text="SB1 Cell Structure - Functtion"
-                btnFontSize="text-xs"
-            />
+            <Filters text="SB1 Cell Structure - Function" />
             <div className="mt-8 ">
                 <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
                     {filteredResources.map((card) => (

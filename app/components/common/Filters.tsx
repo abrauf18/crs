@@ -1,5 +1,6 @@
 import React from 'react';
-import { Filter, ChevronDown, Upload } from 'lucide-react';
+import { ChevronDown, Upload } from 'lucide-react';
+import FilterIcon from '@/app/assets/icons/FilterIcon';
 
 interface FiltersInterface {
     isHideFirstBtn?: boolean;
@@ -7,7 +8,6 @@ interface FiltersInterface {
     text: string;
     secondButtonText?: string;
     handleClick?: () => void;
-    btnFontSize?: string;
     textColor?: string;
     options?: { value: string; label: string }[];
     handleFilterUpdate?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -19,7 +19,6 @@ function Filters({
     handleClick,
     isHideFirstBtn,
     isHideSecondBtn = false,
-    btnFontSize = 'text-sm',
     textColor = 'text-dark-gray',
     options,
     handleFilterUpdate,
@@ -58,16 +57,11 @@ function Filters({
             {renderHeaderText()}
             <div className="flex">
                 {!isHideFirstBtn && (
-                    <div
-                        className={`cursor-pointer mr-2 px-4 py-2 border text-dark-gray rounded-lg flex items-center justify-between ${btnFontSize}`}
-                    >
-                        <Filter
-                            width={btnFontSize === 'text-xs' ? 12 : 15}
-                            height={btnFontSize === 'text-xs' ? 12 : 15}
-                        />
+                    <div className="cursor-pointer mr-2 px-3 py-2 border text-dark-gray rounded-lg flex items-center justify-between text-sm">
+                        <FilterIcon width={15} height={15} />
                         <select
                             onChange={handleFilterUpdate}
-                            className="ml-2 focus:outline-none"
+                            className="ml-1 focus:outline-none"
                         >
                             {options?.map((option) => (
                                 <option
@@ -83,7 +77,7 @@ function Filters({
                 {!isHideSecondBtn && (
                     <div
                         onClick={handleClick}
-                        className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between gap-x-2.5 ${btnFontSize} ${
+                        className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between gap-x-2.5 text-sm ${
                             secondButtonText?.startsWith('Create New') ||
                             secondButtonText?.startsWith('Upload')
                                 ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition

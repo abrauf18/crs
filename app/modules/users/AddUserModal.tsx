@@ -14,12 +14,12 @@ import { signupInvite } from '@/lib/react-redux/features/auth/authAction';
 import { Button } from '@/app/components/ui/button';
 import Input from '@/app/components/common/Input';
 import { validationError } from '@/lib/utils';
-import Loader from '@/app/components/common/Loader';
+import Loader from '@/app/components/common/ButtonLoader';
 
 function ProfileModal({ onClose }: any) {
     const [role, setRole] = useState('student');
     const dispatch = useAppDispatch();
-    const state = useAppSelector((state: { user: any; }) => state.user);
+    const state = useAppSelector((state: { user: any }) => state.user);
     const { data, status } = useSession();
     const allRoles: OptionsInterface[] = [
         { label: 'student', value: 'Student' },

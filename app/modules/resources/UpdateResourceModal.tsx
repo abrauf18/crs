@@ -6,6 +6,7 @@ import {
     SubmitHandler,
     FieldValues,
     FormProvider,
+    set,
 } from 'react-hook-form';
 import action from '@/app/action';
 import { validationError, Resource } from '@/lib/utils';
@@ -38,31 +39,39 @@ function UpdateResourceModal({
     resource: Resource;
 }) {
     const { data } = useSession();
+    const [loading, setLoading] = React.useState(false);
     const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
 
     const handleUpdate = async (formData: ResourceFormData) => {
-        // Upload resource to s3Bucket if selected
-        if (data?.user?.accessToken) {
-            const updateResponse: any = await updateResourceAPI({
-                resourceId: resource.id,
-                name: formData.name,
-                type: formData.type,
-                topic: formData.topic,
-                accessToken: data?.user?.accessToken,
-            });
-            if (updateResponse?.status !== 200) {
-                toast.error(
-                    updateResponse?.message || 'Resource Update Failed'
-                );
+        try {
+            setLoading(true);
+            // Upload resource to s3Bucket if selected
+            if (data?.user?.accessToken) {
+                const updateResponse: any = await updateResourceAPI({
+                    resourceId: resource.id,
+                    name: formData.name,
+                    type: formData.type,
+                    topic: formData.topic,
+                    accessToken: data?.user?.accessToken,
+                });
+                if (updateResponse?.status !== 200) {
+                    toast.error(
+                        updateResponse?.message || 'Resource Update Failed'
+                    );
+                } else {
+                    action('getResources');
+                    toast.success('Resource Updated Successfully');
+                }
             } else {
-                action('getResources');
-                toast.success('Resource Updated Successfully');
+                toast.error('Token Expire, Please Signin Again');
             }
-        } else {
-            toast.error('Token Expire, Please Signin Again');
+        } catch (error: any) {
+            toast.error(error?.message || 'Resource Update Failed');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -165,7 +174,7 @@ function UpdateResourceModal({
                             />
                         </div>
                     </div>
-                    <ModalFooter text="Update" buttonType="submit" />
+                    <ModalFooter text="Update" loading={loading} />
                 </form>
             </FormProvider>
         </section>

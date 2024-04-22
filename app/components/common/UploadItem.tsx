@@ -18,17 +18,20 @@ function UploadItem({
     };
 
     return (
-        <section className="flex justify-between items-center flex-col md:p-12 sm:p-10 p-6 border-4 border-dotted rounded-lg text-center">
+        <section
+            className="flex justify-between items-center flex-col md:p-12 sm:p-10 p-6 border-4 border-dotted rounded-lg text-center cursor-pointer"
+            onClick={() => document.getElementById('fileInput')?.click()}
+        >
             <label
                 htmlFor="fileInput"
-                className=" rounded-full bg-green-50 p-2 mb-2 cursor-pointer"
+                className=" rounded-full bg-green-50 p-2 mb-2"
             >
                 <input
                     type="file"
                     id="fileInput"
                     accept=".pdf, .jpg, .jpeg, .png, .gif, .mp4, .avi, .mov, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
                     onChange={handleFileChange}
-                    style={{ display: 'none' }}
+                    className="hidden"
                 />
                 <Upload size={30} color="#7AA43E" />
             </label>

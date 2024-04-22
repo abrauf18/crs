@@ -13,7 +13,7 @@ import {
 } from '@/app/api/school';
 import { DeleteProfilePicture, UploadProfilePicture } from '@/app/api/s3Bucket';
 import { updateUserProfileAPI } from '@/app/api/user';
-import Loader from '@/app/components/common/Loader';
+import Loader from '@/app/components/common/ButtonLoader';
 
 type Inputs = {
     schoolName: string;

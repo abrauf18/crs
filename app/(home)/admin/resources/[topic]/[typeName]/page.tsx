@@ -47,7 +47,7 @@ async function ResourceDetailsPage({
                 topic: convertDashesToSpacesSimple(params.topic),
                 type,
                 page: parseInt(page, 10),
-                limit: 2,
+                limit: 10,
                 orderBy,
                 sortBy,
             });

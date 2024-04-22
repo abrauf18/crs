@@ -102,7 +102,7 @@ function ResourceDetails({
                     resources={APIdata.resources}
                     resourcesType={params.typeName}
                     currentPage={Number(page) - 1}
-                    limit={2}
+                    limit={10}
                     handlePageChange={handlePageChange}
                 />
             </div>

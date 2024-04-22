@@ -12,8 +12,7 @@ export function convertDashesToSpaces(str: string) {
 }
 
 export function convertDashesToSpacesSimple(str: string) {
-    return str
-        .replace(/-/g, ' '); // Replace hyphens with spaces
+    return str.replace(/-/g, ' '); // Replace hyphens with spaces
 }
 
 export function convertSpacesToDashes(str: string) {
@@ -38,7 +37,6 @@ export const validationError = {
 export const DEFAULT_IMAGE =
     'https://crs-data-storage-bucket.s3.ap-southeast-2.amazonaws.com/ProfilePictures/defaultImage.JPG';
 
-
 export enum ResourceType {
     VIDEO = 'video',
     SLIDESHOW = 'slideshow',
@@ -57,14 +55,14 @@ export const ResourceToPath = {
 
 export const PathToResource = {
     "Total-Video's": ResourceType.VIDEO,
-    "Slideshows": ResourceType.SLIDESHOW,
-    "Worksheets": ResourceType.WORKSHEET,
-    "Exit-Ticket-Test": ResourceType.EXIT_TICKET_TEST,
-    "Quizzes": ResourceType.QUIZ,
+    Slideshows: ResourceType.SLIDESHOW,
+    Worksheets: ResourceType.WORKSHEET,
+    'Exit-Ticket-Test': ResourceType.EXIT_TICKET_TEST,
+    Quizzes: ResourceType.QUIZ,
 };
 
 export const commonFilterOptions = [
-    { value: '', label: 'Filters' },
+    { value: '', label: 'Select Filters' },
     { value: 'Newest-First', label: 'Newest First' },
     { value: 'Oldest-First', label: 'Oldest First' },
     { value: 'Name-Alphabetical', label: 'Name: A to Z' },
@@ -76,7 +74,7 @@ export const commonFilterQueries = {
     'Oldest-First': { orderBy: 'createdAt', sortBy: 'asc' },
     'Name-Alphabetical': { orderBy: 'name', sortBy: 'asc' },
     'Name-Reverse-Alphabetical': { orderBy: 'name', sortBy: 'desc' },
-}
+};
 
 export const DEFAULT_RESOURCE = {
     id: '',
