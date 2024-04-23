@@ -12,7 +12,7 @@ function Standards() {
                 tagline="Here’s All Your Learning Standards"
                 Icon={TeacherStandardIcon}
             />
-            <Filters text="40 Learning Plans In Total" btnFontSize="text-xs" />
+            <Filters text="40 Learning Plans In Total" />
             <StandardCard />
         </section>
     );

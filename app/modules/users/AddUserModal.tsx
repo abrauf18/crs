@@ -108,11 +108,7 @@ function ProfileModal({ onClose }: any) {
                                 type="submit"
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                             >
-                                {state.loading ? (
-                                    <Loader color="white" size="4" />
-                                ) : (
-                                    'Invite'
-                                )}
+                                {state.loading ? <Loader /> : 'Invite'}
                             </Button>
                         </div>
                     </form>

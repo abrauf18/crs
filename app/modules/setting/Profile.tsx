@@ -241,11 +241,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                             : 'bg-primary-color'
                                     } font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12`}
                                 >
-                                    {loading ? (
-                                        <Loader color="white" size="4" />
-                                    ) : (
-                                        'Save Changes'
-                                    )}
+                                    {loading ? <Loader /> : 'Save Changes'}
                                 </button>
                             </div>
                         )}

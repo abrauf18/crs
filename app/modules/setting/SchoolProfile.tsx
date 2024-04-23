@@ -290,11 +290,7 @@ function SchoolProfile({
                                     : 'bg-primary-color'
                             } font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg`}
                         >
-                            {loading ? (
-                                <Loader color="white" size="4" />
-                            ) : (
-                                'Save'
-                            )}
+                            {loading ? <Loader /> : 'Save'}
                         </button>
                     </div>
                     {/* </div> */}

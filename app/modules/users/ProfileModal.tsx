@@ -247,11 +247,7 @@ function ProfileModal({
                                         : 'bg-primary-color'
                                 } font-semibold w-full px-5 py-2  border rounded-xl`}
                             >
-                                {loading ? (
-                                    <Loader color="white" size="4" />
-                                ) : (
-                                    'Save Changes'
-                                )}
+                                {loading ? <Loader /> : 'Save Changes'}
                             </button>
                         </div>
                     )}

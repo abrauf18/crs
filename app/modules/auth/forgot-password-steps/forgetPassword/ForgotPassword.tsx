@@ -81,11 +81,7 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                                 onClick={handleSubmit}
                             >
-                                {loading ? (
-                                    <Loader color="white" size="4" />
-                                ) : (
-                                    'Get Verification Code'
-                                )}
+                                {loading ? <Loader /> : 'Get Verification Code'}
                             </Button>
                         </div>
                     </form>
