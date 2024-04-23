@@ -127,10 +127,9 @@ function UsersTable({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {/* replace userList with users after delete functionality is implemented */}
                     {users &&
-                        Array.from(users as User[]).map(
-                            (user: User, index: number) => (
+                        users
+                            ?.map((user: User, index: number) => (
                                 <TableRow
                                     className="border-none"
                                     key={user?.id}
@@ -167,10 +166,10 @@ function UsersTable({
                                     <TableCell className="text-dark-gray">
                                         {user?.role}
                                     </TableCell>
-                                    <TableCell className="flex  items-center p-0 ml-2 mt-4 ">
+                                    <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
                                         {isDashboard ? (
                                             <div
-                                                className="mr-2 rounded-md flex justify-center w-full h-fulls cursor-pointer"
+                                                className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer flex items-center mt-1"
                                                 onClick={() =>
                                                     handleOpenProfileModal(user)
                                                 }
@@ -182,7 +181,7 @@ function UsersTable({
                                                 />
                                             </div>
                                         ) : (
-                                            <>
+                                            <div className="flex">
                                                 <div
                                                     className="mr-2 rounded-md cursor-pointer"
                                                     onClick={() =>
@@ -211,12 +210,12 @@ function UsersTable({
                                                         height={18}
                                                     />
                                                 </div>
-                                            </>
+                                            </div>
                                         )}
                                     </TableCell>
                                 </TableRow>
-                            )
-                        )}
+                            ))
+                            .slice(0, isDashboard ? 4 : users.length)}
                 </TableBody>
             </Table>
             {isShowProfileModal && (

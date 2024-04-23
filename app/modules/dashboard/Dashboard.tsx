@@ -8,9 +8,9 @@ import UserIcon from '@/app/assets/icons/UserIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import graph from '@/app/assets/images/graph.svg';
-import { usersData } from '@/app/modules/users/Users';
 import { ResourcesData } from '@/app/modules/resources/Resources';
-import UsersTable from '../users/UsersTable';
+import { Resource } from '@/lib/utils';
+import UsersTable, { User } from '../users/UsersTable';
 import ResourcesTable from '../resources/ResourcesTable';
 import Filters from '../../components/common/Filters';
 import Card from '../../components/common/Card';
@@ -71,7 +71,19 @@ export const learningPlans: LearningInterface[] = [
     },
 ];
 
-function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
+function Dashboard({
+    isTeacher,
+    UserAPIData,
+    ResourceAPIData,
+}: {
+    isTeacher?: boolean;
+    UserAPIData?: { users: User[]; totalUsers: number; totalPages: number };
+    ResourceAPIData?: {
+        resources: Resource[];
+        totalResources: number;
+        totalPages: number;
+    };
+}) {
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
             <Searchbar
@@ -147,22 +159,16 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                     </>
                 )}
             </div>
-            <Filters
-                text="Overall Performance"
-                btnFontSize="text-xs"
-                textColor="text-black"
-            />
+            <Filters text="Overall Performance" textColor="text-black" />
             <div className="w-auto ">
                 <Image src={graph as string} alt="icon" className="w-full" />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mobile:gap-8 mt-5">
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-xl font-semibold mb-2">
-                            Users
-                        </h1>
+                        <h1 className="text-xl font-semibold mb-2">Users</h1>
                         <UsersTable
-                            users={usersData}
+                            users={UserAPIData?.users ?? []}
                             fontSize="12"
                             isDashboard
                         />
@@ -186,8 +192,9 @@ function Dashboard({ isTeacher }: { isTeacher?: boolean }) {
                             Resources
                         </h1>
                         <ResourcesTable
-                            resources={ResourcesData}
+                            resources={ResourceAPIData?.resources ?? []}
                             fontSize="12"
+                            isDashboard
                         />
                     </div>
                 ) : (

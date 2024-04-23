@@ -30,6 +30,7 @@ interface ResourcesProp {
     currentPage?: number;
     limit?: number;
     handlePageChange?: (page: number) => void;
+    isDashboard?: boolean;
 }
 
 const poppins = Poppins({
@@ -42,6 +43,7 @@ function ResourcesTable({
     currentPage = 0,
     limit = 0,
     handlePageChange,
+    isDashboard,
 }: ResourcesProp) {
     const path = usePathname();
     const { push } = useRouter();
@@ -119,70 +121,86 @@ function ResourcesTable({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {resources.map((resource, index) => (
-                        <TableRow className="border-none" key={resource.id}>
-                            <TableCell className="font-medium ">
-                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {currentPage * limit + index + 1}
-                                </span>
-                            </TableCell>
-                            <TableCell className="">
-                                <span className="flex gap-x-2 items-center ">
-                                    <span className="truncate h-[26px]">
-                                        {resource.name}
+                    {resources
+                        .map((resource: any, index: number) => (
+                            <TableRow className="border-none" key={resource.id}>
+                                <TableCell className="font-medium ">
+                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                        {currentPage * limit + index + 1}
                                     </span>
-                                </span>
-                            </TableCell>
-                            {/* <TableCell>{resource.name}</TableCell> */}
-                            <TableCell className="text-dark-gray">
-                                {resource.type}
-                            </TableCell>
-                            <TableCell
-                                className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
-                                onClick={(
-                                    e: React.MouseEvent<
-                                        HTMLTableCellElement,
-                                        MouseEvent
-                                    >
-                                ) => handleClick(e)}
-                            >
-                                {resource.topic}
-                            </TableCell>
-                            <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
-                                <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
-                                    <Eye
-                                        color="#F59A3B"
-                                        width={18}
-                                        height={18}
-                                        onClick={() => {
-                                            push(
-                                                `${path}/${convertSpacesToDashes(
-                                                    resource.topic
-                                                )}/${
-                                                    ResourceToPath[
-                                                        resource.type
-                                                    ]
-                                                }/${resource.id}`
-                                            );
-                                        }}
-                                    />
-                                </div>
-                                <div
-                                    className="bg-red-100 rounded-md p-1 cursor-pointer"
-                                    onClick={() => {
-                                        setSelectedResource(resource);
-                                        setIsShowDialogBox(true);
-                                    }}
+                                </TableCell>
+                                <TableCell className="">
+                                    <span className="flex gap-x-2 items-center ">
+                                        <span className="truncate h-[26px]">
+                                            {resource.name}
+                                        </span>
+                                    </span>
+                                </TableCell>
+                                {/* <TableCell>{resource.name}</TableCell> */}
+                                <TableCell className="text-dark-gray">
+                                    {resource.type}
+                                </TableCell>
+                                <TableCell
+                                    className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
+                                    onClick={(
+                                        e: React.MouseEvent<
+                                            HTMLTableCellElement,
+                                            MouseEvent
+                                        >
+                                    ) => handleClick(e)}
                                 >
-                                    <Trash
-                                        color="#D34645"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                                    {resource.topic}
+                                </TableCell>
+                                <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
+                                    <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
+                                        <Eye
+                                            color="#F59A3B"
+                                            width={18}
+                                            height={18}
+                                            onClick={() => {
+                                                if (isDashboard) {
+                                                    push(
+                                                        `${path}/resources/${convertSpacesToDashes(
+                                                            resource.topic
+                                                        )}/${
+                                                            ResourceToPath[
+                                                                resource.type as keyof typeof ResourceToPath
+                                                            ]
+                                                        }/${resource.id}`
+                                                    );
+                                                } else {
+                                                    push(
+                                                        `${path}/${convertSpacesToDashes(
+                                                            resource.topic
+                                                        )}/${
+                                                            ResourceToPath[
+                                                                resource.type as keyof typeof ResourceToPath
+                                                            ]
+                                                        }/${resource.id}`
+                                                    );
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                    {!isDashboard && (
+                                        <div
+                                            className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                            onClick={() => {
+                                                setSelectedResource(resource);
+                                                setIsShowDialogBox(true);
+                                            }}
+                                        >
+                                            <Trash
+                                                color="#D34645"
+                                                width={18}
+                                                height={18}
+                                            />
+                                        </div>
+                                    )}
+                                </TableCell>
+                            </TableRow>
+                        ))
+                        .slice(0, isDashboard ? 4 : resources.length)}
                 </TableBody>
             </Table>
             {isShowDialogBox && (

@@ -88,7 +88,6 @@ function SchoolDashboard() {
             <Filters
                 text="Overall Performance"
                 secondButtonText="Average Time Spent"
-                btnFontSize="text-xs"
             />
             <div className="w-auto">
                 <Image
