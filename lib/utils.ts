@@ -11,6 +11,10 @@ export function convertDashesToSpaces(str: string) {
         .replace(/-/g, ' '); // Replace hyphens with spaces
 }
 
+export function convertDashesToSpacesSimple(str: string) {
+    return str.replace(/-/g, ' '); // Replace hyphens with spaces
+}
+
 export function convertSpacesToDashes(str: string) {
     return str.replace(/ /g, '-');
 }
@@ -32,3 +36,60 @@ export const validationError = {
 
 export const DEFAULT_IMAGE =
     'https://crs-data-storage-bucket.s3.ap-southeast-2.amazonaws.com/ProfilePictures/defaultImage.JPG';
+
+export enum ResourceType {
+    VIDEO = 'video',
+    SLIDESHOW = 'slideshow',
+    WORKSHEET = 'worksheet',
+    EXIT_TICKET_TEST = 'exit-ticket-test',
+    QUIZ = 'quiz',
+}
+
+export const ResourceToPath = {
+    [ResourceType.VIDEO]: 'Total-Videos',
+    [ResourceType.SLIDESHOW]: 'Slideshows',
+    [ResourceType.WORKSHEET]: 'Worksheets',
+    [ResourceType.EXIT_TICKET_TEST]: 'Exit-Ticket-Test',
+    [ResourceType.QUIZ]: 'Quizzes',
+};
+
+export const PathToResource = {
+    "Total-Video's": ResourceType.VIDEO,
+    Slideshows: ResourceType.SLIDESHOW,
+    Worksheets: ResourceType.WORKSHEET,
+    'Exit-Ticket-Test': ResourceType.EXIT_TICKET_TEST,
+    Quizzes: ResourceType.QUIZ,
+};
+
+export const commonFilterOptions = [
+    { value: '', label: 'Select Filters' },
+    { value: 'Newest-First', label: 'Newest First' },
+    { value: 'Oldest-First', label: 'Oldest First' },
+    { value: 'Name-Alphabetical', label: 'Name: A to Z' },
+    { value: 'Name-Reverse-Alphabetical', label: 'Name: Z to A' },
+];
+
+export const commonFilterQueries = {
+    'Newest-First': { orderBy: 'createdAt', sortBy: 'desc' },
+    'Oldest-First': { orderBy: 'createdAt', sortBy: 'asc' },
+    'Name-Alphabetical': { orderBy: 'name', sortBy: 'asc' },
+    'Name-Reverse-Alphabetical': { orderBy: 'name', sortBy: 'desc' },
+};
+
+export const DEFAULT_RESOURCE = {
+    id: '',
+    name: '',
+    type: ResourceType.QUIZ,
+    topic: '',
+    url: '',
+    show: '',
+};
+
+export interface Resource {
+    id: string;
+    name: string;
+    type: ResourceType;
+    topic: string;
+    url?: string; // remove ? after completion of CRS to prevent breakages
+    show?: string; // remove ? after completion of CRS to prevent breakages
+}

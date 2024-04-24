@@ -14,7 +14,7 @@ import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
 import { forgotPassword } from '@/lib/react-redux/features/auth/authAction';
 import { toast } from 'react-toastify';
-import Loader from '@/app/components/common/Loader';
+import Loader from '@/app/components/common/ButtonLoader';
 import LeftSide from '../../common/LeftSide';
 
 function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
@@ -81,11 +81,7 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                                 onClick={handleSubmit}
                             >
-                                {loading ? (
-                                    <Loader color="white" size="4" />
-                                ) : (
-                                    'Get Verification Code'
-                                )}
+                                {loading ? <Loader /> : 'Get Verification Code'}
                             </Button>
                         </div>
                     </form>

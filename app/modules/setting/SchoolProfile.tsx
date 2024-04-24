@@ -13,7 +13,7 @@ import {
 } from '@/app/api/school';
 import { DeleteProfilePicture, UploadProfilePicture } from '@/app/api/s3Bucket';
 import { updateUserProfileAPI } from '@/app/api/user';
-import Loader from '@/app/components/common/Loader';
+import Loader from '@/app/components/common/ButtonLoader';
 
 type Inputs = {
     schoolName: string;
@@ -290,11 +290,7 @@ function SchoolProfile({
                                     : 'bg-primary-color'
                             } font-semibold mobile:w-full p-2 md:px-6 md:py-2 border rounded-lg`}
                         >
-                            {loading ? (
-                                <Loader color="white" size="4" />
-                            ) : (
-                                'Save'
-                            )}
+                            {loading ? <Loader /> : 'Save'}
                         </button>
                     </div>
                     {/* </div> */}

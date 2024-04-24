@@ -7,6 +7,7 @@ interface InputPropsInterface {
     placeholder?: string;
     type: string;
     rules?: Record<string, any>;
+    inputValue?: string;
 }
 
 function Input({
@@ -14,6 +15,7 @@ function Input({
     placeholder,
     type,
     rules,
+    inputValue,
 }: InputPropsInterface): JSX.Element {
     const { register } = useFormContext();
 
@@ -25,6 +27,7 @@ function Input({
                 type={type}
                 placeholder={placeholder}
                 {...register(name, rules)}
+                defaultValue={inputValue ?? ''}
             />
             <FormError name={name} />
         </div>

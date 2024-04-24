@@ -44,7 +44,8 @@ function SignupForm({ token }: { token: string }) {
                         alt="CRSC Logo"
                     />
                     <h1 className="text-2xl font-semibold mt-6">
-                        Join School <span className="text-primary-color">XYZ</span>
+                        Join School{' '}
+                        <span className="text-primary-color">XYZ</span>
                     </h1>
                     <p className="text-sm font-medium text-dark-gray mb-6">
                         Enter Details to Create your Account
@@ -126,7 +127,11 @@ function SignupForm({ token }: { token: string }) {
                         </Button>
                         <span className="text-black text-xs">Or</span>
                         <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
-                            <GoogleIcon width={20} height={20} className="mr-2" />
+                            <GoogleIcon
+                                width={20}
+                                height={20}
+                                className="mr-2"
+                            />
                             Sign Up With Google
                         </Button>
                     </div>

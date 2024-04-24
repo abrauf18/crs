@@ -7,6 +7,7 @@ import userImage from '@/app/assets/images/UserImage.svg';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import AddUserModal from '@/app/modules/users/AddUserModal';
+import { commonFilterOptions, commonFilterQueries } from '@/lib/utils';
 import UsersTable, { User } from './UsersTable';
 
 // remove after all users are fetched from the API in every dummy Users component in the app
@@ -82,30 +83,18 @@ function Users({
     const handleFilterUpdate = (
         event: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        switch (event.target.value) {
-            case 'Newest-First':
-                // Handle the "Newest First" option
-                router.push(`?page=${page}&orderBy=createdAt&sortBy=desc`);
-                break;
-            case 'Oldest-First':
-                // Handle the "Oldest First" option
-                router.push(`?page=${page}&orderBy=createdAt&sortBy=asc`);
-                break;
-            case 'Name-Alphabetical':
-                // Handle the "Name: A to Z" option
-                router.push(`?page=${page}&orderBy=name&sortBy=asc`);
-                break;
-            case 'Name-Reverse-Alphabetical':
-                // Handle the "Name: Z to A" option
-                router.push(`?page=${page}&orderBy=name&sortBy=desc`);
-                break;
-            default:
-                // Handle the default case
-                router.push(`?page=${page}`);
-                break;
+        const query =
+            commonFilterQueries[
+                event.target.value as keyof typeof commonFilterQueries
+            ];
+        if (query) {
+            router.push(
+                `?page=${page}&orderBy=${query.orderBy}&sortBy=${query.sortBy}`
+            );
+        } else {
+            router.push(`?page=${page}`);
         }
     };
-
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
@@ -114,25 +103,7 @@ function Users({
                         <Filters
                             text="Users"
                             isHideSecondBtn
-                            options={[
-                                { value: '', label: 'Filters' },
-                                {
-                                    value: 'Newest-First',
-                                    label: 'Newest First',
-                                },
-                                {
-                                    value: 'Oldest-First',
-                                    label: 'Oldest First',
-                                },
-                                {
-                                    value: 'Name-Alphabetical',
-                                    label: 'Name: A to Z',
-                                },
-                                {
-                                    value: 'Name-Reverse-Alphabetical',
-                                    label: 'Name: Z to A',
-                                },
-                            ]}
+                            options={[...commonFilterOptions]}
                             handleFilterUpdate={handleFilterUpdate}
                         />
                     </div>
@@ -152,14 +123,16 @@ function Users({
                 <UsersTable
                     users={APIdata?.users}
                     currentPage={Number(page) - 1}
-                    limit={2}
+                    limit={10}
                     handlePageChange={handlePageChange}
                 />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion
-                    currentPage={Number(page)}
-                    totalPages={APIdata?.totalPages}
+                    currentPage={Number(page) > 0 ? Number(page) : 1}
+                    totalPages={
+                        APIdata?.totalPages > 0 ? APIdata.totalPages : 1
+                    }
                     onPageChange={handlePageChange}
                 />
             </div>

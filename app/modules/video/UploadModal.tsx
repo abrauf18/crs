@@ -16,8 +16,11 @@ function UploadModal() {
                     }}
                     Icon={FileVideoIcon}
                 />
-                <UploadItem itemName="Video" />
-                <FileUploading />
+                <UploadItem
+                    itemName="Video"
+                    setSelectedFile={(file: File | null) => {}}
+                />
+                <FileUploading progress={0} />
                 <div className="p-2 rounded-lg border w-32 text-center mt-3">
                     <button type="button" className="text-dark-gray text-sm">
                         Cancel Upload

@@ -7,9 +7,15 @@ interface SelectPropsInterface extends SelectHTMLAttributes<HTMLSelectElement> {
     placeholder?: string;
     rules?: Record<string, any>;
     options: { value: string; label: string }[];
+    selectedOption?: string;
 }
 
-function Select({ name, rules, options }: SelectPropsInterface): JSX.Element {
+function Select({
+    name,
+    rules,
+    options,
+    selectedOption,
+}: SelectPropsInterface): JSX.Element {
     const { register } = useFormContext();
 
     return (
@@ -20,7 +26,14 @@ function Select({ name, rules, options }: SelectPropsInterface): JSX.Element {
                 {...register(name, rules)}
             >
                 {options.map((option) => (
-                    <option key={option.label} value={option.label}>
+                    <option
+                        key={option.label}
+                        value={option.label}
+                        selected={
+                            option.value.toLowerCase() ===
+                            selectedOption?.toLowerCase()
+                        }
+                    >
                         {option.value}
                     </option>
                 ))}

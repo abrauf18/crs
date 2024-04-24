@@ -1,3 +1,6 @@
+'use client';
+
+// component is client beacuse of pagination
 import React from 'react';
 import Searchbar from '@/app/components/common/Searchbar';
 import Filters from '@/app/components/common/Filters';
@@ -50,7 +53,7 @@ function Resources() {
                 tagline="Your All Resources Allocated to Topics"
             />
             <div className="border rounded-lg p-3 px-6">
-                <Filters text="All topic's" btnFontSize="text-xs" />
+                <Filters text="All topic's" />
                 <ResourcesTable resources={resourcesList} />
             </div>
             <div className="flex justify-center items-center mt-5">

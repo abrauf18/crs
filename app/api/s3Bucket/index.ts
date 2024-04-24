@@ -61,3 +61,44 @@ export const DeleteProfilePicture = async (objectUrl: string) => {
         };
     }
 };
+
+export const UploadResource = async ({
+    selectedFile,
+    userId,
+    onUploadProgress,
+}: {
+    selectedFile: any;
+    userId: string;
+    onUploadProgress: (progressEvent: any) => void;
+}) => {
+    if (!selectedFile) {
+        return {
+            status: 400,
+            message: 'File Not Selected',
+        };
+    }
+    try {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('fileSaveDirectory', 'Resources');
+        formData.append('userId', userId);
+
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/s3Bucket`,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                onUploadProgress,
+            }
+        );
+
+        return response;
+    } catch (error) {
+        return {
+            status: 500,
+            message: 'Error Uploading Image',
+        };
+    }
+};

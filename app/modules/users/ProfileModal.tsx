@@ -15,7 +15,7 @@ import { Label } from '@/app/components/ui/label';
 import { validationError } from '@/lib/utils';
 import { OptionsInterface } from '@/app/components/common/AppDropDown';
 import Input from '@/app/components/common/Input';
-import Loader from '@/app/components/common/Loader';
+import Loader from '@/app/components/common/ButtonLoader';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import useProfileImage from '@/lib/custom-hooks/useProfileImage';
 import { updateAnotherUserProfileAPI } from '@/app/api/user';
@@ -170,7 +170,7 @@ function ProfileModal({
                             onClose={onClose}
                         />
                         <div className="flex flex-col  mobile:items-center w-full">
-                        <ProfileImage
+                            <ProfileImage
                                 selectedFile={selectedFile}
                                 currentImage={currentImage}
                                 handleClick={handleClick}
@@ -247,11 +247,7 @@ function ProfileModal({
                                         : 'bg-primary-color'
                                 } font-semibold w-full px-5 py-2  border rounded-xl`}
                             >
-                                {loading ? (
-                                    <Loader color="white" size="4" />
-                                ) : (
-                                    'Save Changes'
-                                )}
+                                {loading ? <Loader /> : 'Save Changes'}
                             </button>
                         </div>
                     )}

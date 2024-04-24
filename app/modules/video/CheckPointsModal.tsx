@@ -18,7 +18,7 @@ function CheckPointsModal() {
                     Icon={FileVideoIcon}
                 />
 
-                <FileUploading isCompleted />
+                <FileUploading isCompleted progress={0}/>
                 <div className=" mt-3 flex justify-end w-full">
                     <button
                         type="button"
