@@ -8,7 +8,6 @@ import UserIcon from '@/app/assets/icons/UserIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import graph from '@/app/assets/images/graph.svg';
-import { ResourcesData } from '@/app/modules/resources/Resources';
 import { Resource } from '@/lib/utils';
 import UsersTable, { User } from '../users/UsersTable';
 import ResourcesTable from '../resources/ResourcesTable';
