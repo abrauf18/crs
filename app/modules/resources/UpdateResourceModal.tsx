@@ -17,11 +17,6 @@ import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { updateResourceAPI } from '@/app/api/resource';
-import VideoIcon from '@/app/assets/icons/VideoIcon';
-import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
-import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
-import TicketIcon from '@/app/assets/icons/TicketIcon';
-import QuestionIcon from '@/app/assets/icons/QuestionIcon';
 import { resourceTypeOptions } from '@/app/modules/resources/UploadResourceModal';
 
 // type for the form data
@@ -74,28 +69,6 @@ function UpdateResourceModal({
             setLoading(false);
         }
     };
-
-    let Icon;
-    switch (resource.type) {
-        case 'video':
-            Icon = VideoIcon;
-            break;
-        case 'slideshow':
-            Icon = SlideShowIcon;
-            break;
-        case 'worksheet':
-            Icon = WorksheetIcon;
-            break;
-        case 'exit-ticket-test':
-            Icon = TicketIcon;
-            break;
-        case 'quiz':
-            Icon = QuestionIcon;
-            break;
-        default:
-            Icon = ResourceIcon;
-            break;
-    }
 
     return (
         <section className="w-full bg-white h-screen py-4  shadow-lg">
