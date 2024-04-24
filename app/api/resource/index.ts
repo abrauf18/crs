@@ -82,6 +82,7 @@ export const createResourceAPI = async ({
     type,
     topic,
     accessToken,
+    thumbnailURL,
     onUploadProgress,
 }: {
     name: string;
@@ -89,6 +90,7 @@ export const createResourceAPI = async ({
     topic: string;
     type: string;
     accessToken: string;
+    thumbnailURL?: string;
     onUploadProgress: (progressEvent: any) => void;
 }) => {
     const response = await axios.post(
@@ -99,6 +101,7 @@ export const createResourceAPI = async ({
             type,
             topic,
             accessToken,
+            thumbnailURL,
         },
         {
             onUploadProgress,
