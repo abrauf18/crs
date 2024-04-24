@@ -33,7 +33,13 @@ function VideoCard({ card, isModal }: VideoCardProps) {
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
             <Link href="#" className="relative">
-                <Image src={card.imageUrl} alt="video" className="w-full" />
+            <Image
+                    src={card.imageUrl}
+                    alt="video"
+                    className="w-full"
+                    width={150}
+                    height={150}
+                />
                 <div className="absolute left-1/2 bottom-[29%] transform -translate-x-1/2 -translate-y-1/2">
                     <PlayIcon fill="white" color="white" size={35} />
                 </div>
