@@ -34,33 +34,25 @@ export const getVideosAPI = async ({
 
 export const createVideoQuestionsAPI = async ({
     videoId,
-    statement,
-    options,
-    correctOption,
-    correctOptionExplanation,
-    totalMarks = 0,
-    popupTime,
+    questions,
     accessToken,
 }: {
     videoId: string;
-    statement: string;
-    options: { [key: string]: string }[];
-    correctOption: string;
-    correctOptionExplanation: string;
-    totalMarks: number;
-    popupTime: string;
+    questions: {
+        statement: string;
+        options: { [key: string]: string };
+        correctOption: string;
+        correctOptionExplanation: string;
+        totalMarks: number;
+        popupTime: string;
+    }[];
     accessToken: string;
 }) => {
     const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/question/createVideoQuestions`,
         {
             videoId,
-            statement,
-            options,
-            correctOption,
-            correctOptionExplanation,
-            totalMarks,
-            popupTime,
+            questions,
             accessToken,
         }
     );

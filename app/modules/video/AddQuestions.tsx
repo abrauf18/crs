@@ -19,7 +19,7 @@ interface Question {
     type: 'Open' | 'Mcq'; // Add the type field
 }
 
-function AddQuestions() {
+function AddQuestions({ videoId }: { videoId: string }) {
     const { data } = useSession();
     const initialQuestions: Question[] = [
         {
@@ -28,7 +28,7 @@ function AddQuestions() {
             correctOption: '',
             correctOptionExplanation: '',
             popupTime: '',
-            type: 'Open', // Set default type
+            type: 'Open',
         },
     ];
 
@@ -82,8 +82,32 @@ function AddQuestions() {
         setQuestions(newQuestions);
     };
 
-    const handleSubmit = () => {
-        console.log(questions);
+    const onFormSubmit = async () => {
+        try {
+            // Transform each question in the questions array
+            const transformedQuestions = questions.map((question) => ({
+                statement: question.statement,
+                options: question.options,
+                correctOption: question.correctOption,
+                correctOptionExplanation: question.correctOptionExplanation,
+                totalMarks: 0, // Assuming totalMarks is always 0 for now
+                popupTime: question.popupTime,
+            }));
+
+            const response = await createVideoQuestionsAPI({
+                videoId,
+                questions: transformedQuestions,
+                accessToken: data?.user?.accessToken || '',
+            });
+
+            if (response.status !== 200) {
+                return toast.error('Failed to add question');
+            }
+
+            return toast.success('Question added successfully');
+        } catch (error: any) {
+            return toast.error(error?.message || 'Failed to add question');
+        }
     };
 
     return (
@@ -255,7 +279,7 @@ function AddQuestions() {
                     </div>
                 ))}
             </div>
-            <div onClick={handleSubmit}>
+            <div onClick={onFormSubmit}>
                 <ModalFooter text="Next" />
             </div>
         </section>

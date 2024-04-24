@@ -71,9 +71,9 @@ function Video({
                 </div>
             )}
 
-            {isShowUploadVideoModal && step === 0 && (
+            {isShowUploadVideoModal && step === 1 && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                    <AddQuestions />
+                    <AddQuestions videoId={videoId} />
                 </div>
             )}
 
