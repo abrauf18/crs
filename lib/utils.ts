@@ -1,5 +1,11 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import VideoIcon from '@/app/assets/icons/VideoIcon';
+import TicketIcon from '@/app/assets/icons/TicketIcon';
+import ResourceIcon from '@/app/assets/icons/ResourceIcon';
+import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
+import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
+import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -92,4 +98,46 @@ export interface Resource {
     topic: string;
     url?: string; // remove ? after completion of CRS to prevent breakages
     show?: string; // remove ? after completion of CRS to prevent breakages
+}
+
+export interface VideoSummary {
+    id: string,
+    resourceId: string,
+    thumbnailURL: string,
+    name: string,
+    questionCountNumber: number,
+    topicsCount: number
+}
+
+export const resourceDropDownOptions = [
+    { label: ResourceType.QUIZ, value: 'Quiz' },
+    { label: ResourceType.VIDEO, value: 'Video' },
+    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
+    { label: ResourceType.WORKSHEET, value: 'Worksheet' },
+    { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
+];
+
+export const resourceTypeToIcon = (resourceType: ResourceType) => {
+    let Icon;
+    switch (resourceType) {
+        case 'video':
+            Icon = VideoIcon;
+            break;
+        case 'slideshow':
+            Icon = SlideShowIcon;
+            break;
+        case 'worksheet':
+            Icon = WorksheetIcon;
+            break;
+        case 'exit-ticket-test':
+            Icon = TicketIcon;
+            break;
+        case 'quiz':
+            Icon = QuestionMarkIcon;
+            break;
+        default:
+            Icon = ResourceIcon;
+            break;
+    }
+    return Icon;
 }
