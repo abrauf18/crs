@@ -7,41 +7,27 @@ import {
     FieldValues,
     FormProvider,
 } from 'react-hook-form';
+import {
+    validationError,
+    resourceDropDownOptions,
+    ResourceType,
+    resourceTypeToIcon,
+} from '@/lib/utils';
 import action from '@/app/action';
-import { validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { UploadResource } from '@/app/api/s3Bucket';
 import Select from '@/app/components/common/DropDown';
+import { createResourceAPI } from '@/app/api/resource';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import UploadItem from '@/app/components/common/UploadItem';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import FileUploading from '@/app/components/common/FileUploading';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { OptionsInterface } from '@/app/components/common/AppDropDown';
-import { createResourceAPI } from '@/app/api/resource';
-import VideoIcon from '@/app/assets/icons/VideoIcon';
-import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
-import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
-import TicketIcon from '@/app/assets/icons/TicketIcon';
-import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
-import { arrayBuffer } from 'stream/consumers';
-
-// ENUM for the resource type
-export enum ResourceType {
-    VIDEO = 'video',
-    SLIDESHOW = 'slideshow',
-    WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
-    QUIZ = 'quiz',
-}
 
 export const resourceTypeOptions: OptionsInterface[] = [
-    { label: ResourceType.VIDEO, value: 'Video' },
-    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
-    { label: ResourceType.WORKSHEET, value: 'Worksheet' },
-    { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
-    { label: ResourceType.QUIZ, value: 'Quiz' },
+    ...resourceDropDownOptions,
 ];
 
 // type for the form data
@@ -49,6 +35,7 @@ type ResourceFormData = {
     topic: string;
     type: string;
     name: string;
+    thumbnail?: File;
 };
 
 function UploadResourceModal({ onClose }: any) {
@@ -60,79 +47,96 @@ function UploadResourceModal({ onClose }: any) {
         reValidateMode: 'onChange',
     });
     const resourceType = methods.watch('type');
+    const thumbnailFile = methods.watch('thumbnail');
 
-    const handleUpload = async (formData: ResourceFormData) => {
-        // Upload resource to s3Bucket if selected
-        if (selectedFile && data?.user?.accessToken) {
-            const uploadAtS3: any = await UploadResource({
-                selectedFile,
-                userId: data?.user?.id,
-                onUploadProgress: (progressEvent) => {
-                    const percentage = Math.round(
-                        (progressEvent.loaded * 10) / progressEvent.total
-                    );
-                    setProgress(percentage); // Update progress state
-                },
-            });
-            // Handle resource upload error
-            if (uploadAtS3?.status !== 200) {
-                toast.error(uploadAtS3?.message || 'Resource Upload Failed');
-            }
-            // It is an axios response so we need to access the data property
-            const resourceURL = uploadAtS3?.data?.url;
-
-            const UploadAtBackend: any = await createResourceAPI({
-                accessToken: data?.user?.accessToken,
-                name: formData.name,
-                topic: formData.topic,
-                type: formData.type,
-                url: resourceURL,
-                onUploadProgress: (progressEvent) => {
-                    const percentage = Math.round(
-                        (progressEvent.loaded * 50) / progressEvent.total + 50
-                    );
-                    setProgress(percentage); // Update progress state
-                },
-            });
-            // Handle resource upload error
-            if (UploadAtBackend?.status !== 200) {
-                toast.error(
-                    UploadAtBackend?.message || 'Resource Upload Failed'
+    const uploadFile = async (file: File) => {
+        const response: any = await UploadResource({
+            selectedFile: file,
+            userId: data?.user?.id,
+            onUploadProgress: (progressEvent) => {
+                const percentage = Math.round(
+                    (progressEvent.loaded * 50) / progressEvent.total
                 );
-            } else {
-                action('getResources');
-                action('getResourcesCount');
-                onClose();
-                toast.success('Resource Uploaded Successfully');
-            }
-        } else if (!data?.user.accessToken) {
-            toast.error('Token Expire, Please Signin Again');
-        } else {
-            toast.error('Please Select File');
+                setProgress(percentage);
+            },
+        });
+
+        if (response?.status !== 200) {
+            toast.error(response?.message || 'Upload Failed');
+            return null;
+        }
+
+        return response?.data?.url;
+    };
+
+    const createResource = async (
+        url: string,
+        formData: ResourceFormData,
+        thumbnailURL?: string
+    ) => {
+        const resourceData: any = {
+            accessToken: data?.user?.accessToken ?? '',
+            name: formData.name,
+            topic: formData.topic,
+            type: formData.type,
+            url,
+            onUploadProgress: (progressEvent: {
+                loaded: number;
+                total: number;
+            }) => {
+                const percentage = Math.round(
+                    (progressEvent.loaded * 50) / progressEvent.total + 50
+                );
+                setProgress(percentage);
+            },
+        };
+
+        if (formData.type === ResourceType.VIDEO) {
+            resourceData.thumbnailURL = thumbnailURL;
+        }
+
+        const response: any = await createResourceAPI(resourceData);
+
+        if (response?.status !== 200) {
+            toast.error(response?.message || 'Resource Upload Failed');
         }
     };
 
-    let Icon;
-    switch (resourceType) {
-        case 'video':
-            Icon = VideoIcon;
-            break;
-        case 'slideshow':
-            Icon = SlideShowIcon;
-            break;
-        case 'worksheet':
-            Icon = WorksheetIcon;
-            break;
-        case 'exit-ticket-test':
-            Icon = TicketIcon;
-            break;
-        case 'quiz':
-            Icon = QuestionMarkIcon;
-            break;
-        default:
-            Icon = ResourceIcon;
-            break;
-    }
+    const handleUpload = async (formData: ResourceFormData) => {
+        try {
+            if (!data?.user.accessToken) {
+                return toast.error('Token Expire, Please Signin Again');
+            }
+            if (!selectedFile) {
+                return toast.error('Please Select File');
+            }
+
+            const resourceURL = await uploadFile(selectedFile);
+            if (!resourceURL) {
+                return null;
+            }
+
+            if (resourceType === ResourceType.VIDEO) {
+                if (!formData.thumbnail) {
+                    return toast.error('Please Select Thumbnail');
+                }
+                const thumbnailURL = await uploadFile(thumbnailFile['0']);
+                await createResource(resourceURL, formData, thumbnailURL);
+            } else {
+                await createResource(resourceURL, formData);
+            }
+
+            action('getResources');
+            action('getResourcesCount');
+            onClose();
+
+            return toast.success('Resource Uploaded Successfully');
+        } catch (error: any) {
+            return toast.error(error?.message);
+        }
+    };
+
+    const Icon = resourceTypeToIcon(resourceType);
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
@@ -207,6 +211,28 @@ function UploadResourceModal({ onClose }: any) {
                                 }}
                             />
                         </div>
+                        {resourceType === ResourceType.VIDEO && (
+                            <div className="flex flex-col space-y-1 mt-5">
+                                <Label
+                                    htmlFor="thumbnail"
+                                    className="font-semibold text-md"
+                                >
+                                    Video Thumbnail
+                                </Label>
+                                <Input
+                                    name="thumbnail"
+                                    placeholder="Select Thumbnail"
+                                    type="file"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
                         <div className="mt-4">
                             {!selectedFile && (
                                 <UploadItem
@@ -221,7 +247,6 @@ function UploadResourceModal({ onClose }: any) {
                                     Icon={Icon}
                                 />
                             )}
-                            {/* {progress} */}
                             <div className="p-2 rounded-lg border w-32 text-center mt-3">
                                 <button
                                     type="button"
