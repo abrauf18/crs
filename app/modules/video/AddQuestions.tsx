@@ -12,11 +12,9 @@ import {
 import { Label } from '@/app/components/ui/label';
 import { createVideoQuestionsAPI } from '@/app/api/video';
 import ModalFooter from '@/app/components/common/ModalFooter';
-import AppInput from '@/app/components/common/AppInput';
 import Input from '@/app/components/common/Input';
 import { validationError } from '@/lib/utils';
 import Select from '@/app/components/common/DropDown';
-import FileUploading from '../../components/common/FileUploading';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 interface Question {
