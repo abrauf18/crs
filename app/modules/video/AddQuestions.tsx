@@ -192,6 +192,11 @@ function AddQuestions({
                                             message:
                                                 validationError.REQUIRED_FIELD,
                                         },
+                                        pattern: {
+                                            value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
+                                            message:
+                                                'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
+                                        },
                                     }}
                                 />
                             </div>
