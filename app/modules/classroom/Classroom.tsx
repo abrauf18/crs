@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 import { VideoIcon } from 'lucide-react';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import StudentIcon from '@/app/assets/icons/StudentIcon';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import StudentsInfoTable from '../students/StudentsInfoTable';
@@ -10,14 +10,14 @@ import ClassroomModal from './ClassroomModal';
 import ClassroomCard from './ClassroomCard';
 
 function Classroom() {
-    const [selectedClass, setSelectedClass] = useState("6th Class");
+    const [selectedClass, setSelectedClass] = useState('6th Class');
     const showClassStudents = (viewClass: React.SetStateAction<string>) => {
         setSelectedClass(viewClass);
         const detailsSection = document.getElementById('classDetailsSection');
         if (detailsSection) {
             detailsSection.scrollIntoView({ behavior: 'smooth' });
         }
-    }
+    };
 
     return (
         <div>
@@ -157,9 +157,12 @@ function Classroom() {
                 />
             </div>
 
-            <div className="border rounded-lg p-4 px-6 mt-5" id='classDetailsSection'>
+            <div
+                className="border rounded-lg p-4 px-6 mt-5"
+                id="classDetailsSection"
+            >
                 <h1 className="text-xl font-semibold">{selectedClass}</h1>
-                <StudentsInfoTable students={Studentinfo} isClassroomTable/>
+                <StudentsInfoTable students={Studentinfo} isClassroomTable />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
                 <Pagintaion />

@@ -59,7 +59,8 @@ function CreatePasswordForm({ description }: { description: string }) {
                                 },
                                 pattern: {
                                     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-\\+=:;"'?\\/>.<,{}\\[\]])[a-zA-Z\d~`!@#$%^&*()_\-\\+=:;"'?\\/>.<,{}\\[\]]{8,}$/,
-                                    message: validationError.PASSWORD_VALIDATION_INFO_TEXT,
+                                    message:
+                                        validationError.PASSWORD_VALIDATION_INFO_TEXT,
                                 },
                                 minLength: {
                                     value: 8,
@@ -85,7 +86,8 @@ function CreatePasswordForm({ description }: { description: string }) {
                                     message: validationError.REQUIRED_FIELD,
                                 },
                                 validate: (value: string) =>
-                                    value === methods.getValues('newPassword') ||
+                                    value ===
+                                        methods.getValues('newPassword') ||
                                     'Passwords must match',
                             }}
                         />

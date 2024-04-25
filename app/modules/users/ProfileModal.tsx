@@ -151,7 +151,7 @@ function ProfileModal({
             email,
             role,
         });
-    }, []);
+    }, [email, image, methods, name, role, setCurrentImage, setOriginalImage]);
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-auto">

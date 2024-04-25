@@ -155,7 +155,9 @@ function StudentsInfoTable({
                                 {!isTeacherDashboardTable && (
                                     <div
                                         className="bg-red-100 rounded-md p-1 cursor-pointer"
-                                        onClick={() => handleDeleteStudents(index)}
+                                        onClick={() =>
+                                            handleDeleteStudents(index)
+                                        }
                                     >
                                         <Trash
                                             color="#D34645"

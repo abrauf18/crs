@@ -47,9 +47,7 @@ function TestDetailTable({ test, fontSize }: TestDetailProp) {
     };
     return (
         <section>
-            <Table
-                className={`text-[${fontSize || '18'}px] mobile:text-sm`}
-            >
+            <Table className={`text-[${fontSize || '18'}px] mobile:text-sm`}>
                 <TableHeader>
                     <TableRow>
                         <TableHead className=" text-dark-gray font-semibold">

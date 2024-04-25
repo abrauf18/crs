@@ -16,25 +16,25 @@ interface LeftSideProp {
 function LeftSide({ images, metaText }: LeftSideProp) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const nextSlide = () => {
-        const isLastSlide = currentIndex === images.length - 1;
-        const newIndex = isLastSlide ? 0 : currentIndex + 1;
-        setCurrentIndex(newIndex);
-    };
-
     const goToSlide = (slideIndex: any) => {
         setCurrentIndex(slideIndex);
     };
 
     // Automatically move to the next slide every 3 seconds
     useEffect(() => {
+        const nextSlide = () => {
+            const isLastSlide = currentIndex === images.length - 1;
+            const newIndex = isLastSlide ? 0 : currentIndex + 1;
+            setCurrentIndex(newIndex);
+        };
+
         const intervalId = setInterval(() => {
             nextSlide();
         }, 5000);
 
         // Clear the interval when the component is unmounted
         return () => clearInterval(intervalId);
-    }, [currentIndex]);
+    }, [currentIndex, images.length]);
 
     return (
         <div className="bg-gray-100  lg:p-10 flex flex-col justify-center items-center h-full">

@@ -1,5 +1,4 @@
 import { LucideIcon } from 'lucide-react';
-import Link from 'next/link';
 import React, { useState } from 'react';
 
 interface ClassroomCardProps {
@@ -62,7 +61,3 @@ function ClassroomCard({
 }
 
 export default ClassroomCard;
-function setState(arg0: boolean): [any, any] {
-    throw new Error('Function not implemented.');
-}
-
