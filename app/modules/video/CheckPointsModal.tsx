@@ -3,12 +3,28 @@ import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { FileVideoIcon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import {
+    useForm,
+    SubmitHandler,
+    FieldValues,
+    FormProvider,
+} from 'react-hook-form';
+import { validationError } from '@/lib/utils';
+import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { addTopicsInVideoAPI } from '@/app/api/video';
-import AppInput from '@/app/components/common/AppInput';
 import ModalFooter from '@/app/components/common/ModalFooter';
-import FileUploading from '../../components/common/FileUploading';
 import { ModalHeader } from '../../components/common/ModalHeader';
+
+interface Topic {
+    name: string;
+    timeline: string;
+}
+
+type ResourceFormData = {
+    timeline: string;
+    topicName: string;
+};
 
 function CheckPointsModal({
     videoId,
@@ -18,16 +34,21 @@ function CheckPointsModal({
     onClose: () => void;
 }) {
     const { data } = useSession();
-    const [topics, setTopics] = useState([{ name: '', timeline: '' }]);
+    const initialTopics: Topic[] = [];
+    const [topics, setTopics] = useState(initialTopics);
+    const methods = useForm({
+        mode: 'onChange',
+        reValidateMode: 'onChange',
+    });
 
-    const handleAddTopic = () => {
-        setTopics([...topics, { name: '', timeline: '' }]);
-    };
-
-    const handleTopicChange = (index: number, field: string, value: string) => {
-        const newTopics = [...topics];
-        newTopics[index][field] = value;
-        setTopics(newTopics);
+    const addTopic = (formData: ResourceFormData) => {
+        const newTopic = {
+            name: formData.topicName,
+            timeline: formData.timeline,
+        };
+        setTopics((prevTopics) => [...prevTopics, newTopic]);
+        console.log(topics, formData);
+        methods.reset();
     };
 
     const onFormSubmit = async () => {
@@ -73,62 +94,68 @@ function CheckPointsModal({
                 />
 
                 {/* <FileUploading isCompleted progress={0} /> */}
-                <div className=" mt-3 flex justify-end w-full">
-                    <button
-                        type="button"
-                        className="text-white text-sm w-fit text-center  bg-primary-color p-3 rounded-lg"
-                        onClick={handleAddTopic}
+                <FormProvider {...methods}>
+                    <form
+                        onSubmit={methods.handleSubmit(
+                            addTopic as SubmitHandler<FieldValues>
+                        )}
                     >
-                        Add Check Point
-                    </button>
-                </div>
-
-                {topics.map((topic, index) => (
-                    <div key={index}>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col space-y-1 mt-2">
                             <Label
-                                htmlFor={`topicName-${index}`}
-                                className="font-semibold"
+                                htmlFor="topicName"
+                                className="font-semibold text-md"
                             >
-                                Topic Name
+                                Topic
                             </Label>
-                            <AppInput
-                                id={`topicName-${index}`}
-                                placeholder="Write Topic Name"
-                                onChange={(e) =>
-                                    handleTopicChange(
-                                        index,
-                                        'name',
-                                        e.target.value
-                                    )
-                                }
+                            <Input
+                                name="topicName"
+                                placeholder="Enter Question Statement"
+                                type="text"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                }}
                             />
                         </div>
-                        <div className="flex flex-col mt-4">
+                        <div className="flex flex-col space-y-1 mt-2">
                             <Label
-                                htmlFor={`timeline-${index}`}
-                                className="font-semibold"
+                                htmlFor="timeline"
+                                className="font-semibold text-md"
                             >
                                 Timeline
                             </Label>
-                            <AppInput
-                                id={`timeline-${index}`}
-                                placeholder="Add Timeline"
-                                onChange={(e) =>
-                                    handleTopicChange(
-                                        index,
-                                        'timeline',
-                                        e.target.value
-                                    )
-                                }
+                            <Input
+                                name="timeline"
+                                placeholder="Enter Question Statement"
+                                type="text"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                    pattern: {
+                                        value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
+                                        message:
+                                            'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
+                                    },
+                                }}
                             />
                         </div>
-                        <hr className="my-4" />
-                    </div>
-                ))}
+                        <div className=" mt-3 flex justify-end w-full">
+                            <button
+                                type="submit"
+                                className="text-white text-sm w-fit text-center  bg-primary-color p-3 rounded-lg"
+                            >
+                                Add Check Point
+                            </button>
+                        </div>
+                    </form>
+                </FormProvider>
             </div>
             <div onClick={onFormSubmit}>
-                <ModalFooter text="Upload Video" />
+                <ModalFooter text="Upload Video" buttonType="button" />
             </div>
         </section>
     );
