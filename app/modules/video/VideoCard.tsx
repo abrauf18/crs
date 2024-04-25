@@ -32,7 +32,7 @@ function VideoCard({ card, isModal }: VideoCardProps) {
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
             <Link href="#" className="relative">
-            <Image
+                <Image
                     src={card.imageUrl}
                     alt="video"
                     className="w-full"
