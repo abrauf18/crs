@@ -14,7 +14,7 @@ interface CardContentProps {
     heading: string;
     first: string;
     second: string;
-    third: string;
+    third?: string;
     Icons: IconProps;
     isModal?: boolean;
     isHideEditIcon?: boolean;
@@ -50,10 +50,12 @@ function CardContent({
                         <p>{second}</p>
                     </div>
                 </div>
-                <div className="flex gap-1 items-center mb-5 text-dark-gray text-sm">
-                    <ThirdIcon height={17} width={17} color="#54C3F4" />
-                    <p>{third}</p>
-                </div>
+                {third && (
+                    <div className="flex gap-1 items-center mb-5 text-dark-gray text-sm">
+                        <ThirdIcon height={17} width={17} color="#54C3F4" />
+                        <p>{third}</p>
+                    </div>
+                )}
             </div>
             {isModal ? (
                 <Link

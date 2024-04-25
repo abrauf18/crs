@@ -29,6 +29,7 @@ function Video({
 
     const handleCloseUploadModal = () => {
         setIsShowUploadVideoModal(false);
+        setStep(0);
         action('getVideos');
     };
 
@@ -38,7 +39,6 @@ function Video({
         Text: video.name,
         Questions: video.questionCountNumber,
         Checkpoints: video.topicsCount,
-        Resources: 0,
     }));
 
     return (

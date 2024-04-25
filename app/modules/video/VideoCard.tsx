@@ -16,7 +16,6 @@ export interface Card {
     Text: string;
     Questions: number;
     Checkpoints: number;
-    Resources: number;
 }
 
 interface VideoCardProps {
@@ -49,7 +48,6 @@ function VideoCard({ card, isModal }: VideoCardProps) {
                 heading={card.Text}
                 first={`Questions (${card.Questions})`}
                 second={`Checkpoints (${card.Checkpoints})`}
-                third={`Resources (${card.Resources})`}
                 Icons={Icons}
                 isModal={isModal}
             />

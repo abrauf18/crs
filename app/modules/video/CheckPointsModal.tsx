@@ -47,7 +47,6 @@ function CheckPointsModal({
             timeline: formData.timeline,
         };
         setTopics((prevTopics) => [...prevTopics, newTopic]);
-        console.log(topics, formData);
         methods.reset();
     };
 
