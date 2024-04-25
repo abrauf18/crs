@@ -59,3 +59,24 @@ export const createVideoQuestionsAPI = async ({
 
     return response;
 };
+
+export const addTopicsInVideoAPI = async ({
+    videoId,
+    topics,
+    accessToken,
+}: {
+    videoId: string;
+    topics: { [key: string]: string };
+    accessToken: string;
+}) => {
+    const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/video/addTopicsInVideo`,
+        {
+            videoId,
+            topics,
+            accessToken,
+        }
+    );
+
+    return response;
+};

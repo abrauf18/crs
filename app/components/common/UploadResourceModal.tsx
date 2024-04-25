@@ -8,7 +8,6 @@ import {
     FieldValues,
     FormProvider,
 } from 'react-hook-form';
-import action from '@/app/action';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import { UploadResource } from '@/app/api/s3Bucket';
@@ -137,7 +136,6 @@ function UploadResourceModal({
                 setUploadedVideoId(videoId);
             }
 
-            action('getVideos');
             if (onButtonClick) {
                 onButtonClick();
             }

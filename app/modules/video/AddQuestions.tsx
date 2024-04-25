@@ -19,7 +19,15 @@ interface Question {
     type: 'Open' | 'Mcq'; // Add the type field
 }
 
-function AddQuestions({ videoId }: { videoId: string }) {
+function AddQuestions({
+    videoId,
+    onClose,
+    onButtonClick,
+}: {
+    videoId: string;
+    onClose?: () => void;
+    onButtonClick: () => void;
+}) {
     const { data } = useSession();
     const initialQuestions: Question[] = [
         {
@@ -94,14 +102,20 @@ function AddQuestions({ videoId }: { videoId: string }) {
                 popupTime: question.popupTime,
             }));
 
-            const response = await createVideoQuestionsAPI({
+            const response: any = await createVideoQuestionsAPI({
                 videoId,
                 questions: transformedQuestions,
                 accessToken: data?.user?.accessToken || '',
             });
 
             if (response.status !== 200) {
-                return toast.error('Failed to add question');
+                return toast.error(
+                    response?.message || 'Failed to add question'
+                );
+            }
+
+            if (onButtonClick) {
+                onButtonClick();
             }
 
             return toast.success('Question added successfully');
@@ -119,8 +133,9 @@ function AddQuestions({ videoId }: { videoId: string }) {
                         tagline: 'let’s Upload Video For Your User',
                     }}
                     Icon={FileVideoIcon}
+                    onClose={onClose}
                 />
-                <FileUploading isCompleted progress={0} />
+                {/* <FileUploading isCompleted progress={0} /> */}
                 <div className="mt-3 flex justify-end w-full">
                     <button
                         type="button"

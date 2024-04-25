@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import action from '@/app/action';
 import { VideoSummary } from '@/lib/utils';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import Filters from '@/app/components/common/Filters';
@@ -28,6 +29,7 @@ function Video({
 
     const handleCloseUploadModal = () => {
         setIsShowUploadVideoModal(false);
+        action('getVideos');
     };
 
     const cards: Card[] = APIdata.videos.map((video) => ({
@@ -73,13 +75,20 @@ function Video({
 
             {isShowUploadVideoModal && step === 1 && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                    <AddQuestions videoId={videoId} />
+                    <AddQuestions
+                        videoId={videoId}
+                        onButtonClick={() => setStep((prev) => prev + 1)}
+                        onClose={handleCloseUploadModal}
+                    />
                 </div>
             )}
 
             {isShowUploadVideoModal && step === 2 && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                    <CheckPointsModal />
+                    <CheckPointsModal
+                        videoId={videoId}
+                        onClose={handleCloseUploadModal}
+                    />
                 </div>
             )}
         </>
