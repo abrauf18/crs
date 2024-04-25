@@ -32,8 +32,8 @@ interface UploadResourceModalProp {
     isDisplayHeaderIcon?: boolean;
     buttonText: string;
     onClose?: () => void;
-    setUploadedVideoId: (id: string) => void;
-    onButtonClick: () => void;
+    setUploadedVideoId?: (id: string) => void;
+    onButtonClick?: () => void;
 }
 function UploadResourceModal({
     headerText,
