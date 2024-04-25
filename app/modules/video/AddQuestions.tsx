@@ -66,7 +66,6 @@ function AddQuestions({
 
     const addQuestion = (formData: ResourceFormData) => {
         let newQuestion: Question;
-        console.log('formData: ', formData);
 
         if (formData.questionType === 'open') {
             newQuestion = {
@@ -268,7 +267,7 @@ function AddQuestions({
                     </div>
 
                     <div onClick={onFormSubmit}>
-                        <ModalFooter text="Next" />
+                        <ModalFooter text="Next" buttonType="button" />
                     </div>
                 </form>
             </FormProvider>
