@@ -15,7 +15,7 @@ function CheckPointsModal({
     onClose,
 }: {
     videoId: string;
-    onClose?: () => void;
+    onClose: () => void;
 }) {
     const { data } = useSession();
     const [topics, setTopics] = useState([{ name: '', timeline: '' }]);

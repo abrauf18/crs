@@ -52,7 +52,7 @@ function AddQuestions({
     onButtonClick,
 }: {
     videoId: string;
-    onClose?: () => void;
+    onClose: () => void;
     onButtonClick: () => void;
 }) {
     const { data } = useSession();
