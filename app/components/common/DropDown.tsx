@@ -8,6 +8,7 @@ interface SelectPropsInterface extends SelectHTMLAttributes<HTMLSelectElement> {
     rules?: Record<string, any>;
     options: { value: string; label: string }[];
     selectedOption?: string;
+    additionalClasses?: string;
 }
 
 function Select({
@@ -15,11 +16,12 @@ function Select({
     rules,
     options,
     selectedOption,
+    additionalClasses,
 }: SelectPropsInterface): JSX.Element {
     const { register } = useFormContext();
 
     return (
-        <div className="relative w-full">
+        <div className={`relative w-full ${additionalClasses}`}>
             <select
                 className="pl-4 p-3 py-3 pr-8 bg-slate-100 border rounded-lg focus:outline-none focus:border-sky-500 
                 focus:ring-1 focus:ring-sky-500 font-medium appearance-none w-full text-sm"
