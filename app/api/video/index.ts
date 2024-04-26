@@ -80,3 +80,26 @@ export const addTopicsInVideoAPI = async ({
 
     return response;
 };
+
+export const getVideoAPI = async ({
+    accessToken,
+    videoId,
+}: {
+    accessToken: string;
+    videoId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/video/getVideo`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                videoid: videoId,
+            },
+            next: {
+                tags: ['getVideo'],
+            },
+        }
+    );
+
+    return result;
+};

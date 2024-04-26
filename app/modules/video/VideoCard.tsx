@@ -44,12 +44,13 @@ function VideoCard({ card, isModal }: VideoCardProps) {
                 </div>
             </Link>
             <CardContent
-                id={card.Questions.toString()}
+                id={card.id}
                 heading={card.Text}
                 first={`Questions (${card.Questions})`}
                 second={`Checkpoints (${card.Checkpoints})`}
                 Icons={Icons}
                 isModal={isModal}
+                route="/admin/video"
             />
         </div>
     );

@@ -141,3 +141,34 @@ export const resourceTypeToIcon = (resourceType: ResourceType) => {
     }
     return Icon;
 }
+
+export const DEFAULT_VIDEO = {
+    id: "",
+    resourceId: "",
+    thumbnailURL: "",
+    createdAt: "",
+    updatedAt: "",
+    name: "",
+    videoUrl:"",
+    questions: [],
+    topics: {}
+}
+
+export interface Video {
+    id: string,
+    resourceId: string,
+    thumbnailURL: string,
+    createdAt: string,
+    updatedAt: string,
+    name: string,
+    videoUrl: string,
+    questions: {
+        statement: string,
+        options: { [key: string]: string },
+        correctOption: string,
+        correctOptionExplanation: string,
+        totalMarks: number,
+        popupTime: string
+    }[],
+    topics: { [key: string]: string }
+}
