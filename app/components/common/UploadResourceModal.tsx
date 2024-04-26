@@ -32,8 +32,9 @@ interface UploadResourceModalProp {
     isDisplayHeaderIcon?: boolean;
     buttonText: string;
     onClose?: () => void;
-    setUploadedVideoId?: (id: string) => void;
     onButtonClick?: () => void;
+    setUploadedVideoId?: (id: string) => void;
+    setUploadedVideoUrl?: (id: string) => void;
 }
 function UploadResourceModal({
     headerText,
@@ -44,6 +45,7 @@ function UploadResourceModal({
     onClose,
     onButtonClick,
     setUploadedVideoId,
+    setUploadedVideoUrl,
 }: UploadResourceModalProp) {
     const { data } = useSession();
     const [progress, setProgress] = React.useState(0);
@@ -118,6 +120,9 @@ function UploadResourceModal({
             const resourceURL = await uploadFile(selectedFile);
             if (!resourceURL) {
                 return null;
+            }
+            if (setUploadedVideoUrl) {
+                setUploadedVideoUrl(resourceURL);
             }
 
             if (!formData.thumbnail) {

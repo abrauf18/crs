@@ -10,11 +10,15 @@ import {
     FormProvider,
 } from 'react-hook-form';
 import { Label } from '@/app/components/ui/label';
+import Input from '@/app/components/common/Input';
+import Select from '@/app/components/common/DropDown';
 import { createVideoQuestionsAPI } from '@/app/api/video';
 import ModalFooter from '@/app/components/common/ModalFooter';
-import Input from '@/app/components/common/Input';
-import { validationError } from '@/lib/utils';
-import Select from '@/app/components/common/DropDown';
+import {
+    secondsToString,
+    timeStringToSeconds,
+    validationError,
+} from '@/lib/utils';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 interface Question {
@@ -48,12 +52,18 @@ const answerOptions = [
 
 function AddQuestions({
     videoId,
+    videoUrl,
+    videoDuration,
     onClose,
     onButtonClick,
+    setVideoDuration,
 }: {
     videoId: string;
+    videoUrl: string;
+    videoDuration?: number;
     onClose: () => void;
     onButtonClick: () => void;
+    setVideoDuration?: (duration: number) => void;
 }) {
     const { data } = useSession();
     const initialQuestions: Question[] = [];
@@ -63,6 +73,11 @@ function AddQuestions({
         reValidateMode: 'onChange',
     });
     const questionType = methods.watch('questionType');
+
+    const handleLoadedMetadata = (event: any) => {
+        const { duration } = event.target;
+        setVideoDuration && setVideoDuration(duration);
+    };
 
     const addQuestion = (formData: ResourceFormData) => {
         let newQuestion: Question;
@@ -125,6 +140,17 @@ function AddQuestions({
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
+            <div style={{ display: 'none' }}>
+                {
+                    // eslint-disable-next-line jsx-a11y/media-has-caption
+                    <video
+                        src={videoUrl}
+                        controls
+                        width={640}
+                        onLoadedMetadata={handleLoadedMetadata}
+                    />
+                }
+            </div>
             <FormProvider {...methods}>
                 <form
                     onSubmit={methods.handleSubmit(
@@ -196,6 +222,20 @@ function AddQuestions({
                                             value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
                                             message:
                                                 'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
+                                        },
+                                        validate: (value: string) => {
+                                            const timelineSeconds =
+                                                timeStringToSeconds(value);
+                                            if (
+                                                videoDuration !== 0 &&
+                                                timelineSeconds >
+                                                    (videoDuration ?? 0)
+                                            ) {
+                                                return `Timeline exceeds video duration ${secondsToString(
+                                                    videoDuration ?? 0
+                                                )}`;
+                                            }
+                                            return true;
                                         },
                                     }}
                                 />

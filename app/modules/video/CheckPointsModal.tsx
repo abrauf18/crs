@@ -9,7 +9,11 @@ import {
     FieldValues,
     FormProvider,
 } from 'react-hook-form';
-import { validationError } from '@/lib/utils';
+import {
+    secondsToString,
+    timeStringToSeconds,
+    validationError,
+} from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { addTopicsInVideoAPI } from '@/app/api/video';
@@ -19,6 +23,7 @@ import { ModalHeader } from '../../components/common/ModalHeader';
 interface Topic {
     name: string;
     timeline: string;
+    videoDuration?: number;
 }
 
 type ResourceFormData = {
@@ -29,9 +34,11 @@ type ResourceFormData = {
 function CheckPointsModal({
     videoId,
     onClose,
+    videoDuration,
 }: {
     videoId: string;
     onClose: () => void;
+    videoDuration?: number;
 }) {
     const { data } = useSession();
     const initialTopics: Topic[] = [];
@@ -138,6 +145,20 @@ function CheckPointsModal({
                                         value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
                                         message:
                                             'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
+                                    },
+                                    validate: (value: string) => {
+                                        const timelineSeconds =
+                                            timeStringToSeconds(value);
+                                        if (
+                                            videoDuration !== 0 &&
+                                            timelineSeconds >
+                                                (videoDuration ?? 0)
+                                        ) {
+                                            return `Timeline exceeds video duration ${secondsToString(
+                                                videoDuration ?? 0
+                                            )}`;
+                                        }
+                                        return true;
                                     },
                                 }}
                             />

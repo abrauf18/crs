@@ -21,6 +21,8 @@ function Video({
 }) {
     const [step, setStep] = useState(0);
     const [videoId, setVideoId] = useState('');
+    const [duration, setDuration] = useState(0);
+    const [videoUrl, setVideoUrl] = useState('');
     const [isShowUploadVideoModal, setIsShowUploadVideoModal] = useState(false);
 
     const handleOpenUploadModal = () => {
@@ -67,8 +69,9 @@ function Video({
                         description="let’s Upload Video For Your User"
                         onClose={handleCloseUploadModal}
                         Icon={VideoIcon}
-                        setUploadedVideoId={setVideoId}
                         onButtonClick={() => setStep((prev) => prev + 1)}
+                        setUploadedVideoId={setVideoId}
+                        setUploadedVideoUrl={setVideoUrl}
                     />
                 </div>
             )}
@@ -77,8 +80,11 @@ function Video({
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <AddQuestions
                         videoId={videoId}
+                        videoUrl={videoUrl}
                         onButtonClick={() => setStep((prev) => prev + 1)}
                         onClose={handleCloseUploadModal}
+                        videoDuration={duration}
+                        setVideoDuration={setDuration}
                     />
                 </div>
             )}
@@ -87,6 +93,7 @@ function Video({
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <CheckPointsModal
                         videoId={videoId}
+                        videoDuration={duration}
                         onClose={handleCloseUploadModal}
                     />
                 </div>

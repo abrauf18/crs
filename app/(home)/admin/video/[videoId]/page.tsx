@@ -4,7 +4,6 @@ import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { DEFAULT_VIDEO, Video } from '@/lib/utils';
 import { getVideoAPI } from '@/app/api/video';
-import VideoPlayerWithBreakpoints from '@/app/modules/video/previewVideo';
 
 async function VideoDetailsPage({ params }: { params: { videoId: string } }) {
     const data: Session | null = await getServerSession(options);
@@ -27,12 +26,7 @@ async function VideoDetailsPage({ params }: { params: { videoId: string } }) {
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
                 // console.log(APIResponse);
-                return (
-                    <VideoPlayerWithBreakpoints
-                        videoSrc={APIdata.video.videoUrl}
-                        topics={APIdata.video.topics}
-                    />
-                );
+                return null;
             }
 
             if (!response.ok) {
