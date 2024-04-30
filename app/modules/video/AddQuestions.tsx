@@ -26,13 +26,13 @@ interface Question {
     statement: string;
     correctOption: string;
     correctOptionExplanation: string;
-    popupTime: string;
+    popUpTime: string;
 }
 
 type ResourceFormData = {
     statement: string;
     questionType: 'open' | 'mcq';
-    popupTime: string;
+    popUpTime: string;
     options: { [key: string]: string };
     correctOption: string;
     correctOptionExplanation: string;
@@ -85,7 +85,7 @@ function AddQuestions({
         if (formData.questionType === 'open') {
             newQuestion = {
                 statement: formData.statement,
-                popupTime: formData.popupTime,
+                popUpTime: formData.popUpTime,
                 options: {},
                 correctOption: '',
                 correctOptionExplanation: '',
@@ -93,7 +93,7 @@ function AddQuestions({
         } else {
             newQuestion = {
                 statement: formData.statement,
-                popupTime: formData.popupTime,
+                popUpTime: formData.popUpTime,
                 options: { ...formData.options },
                 correctOption: formData.correctOption,
                 correctOptionExplanation: formData.correctOptionExplanation,
@@ -114,7 +114,7 @@ function AddQuestions({
                 correctOption: question.correctOption,
                 correctOptionExplanation: question.correctOptionExplanation,
                 totalMarks: 0, // Assuming totalMarks is always 0 for now
-                popupTime: question.popupTime,
+                popUpTime: question.popUpTime,
             }));
 
             const response: any = await createVideoQuestionsAPI({
@@ -203,13 +203,13 @@ function AddQuestions({
                             </div>
                             <div className="flex flex-col space-y-1 mt-2">
                                 <Label
-                                    htmlFor="popupTime"
+                                    htmlFor="popUpTime"
                                     className="font-semibold text-md"
                                 >
                                     Timeline
                                 </Label>
                                 <Input
-                                    name="popupTime"
+                                    name="popUpTime"
                                     placeholder="Enter Question Statement"
                                     type="text"
                                     rules={{

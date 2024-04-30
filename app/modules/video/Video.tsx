@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useEffect, useState } from 'react';
 import action from '@/app/action';
 import { VideoSummary } from '@/lib/utils';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import Filters from '@/app/components/common/Filters';
 import UploadResourceModal from '@/app/components/common/UploadResourceModal';
+import ReactPlayer from 'react-player';
 import UploadModal from './UploadModal';
 import AddQuestions from './AddQuestions';
 import VideoCard, { Card } from './VideoCard';
@@ -42,6 +44,44 @@ function Video({
         Questions: video.questionCountNumber,
         Checkpoints: video.topicsCount,
     }));
+
+    function convertYouTubeDuration(duration: string) {
+        const match = duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/);
+
+        const hours = (match && parseInt(match[2], 10)) || 0;
+        const minutes = (match && parseInt(match[4], 10)) || 0;
+        const seconds = (match && parseInt(match[6], 10)) || 0;
+
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
+    useEffect(() => {
+        async function handleVideoUpload(videoUrl: string) {
+            let duration = 0;
+
+            if (videoUrl.includes('youtube')) {
+                const videoId = new URL(videoUrl).searchParams.get('v');
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=AIzaSyCrhW8yFSb14hpLBPJgo2VnqI8NcxeW-M4`
+                );
+                const data = await response.json();
+                duration = convertYouTubeDuration(
+                    data.items[0].contentDetails.duration
+                );
+            } else {
+                // For S3 videos, use ReactPlayer to get the duration
+                const player = new ReactPlayer({
+                    videoUrl,
+                    width: 0,
+                    height: 0,
+                });
+                duration = player.getDuration();
+            }
+
+            setDuration(duration);
+        }
+        handleVideoUpload(videoUrl);
+    }, [videoUrl]);
 
     return (
         <>
