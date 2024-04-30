@@ -168,15 +168,18 @@ export interface Video {
         correctOption: string,
         correctOptionExplanation: string,
         totalMarks: number,
-        popupTime: string
+        popUpTime: string
     }[],
     topics: { [key: string]: string }
 }
 
 
 export const timeStringToSeconds = (timeString: string) => {
-    const [hours, minutes, seconds] = timeString.split(':').map(Number);
-    return hours * 3600 + minutes * 60 + seconds;
+    if(!timeString){
+        return -1;
+    }
+    const [hours, minutes, seconds] = timeString?.split(':');
+    return parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
 }
 
 export const secondsToString = (seconds: number) => {
