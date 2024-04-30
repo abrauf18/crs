@@ -44,7 +44,7 @@ export const createVideoQuestionsAPI = async ({
         correctOption: string;
         correctOptionExplanation: string;
         totalMarks: number;
-        popupTime: string;
+        popUpTime: string;
     }[];
     accessToken: string;
 }) => {
