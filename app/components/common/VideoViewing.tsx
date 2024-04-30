@@ -126,11 +126,12 @@ export default function VideoViewing({
                         <ReactPlayer
                             ref={playerRef}
                             url={videoURL}
-                            width="100%"
-                            height="100%"
+                            width="800px"
+                            height="450px"
                             controls
                             playing={playing}
                             onProgress={handleVideoProgress}
+                            className="mb-4"
                         />
                     </div>
                     <div className="mt-4">
