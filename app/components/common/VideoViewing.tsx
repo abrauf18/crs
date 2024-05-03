@@ -5,6 +5,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useSession } from 'next-auth/react';
 import { timeStringToSeconds } from '@/lib/utils';
+import MovieIcon from '@/app/assets/icons/MovieIcon';
+
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableRow,
+} from '@/app/components/ui/table';
 import VideoQuestion from './VideoQuestion';
 
 export default function VideoViewing({
@@ -134,27 +142,27 @@ export default function VideoViewing({
                             className="mb-4"
                         />
                     </div>
-                    <div className="mt-4">
-                        <h2 className="text-xl font-semibold mb-2">
+                    <div className="mt-4 border-2 border-light-gray p-2">
+                        <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
                             Checkpoints
                         </h2>
-                        <table className="table-auto">
-                            <tbody>
+                        <Table className="text-center">
+                            <TableBody>
                                 {sortedTopics.map(
                                     ({ popupTime, topic }, index) => (
-                                        <tr key={topic}>
-                                            <td className="border px-4 py-2">
-                                                {index + 1}
-                                            </td>
-                                            <td className="border px-4 py-2">
-                                                {topic}
-                                            </td>
-                                            <td className="border px-4 py-2">
-                                                {popupTime}
-                                            </td>
-                                            <td className="border px-4 py-2">
+                                        <TableRow key={topic}>
+                                            <TableCell>{index + 1}</TableCell>
+                                            <TableCell>
+                                                <span className="rounded flex gap-x-2 items-center justify-center">
+                                                    <MovieIcon />
+                                                    {topic}
+                                                </span>
+                                            </TableCell>
+                                            <TableCell>{popupTime}</TableCell>
+                                            <TableCell>
                                                 <button
                                                     type="button"
+                                                    className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
                                                     onClick={() =>
                                                         handlePlayTopic(
                                                             popupTime
@@ -163,12 +171,12 @@ export default function VideoViewing({
                                                 >
                                                     Play
                                                 </button>
-                                            </td>
-                                        </tr>
+                                            </TableCell>
+                                        </TableRow>
                                     )
                                 )}
-                            </tbody>
-                        </table>
+                            </TableBody>
+                        </Table>
                     </div>
                 </div>
             )}
