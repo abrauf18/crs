@@ -152,6 +152,7 @@ function EditTopicsModal({
             toast.success(
                 `Video topics ${newVideo ? `added` : `updated`} successfully`
             );
+            onClose();
         } catch (error: any) {
             toast.error(
                 error?.message ||

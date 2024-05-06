@@ -156,6 +156,7 @@ function EditQuestionsModal({
             toast.success(
                 `Video questions ${newVideo ? `added` : `updated`} successfully`
             );
+            onButtonClick();
         } catch (error: any) {
             toast.error(
                 error?.message ||
