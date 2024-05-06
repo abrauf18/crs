@@ -108,7 +108,7 @@ function Video({
                         newVideo
                         newVideoDuration={duration}
                         videoId={videoId}
-                        onClose={handleCloseEditModal}
+                        onClose={handleCloseUploadModal}
                         onButtonClick={() => setStep((prev) => prev + 1)}
                     />
                 </div>
