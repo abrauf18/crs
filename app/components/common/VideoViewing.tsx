@@ -121,42 +121,48 @@ export default function VideoViewing({
                             className="mb-4"
                         />
                     </div>
-                    <div className="mt-4 border-2 border-light-gray p-2">
-                        <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
-                            Checkpoints
-                        </h2>
-                        <Table className="text-center">
-                            <TableBody>
-                                {sortedTopics.map(
-                                    ({ popupTime, topic }, index) => (
-                                        <TableRow key={topic}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>
-                                                <span className="rounded flex gap-x-2 items-center justify-center">
-                                                    <MovieIcon />
-                                                    {topic}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell>{popupTime}</TableCell>
-                                            <TableCell>
-                                                <button
-                                                    type="button"
-                                                    className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
-                                                    onClick={() =>
-                                                        handlePlayTopic(
-                                                            popupTime
-                                                        )
-                                                    }
-                                                >
-                                                    Play
-                                                </button>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                )}
-                            </TableBody>
-                        </Table>
-                    </div>
+                    {topicsArray.length > 0 && (
+                        <div className="mt-4 border-2 border-light-gray p-2">
+                            <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                Checkpoints
+                            </h2>
+                            <Table className="text-center">
+                                <TableBody>
+                                    {sortedTopics.map(
+                                        ({ popupTime, topic }, index) => (
+                                            <TableRow key={topic}>
+                                                <TableCell>
+                                                    {index + 1}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <span className="rounded flex gap-x-2 items-center justify-center">
+                                                        <MovieIcon />
+                                                        {topic}
+                                                    </span>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {popupTime}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <button
+                                                        type="button"
+                                                        className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
+                                                        onClick={() =>
+                                                            handlePlayTopic(
+                                                                popupTime
+                                                            )
+                                                        }
+                                                    >
+                                                        Play
+                                                    </button>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
