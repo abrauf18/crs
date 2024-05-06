@@ -26,7 +26,6 @@ async function VideoDetailsPage({ params }: { params: { videoId: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                console.log(APIdata.video);
                 const { videoUrl, thumbnailURL, topics, questions } =
                     APIdata.video;
                 return (

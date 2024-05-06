@@ -34,7 +34,6 @@ function VideoQuestion({
     // Determine question type when question prop changes
     useEffect(() => {
         if (question && question.options) {
-            // console.log(Object.keys(question.options).length);
             if (Object.keys(question.options).length > 0) {
                 setQuestionType('mcq');
             } else {
@@ -50,7 +49,6 @@ function VideoQuestion({
 
     function handleUpload(formData: any) {
         const { selectedOption } = methods.getValues();
-        console.log(formData, selectedOption);
         setCurrentQuestion(null);
         setPlaying(true);
         handlePlayAfterQuestion();
