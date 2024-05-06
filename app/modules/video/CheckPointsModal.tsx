@@ -18,6 +18,7 @@ import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { addTopicsInVideoAPI } from '@/app/api/video';
 import ModalFooter from '@/app/components/common/ModalFooter';
+import action from '@/app/action';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 interface Topic {
@@ -80,7 +81,7 @@ function CheckPointsModal({
             if (onClose) {
                 onClose();
             }
-
+            await action('getVideos');
             return toast.success('Question added successfully');
         } catch (error: any) {
             return toast.error(error?.message || 'Failed to add question');
