@@ -36,7 +36,6 @@ function Video({
         setVideoId('');
         setIsShowUploadVideoModal(false);
         setStep(0);
-        // action('getVideos');
     };
 
     const handleOpenEditModal = (id: string) => {
@@ -48,7 +47,6 @@ function Video({
         setEditVideoId('');
         setIsShowEditVideoModal(false);
         setStep(0);
-        // action('getVideos');
     };
 
     return (
@@ -94,12 +92,6 @@ function Video({
 
             {isShowUploadVideoModal && step === 1 && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                    {/* <AddQuestions
-                        videoId={videoId}
-                        onButtonClick={() => setStep((prev) => prev + 1)}
-                        onClose={handleCloseUploadModal}
-                        videoDuration={duration}
-                    /> */}
                     <EditQuestionsModal
                         newVideo
                         newVideoDuration={duration}
@@ -112,11 +104,6 @@ function Video({
 
             {isShowUploadVideoModal && step === 2 && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                    {/* <CheckPointsModal
-                        videoId={videoId}
-                        videoDuration={duration}
-                        onClose={handleCloseUploadModal}
-                    /> */}
                     <EditTopicsModal
                         newVideo
                         newVideoDuration={duration}
