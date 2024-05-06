@@ -21,9 +21,10 @@ export interface Card {
 interface VideoCardProps {
     card: Card;
     isModal?: boolean;
+    onClickEditBtn?: (id: string) => void;
 }
 
-function VideoCard({ card, isModal }: VideoCardProps) {
+function VideoCard({ card, isModal, onClickEditBtn }: VideoCardProps) {
     const Icons: IconProps = {
         FirstIcon: QuestionIcon,
         SecondIcon: CheckPointIcon,
@@ -54,6 +55,7 @@ function VideoCard({ card, isModal }: VideoCardProps) {
                     Icons={Icons}
                     isModal={isModal}
                     route="/admin/video"
+                    handleOpenEditModal={onClickEditBtn}
                 />
             </div>
         </div>
