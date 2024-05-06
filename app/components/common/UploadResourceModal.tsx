@@ -87,7 +87,7 @@ function UploadResourceModal({
         ) {
             const videoId = new URL(videoSource).searchParams.get('v');
             const response = await fetch(
-                `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${process.env.YOUTUBE_API_V3_KEY}`
+                `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${process.env.NEXT_PUBLIC_YOUTUBE_KEY}`
             );
             const data = await response.json();
             videoDuration = convertYouTubeDuration(
