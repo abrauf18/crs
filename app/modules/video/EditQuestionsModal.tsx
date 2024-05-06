@@ -17,6 +17,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { FileVideoIcon, X } from 'lucide-react';
 import action from '@/app/action';
 import PageLoader from '@/app/components/common/PageLoader';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 const questionsTypes = [
@@ -371,6 +372,15 @@ function EditQuestionsModal({
                                             <ErrorMessage
                                                 errors={errors}
                                                 name={`video.questions[${index}].popUpTime`}
+                                                render={({ message }) => (
+                                                    <p className="flex items-center">
+                                                        <X
+                                                            size={20}
+                                                            color="#E6500D"
+                                                        />
+                                                        {message}
+                                                    </p>
+                                                )}
                                             />
                                         </span>
                                     </div>
@@ -421,6 +431,21 @@ function EditQuestionsModal({
                                                                           errors
                                                                       }
                                                                       name={`video.questions[${index}].options.${optionKey}`}
+                                                                      render={({
+                                                                          message,
+                                                                      }) => (
+                                                                          <p className="flex items-center">
+                                                                              <X
+                                                                                  size={
+                                                                                      20
+                                                                                  }
+                                                                                  color="#E6500D"
+                                                                              />
+                                                                              {
+                                                                                  message
+                                                                              }
+                                                                          </p>
+                                                                      )}
                                                                   />
                                                               </span>
                                                           </div>
@@ -459,6 +484,21 @@ function EditQuestionsModal({
                                                                           errors
                                                                       }
                                                                       name={`video.questions[${index}].options.${optionField}`}
+                                                                      render={({
+                                                                          message,
+                                                                      }) => (
+                                                                          <p className="flex items-center">
+                                                                              <X
+                                                                                  size={
+                                                                                      20
+                                                                                  }
+                                                                                  color="#E6500D"
+                                                                              />
+                                                                              {
+                                                                                  message
+                                                                              }
+                                                                          </p>
+                                                                      )}
                                                                   />
                                                               </span>
                                                           </div>
@@ -488,6 +528,15 @@ function EditQuestionsModal({
                                                 <ErrorMessage
                                                     errors={errors}
                                                     name={`video.questions[${index}].correctOption`}
+                                                    render={({ message }) => (
+                                                        <p className="flex items-center">
+                                                            <X
+                                                                size={20}
+                                                                color="#E6500D"
+                                                            />
+                                                            {message}
+                                                        </p>
+                                                    )}
                                                 />
                                             </span>
                                             <Label
@@ -514,6 +563,15 @@ function EditQuestionsModal({
                                                 <ErrorMessage
                                                     errors={errors}
                                                     name={`video.questions[${index}].correctOptionExplanation`}
+                                                    render={({ message }) => (
+                                                        <p className="flex items-center">
+                                                            <X
+                                                                size={20}
+                                                                color="#E6500D"
+                                                            />
+                                                            {message}
+                                                        </p>
+                                                    )}
                                                 />
                                             </span>
                                         </div>
@@ -551,17 +609,17 @@ function EditQuestionsModal({
                                     type="submit"
                                     className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
                                 >
-                                    Save Changes
+                                    {buttonLoading ? (
+                                        <ButtonLoader />
+                                    ) : (
+                                        `Save Changes`
+                                    )}
                                 </button>
                             </div>
                         </div>
 
                         <div onClick={onButtonClick}>
-                            <ModalFooter
-                                text="Next"
-                                buttonType="button"
-                                loading={buttonLoading}
-                            />
+                            <ModalFooter text="Next" buttonType="button" />
                         </div>
                     </form>
                 </FormProvider>

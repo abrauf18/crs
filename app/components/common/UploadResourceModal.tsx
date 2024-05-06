@@ -366,7 +366,7 @@ function UploadResourceModal({
                             </div>
                         )}
                     </div>
-                    <ModalFooter text={buttonText} />
+                    <ModalFooter text={buttonText} loading={loading} />
                 </form>
             </FormProvider>
         </section>

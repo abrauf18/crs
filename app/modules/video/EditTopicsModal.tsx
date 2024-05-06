@@ -13,9 +13,10 @@ import Input from '@/app/components/common/Input';
 import { timeStringToSeconds, validationError } from '@/lib/utils';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorMessage } from '@hookform/error-message';
-import { FileVideoIcon } from 'lucide-react';
+import { FileVideoIcon, X } from 'lucide-react';
 import action from '@/app/action';
 import PageLoader from '@/app/components/common/PageLoader';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 const questionsTypes = [
@@ -226,7 +227,8 @@ function EditTopicsModal({
 
             getVideoData();
         }
-    }, [data, videoId, reset, appendTopic, newVideo, topicFields.length]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
             {modalLoading ? (
@@ -281,6 +283,15 @@ function EditTopicsModal({
                                         <ErrorMessage
                                             errors={errors}
                                             name={`video.topics[${index}].name`}
+                                            render={({ message }) => (
+                                                <p className="flex items-center">
+                                                    <X
+                                                        size={20}
+                                                        color="#E6500D"
+                                                    />
+                                                    {message}
+                                                </p>
+                                            )}
                                         />
                                     </span>
                                     <div className="flex flex-col space-y-1 mt-2">
@@ -324,7 +335,7 @@ function EditTopicsModal({
                                                             duration
                                                         )
                                                     ) {
-                                                        return `Timeline exceeds video duration ${originalVideoData.duration}`;
+                                                        return `Timeline exceeds video duration ${duration}`;
                                                     }
                                                     return true;
                                                 },
@@ -334,6 +345,15 @@ function EditTopicsModal({
                                             <ErrorMessage
                                                 errors={errors}
                                                 name={`video.topics[${index}].timeline`}
+                                                render={({ message }) => (
+                                                    <p className="flex items-center">
+                                                        <X
+                                                            size={20}
+                                                            color="#E6500D"
+                                                        />
+                                                        {message}
+                                                    </p>
+                                                )}
                                             />
                                         </span>
                                     </div>
@@ -363,17 +383,17 @@ function EditTopicsModal({
                                     type="submit"
                                     className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
                                 >
-                                    Save Changes
+                                    {buttonLoading ? (
+                                        <ButtonLoader />
+                                    ) : (
+                                        `Save Changes`
+                                    )}
                                 </button>
                             </div>
                         </div>
 
                         <div onClick={onClose}>
-                            <ModalFooter
-                                text="Finish"
-                                buttonType="button"
-                                loading={buttonLoading}
-                            />
+                            <ModalFooter text="Finish" buttonType="button" />
                         </div>
                     </form>
                 </FormProvider>
