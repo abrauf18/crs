@@ -103,3 +103,40 @@ export const getVideoAPI = async ({
 
     return result;
 };
+
+export const updateVideoAPI = async ({
+    videoId,
+    name,
+    thumbnailURL,
+    questions,
+    topics,
+    accessToken,
+}: {
+    videoId: string;
+    name: string;
+    thumbnailURL: string;
+    questions: {
+        statement: string;
+        options: { [key: string]: string };
+        correctOption: string;
+        correctOptionExplanation: string;
+        totalMarks: number;
+        popUpTime: string;
+    }[];
+    topics: { [key: string]: string };
+    accessToken: string;
+}) => {
+    const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/video/updateVideo`,
+        {
+            videoId,
+            name,
+            thumbnailURL,
+            questions,
+            topics,
+            accessToken,
+        }
+    );
+
+    return response;
+};
