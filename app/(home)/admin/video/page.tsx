@@ -7,6 +7,25 @@ import { getVideosAPI } from '@/app/api/video';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 
+const getAllVideos = async (
+    data: Session,
+    page: string,
+    orderBy: string,
+    sortBy: string
+) => {
+    const response = await getVideosAPI({
+        accessToken: data?.user?.accessToken,
+        topic: '',
+        type: '',
+        page: parseInt(page, 10),
+        limit: 10,
+        orderBy,
+        sortBy,
+    });
+    const APIResponse = await response.json();
+    return APIResponse;
+};
+
 async function VideoPage({
     searchParams,
 }: {
@@ -20,49 +39,16 @@ async function VideoPage({
     ) {
         return redirect('video');
     }
+
     const data: Session | null = await getServerSession(options);
 
-    let APIdata: {
-        videos: VideoSummary[];
-        totalVideos: number;
-    } = {
-        videos: [],
-        totalVideos: 0,
-    };
-
-    if (data) {
-        try {
-            const response = await getVideosAPI({
-                accessToken: data?.user?.accessToken,
-                topic: '',
-                type: '',
-                page: parseInt(page, 10),
-                limit: 10,
-                orderBy,
-                sortBy,
-            });
-
-            const APIResponse = await response.json();
-
-            if (APIResponse.status !== 'error') {
-                APIdata = APIResponse?.data;
-                return <Video APIdata={APIdata} />;
-            }
-
-            if (!response.ok) {
-                throw new Error(APIResponse?.message);
-            }
-        } catch (error: any) {
-            return (
-                <UnhandledError
-                    error={{
-                        message: error?.message,
-                        name: error?.name,
-                    }}
-                />
-            );
-        }
+    if (!data) {
+        redirect('/signin');
     }
+
+    const APIResponse = await getAllVideos(data, page, orderBy, sortBy);
+
+    return <Video APIdata={APIResponse?.data} />;
 }
 
 export default VideoPage;
