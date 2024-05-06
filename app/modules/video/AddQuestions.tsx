@@ -14,6 +14,7 @@ import Input from '@/app/components/common/Input';
 import Select from '@/app/components/common/DropDown';
 import { createVideoQuestionsAPI } from '@/app/api/video';
 import ModalFooter from '@/app/components/common/ModalFooter';
+import action from '@/app/action';
 import {
     secondsToString,
     timeStringToSeconds,
@@ -44,26 +45,22 @@ const questionsTypes = [
 ];
 
 const answerOptions = [
-    { label: 'Option 1', value: 'option1' },
-    { label: 'Option 2', value: 'option2' },
-    { label: 'Option 3', value: 'option3' },
-    { label: 'Option 4', value: 'option4' },
+    { label: 'option1', value: 'option1' },
+    { label: 'option2', value: 'option2' },
+    { label: 'option3', value: 'option3' },
+    { label: 'option4', value: 'option4' },
 ];
 
 function AddQuestions({
     videoId,
-    videoUrl,
     videoDuration,
     onClose,
     onButtonClick,
-    setVideoDuration,
 }: {
     videoId: string;
-    videoUrl: string;
     videoDuration?: number;
     onClose: () => void;
     onButtonClick: () => void;
-    setVideoDuration?: (duration: number) => void;
 }) {
     const { data } = useSession();
     const initialQuestions: Question[] = [];
@@ -73,11 +70,6 @@ function AddQuestions({
         reValidateMode: 'onChange',
     });
     const questionType = methods.watch('questionType');
-
-    const handleLoadedMetadata = (event: any) => {
-        const { duration } = event.target;
-        setVideoDuration && setVideoDuration(duration);
-    };
 
     const addQuestion = (formData: ResourceFormData) => {
         let newQuestion: Question;
@@ -107,13 +99,12 @@ function AddQuestions({
 
     const onFormSubmit = async () => {
         try {
-            // // Transform each question in the questions array
             const transformedQuestions = questions.map((question) => ({
                 statement: question.statement,
                 options: question.options,
                 correctOption: question.correctOption,
                 correctOptionExplanation: question.correctOptionExplanation,
-                totalMarks: 0, // Assuming totalMarks is always 0 for now
+                totalMarks: 0,
                 popUpTime: question.popUpTime,
             }));
 
@@ -131,7 +122,7 @@ function AddQuestions({
             if (onButtonClick) {
                 onButtonClick();
             }
-
+            await action('getVideos');
             return toast.success('All Questions added successfully');
         } catch (error: any) {
             return toast.error(error?.message || 'Failed to add question');
@@ -140,17 +131,6 @@ function AddQuestions({
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
-            <div style={{ display: 'none' }}>
-                {
-                    // eslint-disable-next-line jsx-a11y/media-has-caption
-                    <video
-                        src={videoUrl}
-                        controls
-                        width={640}
-                        onLoadedMetadata={handleLoadedMetadata}
-                    />
-                }
-            </div>
             <FormProvider {...methods}>
                 <form
                     onSubmit={methods.handleSubmit(
@@ -167,12 +147,10 @@ function AddQuestions({
                             Icon={FileVideoIcon}
                             onClose={onClose}
                         />
-                        {/* <FileUploading isCompleted progress={0} /> */}
                         <div className="mt-3 flex justify-end w-full">
                             <button
                                 type="submit"
                                 className="text-white text-sm w-32 text-center bg-primary-color p-2 rounded-lg"
-                                // onClick={addQuestion}
                             >
                                 Add Question
                             </button>
