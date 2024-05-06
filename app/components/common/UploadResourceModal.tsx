@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import { FileVideoIcon, LucideIcon } from 'lucide-react';
@@ -12,14 +12,14 @@ import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import { UploadResource } from '@/app/api/s3Bucket';
 import { createResourceAPI } from '@/app/api/resource';
-import { validationError, ResourceType } from '@/lib/utils';
+import { validationError, ResourceType, secondsToString } from '@/lib/utils';
 import UploadItem from '@/app//components/common/UploadItem';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import FileUploading from '@/app/components/common/FileUploading';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
+import action from '@/app/action';
 import Select from './DropDown';
 
-// type for the form data
 type ResourceFormData = {
     topic: string;
     name: string;
@@ -37,7 +37,7 @@ interface UploadResourceModalProp {
     onClose?: () => void;
     onButtonClick?: () => void;
     setUploadedVideoId?: (id: string) => void;
-    setUploadedVideoUrl?: (id: string) => void;
+    setVideoDuration?: (duration: string) => void;
 }
 
 const uploadOptions = [
@@ -54,7 +54,7 @@ function UploadResourceModal({
     onClose,
     onButtonClick,
     setUploadedVideoId,
-    setUploadedVideoUrl,
+    setVideoDuration,
 }: UploadResourceModalProp) {
     const { data } = useSession();
     const [progress, setProgress] = React.useState(0);
@@ -66,6 +66,52 @@ function UploadResourceModal({
     const videoName = methods.watch('name');
     const thumbnailFile = methods.watch('thumbnail');
     const selectedUploadOption = methods.watch('selectedUploadOption');
+
+    const convertYouTubeDuration = (duration: string) => {
+        const match = duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/);
+
+        const hours = (match && parseInt(match[2], 10)) || 0;
+        const minutes = (match && parseInt(match[4], 10)) || 0;
+        const seconds = (match && parseInt(match[6], 10)) || 0;
+
+        return hours * 3600 + minutes * 60 + seconds;
+    };
+
+    const getVideoDuration = async (videoSource: string | File) => {
+        let videoDuration = 0;
+
+        if (
+            typeof videoSource === 'string' &&
+            videoSource.includes('youtube')
+        ) {
+            const videoId = new URL(videoSource).searchParams.get('v');
+            const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=AIzaSyCrhW8yFSb14hpLBPJgo2VnqI8NcxeW-M4`
+            );
+            const data = await response.json();
+            videoDuration = convertYouTubeDuration(
+                data.items[0].contentDetails.duration
+            );
+        } else if (typeof videoSource !== 'string') {
+            videoDuration = await new Promise((resolve, reject) => {
+                const video = document.createElement('video');
+                video.preload = 'metadata';
+                video.onloadedmetadata = () => {
+                    URL.revokeObjectURL(video.src);
+                    resolve(video.duration);
+                };
+                video.onerror = () => {
+                    reject(new Error('Failed to load video metadata.'));
+                };
+                video.src = URL.createObjectURL(videoSource);
+            });
+        }
+
+        if (setVideoDuration) {
+            setVideoDuration(secondsToString(videoDuration));
+        }
+        return videoDuration;
+    };
 
     const uploadFile = async (file: File) => {
         const response: any = await UploadResource({
@@ -90,7 +136,8 @@ function UploadResourceModal({
     const createResource = async (
         url: string,
         formData: ResourceFormData,
-        thumbnailURL?: string
+        thumbnailURL?: string,
+        duration?: string
     ) => {
         const resourceData: any = {
             accessToken: data?.user?.accessToken ?? '',
@@ -99,6 +146,7 @@ function UploadResourceModal({
             type: ResourceType.VIDEO,
             thumbnailURL,
             url,
+            duration,
             onUploadProgress: (progressEvent: {
                 loaded: number;
                 total: number;
@@ -129,17 +177,16 @@ function UploadResourceModal({
             }
 
             let resourceURL = '';
+            let videoDuration = 0;
             if (selectedFile && selectedUploadOption === 'file') {
+                videoDuration = await getVideoDuration(selectedFile);
                 resourceURL = await uploadFile(selectedFile);
                 if (!resourceURL) {
                     return null;
                 }
             } else {
                 resourceURL = formData?.youtubeURL ?? '';
-            }
-
-            if (setUploadedVideoUrl) {
-                setUploadedVideoUrl(resourceURL);
+                videoDuration = await getVideoDuration(resourceURL);
             }
 
             if (!formData.thumbnail) {
@@ -149,11 +196,13 @@ function UploadResourceModal({
             const createResponse: any = await createResource(
                 resourceURL,
                 formData,
-                thumbnailURL
+                thumbnailURL,
+                secondsToString(videoDuration) || '00:00:00'
             );
             const APIdata = createResponse?.data;
 
             const videoId = APIdata?.data?.videoAttributes?.id ?? '';
+
             if (setUploadedVideoId) {
                 setUploadedVideoId(videoId);
             }
@@ -162,60 +211,12 @@ function UploadResourceModal({
                 onButtonClick();
             }
 
+            await action('getVideos');
             return toast.success('Video Uploaded Successfully');
         } catch (error: any) {
             return toast.error(error?.message);
         }
     };
-
-    // useEffect(() => {
-    //     let player: any;
-    //     let time: any;
-    //     // Initialize the YouTube Player API
-    //     const tag = document.createElement('script');
-    //     tag.src = 'https://www.youtube.com/iframe_api';
-    //     tag.async = true;
-    //     const firstScriptTag = document.getElementsByTagName('script')[0];
-    //     if (firstScriptTag.parentNode) {
-    //         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    //     }
-
-    //     function onYouTubeIframeAPIReady() {
-    //         player = new YT.Player('player', {
-    //             height: '390',
-    //             width: '640',
-    //             videoId: 'SIWbjgPYcJY',
-    //             playerVars: {
-    //                 autoplay: 0,
-    //                 controls: 1,
-    //             },
-    //             events: {
-    //                 onReady: onPlayerReady,
-    //             },
-    //         });
-    //     }
-
-    //     // Function to handle when the player is ready
-    //     const onPlayerReady = (event: any) => {
-    //         const player = event.target;
-    //         const duration = player.getDuration();
-    //         console.log('Video Duration:', duration);
-    //     };
-
-    //     // // Callback function to create the player after the API code downloads
-    //     // new YT.Player('youtube-player', {
-    //     //     events: {
-    //     //         'onReady': onPlayerReady
-    //     //     }
-    //     // });
-
-    //     // // Function to handle when the player is ready
-    //     // const onPlayerReady = (event) => {
-    //     //     const player = event.target;
-    //     //     const duration = player.getDuration();
-    //     //     console.log('Video Duration:', duration);
-    //     // };
-    // }, []);
 
     return (
         <section className="w-full bg-white h-screen py-4  shadow-lg">
