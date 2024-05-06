@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import {
@@ -15,6 +15,7 @@ import { timeStringToSeconds, validationError } from '@/lib/utils';
 import { ErrorMessage } from '@hookform/error-message';
 import { FileVideoIcon } from 'lucide-react';
 import action from '@/app/action';
+import PageLoader from '@/app/components/common/PageLoader';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 const questionsTypes = [
@@ -79,6 +80,9 @@ function EditTopicsModal({
     onButtonClick: () => void;
 }) {
     const { data } = useSession();
+    const topicAddedRef = useRef(false);
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const [modalLoading, setModalLoading] = useState(false);
     const [originalVideoData, setOriginalVideoData] = useState<Video>(
         {} as Video
     );
@@ -117,7 +121,7 @@ function EditTopicsModal({
 
         try {
             let response = null;
-
+            setButtonLoading(true);
             if (newVideo) {
                 response = await addTopicsInVideoAPI({
                     videoId,
@@ -152,13 +156,29 @@ function EditTopicsModal({
                 error?.message ||
                     'An error occurred while updating video topics'
             );
+        } finally {
+            setButtonLoading(false);
         }
     };
 
     useEffect(() => {
-        const getVideoData = async () => {
-            try {
-                if (data) {
+        // Only proceed if data is available
+        if (!data) {
+            return;
+        }
+
+        if (newVideo) {
+            if (topicFields.length === 0 && !topicAddedRef.current) {
+                appendTopic({
+                    timeline: '',
+                    name: '',
+                });
+                topicAddedRef.current = true;
+            }
+        } else {
+            const getVideoData = async () => {
+                setModalLoading(true);
+                try {
                     const APIData = await getVideoAPI({
                         accessToken: data?.user?.accessToken,
                         videoId,
@@ -194,156 +214,170 @@ function EditTopicsModal({
                             });
                         }
                     }
+                } catch (error: any) {
+                    toast.error(
+                        error.message ??
+                            'An error occurred while fetching video data'
+                    );
+                } finally {
+                    setModalLoading(false);
                 }
-            } catch (error: any) {
-                toast.error(
-                    error.message ??
-                        'An error occurred while fetching video data'
-                );
-            }
-        };
+            };
 
-        getVideoData();
-    }, [data, videoId, reset, appendTopic]);
+            getVideoData();
+        }
+    }, [data, videoId, reset, appendTopic, newVideo, topicFields.length]);
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
-            <FormProvider {...methods}>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="h-[90%] overflow-y-scroll w-full px-6"
-                >
-                    <div>
-                        <ModalHeader
-                            headerText={{
-                                heading: newVideo
-                                    ? 'Upload Video'
-                                    : 'Edit Video',
-                                tagline: `let’s ${
-                                    newVideo ? `Upload` : `Edit`
-                                } Video For Your User`,
-                            }}
-                            Icon={FileVideoIcon}
-                            onClose={onClose}
-                        />
-                        {topicFields.map((topic, index) => (
-                            <div key={topic.id}>
-                                <div className="flex flex-col space-y-1 mt-2">
-                                    <Label
-                                        htmlFor={`video.topics[${index}].name`}
-                                        className="font-semibold text-md"
-                                    >
-                                        Topic Name
-                                    </Label>
-                                    <Input
-                                        name={`video.topics[${index}].name`}
-                                        inputValue={
-                                            (topic as { name: string }).name
-                                        }
-                                        placeholder="Enter Topic Name"
-                                        type="text"
-                                        rules={{
-                                            required: {
-                                                value: true,
-                                                message:
-                                                    validationError.REQUIRED_FIELD,
-                                            },
-                                        }}
-                                    />
-                                </div>
-                                <span className="text-red-500 text-xs">
-                                    <ErrorMessage
-                                        errors={errors}
-                                        name={`video.topics[${index}].name`}
-                                    />
-                                </span>
-                                <div className="flex flex-col space-y-1 mt-2">
-                                    <Label
-                                        htmlFor={`video.topics[${index}].timeline`}
-                                        className="font-semibold text-md"
-                                    >
-                                        Timeline
-                                    </Label>
-                                    <Input
-                                        name={`video.topics[${index}].timeline`}
-                                        inputValue={
-                                            (topic as { timeline: string })
-                                                .timeline
-                                        }
-                                        placeholder="Enter The Start Time"
-                                        type="text"
-                                        rules={{
-                                            required: {
-                                                value: true,
-                                                message:
-                                                    validationError.REQUIRED_FIELD,
-                                            },
-                                            pattern: {
-                                                value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
-                                                message:
-                                                    'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
-                                            },
-                                            validate: (value: string) => {
-                                                const timelineSeconds =
-                                                    timeStringToSeconds(value);
-                                                const duration = newVideo
-                                                    ? newVideoDuration ||
-                                                      '00:00:00'
-                                                    : originalVideoData.duration;
-                                                if (
-                                                    timelineSeconds >
-                                                    timeStringToSeconds(
-                                                        duration
-                                                    )
-                                                ) {
-                                                    return `Timeline exceeds video duration ${originalVideoData.duration}`;
-                                                }
-                                                return true;
-                                            },
-                                        }}
-                                    />
+            {modalLoading ? (
+                <div>
+                    <PageLoader />
+                </div>
+            ) : (
+                <FormProvider {...methods}>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="h-[90%] overflow-y-scroll w-full px-6"
+                    >
+                        <div>
+                            <ModalHeader
+                                headerText={{
+                                    heading: newVideo
+                                        ? 'Upload Video'
+                                        : 'Edit Video',
+                                    tagline: `let’s ${
+                                        newVideo ? `Upload` : `Edit`
+                                    } Video For Your User`,
+                                }}
+                                Icon={FileVideoIcon}
+                                onClose={onClose}
+                            />
+                            {topicFields.map((topic, index) => (
+                                <div key={topic.id}>
+                                    <div className="flex flex-col space-y-1 mt-2">
+                                        <Label
+                                            htmlFor={`video.topics[${index}].name`}
+                                            className="font-semibold text-md"
+                                        >
+                                            Topic Name
+                                        </Label>
+                                        <Input
+                                            name={`video.topics[${index}].name`}
+                                            inputValue={
+                                                (topic as { name: string }).name
+                                            }
+                                            placeholder="Enter Topic Name"
+                                            type="text"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                            }}
+                                        />
+                                    </div>
                                     <span className="text-red-500 text-xs">
                                         <ErrorMessage
                                             errors={errors}
-                                            name={`video.topics[${index}].timeline`}
+                                            name={`video.topics[${index}].name`}
                                         />
                                     </span>
+                                    <div className="flex flex-col space-y-1 mt-2">
+                                        <Label
+                                            htmlFor={`video.topics[${index}].timeline`}
+                                            className="font-semibold text-md"
+                                        >
+                                            Timeline
+                                        </Label>
+                                        <Input
+                                            name={`video.topics[${index}].timeline`}
+                                            inputValue={
+                                                (topic as { timeline: string })
+                                                    .timeline
+                                            }
+                                            placeholder="Enter The Start Time"
+                                            type="text"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                                pattern: {
+                                                    value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
+                                                    message:
+                                                        'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
+                                                },
+                                                validate: (value: string) => {
+                                                    const timelineSeconds =
+                                                        timeStringToSeconds(
+                                                            value
+                                                        );
+                                                    const duration = newVideo
+                                                        ? newVideoDuration ||
+                                                          '00:00:00'
+                                                        : originalVideoData.duration;
+                                                    if (
+                                                        timelineSeconds >
+                                                        timeStringToSeconds(
+                                                            duration
+                                                        )
+                                                    ) {
+                                                        return `Timeline exceeds video duration ${originalVideoData.duration}`;
+                                                    }
+                                                    return true;
+                                                },
+                                            }}
+                                        />
+                                        <span className="text-red-500 text-xs">
+                                            <ErrorMessage
+                                                errors={errors}
+                                                name={`video.topics[${index}].timeline`}
+                                            />
+                                        </span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => removeTopic(index)}
+                                        className="cursor-pointer p-2 w-full rounded-lg bg-red-500 text-white text-center mt-5"
+                                    >
+                                        Remove
+                                    </button>
                                 </div>
+                            ))}
+                            <div className="flex flex-row gap-4">
                                 <button
                                     type="button"
-                                    onClick={() => removeTopic(index)}
-                                    className="cursor-pointer p-2 w-full rounded-lg bg-red-500 text-white text-center mt-5"
+                                    className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
+                                    onClick={() =>
+                                        appendTopic({
+                                            timeline: '',
+                                            name: '',
+                                        })
+                                    }
                                 >
-                                    Remove
+                                    Add Topic
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
+                                >
+                                    Save Changes
                                 </button>
                             </div>
-                        ))}
-                        <div className="flex flex-row gap-4">
-                            <button
-                                type="button"
-                                className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
-                                onClick={() =>
-                                    appendTopic({
-                                        timeline: '',
-                                        name: '',
-                                    })
-                                }
-                            >
-                                Add Topic
-                            </button>
-                            <button
-                                type="submit"
-                                className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
-                            >
-                                Save Changes
-                            </button>
                         </div>
-                    </div>
 
-                    <div onClick={onClose}>
-                        <ModalFooter text="Finish" buttonType="button" />
-                    </div>
-                </form>
-            </FormProvider>
+                        <div onClick={onClose}>
+                            <ModalFooter
+                                text="Finish"
+                                buttonType="button"
+                                loading={buttonLoading}
+                            />
+                        </div>
+                    </form>
+                </FormProvider>
+            )}
         </section>
     );
 }
