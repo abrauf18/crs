@@ -58,6 +58,7 @@ function UploadResourceModal({
 }: UploadResourceModalProp) {
     const { data } = useSession();
     const [progress, setProgress] = React.useState(0);
+    const [loading, setLoading] = React.useState(false);
     const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
     const methods = useForm({
         mode: 'onChange',
@@ -175,7 +176,7 @@ function UploadResourceModal({
             if (!selectedFile && selectedUploadOption === 'file') {
                 return toast.error('Please Select File');
             }
-
+            setLoading(true);
             let resourceURL = '';
             let videoDuration = 0;
             if (selectedFile && selectedUploadOption === 'file') {
@@ -215,6 +216,8 @@ function UploadResourceModal({
             return toast.success('Video Uploaded Successfully');
         } catch (error: any) {
             return toast.error(error?.message);
+        } finally {
+            setLoading(false);
         }
     };
 
