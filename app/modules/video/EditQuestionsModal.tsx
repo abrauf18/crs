@@ -121,8 +121,6 @@ function EditQuestionsModal({
         );
 
         try {
-            // const updateVideo = async () => {
-            // if (data) {
             let response = null;
 
             if (newVideo) {
@@ -154,10 +152,6 @@ function EditQuestionsModal({
             toast.success(
                 `Video questions ${newVideo ? `added` : `updated`} successfully`
             );
-            // }
-            // };
-
-            // await updateVideo();
         } catch (error: any) {
             toast.error(
                 error?.message ||
@@ -189,7 +183,6 @@ function EditQuestionsModal({
         } else {
             const getVideoData = async () => {
                 try {
-                    // if (data && !newVideo) {
                     const APIData = await getVideoAPI({
                         accessToken: data?.user?.accessToken,
                         videoId,
@@ -235,7 +228,6 @@ function EditQuestionsModal({
                             });
                         }
                     }
-                    // }
                 } catch (error: any) {
                     toast.error(
                         error.message ??
