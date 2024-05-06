@@ -55,6 +55,7 @@ function Video({
                 <Filters
                     text={`${APIdata.totalVideos} Videos In Total`}
                     secondButtonText="Upload Video"
+                    isHideFirstBtn
                     handleClick={handleOpenUploadModal}
                 />
             </div>

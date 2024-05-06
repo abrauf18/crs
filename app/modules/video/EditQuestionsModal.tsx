@@ -14,7 +14,7 @@ import Select from '@/app/components/common/DropDown';
 import { timeStringToSeconds, validationError } from '@/lib/utils';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorMessage } from '@hookform/error-message';
-import { FileVideoIcon } from 'lucide-react';
+import { FileVideoIcon, X } from 'lucide-react';
 import action from '@/app/action';
 import PageLoader from '@/app/components/common/PageLoader';
 import { ModalHeader } from '../../components/common/ModalHeader';
@@ -246,7 +246,8 @@ function EditQuestionsModal({
 
             getVideoData();
         }
-    }, [appendQuestion, data, newVideo, questionFields.length, reset, videoId]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
             {modalLoading ? (
@@ -296,7 +297,7 @@ function EditQuestionsModal({
                                             }}
                                         />
                                         <Select
-                                            additionalClasses="w-2/5"
+                                            additionalClasses="!w-2/5"
                                             name={`video.questions[${index}].type`}
                                             options={questionsTypes}
                                             selectedOption={
@@ -311,6 +312,15 @@ function EditQuestionsModal({
                                         <ErrorMessage
                                             errors={errors}
                                             name={`video.questions[${index}].statement`}
+                                            render={({ message }) => (
+                                                <p className="flex items-center">
+                                                    <X
+                                                        size={20}
+                                                        color="#E6500D"
+                                                    />
+                                                    {message}
+                                                </p>
+                                            )}
                                         />
                                     </span>
                                     <div className="flex flex-col space-y-1 mt-2">
