@@ -16,6 +16,7 @@ import { timeStringToSeconds, validationError } from '@/lib/utils';
 import { ErrorMessage } from '@hookform/error-message';
 import { FileVideoIcon } from 'lucide-react';
 import action from '@/app/action';
+import PageLoader from '@/app/components/common/PageLoader';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 const questionsTypes = [
@@ -80,6 +81,8 @@ function EditQuestionsModal({
 }) {
     const { data } = useSession();
     const questionAddedRef = useRef(false);
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const [modalLoading, setModalLoading] = useState(false);
     const [originalVideoData, setOriginalVideoData] = useState<Video>(
         {} as Video
     );
@@ -122,7 +125,7 @@ function EditQuestionsModal({
 
         try {
             let response = null;
-
+            setButtonLoading(true);
             if (newVideo) {
                 response = await createVideoQuestionsAPI({
                     videoId,
@@ -157,6 +160,8 @@ function EditQuestionsModal({
                 error?.message ||
                     'An error occurred while updating video questions'
             );
+        } finally {
+            setButtonLoading(false);
         }
     };
     useEffect(() => {
@@ -182,6 +187,7 @@ function EditQuestionsModal({
             }
         } else {
             const getVideoData = async () => {
+                setModalLoading(true);
                 try {
                     const APIData = await getVideoAPI({
                         accessToken: data?.user?.accessToken,
@@ -233,6 +239,8 @@ function EditQuestionsModal({
                         error.message ??
                             'An error occurred while fetching video data'
                     );
+                } finally {
+                    setModalLoading(false);
                 }
             };
 
@@ -241,294 +249,313 @@ function EditQuestionsModal({
     }, [appendQuestion, data, newVideo, questionFields.length, reset, videoId]);
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
-            <FormProvider {...methods}>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="h-[90%] overflow-y-scroll w-full px-6"
-                >
-                    <div>
-                        <ModalHeader
-                            headerText={{
-                                heading: newVideo
-                                    ? 'Upload Video'
-                                    : 'Edit Video',
-                                tagline: `let’s ${
-                                    newVideo ? `Upload` : `Edit`
-                                } Video For Your User`,
-                            }}
-                            Icon={FileVideoIcon}
-                            onClose={onClose}
-                        />
-                        {questionFields.map((question: Question, index) => (
-                            <div key={question.id}>
-                                <Label
-                                    htmlFor={`video.questions[${index}].statement`}
-                                    className="font-semibold"
-                                >
-                                    {`Question ${index + 1}`}
-                                </Label>
-                                <div className="flex items-center gap-5">
-                                    <Input
-                                        additionalClasses="w-full"
-                                        name={`video.questions[${index}].statement`}
-                                        inputValue={question.statement}
-                                        placeholder="Write Question"
-                                        type="text"
-                                        rules={{
-                                            required: {
-                                                value: true,
-                                                message:
-                                                    validationError.REQUIRED_FIELD,
-                                            },
-                                        }}
-                                    />
-                                    <Select
-                                        additionalClasses="w-2/5"
-                                        name={`video.questions[${index}].type`}
-                                        options={questionsTypes}
-                                        selectedOption={
-                                            Object.keys(question.options)
-                                                .length > 0
-                                                ? 'mcq'
-                                                : 'open'
-                                        }
-                                    />
-                                </div>
-                                <span className="text-red-500 text-xs">
-                                    <ErrorMessage
-                                        errors={errors}
-                                        name={`video.questions[${index}].statement`}
-                                    />
-                                </span>
-                                <div className="flex flex-col space-y-1 mt-2">
+            {modalLoading ? (
+                <div>
+                    <PageLoader />
+                </div>
+            ) : (
+                <FormProvider {...methods}>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="h-[90%] overflow-y-scroll w-full px-6"
+                    >
+                        <div>
+                            <ModalHeader
+                                headerText={{
+                                    heading: newVideo
+                                        ? 'Upload Video'
+                                        : 'Edit Video',
+                                    tagline: `let’s ${
+                                        newVideo ? `Upload` : `Edit`
+                                    } Video For Your User`,
+                                }}
+                                Icon={FileVideoIcon}
+                                onClose={onClose}
+                            />
+                            {questionFields.map((question: Question, index) => (
+                                <div key={question.id}>
                                     <Label
-                                        htmlFor={`video.questions[${index}].popUpTime`}
-                                        className="font-semibold text-md"
+                                        htmlFor={`video.questions[${index}].statement`}
+                                        className="font-semibold"
                                     >
-                                        Timeline
+                                        {`Question ${index + 1}`}
                                     </Label>
-                                    <Input
-                                        name={`video.questions[${index}].popUpTime`}
-                                        inputValue={question.popUpTime}
-                                        placeholder="Enter Question Statement"
-                                        type="text"
-                                        rules={{
-                                            required: {
-                                                value: true,
-                                                message:
-                                                    validationError.REQUIRED_FIELD,
-                                            },
-                                            pattern: {
-                                                value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
-                                                message:
-                                                    'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
-                                            },
-                                            validate: (value: string) => {
-                                                const timelineSeconds =
-                                                    timeStringToSeconds(value);
-                                                const duration = newVideo
-                                                    ? newVideoDuration ||
-                                                      '00:00:00'
-                                                    : originalVideoData.duration;
-                                                if (
-                                                    timelineSeconds >
-                                                    timeStringToSeconds(
-                                                        duration
-                                                    )
-                                                ) {
-                                                    return `Timeline exceeds video duration ${duration}`;
-                                                }
-                                                return true;
-                                            },
-                                        }}
-                                    />
+                                    <div className="flex items-center gap-5">
+                                        <Input
+                                            additionalClasses="w-full"
+                                            name={`video.questions[${index}].statement`}
+                                            inputValue={question.statement}
+                                            placeholder="Write Question"
+                                            type="text"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                            }}
+                                        />
+                                        <Select
+                                            additionalClasses="w-2/5"
+                                            name={`video.questions[${index}].type`}
+                                            options={questionsTypes}
+                                            selectedOption={
+                                                Object.keys(question.options)
+                                                    .length > 0
+                                                    ? 'mcq'
+                                                    : 'open'
+                                            }
+                                        />
+                                    </div>
                                     <span className="text-red-500 text-xs">
                                         <ErrorMessage
                                             errors={errors}
-                                            name={`video.questions[${index}].popUpTime`}
+                                            name={`video.questions[${index}].statement`}
                                         />
                                     </span>
-                                </div>
-                                {watch(
-                                    `video.questions[${index}].type` as `video.questions.${number}.type`
-                                ) === 'mcq' && (
-                                    <div className="flex flex-col mt-5">
+                                    <div className="flex flex-col space-y-1 mt-2">
                                         <Label
-                                            htmlFor={`video.questions[${index}].options.0`}
-                                            className="font-semibold mt-2"
+                                            htmlFor={`video.questions[${index}].popUpTime`}
+                                            className="font-semibold text-md"
                                         >
-                                            Options
-                                        </Label>
-                                        {Object.keys(question.options).length >
-                                        0
-                                            ? Object.keys(question.options).map(
-                                                  (optionKey, optionIndex) => (
-                                                      <div
-                                                          key={optionKey}
-                                                          className="mt-2"
-                                                      >
-                                                          <Input
-                                                              type="text"
-                                                              inputValue={
-                                                                  question
-                                                                      .options[
-                                                                      optionKey
-                                                                  ]
-                                                              }
-                                                              name={`video.questions[${index}].options.${optionKey}`}
-                                                              rules={{
-                                                                  required: {
-                                                                      value: true,
-                                                                      message:
-                                                                          validationError.REQUIRED_FIELD,
-                                                                  },
-                                                              }}
-                                                          />
-                                                          <span className="text-red-500 text-xs">
-                                                              <ErrorMessage
-                                                                  errors={
-                                                                      errors
-                                                                  }
-                                                                  name={`video.questions[${index}].options.${optionKey}`}
-                                                              />
-                                                          </span>
-                                                      </div>
-                                                  )
-                                              )
-                                            : [
-                                                  'option1',
-                                                  'option2',
-                                                  'option3',
-                                                  'option4',
-                                              ].map(
-                                                  (
-                                                      optionField,
-                                                      optionIndex
-                                                  ) => (
-                                                      <div
-                                                          key={optionField}
-                                                          className="mt-2"
-                                                      >
-                                                          <Input
-                                                              name={`video.questions[${index}].options.${optionField}`}
-                                                              placeholder="Enter Option Statement"
-                                                              type="text"
-                                                              rules={{
-                                                                  required: {
-                                                                      value: true,
-                                                                      message:
-                                                                          validationError.REQUIRED_FIELD,
-                                                                  },
-                                                              }}
-                                                          />
-                                                          <span className="text-red-500 text-xs">
-                                                              <ErrorMessage
-                                                                  errors={
-                                                                      errors
-                                                                  }
-                                                                  name={`video.questions[${index}].options.${optionField}`}
-                                                              />
-                                                          </span>
-                                                      </div>
-                                                  )
-                                              )}
-                                        <Label
-                                            htmlFor={`video.questions[${index}].correctOption`}
-                                            className="font-semibold mt-3"
-                                        >
-                                            Correct Option
-                                        </Label>
-                                        <Select
-                                            name={`video.questions[${index}].correctOption`}
-                                            options={answerOptions}
-                                            rules={{
-                                                required: {
-                                                    value: true,
-                                                    message:
-                                                        validationError.REQUIRED_FIELD,
-                                                },
-                                            }}
-                                            selectedOption={
-                                                question.correctOption
-                                            }
-                                        />
-                                        <span className="text-red-500 text-xs">
-                                            <ErrorMessage
-                                                errors={errors}
-                                                name={`video.questions[${index}].correctOption`}
-                                            />
-                                        </span>
-                                        <Label
-                                            htmlFor={`video.questions[${index}].correctOptionExplanation`}
-                                            className="font-semibold mt-4"
-                                        >
-                                            Correct Answer Explanation
+                                            Timeline
                                         </Label>
                                         <Input
+                                            name={`video.questions[${index}].popUpTime`}
+                                            inputValue={question.popUpTime}
+                                            placeholder="Enter Question Statement"
                                             type="text"
-                                            inputValue={
-                                                question.correctOptionExplanation
-                                            }
-                                            name={`video.questions[${index}].correctOptionExplanation`}
                                             rules={{
                                                 required: {
                                                     value: true,
                                                     message:
                                                         validationError.REQUIRED_FIELD,
                                                 },
+                                                pattern: {
+                                                    value: /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/,
+                                                    message:
+                                                        'Enter the time in the format HH:MM:SS (00:00:00 - 23:59:59)',
+                                                },
+                                                validate: (value: string) => {
+                                                    const timelineSeconds =
+                                                        timeStringToSeconds(
+                                                            value
+                                                        );
+                                                    const duration = newVideo
+                                                        ? newVideoDuration ||
+                                                          '00:00:00'
+                                                        : originalVideoData.duration;
+                                                    if (
+                                                        timelineSeconds >
+                                                        timeStringToSeconds(
+                                                            duration
+                                                        )
+                                                    ) {
+                                                        return `Timeline exceeds video duration ${duration}`;
+                                                    }
+                                                    return true;
+                                                },
                                             }}
                                         />
                                         <span className="text-red-500 text-xs">
                                             <ErrorMessage
                                                 errors={errors}
-                                                name={`video.questions[${index}].correctOptionExplanation`}
+                                                name={`video.questions[${index}].popUpTime`}
                                             />
                                         </span>
                                     </div>
-                                )}
+                                    {watch(
+                                        `video.questions[${index}].type` as `video.questions.${number}.type`
+                                    ) === 'mcq' && (
+                                        <div className="flex flex-col mt-5">
+                                            <Label
+                                                htmlFor={`video.questions[${index}].options.0`}
+                                                className="font-semibold mt-2"
+                                            >
+                                                Options
+                                            </Label>
+                                            {Object.keys(question.options)
+                                                .length > 0
+                                                ? Object.keys(
+                                                      question.options
+                                                  ).map(
+                                                      (
+                                                          optionKey,
+                                                          optionIndex
+                                                      ) => (
+                                                          <div
+                                                              key={optionKey}
+                                                              className="mt-2"
+                                                          >
+                                                              <Input
+                                                                  type="text"
+                                                                  inputValue={
+                                                                      question
+                                                                          .options[
+                                                                          optionKey
+                                                                      ]
+                                                                  }
+                                                                  name={`video.questions[${index}].options.${optionKey}`}
+                                                                  rules={{
+                                                                      required:
+                                                                          {
+                                                                              value: true,
+                                                                              message:
+                                                                                  validationError.REQUIRED_FIELD,
+                                                                          },
+                                                                  }}
+                                                              />
+                                                              <span className="text-red-500 text-xs">
+                                                                  <ErrorMessage
+                                                                      errors={
+                                                                          errors
+                                                                      }
+                                                                      name={`video.questions[${index}].options.${optionKey}`}
+                                                                  />
+                                                              </span>
+                                                          </div>
+                                                      )
+                                                  )
+                                                : [
+                                                      'option1',
+                                                      'option2',
+                                                      'option3',
+                                                      'option4',
+                                                  ].map(
+                                                      (
+                                                          optionField,
+                                                          optionIndex
+                                                      ) => (
+                                                          <div
+                                                              key={optionField}
+                                                              className="mt-2"
+                                                          >
+                                                              <Input
+                                                                  name={`video.questions[${index}].options.${optionField}`}
+                                                                  placeholder="Enter Option Statement"
+                                                                  type="text"
+                                                                  rules={{
+                                                                      required:
+                                                                          {
+                                                                              value: true,
+                                                                              message:
+                                                                                  validationError.REQUIRED_FIELD,
+                                                                          },
+                                                                  }}
+                                                              />
+                                                              <span className="text-red-500 text-xs">
+                                                                  <ErrorMessage
+                                                                      errors={
+                                                                          errors
+                                                                      }
+                                                                      name={`video.questions[${index}].options.${optionField}`}
+                                                                  />
+                                                              </span>
+                                                          </div>
+                                                      )
+                                                  )}
+                                            <Label
+                                                htmlFor={`video.questions[${index}].correctOption`}
+                                                className="font-semibold mt-3"
+                                            >
+                                                Correct Option
+                                            </Label>
+                                            <Select
+                                                name={`video.questions[${index}].correctOption`}
+                                                options={answerOptions}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            validationError.REQUIRED_FIELD,
+                                                    },
+                                                }}
+                                                selectedOption={
+                                                    question.correctOption
+                                                }
+                                            />
+                                            <span className="text-red-500 text-xs">
+                                                <ErrorMessage
+                                                    errors={errors}
+                                                    name={`video.questions[${index}].correctOption`}
+                                                />
+                                            </span>
+                                            <Label
+                                                htmlFor={`video.questions[${index}].correctOptionExplanation`}
+                                                className="font-semibold mt-4"
+                                            >
+                                                Correct Answer Explanation
+                                            </Label>
+                                            <Input
+                                                type="text"
+                                                inputValue={
+                                                    question.correctOptionExplanation
+                                                }
+                                                name={`video.questions[${index}].correctOptionExplanation`}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            validationError.REQUIRED_FIELD,
+                                                    },
+                                                }}
+                                            />
+                                            <span className="text-red-500 text-xs">
+                                                <ErrorMessage
+                                                    errors={errors}
+                                                    name={`video.questions[${index}].correctOptionExplanation`}
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
+                                    <button
+                                        type="button"
+                                        onClick={() => removeQuestion(index)}
+                                        className="cursor-pointer p-2 w-full rounded-lg bg-red-500 text-white text-center mt-2 mb-5"
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
+                            ))}
+                            <div className="flex flex-row gap-4">
                                 <button
                                     type="button"
-                                    onClick={() => removeQuestion(index)}
-                                    className="cursor-pointer p-2 w-full rounded-lg bg-red-500 text-white text-center mt-2 mb-5"
+                                    className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
+                                    onClick={() =>
+                                        appendQuestion({
+                                            id: '',
+                                            videoId: '',
+                                            statement: '',
+                                            options: {},
+                                            correctOption: '',
+                                            correctOptionExplanation: '',
+                                            totalMarks: 0,
+                                            popUpTime: '',
+                                            type: 'open',
+                                        })
+                                    }
                                 >
-                                    Remove
+                                    Add Question
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
+                                >
+                                    Save Changes
                                 </button>
                             </div>
-                        ))}
-                        <div className="flex flex-row gap-4">
-                            <button
-                                type="button"
-                                className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
-                                onClick={() =>
-                                    appendQuestion({
-                                        id: '',
-                                        videoId: '',
-                                        statement: '',
-                                        options: {},
-                                        correctOption: '',
-                                        correctOptionExplanation: '',
-                                        totalMarks: 0,
-                                        popUpTime: '',
-                                        type: 'open',
-                                    })
-                                }
-                            >
-                                Add Question
-                            </button>
-                            <button
-                                type="submit"
-                                className="cursor-pointer p-2 w-full rounded-lg bg-primary-color text-white text-center mt-5"
-                            >
-                                Save Changes
-                            </button>
                         </div>
-                    </div>
 
-                    <div onClick={onButtonClick}>
-                        <ModalFooter text="Next" buttonType="button" />
-                    </div>
-                </form>
-            </FormProvider>
+                        <div onClick={onButtonClick}>
+                            <ModalFooter
+                                text="Next"
+                                buttonType="button"
+                                loading={buttonLoading}
+                            />
+                        </div>
+                    </form>
+                </FormProvider>
+            )}
         </section>
     );
 }
