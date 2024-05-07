@@ -1,14 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import { FileVideoIcon } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import SearchInput from '@/app/components/common/SearchInput';
-import { getResourcesByNameAPI } from '@/app/api/resource';
+import {
+    getResourcesByNameAPI,
+    getResourcesByTypeAPI,
+} from '@/app/api/resource';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
+import QuizCard from '@/app/components/common/QuizCard';
 import VideoCard, { Card } from '../video/VideoCard';
 
 const cards: Card[] = [
@@ -27,12 +31,51 @@ const cards: Card[] = [
         Checkpoints: 3,
     },
 ];
+export enum ResourceType {
+    VIDEO = 'video',
+    SLIDESHOW = 'slideshow',
+    WORKSHEET = 'worksheet',
+    EXIT_TICKET_TEST = 'exit-ticket-test',
+    QUIZ = 'quiz',
+}
 
-function VideoModal({ onClose }: any) {
+function VideoModal({
+    onClose,
+    resourceType,
+}: {
+    onClose: () => void;
+    resourceType: ResourceType;
+}) {
     const { data } = useSession();
+    const [allResources, setAllResources] = useState<
+        { id: string; name: string; url: string }[]
+    >([]);
+    const [searchedResources, setSearchedResources] = useState<
+        { id: string; name: string; url: string }[]
+    >([]);
+    const [resourceCards, setResourceCards] = useState<
+        { id: string; Text: string; imageUrl: string }[]
+    >([]);
+
+    const convertResourceToCard = (
+        rawResources: { id: string; name: string; url: string }[]
+    ) => {
+        const transformedData = rawResources.map((resource) => ({
+            id: resource.id,
+            imageUrl: resource.url,
+            Text: resource.name,
+        }));
+
+        setResourceCards(transformedData);
+    };
 
     const searchResources = async (searchInput: string) => {
         if (!data) {
+            return;
+        }
+        if (searchInput === '') {
+            setSearchedResources([]);
+            convertResourceToCard(searchedResources);
             return;
         }
 
@@ -51,8 +94,9 @@ function VideoModal({ onClose }: any) {
             }
 
             const responseData = await APIData.json();
-            const resources = responseData?.data ?? [];
-            console.log(resources);
+            setSearchedResources(responseData?.data ?? []);
+            convertResourceToCard(searchedResources);
+            console.log('searchedResources: ', searchedResources);
         } catch (error: any) {
             toast.error(
                 error.message ?? 'An error occurred while searching resources'
@@ -60,6 +104,40 @@ function VideoModal({ onClose }: any) {
         }
     };
 
+    useEffect(() => {
+        if (!data) {
+            return;
+        }
+
+        const getResourcesByType = async () => {
+            try {
+                const APIData = await getResourcesByTypeAPI({
+                    accessToken: data?.user?.accessToken,
+                    resourceType,
+                });
+
+                if (!APIData.ok) {
+                    const errorData = await APIData.json();
+                    throw new Error(
+                        errorData?.message ??
+                            'An error occurred while fetching video data'
+                    );
+                }
+
+                const responseData = await APIData.json();
+                setAllResources(responseData?.data);
+                console.log(responseData?.data);
+            } catch (error: any) {
+                toast.error(
+                    error.message ??
+                        'An error occurred while fetching video data'
+                );
+            }
+        };
+
+        getResourcesByType();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
     return (
         <section className="w-full bg-white h-screen p-4 shadow-md">
             <ModalHeader
@@ -75,10 +153,10 @@ function VideoModal({ onClose }: any) {
             </div>
             <div className="md:h-96 h-72  overflow-y-auto px-6">
                 {' '}
-                {/* Added container with fixed height and scrolling */}
-                {cards.map((card) => (
-                    <div className="mt-5" key={card.Questions}>
-                        <VideoCard card={card} isModal />
+                {resourceCards.map((card) => (
+                    <div className="mt-5" key={card.id}>
+                        <QuizCard card={card} />
+                        {/* <VideoCard card={card} isModal /> */}
                     </div>
                 ))}
             </div>

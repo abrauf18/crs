@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { CalendarDays } from 'lucide-react';
 import { Label } from '@/app/components/ui/label';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorMessage } from '@hookform/error-message';
 import Input from '@/app/components/common/Input';
+import Select from '@/app/components/common/DropDown';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import { validationError } from '@/lib/utils';
-import CreateTopic from '../CreateTopic';
+import CreateTopic from '../CreateTopicRHF';
 import StandardCard, { Data } from '../StandardCard';
 
 export const data: Data[] = [
@@ -30,11 +32,6 @@ export const data: Data[] = [
         question: '5 questions',
     },
 ];
-interface Resource {
-    id: string;
-    name: string;
-    url: string;
-}
 export enum ResourceType {
     VIDEO = 'video',
     SLIDESHOW = 'slideshow',
@@ -42,29 +39,16 @@ export enum ResourceType {
     EXIT_TICKET_TEST = 'exit-ticket-test',
     QUIZ = 'quiz',
 }
-interface Topic {
-    id: string;
-    // name: string;
-    type: ResourceType;
-    resource: Resource;
-}
-interface DailyUpload {
-    id: string;
-    date: string;
-    topics: Topic[];
-}
 interface Standard {
     id: string;
     name: string;
     description: string;
-    dailyUploads: DailyUpload[];
 }
 interface FormValues {
     standard: Standard;
 }
 
 function CreateStandard() {
-    const dailyUploadAddedRef = useRef(false);
     const methods = useForm<FormValues>({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -76,14 +60,6 @@ function CreateStandard() {
         watch,
         reset,
     } = methods;
-    const {
-        fields: dailyUploadFields,
-        append: appendDailyUpload,
-        remove: removeDailyUpload,
-    } = useFieldArray<FormValues>({
-        control,
-        name: 'standard.dailyUploads',
-    });
 
     const onSubmit = async (formdata: FormValues) => {
         if (!data) {
@@ -92,27 +68,6 @@ function CreateStandard() {
 
         console.log('formdata: ', formdata);
     };
-
-    useEffect(() => {
-        if (!data) {
-            return;
-        }
-        if (dailyUploadFields.length === 0 && !dailyUploadAddedRef.current) {
-            appendDailyUpload({
-                id: '',
-                date: '',
-                topics: [
-                    {
-                        id: '',
-                        type: ResourceType.VIDEO,
-                        resource: { id: '', name: '', url: '' },
-                    },
-                ],
-            });
-            dailyUploadAddedRef.current = true;
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
 
     return (
         <section>
@@ -162,12 +117,11 @@ function CreateStandard() {
                     <div>
                         <div className="flex justify-between items-center my-5">
                             <h3 className="text-xl font-semibold">Topic:</h3>
-                        </div>
-                        {dailyUploadFields.map((dailyUpload, index) => (
-                            <div key={dailyUpload.id}>
-                                <CreateTopic index={index} />
+                            <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
+                                <button type="submit">Add More</button>
                             </div>
-                        ))}
+                        </div>
+                        <CreateTopic />
                     </div>
                     <StandardCard data={data} />
                 </form>

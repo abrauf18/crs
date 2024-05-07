@@ -1,15 +1,14 @@
 'use client';
 
 import { toast } from 'react-toastify';
-import { CalendarDays } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import React, { useEffect, useRef, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
-import Input from '@/app/components/common/Input';
-import Select from '@/app/components/common/DropDown';
 import { getResourcesByTypeAPI } from '@/app/api/resource';
+import Select from '@/app/components/common/DropDown';
+import { validationError } from '@/lib/utils';
+import Input from '@/app/components/common/Input';
 import QuizModal from './QuizModal';
 import VideoModal from './VideoModal';
 
@@ -34,7 +33,6 @@ export const resourceDropDownOptions = [
 ];
 interface Topic {
     id: string;
-    // name: string;
     type: ResourceType;
     resource: Resource;
 }
@@ -43,35 +41,37 @@ interface DailyUpload {
     date: string;
     topics: Topic[];
 }
-interface Standard {
-    id: string;
-    name: string;
-    description: string;
-    dailyUploads: DailyUpload[];
-}
 interface FormValues {
-    standard: Standard;
+    dailyUpload: DailyUpload;
 }
 
-function CreateTopic({ index }: { index: number }) {
+function CreateTopic() {
     const { data } = useSession();
     const topicAddedRef = useRef(false);
     const [selectedType, setSelectedType] = useState('video');
     const [resources, setResources] = useState([]);
     const [isDisplayModal, setIsDisplayModal] = useState(false);
-    const { control } = useFormContext<FormValues>();
-
+    const methods = useForm<FormValues>({
+        mode: 'onChange',
+        reValidateMode: 'onChange',
+    });
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+        watch,
+        reset,
+    } = methods;
     const {
         fields: topicFields,
         append: appendTopic,
         remove: removeTopic,
     } = useFieldArray<FormValues>({
         control,
-        name: `standard.dailyUploads.${index}.topics`,
+        name: `dailyUpload.topics`,
     });
 
-    const handleOpenModal = (type: ResourceType) => {
-        setSelectedType(type);
+    const handleOpenModal = () => {
         setIsDisplayModal(true);
     };
 
@@ -96,26 +96,12 @@ function CreateTopic({ index }: { index: number }) {
 
     return (
         <div>
-            <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
-                <button
-                    type="button"
-                    onClick={() =>
-                        appendTopic({
-                            id: '',
-                            type: ResourceType.VIDEO,
-                            resource: { id: '', name: '', url: '' },
-                        })
-                    }
-                >
-                    Add More
-                </button>
-            </div>
             {topicFields.map((topic, index) => (
                 <div key={topic.id}>
                     <div className="sm:flex justify-between items-center gap-5 w-full mt-3">
                         <div className="basis-1/2 relative">
                             <Label
-                                htmlFor={`standard.dailyUploads.${index}.topics.${index}.type`}
+                                htmlFor={`dailyUpload.topics.${index}.type`}
                                 className="font-semibold"
                             >
                                 Type
@@ -123,7 +109,7 @@ function CreateTopic({ index }: { index: number }) {
                             <div className="flex justify-between items-start gap-1">
                                 <Select
                                     additionalClasses="!w-2/5"
-                                    name={`standard.dailyUploads.${index}.topics.${index}.type`}
+                                    name={`dailyUpload.topics.${index}.type`}
                                     options={resourceDropDownOptions}
                                     selectedOption={ResourceType.VIDEO}
                                 />
@@ -131,11 +117,7 @@ function CreateTopic({ index }: { index: number }) {
                                     <button
                                         className="text-sm text-center"
                                         type="button"
-                                        onClick={() =>
-                                            handleOpenModal(
-                                                selectedType as ResourceType
-                                            )
-                                        }
+                                        onClick={handleOpenModal}
                                     >
                                         Select
                                     </button>
@@ -143,12 +125,26 @@ function CreateTopic({ index }: { index: number }) {
                             </div>
                         </div>
                     </div>
+                    <div className="basis-1/2 relative">
+                        <Label htmlFor="dailyUpload.date">Date</Label>
+                        <Input
+                            type="text"
+                            placeholder="Write Date"
+                            name="dailyUpload.date"
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: validationError.REQUIRED_FIELD,
+                                },
+                            }}
+                        />
+                    </div>
                     <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                         {isDisplayModal &&
                             selectedType.toLowerCase() === 'video' && (
                                 <VideoModal
                                     onClose={handleCloseModal}
-                                    resourceType={selectedType as ResourceType}
+                                    allResources={resources}
                                 />
                             )}
                         {isDisplayModal &&
@@ -158,37 +154,6 @@ function CreateTopic({ index }: { index: number }) {
                     </div>
                 </div>
             ))}
-            <div className="sm:flex justify-between items-center my-5 gap-5">
-                <div className="basis-1/2 relative">
-                    <Label htmlFor={`standard.dailyUploads.${index}.date`}>
-                        Date
-                    </Label>
-                    <Input
-                        type="text"
-                        // additionalClasses="mb-5 mt-2 block w-full px-3 py-2 bg-slate-100 border rounded-lg text-sm placeholder-slate-400
-                        // focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                        placeholder="Write Date"
-                        name={`standard.dailyUploads.${index}.date`}
-                        rules={{
-                            required: {
-                                value: true,
-                                message: validationError.REQUIRED_FIELD,
-                            },
-                        }}
-                    />
-                    <div className="absolute top-10 right-2">
-                        <CalendarDays size={20} color="#85878D" />
-                    </div>
-                </div>
-                <div className="basis-1/2 my-5">
-                    <button
-                        type="button"
-                        className="bg-primary-color text-white font-medium p-2 mt-3 rounded-lg sm:float-right"
-                    >
-                        Add TimeLine
-                    </button>
-                </div>
-            </div>
         </div>
     );
 }
