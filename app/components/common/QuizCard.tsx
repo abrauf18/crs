@@ -18,7 +18,13 @@ function VideoCard({ card }: VideoCardProps) {
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
             <Link href="#" className="relative">
-                <Image src={card.imageUrl} alt="video" className="w-72" />
+                <Image
+                    src={card.imageUrl}
+                    alt="video"
+                    className="w-72"
+                    height={300}
+                    width={300}
+                />
                 <div className="absolute left-3 top-3 transform -translate-x-1/2 -translate-y-1/2">
                     <HelpCircle fill="#54C3F4" color="white" size={35} />
                 </div>

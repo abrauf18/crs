@@ -13,6 +13,7 @@ import {
 } from '@/app/api/resource';
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import QuizCard from '@/app/components/common/QuizCard';
+import { DEFAULT_IMAGE } from '@/lib/utils';
 import VideoCard, { Card } from '../video/VideoCard';
 
 const cards: Card[] = [
@@ -62,7 +63,7 @@ function VideoModal({
     ) => {
         const transformedData = rawResources.map((resource) => ({
             id: resource.id,
-            imageUrl: resource.url,
+            imageUrl: DEFAULT_IMAGE,
             Text: resource.name,
         }));
 
@@ -74,8 +75,8 @@ function VideoModal({
             return;
         }
         if (searchInput === '') {
-            setSearchedResources([]);
-            convertResourceToCard(searchedResources);
+            setSearchedResources(allResources);
+            convertResourceToCard(allResources);
             return;
         }
 
@@ -95,7 +96,7 @@ function VideoModal({
 
             const responseData = await APIData.json();
             setSearchedResources(responseData?.data ?? []);
-            convertResourceToCard(searchedResources);
+            convertResourceToCard(responseData?.data);
             console.log('searchedResources: ', searchedResources);
         } catch (error: any) {
             toast.error(
@@ -103,7 +104,7 @@ function VideoModal({
             );
         }
     };
-
+    console.log('resourceCards:', resourceCards);
     useEffect(() => {
         if (!data) {
             return;
@@ -126,6 +127,8 @@ function VideoModal({
 
                 const responseData = await APIData.json();
                 setAllResources(responseData?.data);
+                setSearchedResources(responseData?.data);
+                convertResourceToCard(responseData?.data);
                 console.log(responseData?.data);
             } catch (error: any) {
                 toast.error(
@@ -137,7 +140,7 @@ function VideoModal({
 
         getResourcesByType();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    }, [data, resourceType]);
     return (
         <section className="w-full bg-white h-screen p-4 shadow-md">
             <ModalHeader
@@ -152,7 +155,6 @@ function VideoModal({
                 <SearchInput handleClick={searchResources} />
             </div>
             <div className="md:h-96 h-72  overflow-y-auto px-6">
-                {' '}
                 {resourceCards.map((card) => (
                     <div className="mt-5" key={card.id}>
                         <QuizCard card={card} />
