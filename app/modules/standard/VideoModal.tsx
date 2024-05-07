@@ -51,9 +51,6 @@ function VideoModal({
     const [allResources, setAllResources] = useState<
         { id: string; name: string; url: string }[]
     >([]);
-    const [searchedResources, setSearchedResources] = useState<
-        { id: string; name: string; url: string }[]
-    >([]);
     const [resourceCards, setResourceCards] = useState<
         { id: string; Text: string; imageUrl: string }[]
     >([]);
@@ -75,7 +72,6 @@ function VideoModal({
             return;
         }
         if (searchInput === '') {
-            setSearchedResources(allResources);
             convertResourceToCard(allResources);
             return;
         }
@@ -95,9 +91,8 @@ function VideoModal({
             }
 
             const responseData = await APIData.json();
-            setSearchedResources(responseData?.data ?? []);
-            convertResourceToCard(responseData?.data);
-            console.log('searchedResources: ', searchedResources);
+            const searchedResources = responseData?.data;
+            convertResourceToCard(searchedResources);
         } catch (error: any) {
             toast.error(
                 error.message ?? 'An error occurred while searching resources'
@@ -126,9 +121,9 @@ function VideoModal({
                 }
 
                 const responseData = await APIData.json();
-                setAllResources(responseData?.data);
-                setSearchedResources(responseData?.data);
-                convertResourceToCard(responseData?.data);
+                const allFetchedResources = responseData?.data;
+                setAllResources(allFetchedResources);
+                convertResourceToCard(allFetchedResources);
                 console.log(responseData?.data);
             } catch (error: any) {
                 toast.error(
