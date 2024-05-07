@@ -1,11 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react';
 import { Label } from '@/app/components/ui/label';
+import { getResourcesByTypeAPI } from '@/app/api/resource';
 import QuizModal from './QuizModal';
 import VideoModal from './VideoModal';
 
 function CreateTopic() {
+    const { data } = useSession();
     const [selectedType, setSelectedType] = useState('video');
     const [isDisplayModal, setIsDisplayModal] = useState(false);
 
@@ -16,6 +20,43 @@ function CreateTopic() {
     const handleCloseModal = () => {
         setIsDisplayModal(false);
     };
+
+    useEffect(() => {
+        if (!data) {
+            return;
+        }
+
+        const getResourcesByType = async () => {
+            try {
+                const APIData = await getResourcesByTypeAPI({
+                    accessToken: data?.user?.accessToken,
+                    resourceType: selectedType,
+                });
+
+                if (!APIData.ok) {
+                    const errorData = await APIData.json();
+                    throw new Error(
+                        errorData?.message ??
+                            'An error occurred while fetching video data'
+                    );
+                }
+
+                const responseData = await APIData.json();
+                const resources = responseData?.data ?? [];
+                console.log(resources);
+            } catch (error: any) {
+                toast.error(
+                    error.message ??
+                        'An error occurred while fetching resources'
+                );
+            }
+        };
+
+        if (isDisplayModal) {
+            getResourcesByType();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedType]);
     return (
         <div>
             <div className="sm:flex justify-between items-center gap-5 w-full mt-3">
@@ -35,8 +76,8 @@ function CreateTopic() {
             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 appearance-none"
                             onChange={(e) => setSelectedType(e.target.value)}
                         >
-                            <option value="Video">Video</option>
-                            <option value="Quiz">Quiz</option>
+                            <option value="video">Video</option>
+                            <option value="quiz">Quiz</option>
                         </select>
                         <div className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center w-24 px-1 py-2 mt-2">
                             <button
