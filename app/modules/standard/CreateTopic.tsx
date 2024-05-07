@@ -56,7 +56,7 @@ interface FormValues {
 function CreateTopic({ index }: { index: number }) {
     const { data } = useSession();
     const topicAddedRef = useRef(false);
-    const [selectedType, setSelectedType] = useState('video');
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [resources, setResources] = useState([]);
     const [isDisplayModal, setIsDisplayModal] = useState(false);
     const { control, watch } = useFormContext<FormValues>();
@@ -70,8 +70,8 @@ function CreateTopic({ index }: { index: number }) {
         name: `standard.dailyUploads.${index}.topics`,
     });
 
-    const handleOpenModal = (type: ResourceType) => {
-        setSelectedType(type);
+    const handleOpenModal = (topicIndex: number) => {
+        setSelectedIndex(topicIndex);
         setIsDisplayModal(true);
     };
 
@@ -132,9 +132,7 @@ function CreateTopic({ index }: { index: number }) {
                                         className="text-sm text-center"
                                         type="button"
                                         onClick={() =>
-                                            handleOpenModal(
-                                                selectedType as ResourceType
-                                            )
+                                            handleOpenModal(topicIndex)
                                         }
                                     >
                                         Select
@@ -148,7 +146,7 @@ function CreateTopic({ index }: { index: number }) {
                             <VideoModal
                                 onClose={handleCloseModal}
                                 resourceType={watch(
-                                    `standard.dailyUploads.${index}.topics.${index}.type`
+                                    `standard.dailyUploads.${index}.topics.${selectedIndex}.type`
                                 )}
                             />
                         )}
