@@ -125,8 +125,6 @@ function CreateStandard() {
                                 <Label htmlFor="standard.name">Plan Name</Label>
                                 <Input
                                     type="text"
-                                    // additionalClasses="mb-5 mt-2 block w-full px-3 py-2 bg-slate-100 border rounded-lg text-sm placeholder-slate-400
-                                    // focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
                                     placeholder="Write Plan Name"
                                     name="standard.name"
                                     rules={{
@@ -144,8 +142,6 @@ function CreateStandard() {
                                 </Label>
                                 <Input
                                     type="text"
-                                    // additionalClasses="mb-5 mt-2 block w-full px-3 py-2 bg-slate-100 border rounded-lg text-sm placeholder-slate-400
-                                    // focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
                                     placeholder="Write Description Here"
                                     name="standard.description"
                                     rules={{

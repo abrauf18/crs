@@ -59,7 +59,7 @@ function CreateTopic({ index }: { index: number }) {
     const [selectedType, setSelectedType] = useState('video');
     const [resources, setResources] = useState([]);
     const [isDisplayModal, setIsDisplayModal] = useState(false);
-    const { control } = useFormContext<FormValues>();
+    const { control, watch } = useFormContext<FormValues>();
 
     const {
         fields: topicFields,
@@ -110,12 +110,12 @@ function CreateTopic({ index }: { index: number }) {
                     Add More
                 </button>
             </div>
-            {topicFields.map((topic, index) => (
+            {topicFields.map((topic, topicIndex) => (
                 <div key={topic.id}>
                     <div className="sm:flex justify-between items-center gap-5 w-full mt-3">
                         <div className="basis-1/2 relative">
                             <Label
-                                htmlFor={`standard.dailyUploads.${index}.topics.${index}.type`}
+                                htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                 className="font-semibold"
                             >
                                 Type
@@ -123,7 +123,7 @@ function CreateTopic({ index }: { index: number }) {
                             <div className="flex justify-between items-start gap-1">
                                 <Select
                                     additionalClasses="!w-2/5"
-                                    name={`standard.dailyUploads.${index}.topics.${index}.type`}
+                                    name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                     options={resourceDropDownOptions}
                                     selectedOption={ResourceType.VIDEO}
                                 />
@@ -144,17 +144,14 @@ function CreateTopic({ index }: { index: number }) {
                         </div>
                     </div>
                     <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                        {isDisplayModal &&
-                            selectedType.toLowerCase() === 'video' && (
-                                <VideoModal
-                                    onClose={handleCloseModal}
-                                    resourceType={selectedType as ResourceType}
-                                />
-                            )}
-                        {isDisplayModal &&
-                            selectedType.toLowerCase() === 'quiz' && (
-                                <QuizModal onClose={handleCloseModal} />
-                            )}
+                        {isDisplayModal && (
+                            <VideoModal
+                                onClose={handleCloseModal}
+                                resourceType={watch(
+                                    `standard.dailyUploads.${index}.topics.${index}.type`
+                                )}
+                            />
+                        )}
                     </div>
                 </div>
             ))}
@@ -165,8 +162,6 @@ function CreateTopic({ index }: { index: number }) {
                     </Label>
                     <Input
                         type="text"
-                        // additionalClasses="mb-5 mt-2 block w-full px-3 py-2 bg-slate-100 border rounded-lg text-sm placeholder-slate-400
-                        // focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
                         placeholder="Write Date"
                         name={`standard.dailyUploads.${index}.date`}
                         rules={{
