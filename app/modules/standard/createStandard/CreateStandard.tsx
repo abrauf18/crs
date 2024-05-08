@@ -44,10 +44,8 @@ export enum ResourceType {
     QUIZ = 'quiz',
 }
 interface Topic {
-    id: string;
-    // name: string;
+    resourceId: string;
     type: ResourceType;
-    resource: Resource;
 }
 interface DailyUpload {
     id: string;
@@ -107,9 +105,8 @@ function CreateStandard() {
                 date: '',
                 topics: [
                     {
-                        id: '',
+                        resourceId: '',
                         type: ResourceType.VIDEO,
-                        resource: { id: '', name: '', url: '' },
                     },
                 ],
             });
@@ -205,13 +202,8 @@ function CreateStandard() {
                                     date: '',
                                     topics: [
                                         {
-                                            id: '',
+                                            resourceId: '',
                                             type: ResourceType.VIDEO,
-                                            resource: {
-                                                id: '',
-                                                name: '',
-                                                url: '',
-                                            },
                                         },
                                     ],
                                 });

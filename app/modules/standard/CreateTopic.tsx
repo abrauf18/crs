@@ -31,10 +31,8 @@ export const resourceDropDownOptions = [
     { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
 ];
 interface Topic {
-    id: string;
-    // name: string;
+    resourceId: string;
     type: ResourceType;
-    resource: Resource;
 }
 interface DailyUpload {
     id: string;
@@ -90,9 +88,8 @@ function CreateTopic({
         }
         if (topicFields.length === 0 && !topicAddedRef.current) {
             appendTopic({
-                id: '',
+                resourceId: '',
                 type: ResourceType.VIDEO,
-                resource: { id: '', name: '', url: '' },
             });
             topicAddedRef.current = true;
         }
@@ -115,9 +112,8 @@ function CreateTopic({
                             return;
                         }
                         appendTopic({
-                            id: '',
+                            resourceId: '',
                             type: ResourceType.VIDEO,
-                            resource: { id: '', name: '', url: '' },
                         });
                         setAllSelectedResources([...allSelectedResources, '']);
                     }}
