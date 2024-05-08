@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Label } from '@/app/components/ui/label';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorMessage } from '@hookform/error-message';
 import Input from '@/app/components/common/Input';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import { validationError } from '@/lib/utils';
+import { toast } from 'react-toastify';
 import CreateTopic from '../CreateTopic';
 import StandardCard, { Data } from '../StandardCard';
 
@@ -65,6 +66,9 @@ interface FormValues {
 
 function CreateStandard() {
     const dailyUploadAddedRef = useRef(false);
+    const [allSelectedResources, setAllSelectedResources] = useState<
+        string[][]
+    >([['']]);
     const methods = useForm<FormValues>({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -113,7 +117,7 @@ function CreateStandard() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
-
+    console.log('all selected resources in Parents: ', allSelectedResources);
     return (
         <section>
             <FormProvider {...methods}>
@@ -161,7 +165,23 @@ function CreateStandard() {
                         </div>
                         {dailyUploadFields.map((dailyUpload, index) => (
                             <div key={dailyUpload.id}>
-                                <CreateTopic index={index} />
+                                <CreateTopic
+                                    index={index}
+                                    allSelectedResources={
+                                        allSelectedResources[index]
+                                    }
+                                    setAllSelectedResources={(
+                                        resources: string[]
+                                    ) => {
+                                        const updatedResources = [
+                                            ...allSelectedResources,
+                                        ];
+                                        updatedResources[index] = resources;
+                                        setAllSelectedResources(
+                                            updatedResources
+                                        );
+                                    }}
+                                />
                             </div>
                         ))}
                     </div>
@@ -169,7 +189,17 @@ function CreateStandard() {
                         <button
                             type="button"
                             className="bg-primary-color text-white font-medium p-2 mt-3 rounded-lg sm:float-right"
-                            onClick={() =>
+                            onClick={() => {
+                                if (
+                                    allSelectedResources[
+                                        allSelectedResources.length - 1
+                                    ].some((resource) => resource === '')
+                                ) {
+                                    toast.error(
+                                        'Please select all resources in last day before adding a new one'
+                                    );
+                                    return;
+                                }
                                 appendDailyUpload({
                                     id: '',
                                     date: '',
@@ -184,8 +214,12 @@ function CreateStandard() {
                                             },
                                         },
                                     ],
-                                })
-                            }
+                                });
+                                setAllSelectedResources([
+                                    ...allSelectedResources,
+                                    [''],
+                                ]);
+                            }}
                         >
                             Add TimeLine
                         </button>

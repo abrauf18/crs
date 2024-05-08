@@ -51,13 +51,18 @@ interface FormValues {
     standard: Standard;
 }
 
-function CreateTopic({ index }: { index: number }) {
+function CreateTopic({
+    index,
+    allSelectedResources,
+    setAllSelectedResources,
+}: {
+    index: number;
+    allSelectedResources: string[];
+    setAllSelectedResources: (resources: string[]) => void;
+}) {
     const { data } = useSession();
     const topicAddedRef = useRef(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [allSelectedResources, setAllSelectedResources] = useState<string[]>([
-        '',
-    ]);
     const [isDisplayModal, setIsDisplayModal] = useState(false);
     const { control, watch } = useFormContext<FormValues>();
 
