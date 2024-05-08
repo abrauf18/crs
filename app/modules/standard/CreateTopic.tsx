@@ -56,7 +56,9 @@ function CreateTopic({
 }: {
     index: number;
     allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
-    setAllSelectedResources: (resources: { resourceId: string; resourceType: ResourceType }[]) => void;
+    setAllSelectedResources: (
+        resources: { resourceId: string; resourceType: ResourceType }[]
+    ) => void;
 }) {
     const { data } = useSession();
     const topicAddedRef = useRef(false);

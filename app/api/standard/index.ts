@@ -1,0 +1,28 @@
+import axios from 'axios';
+
+export const createStandardAPI = async ({
+    name,
+    description,
+    courseLength,
+    dailyUploads,
+    accessToken,
+}: {
+    name: string;
+    description: string;
+    courseLength: string;
+    dailyUploads: { resourceId: string; accessDate: string }[];
+    accessToken: string;
+}) => {
+    const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/createStandard`,
+        {
+            name,
+            description,
+            courseLength,
+            dailyUploads,
+            accessToken,
+        }
+    );
+
+    return response;
+};

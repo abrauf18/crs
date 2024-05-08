@@ -1,17 +1,19 @@
 'use client';
 
+import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
+import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
+import { validationError } from '@/lib/utils';
+import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorMessage } from '@hookform/error-message';
-import Input from '@/app/components/common/Input';
-import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
-import { validationError } from '@/lib/utils';
-import { toast } from 'react-toastify';
+import { createStandardAPI } from '@/app/api/standard';
 import CreateTopic from '../CreateTopic';
 import StandardCard, { Data } from '../StandardCard';
 
-export const data: Data[] = [
+export const standardData: Data[] = [
     {
         id: 1,
         name: '3D Printing',
@@ -63,6 +65,7 @@ interface FormValues {
 }
 
 function CreateStandard() {
+    const { data } = useSession();
     const dailyUploadAddedRef = useRef(false);
     const [allSelectedResources, setAllSelectedResources] = useState<
         {
@@ -95,7 +98,40 @@ function CreateStandard() {
             return;
         }
 
-        console.log('formdata: ', formdata);
+        const transformedDailyUploads = formdata.standard.dailyUploads
+            .map((upload, index) =>
+                upload.topics.map((topic, topicIndex) => ({
+                    resourceId:
+                        allSelectedResources[index][topicIndex].resourceId,
+                    accessDate: upload.date,
+                }))
+            )
+            .flat();
+
+        try {
+            console.log(
+                formdata,
+                allSelectedResources,
+                transformedDailyUploads
+            );
+            const response: any = await createStandardAPI({
+                name: formdata.standard.name,
+                description: formdata.standard.description,
+                courseLength: '1: week',
+                dailyUploads: transformedDailyUploads,
+                accessToken: data?.user?.accessToken || '',
+            });
+            if (response.status !== 200) {
+                toast.error(response?.message || 'Failed to create a standard');
+                return;
+            }
+            toast.success('Standard added successfully');
+        } catch (error: any) {
+            console.log(error);
+            toast.error(
+                error?.response?.data?.message || 'Failed to add question'
+            );
+        }
     };
 
     useEffect(() => {
@@ -229,7 +265,13 @@ function CreateStandard() {
                             Add TimeLine
                         </button>
                     </div>
-                    <StandardCard data={data} />
+                    <button
+                        type="submit"
+                        className="bg-primary-color text-white font-medium p-2 mt-3 rounded-lg sm:float-right"
+                    >
+                        submit
+                    </button>
+                    <StandardCard data={standardData} />
                 </form>
             </FormProvider>
         </section>
