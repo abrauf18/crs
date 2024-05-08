@@ -12,9 +12,15 @@ export interface Card {
 
 interface VideoCardProps {
     card: Card;
+    selectedResource: string;
+    setSelectResource: (id: string) => void;
 }
 
-function VideoCard({ card }: VideoCardProps) {
+function VideoCard({
+    card,
+    selectedResource,
+    setSelectResource,
+}: VideoCardProps) {
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
             <Link href="#" className="relative">
@@ -35,9 +41,16 @@ function VideoCard({ card }: VideoCardProps) {
                 </h5>
                 <Link
                     href="#"
-                    className="border rounded-lg text-white px-3 py-2 text-sm font-medium text-center mr-2 float-right bg-primary-color"
+                    className={
+                        card.id === selectedResource
+                            ? 'border rounded-lg text-white px-3 py-2 text-sm font-medium text-center mr-2 float-right bg-primary-color'
+                            : 'bg-gray-400 "border rounded-lg text-white px-3 py-2 text-sm font-medium text-center mr-2 float-right '
+                    }
+                    onClick={() => {
+                        setSelectResource(card.id);
+                    }}
                 >
-                    Selected
+                    {card.id === selectedResource ? 'Selected' : 'Select'}
                 </Link>
             </div>
         </div>

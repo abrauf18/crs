@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import { FileVideoIcon } from 'lucide-react';
@@ -55,6 +55,9 @@ function VideoModal({
         { id: string; Text: string; imageUrl: string }[]
     >([]);
 
+    const [selectedResource, setSelectedResource] = useState('');
+    const [totalResources, setTotalResources] = useState(['']);
+
     const convertResourceToCard = (
         rawResources: { id: string; name: string; url: string }[]
     ) => {
@@ -99,7 +102,6 @@ function VideoModal({
             );
         }
     };
-    console.log('resourceCards:', resourceCards);
     useEffect(() => {
         if (!data) {
             return;
@@ -152,12 +154,26 @@ function VideoModal({
             <div className="md:h-96 h-72  overflow-y-auto px-6">
                 {resourceCards.map((card) => (
                     <div className="mt-5" key={card.id}>
-                        <QuizCard card={card} />
+                        <QuizCard
+                            card={card}
+                            selectedResource={selectedResource}
+                            setSelectResource={setSelectedResource}
+                        />
                         {/* <VideoCard card={card} isModal /> */}
                     </div>
                 ))}
             </div>
-            <ModalFooter text="Continue" />
+            <div
+                onClick={() => {
+                    console.log('Selected Resource:', selectedResource); // Log selected resource
+                    setTotalResources([...totalResources, selectedResource]);
+                    console.log('totalResources', totalResources); // Log total resources
+                    setSelectedResource('');
+                    onClose();
+                }}
+            >
+                <ModalFooter text="Continue" />
+            </div>
         </section>
     );
 }
