@@ -30,6 +30,7 @@ function VideoModal({
     allSelectedResources,
     setAllSelectedResources,
     selectedIndex,
+    updateSelectedResource,
 }: {
     onClose: () => void;
     resourceType: ResourceType;
@@ -38,6 +39,7 @@ function VideoModal({
         resources: { resourceId: string; resourceType: ResourceType }[]
     ) => void;
     selectedIndex: number;
+    updateSelectedResource: (resourceId: string) => void;
 }) {
     const { data } = useSession();
     const [allResources, setAllResources] = useState<
@@ -150,12 +152,13 @@ function VideoModal({
                         <QuizCard
                             card={card}
                             selectedResource={selectedResource}
-                            setSelectResource={(id: string) =>
+                            setSelectResource={(id: string) => {
                                 setSelectedResource({
                                     resourceId: id,
                                     resourceType,
-                                })
-                            }
+                                });
+                                updateSelectedResource(id);
+                            }}
                         />
                     </div>
                 ))}

@@ -64,7 +64,7 @@ function CreateTopic({
     const topicAddedRef = useRef(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isDisplayModal, setIsDisplayModal] = useState(false);
-    const { control, watch } = useFormContext<FormValues>();
+    const { control, watch, setValue } = useFormContext<FormValues>();
 
     const {
         fields: topicFields,
@@ -98,6 +98,12 @@ function CreateTopic({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
+    const handleResourceSelect = (topicIndex: number, resourceId: string) => {
+        setValue(
+            `standard.dailyUploads.${index}.topics.${topicIndex}.resourceId`,
+            resourceId
+        );
+    };
     console.log('all selected resources: ', allSelectedResources);
     return (
         <div>
@@ -173,6 +179,12 @@ function CreateTopic({
                                 }
                                 allSelectedResources={allSelectedResources}
                                 selectedIndex={selectedIndex}
+                                updateSelectedResource={(resourceId: string) =>
+                                    handleResourceSelect(
+                                        selectedIndex,
+                                        resourceId
+                                    )
+                                }
                             />
                         )}
                     </div>
