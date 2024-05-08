@@ -101,6 +101,14 @@ function CreateTopic({ index }: { index: number }) {
                 <button
                     type="button"
                     onClick={() => {
+                        if (
+                            allSelectedResources[topicFields.length - 1] === ''
+                        ) {
+                            toast.error(
+                                'Please select a resource before adding a new one'
+                            );
+                            return;
+                        }
                         appendTopic({
                             id: '',
                             type: ResourceType.VIDEO,
@@ -179,14 +187,6 @@ function CreateTopic({ index }: { index: number }) {
                     <div className="absolute top-10 right-2">
                         <CalendarDays size={20} color="#85878D" />
                     </div>
-                </div>
-                <div className="basis-1/2 my-5">
-                    <button
-                        type="button"
-                        className="bg-primary-color text-white font-medium p-2 mt-3 rounded-lg sm:float-right"
-                    >
-                        Add TimeLine
-                    </button>
                 </div>
             </div>
         </div>
