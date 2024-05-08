@@ -165,6 +165,31 @@ function CreateStandard() {
                             </div>
                         ))}
                     </div>
+                    <div className="basis-1/2 my-5">
+                        <button
+                            type="button"
+                            className="bg-primary-color text-white font-medium p-2 mt-3 rounded-lg sm:float-right"
+                            onClick={() =>
+                                appendDailyUpload({
+                                    id: '',
+                                    date: '',
+                                    topics: [
+                                        {
+                                            id: '',
+                                            type: ResourceType.VIDEO,
+                                            resource: {
+                                                id: '',
+                                                name: '',
+                                                url: '',
+                                            },
+                                        },
+                                    ],
+                                })
+                            }
+                        >
+                            Add TimeLine
+                        </button>
+                    </div>
                     <StandardCard data={data} />
                 </form>
             </FormProvider>
