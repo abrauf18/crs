@@ -9,8 +9,6 @@ import { validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import Select from '@/app/components/common/DropDown';
-import { getResourcesByTypeAPI } from '@/app/api/resource';
-import QuizModal from './QuizModal';
 import VideoModal from './VideoModal';
 
 interface Resource {
@@ -57,7 +55,9 @@ function CreateTopic({ index }: { index: number }) {
     const { data } = useSession();
     const topicAddedRef = useRef(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [resources, setResources] = useState([]);
+    const [allSelectedResources, setAllSelectedResources] = useState<string[]>(
+        []
+    );
     const [isDisplayModal, setIsDisplayModal] = useState(false);
     const { control, watch } = useFormContext<FormValues>();
 
@@ -94,6 +94,7 @@ function CreateTopic({ index }: { index: number }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
+    console.log('all selected resources: ', allSelectedResources);
     return (
         <div>
             <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
@@ -148,6 +149,10 @@ function CreateTopic({ index }: { index: number }) {
                                 resourceType={watch(
                                     `standard.dailyUploads.${index}.topics.${selectedIndex}.type`
                                 )}
+                                setAllSelectedResources={
+                                    setAllSelectedResources
+                                }
+                                allSelectedResources={allSelectedResources}
                             />
                         )}
                     </div>

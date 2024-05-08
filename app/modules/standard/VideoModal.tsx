@@ -14,24 +14,8 @@ import {
 import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import QuizCard from '@/app/components/common/QuizCard';
 import { DEFAULT_IMAGE } from '@/lib/utils';
-import VideoCard, { Card } from '../video/VideoCard';
+import { Card } from '../video/VideoCard';
 
-const cards: Card[] = [
-    {
-        id: '1',
-        imageUrl: videoImage1 as string,
-        Text: 'Master Digital Product Design..',
-        Questions: 5,
-        Checkpoints: 3,
-    },
-    {
-        id: '2',
-        imageUrl: videoImage1 as string,
-        Text: 'Master Digital Product Design..',
-        Questions: 5,
-        Checkpoints: 3,
-    },
-];
 export enum ResourceType {
     VIDEO = 'video',
     SLIDESHOW = 'slideshow',
@@ -43,9 +27,13 @@ export enum ResourceType {
 function VideoModal({
     onClose,
     resourceType,
+    allSelectedResources,
+    setAllSelectedResources,
 }: {
     onClose: () => void;
     resourceType: ResourceType;
+    allSelectedResources: string[];
+    setAllSelectedResources: (resources: string[]) => void;
 }) {
     const { data } = useSession();
     const [allResources, setAllResources] = useState<
@@ -54,9 +42,7 @@ function VideoModal({
     const [resourceCards, setResourceCards] = useState<
         { id: string; Text: string; imageUrl: string }[]
     >([]);
-
     const [selectedResource, setSelectedResource] = useState('');
-    const [totalResources, setTotalResources] = useState(['']);
 
     const convertResourceToCard = (
         rawResources: { id: string; name: string; url: string }[]
@@ -159,15 +145,15 @@ function VideoModal({
                             selectedResource={selectedResource}
                             setSelectResource={setSelectedResource}
                         />
-                        {/* <VideoCard card={card} isModal /> */}
                     </div>
                 ))}
             </div>
             <div
                 onClick={() => {
-                    console.log('Selected Resource:', selectedResource); // Log selected resource
-                    setTotalResources([...totalResources, selectedResource]);
-                    console.log('totalResources', totalResources); // Log total resources
+                    setAllSelectedResources([
+                        ...allSelectedResources,
+                        selectedResource,
+                    ]);
                     setSelectedResource('');
                     onClose();
                 }}
