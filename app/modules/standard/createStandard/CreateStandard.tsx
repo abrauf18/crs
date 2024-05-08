@@ -65,8 +65,11 @@ interface FormValues {
 function CreateStandard() {
     const dailyUploadAddedRef = useRef(false);
     const [allSelectedResources, setAllSelectedResources] = useState<
-        string[][]
-    >([['']]);
+        {
+            resourceId: string;
+            resourceType: ResourceType;
+        }[][]
+    >([[{ resourceId: '', resourceType: ResourceType.VIDEO }]]);
     const methods = useForm<FormValues>({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -168,7 +171,10 @@ function CreateStandard() {
                                         allSelectedResources[index]
                                     }
                                     setAllSelectedResources={(
-                                        resources: string[]
+                                        resources: {
+                                            resourceId: string;
+                                            resourceType: ResourceType;
+                                        }[]
                                     ) => {
                                         const updatedResources = [
                                             ...allSelectedResources,
@@ -190,7 +196,9 @@ function CreateStandard() {
                                 if (
                                     allSelectedResources[
                                         allSelectedResources.length - 1
-                                    ].some((resource) => resource === '')
+                                    ].some(
+                                        (resource) => resource.resourceId === ''
+                                    )
                                 ) {
                                     toast.error(
                                         'Please select all resources in last day before adding a new one'
@@ -209,7 +217,12 @@ function CreateStandard() {
                                 });
                                 setAllSelectedResources([
                                     ...allSelectedResources,
-                                    [''],
+                                    [
+                                        {
+                                            resourceId: '',
+                                            resourceType: ResourceType.VIDEO,
+                                        },
+                                    ],
                                 ]);
                             }}
                         >

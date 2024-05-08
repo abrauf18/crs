@@ -55,8 +55,8 @@ function CreateTopic({
     setAllSelectedResources,
 }: {
     index: number;
-    allSelectedResources: string[];
-    setAllSelectedResources: (resources: string[]) => void;
+    allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
+    setAllSelectedResources: (resources: { resourceId: string; resourceType: ResourceType }[]) => void;
 }) {
     const { data } = useSession();
     const topicAddedRef = useRef(false);
@@ -104,7 +104,8 @@ function CreateTopic({
                     type="button"
                     onClick={() => {
                         if (
-                            allSelectedResources[topicFields.length - 1] === ''
+                            allSelectedResources[topicFields.length - 1]
+                                .resourceId === ''
                         ) {
                             toast.error(
                                 'Please select a resource before adding a new one'
@@ -115,7 +116,13 @@ function CreateTopic({
                             resourceId: '',
                             type: ResourceType.VIDEO,
                         });
-                        setAllSelectedResources([...allSelectedResources, '']);
+                        setAllSelectedResources([
+                            ...allSelectedResources,
+                            {
+                                resourceId: '',
+                                resourceType: ResourceType.VIDEO,
+                            },
+                        ]);
                     }}
                 >
                     Add More
