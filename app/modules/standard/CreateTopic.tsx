@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { CalendarDays } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { set, useFieldArray, useFormContext } from 'react-hook-form';
 import { validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
@@ -55,9 +55,9 @@ function CreateTopic({ index }: { index: number }) {
     const { data } = useSession();
     const topicAddedRef = useRef(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [allSelectedResources, setAllSelectedResources] = useState<string[]>(
-        []
-    );
+    const [allSelectedResources, setAllSelectedResources] = useState<string[]>([
+        '',
+    ]);
     const [isDisplayModal, setIsDisplayModal] = useState(false);
     const { control, watch } = useFormContext<FormValues>();
 
@@ -100,13 +100,14 @@ function CreateTopic({ index }: { index: number }) {
             <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
                 <button
                     type="button"
-                    onClick={() =>
+                    onClick={() => {
                         appendTopic({
                             id: '',
                             type: ResourceType.VIDEO,
                             resource: { id: '', name: '', url: '' },
-                        })
-                    }
+                        });
+                        setAllSelectedResources([...allSelectedResources, '']);
+                    }}
                 >
                     Add More
                 </button>
@@ -153,6 +154,7 @@ function CreateTopic({ index }: { index: number }) {
                                     setAllSelectedResources
                                 }
                                 allSelectedResources={allSelectedResources}
+                                selectedIndex={selectedIndex}
                             />
                         )}
                     </div>

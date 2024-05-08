@@ -29,11 +29,13 @@ function VideoModal({
     resourceType,
     allSelectedResources,
     setAllSelectedResources,
+    selectedIndex,
 }: {
     onClose: () => void;
     resourceType: ResourceType;
     allSelectedResources: string[];
     setAllSelectedResources: (resources: string[]) => void;
+    selectedIndex: number;
 }) {
     const { data } = useSession();
     const [allResources, setAllResources] = useState<
@@ -150,10 +152,14 @@ function VideoModal({
             </div>
             <div
                 onClick={() => {
-                    setAllSelectedResources([
-                        ...allSelectedResources,
-                        selectedResource,
-                    ]);
+                    setAllSelectedResources(
+                        allSelectedResources.map((resource, index) => {
+                            if (index === selectedIndex) {
+                                return selectedResource;
+                            }
+                            return resource;
+                        })
+                    );
                     setSelectedResource('');
                     onClose();
                 }}
