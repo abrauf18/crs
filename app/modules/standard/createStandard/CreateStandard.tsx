@@ -33,11 +33,7 @@ export const standardData: Data[] = [
         question: '5 questions',
     },
 ];
-interface Resource {
-    id: string;
-    name: string;
-    url: string;
-}
+
 export enum ResourceType {
     VIDEO = 'video',
     SLIDESHOW = 'slideshow',
@@ -50,12 +46,10 @@ interface Topic {
     type: ResourceType;
 }
 interface DailyUpload {
-    id: string;
     date: string;
     topics: Topic[];
 }
 interface Standard {
-    id: string;
     name: string;
     description: string;
     dailyUploads: DailyUpload[];
@@ -109,7 +103,7 @@ function CreateStandard() {
             .flat();
 
         try {
-            console.log(
+            console.log('form info: ',
                 formdata,
                 allSelectedResources,
                 transformedDailyUploads
@@ -140,7 +134,6 @@ function CreateStandard() {
         }
         if (dailyUploadFields.length === 0 && !dailyUploadAddedRef.current) {
             appendDailyUpload({
-                id: '',
                 date: '',
                 topics: [
                     {
@@ -242,7 +235,6 @@ function CreateStandard() {
                                     return;
                                 }
                                 appendDailyUpload({
-                                    id: '',
                                     date: '',
                                     topics: [
                                         {
