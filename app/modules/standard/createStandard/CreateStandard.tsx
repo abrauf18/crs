@@ -11,7 +11,7 @@ import { Label } from '@/app/components/ui/label';
 import { ErrorMessage } from '@hookform/error-message';
 import { createStandardAPI, updateStandardAPI } from '@/app/api/standard';
 import CreateTopic from '../CreateTopic';
-import StandardCard, { Data } from '../StandardCard';
+// import StandardCard, { Data } from '../StandardCard';
 
 // export const standardData: Data[] = [
 //     {
@@ -314,6 +314,8 @@ function CreateStandard({
                             onClick={() => {
                                 if (
                                     allSelectedResources[
+                                        allSelectedResources.length - 1
+                                    ] && allSelectedResources[
                                         allSelectedResources.length - 1
                                     ].some(
                                         (resource) => resource.resourceId === ''

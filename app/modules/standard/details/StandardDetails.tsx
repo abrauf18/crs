@@ -2,49 +2,79 @@
 
 import React, { useState } from 'react';
 import { File } from 'lucide-react';
-import StandardCard, { Data } from '@/app/modules/standard/StandardCard';
+import { ResourceType } from '@/lib/utils';
+import StandardCard from '@/app/modules/standard/StandardCard';
 import { standards } from '../Standard';
 import AssignCourseModal from './AssignCourseModal';
 
+interface Topic {
+    name: string;
+    resourceId: string;
+    type: ResourceType;
+}
+interface DailyUpload {
+    date: string;
+    topics: Topic[];
+}
 type StandardDetailsProps = {
     params: {
         id: string;
     };
     isShownFromTeacher?: boolean;
+    name?: string;
+    description?: string;
+    dailyUploads?: DailyUpload[];
 };
-
-export const data: Data[] = [
-    {
-        id: 1,
-        name: '3D Printing',
-        duration: '5:00',
-        question: '5 questions',
-    },
-    {
-        id: 2,
-        name: 'Design & Human',
-        duration: '5:00',
-        question: '5 questions',
-    },
-    {
-        id: 3,
-        name: 'Vertual Reality - VR',
-        duration: '5:00',
-        question: '5 questions',
-    },
-];
+// const DEFAULT_STANDARD = {
+//     name: '',
+//     description: '',
+//     dailyUploads: [
+//         {
+//             date: '',
+//             topics: [
+//                 {
+//                     resourceId: '',
+//                     type: ResourceType.VIDEO,
+//                 },
+//             ],
+//         },
+//     ],
+// };
+// export const data: Data[] = [
+//     {
+//         id: 1,
+//         name: '3D Printing',
+//         duration: '5:00',
+//         question: '5 questions',
+//     },
+//     {
+//         id: 2,
+//         name: 'Design & Human',
+//         duration: '5:00',
+//         question: '5 questions',
+//     },
+//     {
+//         id: 3,
+//         name: 'Vertual Reality - VR',
+//         duration: '5:00',
+//         question: '5 questions',
+//     },
+// ];
 
 function StandardDetails({
     params: { id },
     isShownFromTeacher,
+    name,
+    description,
+    dailyUploads,
 }: StandardDetailsProps) {
     const [isShowModal, setIsShowModal] = useState(false);
-    const selectedStandard = standards.find((standard) => standard.id === id);
+    // const selectedStandard = standards.find((standard) => standard.id === id);
 
-    if (!selectedStandard) {
-        // Handle the case when no matching standard is found for the given id
-        return <p>Standard not found</p>;
-    }
+    // if (!selectedStandard) {
+    //     // Handle the case when no matching standard is found for the given id
+    //     return <p>Standard not found</p>;
+    // }
     const handleOpenModal = () => {
         setIsShowModal(true);
     };
@@ -55,13 +85,11 @@ function StandardDetails({
 
     return (
         <>
-            <div key={selectedStandard.id} className="mt-5">
+            <div className="mt-5">
                 <div className="flex justify-between items-center mobile:items-start mb-1 mobile:flex-col">
                     <div className="flex  gap-2  items-center mobile:items-start">
                         <File color="#7AA43E" size={30} />
-                        <h1 className="text-3xl font-semibold">
-                            {selectedStandard.heading}
-                        </h1>
+                        <h1 className="text-3xl font-semibold">{name}</h1>
                     </div>
                     {isShownFromTeacher && (
                         <div className="mobile:flex mobile:justify-end mobile:w-full mobile:mb-4">
@@ -74,13 +102,14 @@ function StandardDetails({
                         </div>
                     )}
                 </div>
-                <p className="text-sm text-dark-gray">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
+                <p className="text-sm text-dark-gray">{description}</p>
             </div>
-            <StandardCard data={data} />
-            <StandardCard data={data} />
-            <StandardCard data={data} />
+            {dailyUploads?.map((dailyUpload, index) => (
+                <StandardCard
+                    key={dailyUpload.date}
+                    dailyUpload={dailyUpload}
+                />
+            ))}
 
             {isShowModal && (
                 <div className="fixed right-0 top-0 z-50  md:w-[60%] lg:w-[30%] w-full">

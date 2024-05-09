@@ -1,5 +1,6 @@
-import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { LucideIcon } from 'lucide-react';
+import { type ClassValue, clsx } from 'clsx';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import TicketIcon from '@/app/assets/icons/TicketIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
@@ -141,6 +142,25 @@ export const resourceTypeToIcon = (resourceType: ResourceType) => {
     }
     return Icon;
 }
+
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
+
+export const resourceTypeToJsxIcon = (resourceType: ResourceType): IconComponent => {
+    switch (resourceType) {
+        case ResourceType.VIDEO:
+            return VideoIcon;
+        case ResourceType.SLIDESHOW:
+            return SlideShowIcon;
+        case ResourceType.WORKSHEET:
+            return WorksheetIcon;
+        case ResourceType.EXIT_TICKET_TEST:
+            return TicketIcon;
+        case ResourceType.QUIZ:
+            return QuestionMarkIcon;
+        default:
+            return ResourceIcon;
+    }
+};
 
 export const DEFAULT_VIDEO = {
     id: "",

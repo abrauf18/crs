@@ -5,6 +5,7 @@ import {
     Table,
 } from '@/app/components/ui/table';
 import React from 'react';
+import { ResourceType, resourceTypeToIcon } from '@/lib/utils';
 import EditIcon from '@/app/assets/icons/EditIcon';
 import { Eye, LucideFileQuestion, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -13,37 +14,44 @@ const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-interface Data {
-    id: number;
+// interface Data {
+//     id: number;
+//     name: string;
+//     duration: string;
+//     question: string;
+// }
+
+// export interface StandardProps {
+//     data: Data[];
+// }
+
+interface Topic {
     name: string;
-    duration: string;
-    question: string;
+    resourceId: string;
+    type: ResourceType;
 }
 
-export interface StandardProps {
-    data: Data[];
-}
-
-function StandardTable({ data }: StandardProps) {
+function StandardTable({ topicList }: { topicList: Topic[] }) {
     return (
         <Table className={`text-sm mobile:text-xs ${poppins.className}`}>
             <TableBody>
-                {data.map((item) => (
-                    <TableRow key={item.id}>
+                {topicList.map((topic, index) => (
+                    <TableRow key={topic.resourceId}>
                         <TableCell className="font-medium">
                             <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                {item.id}
+                                {index}
                             </span>
                         </TableCell>
                         <TableCell className="flex items-start gap-2 ">
-                            <LucideFileQuestion color="#54C3F4" />
-                            {item.name}
+                            {
+                                resourceTypeToIcon(
+                                    topic.type as ResourceType
+                                ) as unknown as React.ReactNode
+                            }
+                            {topic.name}
                         </TableCell>
                         <TableCell className="text-dark-gray">
-                            {item.duration}
-                        </TableCell>
-                        <TableCell className="text-dark-gray">
-                            {item.question}
+                            {topic.type}
                         </TableCell>
                         <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
                             <div className="mr-2 bg-light-orange rounded-md p-1">
