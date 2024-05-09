@@ -58,6 +58,7 @@ async function VideoDetailsPage({ params }: { params: { id: string } }) {
                         name={name}
                         description={description}
                         dailyUploads={dailyUploads}
+                        update
                     />
                 );
             }

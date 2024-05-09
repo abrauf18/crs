@@ -57,15 +57,35 @@ interface Standard {
 interface FormValues {
     standard: Standard;
 }
+const DEFAULT_STANDARD = {
+    name: '',
+    description: '',
+    dailyUploads: [
+        {
+            date: '',
+            topics: [
+                {
+                    resourceId: '',
+                    type: ResourceType.VIDEO,
+                },
+            ],
+        },
+    ],
+};
+const DEFAULT_FORM_VALUES = {
+    standard: DEFAULT_STANDARD,
+};
 
 function CreateStandard({
     name,
     description,
     dailyUploads,
+    update,
 }: {
     name?: string;
     description?: string;
     dailyUploads?: DailyUpload[];
+    update: boolean;
 }) {
     const { data } = useSession();
     const dailyUploadAddedRef = useRef(false);
@@ -102,7 +122,7 @@ function CreateStandard({
         ]
     );
     const methods = useForm<FormValues>({
-        defaultValues: transformedData,
+        defaultValues: update ? transformedData : DEFAULT_FORM_VALUES,
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
