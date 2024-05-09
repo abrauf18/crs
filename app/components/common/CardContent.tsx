@@ -76,15 +76,19 @@ function CardContent({
                     </Link>
                     {!isHideEditIcon && (
                         <div className="bg-orange-100 p-2 rounded-md cursor-pointer">
-                            <EditIcon
-                                height={20}
-                                width={20}
-                                color="#F59A3B"
-                                onClick={() =>
-                                    handleOpenEditModal &&
-                                    handleOpenEditModal(id ?? '')
-                                }
-                            />
+                            <Link
+                                href={route && id ? `${route}/edit/${id}` : '#'}
+                            >
+                                <EditIcon
+                                    height={20}
+                                    width={20}
+                                    color="#F59A3B"
+                                    onClick={() =>
+                                        handleOpenEditModal &&
+                                        handleOpenEditModal(id ?? '')
+                                    }
+                                />
+                            </Link>
                         </div>
                     )}
                 </div>

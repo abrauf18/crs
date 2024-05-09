@@ -92,8 +92,23 @@ export const standards = [
         third: 'Course Length (2 Weeks)',
     },
 ];
+type StandardData = {
+    id: string;
+    name: string;
+    courseLength: string;
+    totalVideoUploads: string;
+    totalNonVideoUploads: string;
+};
 
-function Standard({ isShownFromTeacher }: { isShownFromTeacher?: boolean }) {
+function Standard({
+    isShownFromTeacher,
+    standardsCount,
+    allStandards,
+}: {
+    isShownFromTeacher?: boolean;
+    standardsCount?: number;
+    allStandards?: StandardData[];
+}) {
     const Icons = {
         FirstIcon: PlayIcon,
         SecondIcon: File,
@@ -110,8 +125,8 @@ function Standard({ isShownFromTeacher }: { isShownFromTeacher?: boolean }) {
             <Filters
                 text={
                     isShownFromTeacher
-                        ? '40 Learning Plans In Total'
-                        : '40 Learning Standards In Total'
+                        ? `${standardsCount} Learning Plans In Total`
+                        : `${standardsCount} Learning Standards In Total`
                 }
                 secondButtonText={
                     isShownFromTeacher ? 'Create New Plan' : 'Create New'
@@ -120,7 +135,7 @@ function Standard({ isShownFromTeacher }: { isShownFromTeacher?: boolean }) {
                 isHideFirstBtn={isShownFromTeacher}
             />
             <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
-                {standards.map((standard, index) => (
+                {allStandards?.map((standard, index) => (
                     <div
                         key={standard.id || index}
                         className="rounded-lg border p-4"
@@ -132,10 +147,10 @@ function Standard({ isShownFromTeacher }: { isShownFromTeacher?: boolean }) {
                                     ? '/teacher/learning-plans'
                                     : '/admin/standard'
                             }
-                            heading={standard.heading}
-                            first={standard.first}
-                            second={standard.second}
-                            third={standard.third}
+                            heading={standard.name}
+                            first={`Videos (${standard.totalVideoUploads})`}
+                            second={`Other Resources (${standard.totalNonVideoUploads})`}
+                            third={`Course Length (${standard.courseLength})`}
                             Icons={Icons}
                             isHideEditIcon={isShownFromTeacher}
                         />
