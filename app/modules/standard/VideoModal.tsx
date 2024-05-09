@@ -77,6 +77,7 @@ function VideoModal({
         try {
             const APIData = await getResourcesByNameAPI({
                 accessToken: data?.user?.accessToken,
+                resourceType,
                 resourceName: searchInput,
             });
 

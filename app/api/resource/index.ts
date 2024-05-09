@@ -189,9 +189,11 @@ export const getResourcesByTypeAPI = async ({
 
 export const getResourcesByNameAPI = async ({
     resourceName,
+    resourceType,
     accessToken,
 }: {
     resourceName: string;
+    resourceType: string;
     accessToken: string;
 }) => {
     const response = await fetch(
@@ -200,6 +202,7 @@ export const getResourcesByNameAPI = async ({
             headers: {
                 accesstoken: accessToken,
                 resourcename: resourceName,
+                resourcetype: resourceType,
             },
             next: {
                 tags: ['getResourcesByName'],
