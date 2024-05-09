@@ -93,17 +93,18 @@ function CreateStandard() {
         }
 
         const transformedDailyUploads = formdata.standard.dailyUploads
-            .map((upload, index) =>
-                upload.topics.map((topic, topicIndex) => ({
+            .map((dailyUpload, index) =>
+                dailyUpload.topics.map((topic, topicIndex) => ({
                     resourceId:
                         allSelectedResources[index][topicIndex].resourceId,
-                    accessDate: upload.date,
+                    accessDate: dailyUpload.date,
                 }))
             )
             .flat();
 
         try {
-            console.log('form info: ',
+            console.log(
+                'form info: ',
                 formdata,
                 allSelectedResources,
                 transformedDailyUploads
