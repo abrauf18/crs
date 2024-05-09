@@ -11,6 +11,8 @@ interface Topic {
     name: string;
     resourceId: string;
     type: ResourceType;
+    topic: string;
+    videoId?: string;
 }
 interface DailyUpload {
     date: string;

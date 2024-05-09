@@ -10,6 +10,8 @@ interface Topic {
     name: string;
     resourceId: string;
     type: ResourceType;
+    topic: string;
+    videoId?: string;
 }
 interface DailyUpload {
     date: string;
@@ -32,6 +34,7 @@ const DEFAULT_STANDARD = {
                     name: '',
                     resourceId: '',
                     type: ResourceType.VIDEO,
+                    topic: '',
                 },
             ],
         },
