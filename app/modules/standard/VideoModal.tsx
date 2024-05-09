@@ -49,7 +49,7 @@ function VideoModal({
         { id: string; Text: string; imageUrl: string }[]
     >([]);
     const [selectedResource, setSelectedResource] = useState({
-        resourceId: '',
+        resourceId: allSelectedResources[selectedIndex].resourceId ?? '',
         resourceType,
     });
 
