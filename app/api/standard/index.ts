@@ -49,3 +49,33 @@ export const getStandardAPI = async ({
 
     return result;
 };
+
+export const updateStandardAPI = async ({
+    standardId,
+    name,
+    description,
+    courseLength,
+    dailyUploads,
+    accessToken,
+}: {
+    standardId: string;
+    name: string;
+    description: string;
+    courseLength: string;
+    dailyUploads: { resourceId: string; accessDate: string }[];
+    accessToken: string;
+}) => {
+    const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/updateStandard`,
+        {
+            standardId,
+            name,
+            description,
+            courseLength,
+            dailyUploads,
+            accessToken,
+        }
+    );
+
+    return response;
+};

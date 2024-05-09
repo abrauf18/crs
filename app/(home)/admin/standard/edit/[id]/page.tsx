@@ -55,6 +55,7 @@ async function VideoDetailsPage({ params }: { params: { id: string } }) {
                 const { name, description, dailyUploads } = APIdata;
                 return (
                     <CreateStandard
+                        standardId={params.id}
                         name={name}
                         description={description}
                         dailyUploads={dailyUploads}

@@ -9,7 +9,7 @@ import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorMessage } from '@hookform/error-message';
-import { createStandardAPI } from '@/app/api/standard';
+import { createStandardAPI, updateStandardAPI } from '@/app/api/standard';
 import CreateTopic from '../CreateTopic';
 import StandardCard, { Data } from '../StandardCard';
 
@@ -77,11 +77,13 @@ const DEFAULT_FORM_VALUES = {
 };
 
 function CreateStandard({
+    standardId,
     name,
     description,
     dailyUploads,
     update,
 }: {
+    standardId?: string;
     name?: string;
     description?: string;
     dailyUploads?: DailyUpload[];
@@ -164,22 +166,38 @@ function CreateStandard({
                 allSelectedResources,
                 transformedDailyUploads
             );
-            const response: any = await createStandardAPI({
-                name: formdata.standard.name,
-                description: formdata.standard.description,
-                courseLength: '1: week',
-                dailyUploads: transformedDailyUploads,
-                accessToken: data?.user?.accessToken || '',
-            });
+            let response: any = null;
+            if (update) {
+                response = await updateStandardAPI({
+                    standardId: standardId || '',
+                    name: formdata.standard.name,
+                    description: formdata.standard.description,
+                    courseLength: '1: week',
+                    dailyUploads: transformedDailyUploads,
+                    accessToken: data?.user?.accessToken || '',
+                });
+            } else {
+                response = await createStandardAPI({
+                    name: formdata.standard.name,
+                    description: formdata.standard.description,
+                    courseLength: '1: week',
+                    dailyUploads: transformedDailyUploads,
+                    accessToken: data?.user?.accessToken || '',
+                });
+            }
             if (response.status !== 200) {
-                toast.error(response?.message || 'Failed to create a standard');
+                toast.error(
+                    response?.message ||
+                        `Failed to ${update ? `update ` : `create`} a standard`
+                );
                 return;
             }
             toast.success('Standard added successfully');
         } catch (error: any) {
             console.log(error);
             toast.error(
-                error?.response?.data?.message || 'Failed to add question'
+                error?.response?.data?.message ||
+                    `Failed to ${update ? `update ` : `create`} a standard`
             );
         }
     };
