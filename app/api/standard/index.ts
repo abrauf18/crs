@@ -26,3 +26,26 @@ export const createStandardAPI = async ({
 
     return response;
 };
+
+export const getStandardAPI = async ({
+    accessToken,
+    standardId,
+}: {
+    accessToken: string;
+    standardId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/getStandard`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                standardid: standardId,
+            },
+            next: {
+                tags: ['getStandard'],
+            },
+        }
+    );
+
+    return result;
+};
