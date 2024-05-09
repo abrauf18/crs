@@ -3,13 +3,11 @@ import axios from 'axios';
 export const createStandardAPI = async ({
     name,
     description,
-    courseLength,
     dailyUploads,
     accessToken,
 }: {
     name: string;
     description: string;
-    courseLength: string;
     dailyUploads: { resourceId: string; accessDate: string }[];
     accessToken: string;
 }) => {
@@ -18,7 +16,6 @@ export const createStandardAPI = async ({
         {
             name,
             description,
-            courseLength,
             dailyUploads,
             accessToken,
         }
@@ -54,14 +51,12 @@ export const updateStandardAPI = async ({
     standardId,
     name,
     description,
-    courseLength,
     dailyUploads,
     accessToken,
 }: {
     standardId: string;
     name: string;
     description: string;
-    courseLength: string;
     dailyUploads: { resourceId: string; accessDate: string }[];
     accessToken: string;
 }) => {
@@ -71,7 +66,6 @@ export const updateStandardAPI = async ({
             standardId,
             name,
             description,
-            courseLength,
             dailyUploads,
             accessToken,
         }

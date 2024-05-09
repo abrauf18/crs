@@ -172,7 +172,6 @@ function CreateStandard({
                     standardId: standardId || '',
                     name: formdata.standard.name,
                     description: formdata.standard.description,
-                    courseLength: '1: week',
                     dailyUploads: transformedDailyUploads,
                     accessToken: data?.user?.accessToken || '',
                 });
@@ -180,7 +179,6 @@ function CreateStandard({
                 response = await createStandardAPI({
                     name: formdata.standard.name,
                     description: formdata.standard.description,
-                    courseLength: '1: week',
                     dailyUploads: transformedDailyUploads,
                     accessToken: data?.user?.accessToken || '',
                 });
