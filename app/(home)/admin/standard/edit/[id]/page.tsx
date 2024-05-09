@@ -3,11 +3,46 @@ import { Session, getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { getStandardAPI } from '@/app/api/standard';
+import { ResourceType } from '@/lib/utils';
+
+interface Resource {
+    id: string;
+    name: string;
+    type: string;
+}
+
+interface DailyUpload {
+    accessDate: string;
+    resources: Resource[];
+}
+
+interface APIData {
+    name: string;
+    description: string;
+    dailyUploads: DailyUpload[];
+}
+
+const DEFAULT_STANDARD = {
+    name: '',
+    description: '',
+    dailyUploads: [
+        {
+            accessDate: '',
+            resources: [
+                {
+                    id: '',
+                    name: '',
+                    type: ResourceType.VIDEO,
+                },
+            ],
+        },
+    ],
+};
 
 async function VideoDetailsPage({ params }: { params: { id: string } }) {
     const data: Session | null = await getServerSession(options);
 
-    let APIdata: any = {};
+    let APIdata: APIData = DEFAULT_STANDARD;
 
     if (data) {
         try {
