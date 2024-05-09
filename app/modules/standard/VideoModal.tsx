@@ -121,7 +121,7 @@ function VideoModal({
                 const allFetchedResources = responseData?.data;
                 setAllResources(allFetchedResources);
                 convertResourceToCard(allFetchedResources);
-                console.log(responseData?.data);
+                // console.log(responseData?.data);
             } catch (error: any) {
                 toast.error(
                     error.message ??

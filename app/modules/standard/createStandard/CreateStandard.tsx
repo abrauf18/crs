@@ -13,26 +13,26 @@ import { createStandardAPI, updateStandardAPI } from '@/app/api/standard';
 import CreateTopic from '../CreateTopic';
 import StandardCard, { Data } from '../StandardCard';
 
-export const standardData: Data[] = [
-    {
-        id: 1,
-        name: '3D Printing',
-        duration: '5:00',
-        question: '5 questions',
-    },
-    {
-        id: 2,
-        name: 'Design & Human',
-        duration: '5:00',
-        question: '5 questions',
-    },
-    {
-        id: 3,
-        name: 'Vertual Reality - VR',
-        duration: '5:00',
-        question: '5 questions',
-    },
-];
+// export const standardData: Data[] = [
+//     {
+//         id: 1,
+//         name: '3D Printing',
+//         duration: '5:00',
+//         question: '5 questions',
+//     },
+//     {
+//         id: 2,
+//         name: 'Design & Human',
+//         duration: '5:00',
+//         question: '5 questions',
+//     },
+//     {
+//         id: 3,
+//         name: 'Vertual Reality - VR',
+//         duration: '5:00',
+//         question: '5 questions',
+//     },
+// ];
 
 export enum ResourceType {
     VIDEO = 'video',
@@ -160,12 +160,12 @@ function CreateStandard({
             .flat();
 
         try {
-            console.log(
-                'form info: ',
-                formdata,
-                allSelectedResources,
-                transformedDailyUploads
-            );
+            // console.log(
+            //     'form info: ',
+            //     formdata,
+            //     allSelectedResources,
+            //     transformedDailyUploads
+            // );
             let response: any = null;
             if (update) {
                 response = await updateStandardAPI({
@@ -192,9 +192,11 @@ function CreateStandard({
                 );
                 return;
             }
-            toast.success('Standard added successfully');
+            toast.success(
+                `Standard ${update ? `updated ` : `created`} successfully`
+            );
         } catch (error: any) {
-            console.log(error);
+            // console.log(error);
             toast.error(
                 error?.response?.data?.message ||
                     `Failed to ${update ? `update ` : `create`} a standard`
@@ -220,7 +222,21 @@ function CreateStandard({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
-    console.log('all selected resources in Parents: ', allSelectedResources);
+
+    useEffect(() => {
+        const updatedResources = [...allSelectedResources];
+        const indexToRemove = updatedResources.findIndex(
+            (resources) => resources.length === 0
+        );
+
+        if (indexToRemove !== -1) {
+            updatedResources.splice(indexToRemove, 1);
+            setAllSelectedResources(updatedResources);
+            removeDailyUpload(indexToRemove);
+        }
+    }, [allSelectedResources, removeDailyUpload]);
+
+    // console.log('all selected resources in Parents: ', allSelectedResources);
     return (
         <section>
             <FormProvider {...methods}>
@@ -337,7 +353,7 @@ function CreateStandard({
                     >
                         submit
                     </button>
-                    <StandardCard data={standardData} />
+                    {/* <StandardCard data={standardData} /> */}
                 </form>
             </FormProvider>
         </section>

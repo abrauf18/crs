@@ -4,18 +4,13 @@ import { toast } from 'react-toastify';
 import { CalendarDays } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { set, useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import Select from '@/app/components/common/DropDown';
 import VideoModal from './VideoModal';
 
-interface Resource {
-    id: string;
-    name: string;
-    url: string;
-}
 export enum ResourceType {
     VIDEO = 'video',
     SLIDESHOW = 'slideshow',
@@ -104,7 +99,7 @@ function CreateTopic({
             resourceId
         );
     };
-    console.log('all selected resources: ', allSelectedResources);
+    // console.log('all selected resources: ', allSelectedResources);
     return (
         <div>
             <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
@@ -187,6 +182,26 @@ function CreateTopic({
                                 }
                             />
                         )}
+                    </div>
+                    <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                // Remove the topic from allSelectedResources
+                                const updatedSelectedResources =
+                                    allSelectedResources.filter(
+                                        (_, index) => index !== topicIndex
+                                    );
+                                setAllSelectedResources(
+                                    updatedSelectedResources
+                                );
+
+                                // Remove the topic from the form
+                                removeTopic(topicIndex);
+                            }}
+                        >
+                            Remove
+                        </button>
                     </div>
                 </div>
             ))}
