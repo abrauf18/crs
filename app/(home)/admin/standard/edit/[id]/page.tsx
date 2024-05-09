@@ -1,21 +1,19 @@
 import React from 'react';
 import { Session, getServerSession } from 'next-auth';
+import { ResourceType } from '@/lib/utils';
+import { getStandardAPI } from '@/app/api/standard';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import { getStandardAPI } from '@/app/api/standard';
-import { ResourceType } from '@/lib/utils';
+import CreateStandard from '@/app/modules/standard/createStandard/CreateStandard';
 
-interface Resource {
-    id: string;
-    name: string;
-    type: string;
+interface Topic {
+    resourceId: string;
+    type: ResourceType;
 }
-
 interface DailyUpload {
-    accessDate: string;
-    resources: Resource[];
+    date: string;
+    topics: Topic[];
 }
-
 interface APIData {
     name: string;
     description: string;
@@ -27,11 +25,10 @@ const DEFAULT_STANDARD = {
     description: '',
     dailyUploads: [
         {
-            accessDate: '',
-            resources: [
+            date: '',
+            topics: [
                 {
-                    id: '',
-                    name: '',
+                    resourceId: '',
                     type: ResourceType.VIDEO,
                 },
             ],
@@ -56,7 +53,13 @@ async function VideoDetailsPage({ params }: { params: { id: string } }) {
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
                 const { name, description, dailyUploads } = APIdata;
-                return console.log(name, description, dailyUploads);
+                return (
+                    <CreateStandard
+                        name={name}
+                        description={description}
+                        dailyUploads={dailyUploads}
+                    />
+                );
             }
 
             if (!response.ok) {

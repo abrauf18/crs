@@ -58,16 +58,51 @@ interface FormValues {
     standard: Standard;
 }
 
-function CreateStandard() {
+function CreateStandard({
+    name,
+    description,
+    dailyUploads,
+}: {
+    name?: string;
+    description?: string;
+    dailyUploads?: DailyUpload[];
+}) {
     const { data } = useSession();
     const dailyUploadAddedRef = useRef(false);
+    const transformedData = {
+        standard: {
+            name: name ?? '',
+            description: description ?? '',
+            dailyUploads:
+                dailyUploads?.map((upload) => ({
+                    date: upload.date,
+                    topics: upload.topics.map((resource) => ({
+                        resourceId: resource.resourceId,
+                        type: resource.type,
+                    })),
+                })) ?? [],
+        },
+    };
+    const defaultSelectedResources =
+        dailyUploads &&
+        dailyUploads.map((upload) =>
+            upload.topics.map((resource) => ({
+                resourceId: resource.resourceId,
+                resourceType: resource.type,
+            }))
+        );
     const [allSelectedResources, setAllSelectedResources] = useState<
         {
             resourceId: string;
             resourceType: ResourceType;
         }[][]
-    >([[{ resourceId: '', resourceType: ResourceType.VIDEO }]]);
+    >(
+        defaultSelectedResources ?? [
+            [{ resourceId: '', resourceType: ResourceType.VIDEO }],
+        ]
+    );
     const methods = useForm<FormValues>({
+        defaultValues: transformedData,
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
