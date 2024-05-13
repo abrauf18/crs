@@ -303,6 +303,23 @@ function CreateStandard({
                         <button
                             type="submit"
                             className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-24"
+                            onClick={(e) => {
+                                // Check if all resources have been selected
+                                const allResourcesSelected =
+                                    allSelectedResources.every((resources) =>
+                                        resources.every(
+                                            (resource) =>
+                                                resource.resourceId !== ''
+                                        )
+                                    );
+                                console.log(allResourcesSelected)
+                                if (!allResourcesSelected) {
+                                    e.preventDefault(); // Prevent form submission
+                                    toast.error(
+                                        'Please select all resources before submitting'
+                                    );
+                                }
+                            }}
                         >
                             submit
                         </button>
