@@ -143,17 +143,17 @@ function CreateTopic({
                             >
                                 Type
                             </Label>
-                            <div
-                                className="flex items-center gap-5 sm:my-4 mt-12 mb-8"
-                                onClick={() => handleOpenModal(topicIndex)}
-                            >
+                            <div className="flex items-center gap-5 sm:my-4 mt-12 mb-8">
                                 <Select
                                     additionalClasses="!w-2/4"
                                     name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                     options={resourceDropDownOptions}
                                     selectedOption={ResourceType.VIDEO}
                                 />
-                                <div className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center px-4 py-3 hover:bg-slate-100">
+                                <div
+                                    className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center px-4 py-3 hover:bg-slate-100"
+                                    onClick={() => handleOpenModal(topicIndex)}
+                                >
                                     <button
                                         className="text-sm text-center"
                                         type="button"
