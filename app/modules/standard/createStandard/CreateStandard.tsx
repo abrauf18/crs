@@ -100,9 +100,9 @@ function CreateStandard({
             resourceType: ResourceType;
         }[][]
     >(
-        defaultSelectedResources ?? [
-            [{ resourceId: '', resourceType: ResourceType.VIDEO }],
-        ]
+        defaultSelectedResources && defaultSelectedResources.length > 0
+            ? defaultSelectedResources
+            : [[{ resourceId: '', resourceType: ResourceType.VIDEO }]]
     );
     const methods = useForm<FormValues>({
         defaultValues: update ? transformedData : DEFAULT_FORM_VALUES,
@@ -127,18 +127,28 @@ function CreateStandard({
         if (!data) {
             return;
         }
-        setIsLoading(true);
+
+        const allResourcesSelected = allSelectedResources.every((resources) =>
+            resources.every((resource) => resource.resourceId !== '')
+        );
+
+        if (!allResourcesSelected) {
+            toast.error('Please select all resources before submitting');
+            return;
+        }
+
         const transformedDailyUploads = formdata.standard.dailyUploads
             .map((dailyUpload, index) =>
                 dailyUpload.topics.map((topic, topicIndex) => ({
                     resourceId:
-                        allSelectedResources[index][topicIndex].resourceId,
+                        allSelectedResources[index][topicIndex]?.resourceId,
                     accessDate: dailyUpload.date,
                 }))
             )
             .flat();
 
         try {
+            setIsLoading(true);
             let response: any = null;
             if (update) {
                 response = await updateStandardAPI({
@@ -309,21 +319,6 @@ function CreateStandard({
                         <button
                             type="submit"
                             className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-32"
-                            onClick={(e) => {
-                                const allResourcesSelected =
-                                    allSelectedResources.every((resources) =>
-                                        resources.every(
-                                            (resource) =>
-                                                resource.resourceId !== ''
-                                        )
-                                    );
-                                if (!allResourcesSelected) {
-                                    e.preventDefault();
-                                    toast.error(
-                                        'Please select all resources before submitting'
-                                    );
-                                }
-                            }}
                         >
                             {isLoading ? <ButtonLoader /> : `submit`}
                         </button>
