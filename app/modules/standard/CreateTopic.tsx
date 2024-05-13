@@ -109,6 +109,8 @@ function CreateTopic({
                     type="button"
                     onClick={() => {
                         if (
+                            allSelectedResources &&
+                            allSelectedResources.length > 0 &&
                             allSelectedResources[topicFields.length - 1]
                                 .resourceId === ''
                         ) {
@@ -122,7 +124,7 @@ function CreateTopic({
                             type: ResourceType.VIDEO,
                         });
                         setAllSelectedResources([
-                            ...allSelectedResources,
+                            ...(allSelectedResources || []),
                             {
                                 resourceId: '',
                                 resourceType: ResourceType.VIDEO,
@@ -198,9 +200,11 @@ function CreateTopic({
                             onClick={() => {
                                 // Remove the topic from allSelectedResources
                                 const updatedSelectedResources =
-                                    allSelectedResources.filter(
-                                        (_, index) => index !== topicIndex
-                                    );
+                                    allSelectedResources
+                                        ? allSelectedResources.filter(
+                                              (_, index) => index !== topicIndex
+                                          )
+                                        : [];
                                 setAllSelectedResources(
                                     updatedSelectedResources
                                 );
