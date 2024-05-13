@@ -162,10 +162,11 @@ function CreateTopic({
                                     </button>
                                 </div>
                                 <div>
-                                    {
+                                    {allSelectedResources &&
+                                        allSelectedResources.length >
+                                            topicIndex &&
                                         allSelectedResources[topicIndex]
-                                            .resourceId
-                                    }
+                                            .resourceId}
                                 </div>
                             </div>
                         </div>
