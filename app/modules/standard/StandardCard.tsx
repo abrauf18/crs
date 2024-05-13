@@ -3,15 +3,6 @@ import { ResourceType } from '@/lib/utils';
 import GetDate from '@/app/modules/standard/GetDate';
 import StandardTable from '@/app/modules/standard/StandardTable';
 
-// export interface Data {
-//     id: number;
-//     name: string;
-//     duration: string;
-//     question: string;
-// }
-// export interface StandardProps {
-//     data: Data[];
-// }
 interface Topic {
     name: string;
     resourceId: string;

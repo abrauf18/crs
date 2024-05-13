@@ -218,7 +218,7 @@ function CreateTopic({
                     </div>
                 </div>
             ))}
-            <div className="sm:flex justify-between items-center my-5 gap-5">
+            <div className="sm:flex justify-between items-center my-5 gap-5 border-b">
                 <div className="basis-1/2 relative">
                     <Label htmlFor={`standard.dailyUploads.${index}.date`}>
                         Date

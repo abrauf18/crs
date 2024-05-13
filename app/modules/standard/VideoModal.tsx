@@ -136,7 +136,7 @@ function VideoModal({
 
         getResourcesByType();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, resourceType]);
+    }, [resourceType]);
     return (
         <section className="w-full bg-white h-screen p-4 shadow-md">
             <ModalHeader
