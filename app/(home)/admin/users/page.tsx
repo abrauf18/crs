@@ -33,7 +33,7 @@ async function UsersPage({
             const response = await getAllUsersProfileAPI(
                 data?.user.accessToken,
                 parseInt(page, 10),
-                2,
+                10,
                 orderBy,
                 sortBy
             );
