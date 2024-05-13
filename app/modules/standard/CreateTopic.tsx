@@ -1,14 +1,15 @@
 'use client';
 
 import { toast } from 'react-toastify';
-import { CalendarDays } from 'lucide-react';
+import { CalendarDays, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { FieldErrors, useFieldArray, useFormContext } from 'react-hook-form';
 import { validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import Select from '@/app/components/common/DropDown';
+import { ErrorMessage } from '@hookform/error-message';
 import VideoModal from './VideoModal';
 
 export enum ResourceType {
@@ -48,12 +49,14 @@ function CreateTopic({
     index,
     allSelectedResources,
     setAllSelectedResources,
+    errors,
 }: {
     index: number;
     allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
     setAllSelectedResources: (
         resources: { resourceId: string; resourceType: ResourceType }[]
     ) => void;
+    errors: FieldErrors<FormValues>;
 }) {
     const { data } = useSession();
     const topicAddedRef = useRef(false);
@@ -99,10 +102,9 @@ function CreateTopic({
             resourceId
         );
     };
-    // console.log('all selected resources: ', allSelectedResources);
     return (
-        <div>
-            <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
+        <>
+            <div className="cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg absolute right-6 z-10 hover:bg-slate-100">
                 <button
                     type="button"
                     onClick={() => {
@@ -134,30 +136,36 @@ function CreateTopic({
             {topicFields.map((topic, topicIndex) => (
                 <div key={topic.id}>
                     <div className="sm:flex justify-between items-center gap-5 w-full mt-3">
-                        <div className="basis-1/2 relative">
+                        <div className="basis-full relative">
                             <Label
                                 htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
-                                className="font-semibold"
+                                className="font-semibold mt-4"
                             >
                                 Type
                             </Label>
-                            <div className="flex justify-between items-start gap-1">
+                            <div
+                                className="flex items-center gap-5 sm:my-4 mt-12 mb-8"
+                                onClick={() => handleOpenModal(topicIndex)}
+                            >
                                 <Select
-                                    additionalClasses="!w-2/5"
+                                    additionalClasses="!w-2/4"
                                     name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                     options={resourceDropDownOptions}
                                     selectedOption={ResourceType.VIDEO}
                                 />
-                                <div className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center w-24 px-1 py-2 mt-2">
+                                <div className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center px-4 py-3 hover:bg-slate-100">
                                     <button
                                         className="text-sm text-center"
                                         type="button"
-                                        onClick={() =>
-                                            handleOpenModal(topicIndex)
-                                        }
                                     >
                                         Select
                                     </button>
+                                </div>
+                                <div>
+                                    {
+                                        allSelectedResources[topicIndex]
+                                            .resourceId
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -183,7 +191,7 @@ function CreateTopic({
                             />
                         )}
                     </div>
-                    <div className=" cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg flex items-center justify-between">
+                    <div className=" cursor-pointer px-4 py-2 border text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600 ">
                         <button
                             type="button"
                             onClick={() => {
@@ -211,9 +219,10 @@ function CreateTopic({
                         Date
                     </Label>
                     <Input
-                        type="text"
+                        type="date"
                         placeholder="Write Date"
                         name={`standard.dailyUploads.${index}.date`}
+                        additionalClasses="date-input"
                         rules={{
                             required: {
                                 value: true,
@@ -221,12 +230,24 @@ function CreateTopic({
                             },
                         }}
                     />
-                    <div className="absolute top-10 right-2">
+                    <span className="text-red-500 text-xs">
+                        <ErrorMessage
+                            errors={errors}
+                            name={`standard.dailyUploads.${index}.date`}
+                            render={({ message }) => (
+                                <p className="flex items-center">
+                                    <X size={20} color="#E6500D" />
+                                    {message}
+                                </p>
+                            )}
+                        />
+                    </span>
+                    <div className="absolute top-11 right-2">
                         <CalendarDays size={20} color="#85878D" />
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -7,32 +7,10 @@ import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import { validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ErrorMessage } from '@hookform/error-message';
 import { createStandardAPI, updateStandardAPI } from '@/app/api/standard';
+import { X } from 'lucide-react';
 import CreateTopic from '../CreateTopic';
-// import StandardCard, { Data } from '../StandardCard';
-
-// export const standardData: Data[] = [
-//     {
-//         id: 1,
-//         name: '3D Printing',
-//         duration: '5:00',
-//         question: '5 questions',
-//     },
-//     {
-//         id: 2,
-//         name: 'Design & Human',
-//         duration: '5:00',
-//         question: '5 questions',
-//     },
-//     {
-//         id: 3,
-//         name: 'Vertual Reality - VR',
-//         duration: '5:00',
-//         question: '5 questions',
-//     },
-// ];
 
 export enum ResourceType {
     VIDEO = 'video',
@@ -132,8 +110,6 @@ function CreateStandard({
         control,
         handleSubmit,
         formState: { errors },
-        watch,
-        reset,
     } = methods;
     const {
         fields: dailyUploadFields,
@@ -160,12 +136,6 @@ function CreateStandard({
             .flat();
 
         try {
-            // console.log(
-            //     'form info: ',
-            //     formdata,
-            //     allSelectedResources,
-            //     transformedDailyUploads
-            // );
             let response: any = null;
             if (update) {
                 response = await updateStandardAPI({
@@ -234,12 +204,11 @@ function CreateStandard({
         }
     }, [allSelectedResources, removeDailyUpload]);
 
-    // console.log('all selected resources in Parents: ', allSelectedResources);
     return (
         <section>
             <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mt-5 pb-3 border-b">
+                    <div className="mt-5 pb-5 border-b">
                         <h3 className="text-xl font-semibold">Plan Details</h3>
                         <div className="sm:flex justify-between items-center gap-5 w-full mt-5">
                             <div className="basis-1/2">
@@ -256,6 +225,18 @@ function CreateStandard({
                                         },
                                     }}
                                 />
+                                <span className="text-red-500 text-xs">
+                                    <ErrorMessage
+                                        errors={errors}
+                                        name="standard.name"
+                                        render={({ message }) => (
+                                            <p className="flex items-center">
+                                                <X size={20} color="#E6500D" />
+                                                {message}
+                                            </p>
+                                        )}
+                                    />
+                                </span>
                             </div>
                             <div className="basis-1/2">
                                 <Label htmlFor="standard.description">
@@ -273,16 +254,29 @@ function CreateStandard({
                                         },
                                     }}
                                 />
+                                <span className="text-red-500 text-xs">
+                                    <ErrorMessage
+                                        errors={errors}
+                                        name="standard.description"
+                                        render={({ message }) => (
+                                            <p className="flex items-center">
+                                                <X size={20} color="#E6500D" />
+                                                {message}
+                                            </p>
+                                        )}
+                                    />
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <div className="flex justify-between items-center my-5">
+                        <div className="flex justify-between items-center my-5 w-full">
                             <h3 className="text-xl font-semibold">Topic:</h3>
                         </div>
                         {dailyUploadFields.map((dailyUpload, index) => (
                             <div key={dailyUpload.id}>
                                 <CreateTopic
+                                    errors={errors}
                                     index={index}
                                     allSelectedResources={
                                         allSelectedResources[index]
@@ -305,15 +299,19 @@ function CreateStandard({
                             </div>
                         ))}
                     </div>
-                    <div className="basis-1/2 my-5">
+                    <div className="flex justify-between items-center border-b pb-6">
+                        <button
+                            type="submit"
+                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-24"
+                        >
+                            submit
+                        </button>
                         <button
                             type="button"
-                            className="bg-primary-color text-white font-medium p-2 mt-3 rounded-lg sm:float-right"
+                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 rounded-lg"
                             onClick={() => {
                                 if (
                                     allSelectedResources[
-                                        allSelectedResources.length - 1
-                                    ] && allSelectedResources[
                                         allSelectedResources.length - 1
                                     ].some(
                                         (resource) => resource.resourceId === ''
@@ -347,13 +345,6 @@ function CreateStandard({
                             Add TimeLine
                         </button>
                     </div>
-                    <button
-                        type="submit"
-                        className="bg-primary-color text-white font-medium p-2 mt-3 rounded-lg sm:float-right"
-                    >
-                        submit
-                    </button>
-                    {/* <StandardCard data={standardData} /> */}
                 </form>
             </FormProvider>
         </section>

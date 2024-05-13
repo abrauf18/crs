@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import { FileVideoIcon } from 'lucide-react';
@@ -11,10 +11,9 @@ import {
     getResourcesByNameAPI,
     getResourcesByTypeAPI,
 } from '@/app/api/resource';
-import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
 import QuizCard from '@/app/components/common/QuizCard';
 import { DEFAULT_IMAGE } from '@/lib/utils';
-import { Card } from '../video/VideoCard';
+import PageLoader from '@/app/components/common/PageLoader';
 
 export enum ResourceType {
     VIDEO = 'video',
@@ -52,6 +51,7 @@ function VideoModal({
         resourceId: allSelectedResources[selectedIndex].resourceId ?? '',
         resourceType,
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     const convertResourceToCard = (
         rawResources: { id: string; name: string; url: string }[]
@@ -105,6 +105,7 @@ function VideoModal({
 
         const getResourcesByType = async () => {
             try {
+                setIsLoading(true);
                 const APIData = await getResourcesByTypeAPI({
                     accessToken: data?.user?.accessToken,
                     resourceType,
@@ -128,6 +129,8 @@ function VideoModal({
                     error.message ??
                         'An error occurred while fetching video data'
                 );
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -147,23 +150,28 @@ function VideoModal({
             <div className="mb-5">
                 <SearchInput handleClick={searchResources} />
             </div>
-            <div className="md:h-96 h-72  overflow-y-auto px-6">
-                {resourceCards.map((card) => (
-                    <div className="mt-5" key={card.id}>
-                        <QuizCard
-                            card={card}
-                            selectedResource={selectedResource}
-                            setSelectResource={(id: string) => {
-                                setSelectedResource({
-                                    resourceId: id,
-                                    resourceType,
-                                });
-                                updateSelectedResource(id);
-                            }}
-                        />
-                    </div>
-                ))}
-            </div>
+            {isLoading ? (
+                <PageLoader additionalClasses="!h-2/3" />
+            ) : (
+                <div className="md:h-96 h-72 overflow-y-auto px-6">
+                    {resourceCards.map((card) => (
+                        <div className="mt-5" key={card.id}>
+                            <QuizCard
+                                card={card}
+                                selectedResource={selectedResource}
+                                setSelectResource={(id: string) => {
+                                    setSelectedResource({
+                                        resourceId: id,
+                                        resourceType,
+                                    });
+                                    updateSelectedResource(id);
+                                }}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+
             <div
                 onClick={() => {
                     setAllSelectedResources(
