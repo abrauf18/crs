@@ -1,15 +1,17 @@
 'use client';
 
+import { X } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
+import action from '@/app/action';
 import { validationError } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { ErrorMessage } from '@hookform/error-message';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { createStandardAPI, updateStandardAPI } from '@/app/api/standard';
-import { X } from 'lucide-react';
 import CreateTopic from '../CreateTopic';
 
 export enum ResourceType {
@@ -69,6 +71,7 @@ function CreateStandard({
 }) {
     const { data } = useSession();
     const dailyUploadAddedRef = useRef(false);
+    const [isLoading, setIsLoading] = useState(false);
     const transformedData = {
         standard: {
             name: name ?? '',
@@ -124,7 +127,7 @@ function CreateStandard({
         if (!data) {
             return;
         }
-
+        setIsLoading(true);
         const transformedDailyUploads = formdata.standard.dailyUploads
             .map((dailyUpload, index) =>
                 dailyUpload.topics.map((topic, topicIndex) => ({
@@ -169,6 +172,9 @@ function CreateStandard({
                 error?.response?.data?.message ||
                     `Failed to ${update ? `update ` : `create`} a standard`
             );
+        } finally {
+            setIsLoading(false);
+            action('getAllSummarizedStandards');
         }
     };
 
@@ -302,9 +308,8 @@ function CreateStandard({
                     <div className="flex justify-between items-center border-b pb-6">
                         <button
                             type="submit"
-                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-24"
+                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-32"
                             onClick={(e) => {
-                                // Check if all resources have been selected
                                 const allResourcesSelected =
                                     allSelectedResources.every((resources) =>
                                         resources.every(
@@ -312,20 +317,19 @@ function CreateStandard({
                                                 resource.resourceId !== ''
                                         )
                                     );
-                                console.log(allResourcesSelected)
                                 if (!allResourcesSelected) {
-                                    e.preventDefault(); // Prevent form submission
+                                    e.preventDefault();
                                     toast.error(
                                         'Please select all resources before submitting'
                                     );
                                 }
                             }}
                         >
-                            submit
+                            {isLoading ? <ButtonLoader /> : `submit`}
                         </button>
                         <button
                             type="button"
-                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 rounded-lg"
+                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg"
                             onClick={() => {
                                 if (
                                     allSelectedResources[
