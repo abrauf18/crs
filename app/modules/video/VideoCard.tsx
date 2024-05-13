@@ -16,37 +16,48 @@ export interface Card {
     Text: string;
     Questions: number;
     Checkpoints: number;
-    Resources: number;
 }
 
 interface VideoCardProps {
     card: Card;
     isModal?: boolean;
+    onClickEditBtn?: (id: string) => void;
 }
 
-function VideoCard({ card, isModal }: VideoCardProps) {
+function VideoCard({ card, isModal, onClickEditBtn }: VideoCardProps) {
     const Icons: IconProps = {
         FirstIcon: QuestionIcon,
         SecondIcon: CheckPointIcon,
         ThirdIcon: ResourceIcon,
     };
     return (
-        <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
-            <Link href="#" className="relative">
-                <Image src={card.imageUrl} alt="video" className="w-full" />
-                <div className="absolute left-1/2 bottom-[29%] transform -translate-x-1/2 -translate-y-1/2">
-                    <PlayIcon fill="white" color="white" size={35} />
-                </div>
-            </Link>
-            <CardContent
-                id={card.Questions.toString()}
-                heading={card.Text}
-                first={`Questions (${card.Questions})`}
-                second={`Checkpoints (${card.Checkpoints})`}
-                third={`Resources (${card.Resources})`}
-                Icons={Icons}
-                isModal={isModal}
-            />
+        <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2 h-96">
+            <div className="h-[60%] relative">
+                <Link href="#">
+                    <Image
+                        src={card.imageUrl}
+                        alt="video"
+                        className="w-full h-full rounded-lg object-cover"
+                        width={100}
+                        height={0}
+                    />
+                    <div className="absolute left-1/2 bottom-[29%] transform -translate-x-1/2 -translate-y-1/2">
+                        <PlayIcon fill="white" color="white" size={35} />
+                    </div>
+                </Link>
+            </div>
+            <div className="h-[40%] mt-2">
+                <CardContent
+                    id={card.id}
+                    heading={card.Text}
+                    first={`Questions (${card.Questions})`}
+                    second={`Checkpoints (${card.Checkpoints})`}
+                    Icons={Icons}
+                    isModal={isModal}
+                    route="/admin/video"
+                    handleOpenEditModal={onClickEditBtn}
+                />
+            </div>
         </div>
     );
 }

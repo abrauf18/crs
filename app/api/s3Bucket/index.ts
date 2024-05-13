@@ -93,12 +93,34 @@ export const UploadResource = async ({
                 onUploadProgress,
             }
         );
-
         return response;
     } catch (error) {
         return {
             status: 500,
-            message: 'Error Uploading Image',
+            message: 'Error Uploading Resource',
+        };
+    }
+};
+
+export const DeleteResource = async (objectUrl: string) => {
+    try {
+        if (objectUrl === DEFAULT_IMAGE) {
+            return {
+                status: 400,
+                message: 'Default Image Cannot Be Deleted',
+            };
+        }
+        const response = await axios.delete(
+            `${process.env.NEXT_PUBLIC_BASE_FRONTEND_URL}/api/s3Bucket`,
+            {
+                data: { url: objectUrl },
+            }
+        );
+        return response;
+    } catch (error) {
+        return {
+            status: 500,
+            message: 'Error Deleting Image',
         };
     }
 };

@@ -16,38 +16,6 @@ import {
 import ResourcesTable from './ResourcesTable';
 import UploadResourceModal from './UploadResourceModal';
 
-export const ResourcesData: Resource[] = [
-    {
-        id: '1',
-        name: 'XYZ Resources',
-        type: ResourceType.VIDEO,
-        topic: 'Topic xyz',
-    },
-    {
-        id: '2',
-        name: 'XYZ Resources',
-        type: ResourceType.VIDEO,
-        topic: 'Topic 2',
-    },
-    {
-        id: '3',
-        name: 'XYZ Resources',
-        type: ResourceType.QUIZ,
-        topic: 'Topic 2',
-    },
-    {
-        id: '4',
-        name: 'XYZ Resources',
-        type: ResourceType.QUIZ,
-        topic: 'Topic 2',
-    },
-    {
-        id: '5',
-        name: 'XYZ Resources',
-        type: ResourceType.WORKSHEET,
-        topic: 'Topic 3',
-    },
-];
 function Resoures({
     APIdata,
 }: {

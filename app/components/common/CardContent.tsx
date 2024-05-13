@@ -14,11 +14,12 @@ interface CardContentProps {
     heading: string;
     first: string;
     second: string;
-    third: string;
+    third?: string;
     Icons: IconProps;
     isModal?: boolean;
     isHideEditIcon?: boolean;
     isShownFromStudent?: boolean;
+    handleOpenEditModal?: (id: string) => void;
 }
 
 function CardContent({
@@ -32,6 +33,7 @@ function CardContent({
     isModal,
     isHideEditIcon,
     isShownFromStudent,
+    handleOpenEditModal,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
     return (
@@ -50,10 +52,12 @@ function CardContent({
                         <p>{second}</p>
                     </div>
                 </div>
-                <div className="flex gap-1 items-center mb-5 text-dark-gray text-sm">
-                    <ThirdIcon height={17} width={17} color="#54C3F4" />
-                    <p>{third}</p>
-                </div>
+                {third && (
+                    <div className="flex gap-1 items-center mb-5 text-dark-gray text-sm">
+                        <ThirdIcon height={17} width={17} color="#54C3F4" />
+                        <p>{third}</p>
+                    </div>
+                )}
             </div>
             {isModal ? (
                 <Link
@@ -63,7 +67,7 @@ function CardContent({
                     Selected
                 </Link>
             ) : (
-                <div className="flex items-end justify-end">
+                <div className="flex items-end justify-end mt-5">
                     <Link
                         href={route && id ? `${route}/${id}` : '#'}
                         className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 lg:hover:bg-primary-color lg:hover:text-white"
@@ -71,8 +75,16 @@ function CardContent({
                         {isShownFromStudent ? 'Start Course' : 'Details'}
                     </Link>
                     {!isHideEditIcon && (
-                        <div className="bg-orange-100 p-2 rounded-md">
-                            <EditIcon height={20} width={20} color="#F59A3B" />
+                        <div className="bg-orange-100 p-2 rounded-md cursor-pointer">
+                            <EditIcon
+                                height={20}
+                                width={20}
+                                color="#F59A3B"
+                                onClick={() =>
+                                    handleOpenEditModal &&
+                                    handleOpenEditModal(id ?? '')
+                                }
+                            />
                         </div>
                     )}
                 </div>

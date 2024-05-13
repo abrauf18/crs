@@ -1,5 +1,11 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import VideoIcon from '@/app/assets/icons/VideoIcon';
+import TicketIcon from '@/app/assets/icons/TicketIcon';
+import ResourceIcon from '@/app/assets/icons/ResourceIcon';
+import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
+import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
+import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -92,4 +98,99 @@ export interface Resource {
     topic: string;
     url?: string; // remove ? after completion of CRS to prevent breakages
     show?: string; // remove ? after completion of CRS to prevent breakages
+}
+
+export interface VideoSummary {
+    id: string,
+    resourceId: string,
+    thumbnailURL: string,
+    name: string,
+    questionCountNumber: number,
+    topicsCount: number
+}
+
+export const resourceDropDownOptions = [
+    { label: ResourceType.QUIZ, value: 'Quiz' },
+    { label: ResourceType.VIDEO, value: 'Video' },
+    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
+    { label: ResourceType.WORKSHEET, value: 'Worksheet' },
+    { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
+];
+
+export const resourceTypeToIcon = (resourceType: ResourceType) => {
+    let Icon;
+    switch (resourceType) {
+        case 'video':
+            Icon = VideoIcon;
+            break;
+        case 'slideshow':
+            Icon = SlideShowIcon;
+            break;
+        case 'worksheet':
+            Icon = WorksheetIcon;
+            break;
+        case 'exit-ticket-test':
+            Icon = TicketIcon;
+            break;
+        case 'quiz':
+            Icon = QuestionMarkIcon;
+            break;
+        default:
+            Icon = ResourceIcon;
+            break;
+    }
+    return Icon;
+}
+
+export const DEFAULT_VIDEO = {
+    id: "",
+    resourceId: "",
+    thumbnailURL: "",
+    createdAt: "",
+    updatedAt: "",
+    name: "",
+    videoUrl:"",
+    questions: [],
+    topics: {}
+}
+
+export interface Video {
+    id: string,
+    resourceId: string,
+    thumbnailURL: string,
+    createdAt: string,
+    updatedAt: string,
+    name: string,
+    videoUrl: string,
+    questions: {
+        statement: string,
+        options: { [key: string]: string },
+        correctOption: string,
+        correctOptionExplanation: string,
+        totalMarks: number,
+        popUpTime: string
+    }[],
+    topics: { [key: string]: string }
+}
+
+
+export const timeStringToSeconds = (timeString: string) => {
+    if(!timeString){
+        return -1;
+    }
+    const [hours, minutes, seconds] = timeString?.split(':');
+    return parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+}
+
+export const secondsToString = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+
+    const hoursString = String(hours).padStart(2, '0');
+    const minutesString = String(minutes).padStart(2, '0');
+    const secondsString = String(remainingSeconds).padStart(2, '0');
+
+    const timeString = `${hoursString}:${minutesString}:${secondsString}`;
+    return timeString;
 }

@@ -13,7 +13,6 @@ const cards: Card[] = [
         Text: 'Master Digital Product Design..',
         Questions: 5,
         Checkpoints: 3,
-        Resources: 8,
     },
     {
         id: '2',
@@ -21,7 +20,6 @@ const cards: Card[] = [
         Text: 'Master Digital Product Design..',
         Questions: 5,
         Checkpoints: 3,
-        Resources: 8,
     },
 ];
 

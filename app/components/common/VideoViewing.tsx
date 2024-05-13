@@ -1,0 +1,170 @@
+'use client';
+
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useEffect, useRef, useState } from 'react';
+import ReactPlayer from 'react-player';
+import { useSession } from 'next-auth/react';
+import { timeStringToSeconds } from '@/lib/utils';
+import MovieIcon from '@/app/assets/icons/MovieIcon';
+
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableRow,
+} from '@/app/components/ui/table';
+import VideoQuestion from './VideoQuestion';
+
+export default function VideoViewing({
+    videoURL,
+    thumbnailURL,
+    topics,
+    questions,
+}: {
+    videoURL: string;
+    thumbnailURL: string;
+    topics: { [key: string]: string };
+    questions: {
+        statement: string;
+        options: { [key: string]: string };
+        correctOption: string;
+        correctOptionExplanation: string;
+        popUpTime: string;
+    }[];
+}) {
+    const { data } = useSession();
+    const playerRef = useRef<ReactPlayer>(null);
+    const [playing, setPlaying] = useState(true);
+    const [lastPlayedTime, setLastPlayedTime] = useState<number>(0);
+    const [currentQuestion, setCurrentQuestion] = useState<{
+        statement: string;
+        options: { [key: string]: string };
+        correctOption: string;
+        correctOptionExplanation: string;
+    } | null>(null);
+
+    const topicsArray = Object.entries(topics).map(([popupTime, topic]) => ({
+        popupTime,
+        topic,
+    }));
+
+    const sortedTopics = topicsArray.sort((a, b) => {
+        const popupTimeA = timeStringToSeconds(a.popupTime);
+        const popupTimeB = timeStringToSeconds(b.popupTime);
+        return popupTimeA - popupTimeB;
+    });
+
+    const handlePlayTopic = (popupTime: string) => {
+        if (playerRef.current) {
+            const sec = timeStringToSeconds(popupTime);
+            playerRef.current.seekTo(sec);
+        }
+    };
+
+    const handleVideoProgress = (progress: { playedSeconds: number }) => {
+        const currentPlayedSeconds = progress.playedSeconds;
+        const matchedQuestion = questions.find(
+            (question) =>
+                Math.abs(
+                    currentPlayedSeconds -
+                        timeStringToSeconds(question.popUpTime)
+                ) < 1
+        );
+
+        if (matchedQuestion) {
+            setLastPlayedTime(currentPlayedSeconds + 2);
+            setPlaying(false);
+            setCurrentQuestion(matchedQuestion);
+        }
+    };
+
+    useEffect(() => {
+        if (currentQuestion === null && lastPlayedTime !== null) {
+            setPlaying(true);
+            if (playerRef.current) {
+                playerRef.current.seekTo(lastPlayedTime);
+            }
+        }
+    }, [currentQuestion, lastPlayedTime]);
+
+    const handlePlayAfterQuestion = () => {
+        if (currentQuestion === null && lastPlayedTime !== null) {
+            setPlaying(true);
+            if (playerRef.current) {
+                playerRef.current.seekTo(lastPlayedTime);
+            }
+        }
+    };
+
+    return (
+        <div>
+            {currentQuestion ? (
+                <div>
+                    <VideoQuestion
+                        question={currentQuestion}
+                        setCurrentQuestion={setCurrentQuestion}
+                        setPlaying={setPlaying}
+                        handlePlayAfterQuestion={handlePlayAfterQuestion}
+                    />
+                </div>
+            ) : (
+                <div>
+                    <div className="text-lg flex justify-center">
+                        <ReactPlayer
+                            ref={playerRef}
+                            url={videoURL}
+                            width="800px"
+                            height="450px"
+                            controls
+                            playing={playing}
+                            onProgress={handleVideoProgress}
+                            className="mb-4"
+                        />
+                    </div>
+                    {topicsArray.length > 0 && (
+                        <div className="mt-4 border-2 border-light-gray p-2">
+                            <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                Checkpoints
+                            </h2>
+                            <Table className="text-center">
+                                <TableBody>
+                                    {sortedTopics.map(
+                                        ({ popupTime, topic }, index) => (
+                                            <TableRow key={topic}>
+                                                <TableCell>
+                                                    {index + 1}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <span className="rounded flex gap-x-2 items-center justify-center">
+                                                        <MovieIcon />
+                                                        {topic}
+                                                    </span>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {popupTime}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <button
+                                                        type="button"
+                                                        className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
+                                                        onClick={() =>
+                                                            handlePlayTopic(
+                                                                popupTime
+                                                            )
+                                                        }
+                                                    >
+                                                        Play
+                                                    </button>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
