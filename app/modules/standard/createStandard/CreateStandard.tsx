@@ -313,6 +313,9 @@ function CreateStandard({
                                 if (
                                     allSelectedResources[
                                         allSelectedResources.length - 1
+                                    ] &&
+                                    allSelectedResources[
+                                        allSelectedResources.length - 1
                                     ].some(
                                         (resource) => resource.resourceId === ''
                                     )
