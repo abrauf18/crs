@@ -9,8 +9,6 @@ import {
     ResourceToPath,
     ResourceType,
     convertSpacesToDashes,
-    // resourceTypeToIcon,
-    // resourceTypeToJsxIcon,
 } from '@/lib/utils';
 import {
     TableRow,
@@ -33,16 +31,6 @@ const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-// interface Data {
-//     id: number;
-//     name: string;
-//     duration: string;
-//     question: string;
-// }
-
-// export interface StandardProps {
-//     data: Data[];
-// }
 
 interface Topic {
     name: string;
@@ -52,8 +40,15 @@ interface Topic {
     videoId?: string;
 }
 
-function StandardTable({ topicList }: { topicList: Topic[] }) {
+function StandardTable({
+    topicList,
+    isShownFromTeacher,
+}: {
+    topicList: Topic[];
+    isShownFromTeacher?: boolean;
+}) {
     const router = useRouter();
+    const pathname = usePathname();
     const [step, setStep] = useState(0);
     const [editResourceId, setEditResourceId] = useState('');
     const [isShowEditVideoModal, setIsShowEditVideoModal] = useState(false);
@@ -90,22 +85,28 @@ function StandardTable({ topicList }: { topicList: Topic[] }) {
 
     const viewResource = (
         type: ResourceType,
-        resourceId: string,
+        contentId: string,
         topic: string
     ) => {
+        if (isShownFromTeacher) {
+            return router.push(`${pathname}/${type}/${contentId}`);
+        }
+
         if (type === ResourceType.VIDEO) {
-            return router.push(`/admin/video/${resourceId}`);
+            return router.push(`/admin/video/${contentId}`);
         }
         return router.push(
             `/admin/resources/${convertSpacesToDashes(topic)}/${
                 ResourceToPath[type]
-            }/${resourceId}`
+            }/${contentId}`
         );
     };
 
     return (
         <>
-            <Table className={`text-sm mobile:text-xs ${poppins.className}`}>
+            <Table
+                className={`text-sm mobile:text-xs ${poppins.className} lg:table-fixed`}
+            >
                 <TableBody>
                     {topicList.map((topic, index) => (
                         <TableRow key={topic.resourceId}>
@@ -143,7 +144,7 @@ function StandardTable({ topicList }: { topicList: Topic[] }) {
                                         width={18}
                                         height={18}
                                         onClick={() =>
-                                            topic.topic === ResourceType.VIDEO
+                                            topic.type !== ResourceType.VIDEO
                                                 ? viewResource(
                                                       topic.type,
                                                       topic.resourceId,
@@ -157,26 +158,28 @@ function StandardTable({ topicList }: { topicList: Topic[] }) {
                                         }
                                     />
                                 </div>
-                                <div className="mr-2 rounded-md">
-                                    <EditIcon
-                                        width={28}
-                                        height={28}
-                                        onClick={() => {
-                                            if (topic.type === 'video') {
-                                                handleOpenEditVideoModal(
-                                                    topic.videoId ?? ''
-                                                );
-                                            } else {
-                                                handleOpenEditResourceModal(
-                                                    topic.resourceId,
-                                                    topic.name,
-                                                    topic.type,
-                                                    topic.topic
-                                                );
-                                            }
-                                        }}
-                                    />
-                                </div>
+                                {!isShownFromTeacher && (
+                                    <div className="mr-2 rounded-md">
+                                        <EditIcon
+                                            width={28}
+                                            height={28}
+                                            onClick={() => {
+                                                if (topic.type === 'video') {
+                                                    handleOpenEditVideoModal(
+                                                        topic.videoId ?? ''
+                                                    );
+                                                } else {
+                                                    handleOpenEditResourceModal(
+                                                        topic.resourceId,
+                                                        topic.name,
+                                                        topic.type,
+                                                        topic.topic
+                                                    );
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}
