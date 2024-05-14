@@ -93,3 +93,26 @@ export const getAllSummarizedStandardsAPI = async ({
 
     return result;
 };
+
+export const getSummarizedStandardAPI = async ({
+    accessToken,
+    standardId,
+}: {
+    accessToken: string;
+    standardId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/getSummarizedStandard`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                standardid: standardId,
+            },
+            next: {
+                tags: ['getSummarizedStandard'],
+            },
+        }
+    );
+
+    return result;
+};
