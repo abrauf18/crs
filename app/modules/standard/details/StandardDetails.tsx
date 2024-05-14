@@ -27,56 +27,16 @@ type StandardDetailsProps = {
     description?: string;
     dailyUploads?: DailyUpload[];
 };
-// const DEFAULT_STANDARD = {
-//     name: '',
-//     description: '',
-//     dailyUploads: [
-//         {
-//             date: '',
-//             topics: [
-//                 {
-//                     resourceId: '',
-//                     type: ResourceType.VIDEO,
-//                 },
-//             ],
-//         },
-//     ],
-// };
-// export const data: Data[] = [
-//     {
-//         id: 1,
-//         name: '3D Printing',
-//         duration: '5:00',
-//         question: '5 questions',
-//     },
-//     {
-//         id: 2,
-//         name: 'Design & Human',
-//         duration: '5:00',
-//         question: '5 questions',
-//     },
-//     {
-//         id: 3,
-//         name: 'Vertual Reality - VR',
-//         duration: '5:00',
-//         question: '5 questions',
-//     },
-// ];
 
 function StandardDetails({
-    params: { id },
+    params,
     isShownFromTeacher,
     name,
     description,
     dailyUploads,
 }: StandardDetailsProps) {
     const [isShowModal, setIsShowModal] = useState(false);
-    // const selectedStandard = standards.find((standard) => standard.id === id);
 
-    // if (!selectedStandard) {
-    //     // Handle the case when no matching standard is found for the given id
-    //     return <p>Standard not found</p>;
-    // }
     const handleOpenModal = () => {
         setIsShowModal(true);
     };
@@ -110,12 +70,16 @@ function StandardDetails({
                 <StandardCard
                     key={dailyUpload.date}
                     dailyUpload={dailyUpload}
+                    isShownFromTeacher
                 />
             ))}
 
             {isShowModal && (
                 <div className="fixed right-0 top-0 z-50  md:w-[60%] lg:w-[30%] w-full">
-                    <AssignCourseModal onClose={handleCloseModal} />
+                    <AssignCourseModal
+                        onClose={handleCloseModal}
+                        standardId={params.id}
+                    />
                 </div>
             )}
         </>
