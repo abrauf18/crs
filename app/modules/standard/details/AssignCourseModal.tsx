@@ -3,7 +3,7 @@
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
-import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { OptionsInterface } from '@/app/components/common/AppDropDown';
 import { Label } from '@/app/components/ui/label';
 import Select from '@/app/components/common/DropDown';
@@ -55,21 +55,11 @@ function AssignCourseModal({
         },
     });
     const {
-        control,
-        handleSubmit,
         formState: { errors },
         watch,
         reset,
         setValue,
     } = methods;
-    // const {
-    //     fields: classFields,
-    //     append: appendClass,
-    //     remove: removeClass,
-    // } = useFieldArray<FormValues>({
-    //     control,
-    //     name: 'selectedClasses',
-    // });
 
     const onSubmit = async (formData: FormValues) => {
         const payload = {
@@ -104,7 +94,6 @@ function AssignCourseModal({
             setButtonLoading(false);
             onClose();
         }
-        console.log(payload);
     };
 
     useEffect(() => {
@@ -164,8 +153,6 @@ function AssignCourseModal({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    // console.log('classFields', classFields);
-    console.log('watched fields', watch('selectedClasses'));
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
             {modalLoading ? (
