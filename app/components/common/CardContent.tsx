@@ -18,7 +18,7 @@ interface CardContentProps {
     Icons: IconProps;
     isModal?: boolean;
     isHideEditIcon?: boolean;
-    moveToLink?: boolean;
+    isFromStandard?: boolean;
     isShownFromStudent?: boolean;
     handleOpenEditModal?: (id: string) => void;
 }
@@ -34,7 +34,7 @@ function CardContent({
     isModal,
     isHideEditIcon,
     isShownFromStudent,
-    moveToLink,
+    isFromStandard,
     handleOpenEditModal,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
@@ -80,7 +80,7 @@ function CardContent({
                         <div className="bg-orange-100 p-2 rounded-md cursor-pointer">
                             <Link
                                 href={
-                                    moveToLink && route && id
+                                    isFromStandard && route && id
                                         ? `${route}/edit/${id}`
                                         : '#'
                                 }

@@ -153,7 +153,7 @@ function Standard({
                             third={`Course Length (${standard.courseLength})`}
                             Icons={Icons}
                             isHideEditIcon={isShownFromTeacher}
-                            moveToLink
+                            isFromStandard
                         />
                     </div>
                 ))}
