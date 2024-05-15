@@ -117,20 +117,29 @@ function StandardTable({
                             </TableCell>
                             <TableCell className="flex items-start gap-2 ">
                                 {topic.type?.toLowerCase() === 'slideshow' && (
-                                    <PptIcon fill="#1ebeff" />
+                                    <PptIcon
+                                        fill="#1ebeff"
+                                        className="shrink-0"
+                                    />
                                 )}
                                 {topic.type?.toLowerCase() === 'video' && (
-                                    <RecorderIcon />
+                                    <RecorderIcon className="shrink-0" />
                                 )}
                                 {topic.type?.toLowerCase() === 'worksheet' && (
-                                    <XlsIcon color="#54C3F4" />
+                                    <XlsIcon
+                                        color="#54C3F4"
+                                        className="shrink-0"
+                                    />
                                 )}
                                 {topic.type?.toLowerCase() ===
                                     'exit-ticket-test' && (
-                                    <TicketIcon color="#54C3F4" />
+                                    <TicketIcon
+                                        color="#54C3F4"
+                                        className="shrink-0"
+                                    />
                                 )}
                                 {topic.type?.toLowerCase() === 'quiz' && (
-                                    <QuestionMarkIcon />
+                                    <QuestionMarkIcon className="shrink-0" />
                                 )}
                                 {topic.name}
                             </TableCell>
