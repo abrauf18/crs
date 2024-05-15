@@ -24,10 +24,10 @@ function Select({
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedOption = options.find(
-            (option) => option.label === event.target.value
+            (option) => option?.label === event?.target?.value
         );
         if (selectedOption && handleClick) {
-            handleClick(selectedOption.label, selectedOption.value);
+            handleClick(selectedOption?.label, selectedOption?.value);
         }
     };
 
@@ -41,12 +41,12 @@ function Select({
                     handleChange(event)
                 }
             >
-                {options.map((option) => (
+                {options?.map((option) => (
                     <option
                         key={option.label}
                         value={option.label}
                         selected={
-                            option.value.toLowerCase() ===
+                            option?.value?.toLowerCase() ===
                             selectedOption?.toLowerCase()
                         }
                     >
