@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { File } from 'lucide-react';
 import { ResourceType } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
 import StandardCard from '@/app/modules/standard/StandardCard';
-import { standards } from '../Standard';
 import AssignCourseModal from './AssignCourseModal';
 
 interface Topic {
@@ -35,6 +35,7 @@ function StandardDetails({
     description,
     dailyUploads,
 }: StandardDetailsProps) {
+    const { data } = useSession();
     const [isShowModal, setIsShowModal] = useState(false);
 
     const handleOpenModal = () => {
@@ -77,6 +78,7 @@ function StandardDetails({
             {isShowModal && (
                 <div className="fixed right-0 top-0 z-50  md:w-[60%] lg:w-[30%] w-full">
                     <AssignCourseModal
+                        data={data!}
                         onClose={handleCloseModal}
                         standardId={params.id}
                     />

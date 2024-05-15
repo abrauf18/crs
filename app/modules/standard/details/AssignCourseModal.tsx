@@ -1,7 +1,7 @@
 'use client';
 
+import { Session } from 'next-auth';
 import { toast } from 'react-toastify';
-import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { FileVideoIcon, X } from 'lucide-react';
@@ -28,13 +28,14 @@ interface FormValues {
 }
 
 function AssignCourseModal({
+    data,
     onClose,
     standardId,
 }: {
+    data: Session | null;
     onClose: () => void;
     standardId: string;
 }) {
-    const { data } = useSession();
     const [buttonLoading, setButtonLoading] = useState(false);
     const [modalLoading, setModalLoading] = useState<boolean>(true);
     const [standardSummary, setStandardSummary] = useState<{
@@ -130,6 +131,7 @@ function AssignCourseModal({
 
                 const teacherAPIdata = await getAllClassroomsOfTeacherAPI({
                     accessToken: data.user.accessToken,
+                    teacherId: data.user.id,
                 });
                 if (!teacherAPIdata.ok) {
                     const errorData = await teacherAPIdata.json();
