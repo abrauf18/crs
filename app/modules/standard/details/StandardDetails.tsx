@@ -71,7 +71,7 @@ function StandardDetails({
                 <StandardCard
                     key={dailyUpload.date}
                     dailyUpload={dailyUpload}
-                    isShownFromTeacher
+                    isShownFromTeacher={isShownFromTeacher}
                 />
             ))}
 
