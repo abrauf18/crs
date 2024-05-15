@@ -138,7 +138,7 @@ function StandardTable({
                                 {topic.type}
                             </TableCell>
                             <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
-                                <div className="mr-2 bg-light-orange rounded-md p-1">
+                                <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
                                     <Eye
                                         color="#F59A3B"
                                         width={18}
@@ -159,7 +159,7 @@ function StandardTable({
                                     />
                                 </div>
                                 {!isShownFromTeacher && (
-                                    <div className="mr-2 rounded-md">
+                                    <div className="mr-2 rounded-md cursor-pointer">
                                         <EditIcon
                                             width={28}
                                             height={28}
