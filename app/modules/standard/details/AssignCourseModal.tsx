@@ -83,6 +83,7 @@ function AssignCourseModal({
                     (classItem: any) => classItem.label
                 ),
             });
+
             if (response.status !== 200) {
                 toast.error(
                     response?.data?.message ||
@@ -90,14 +91,14 @@ function AssignCourseModal({
                 );
             }
             toast.success('Standard assigned successfully');
+            onClose();
         } catch (error: any) {
             toast.error(
-                error.message ||
+                error?.response?.data?.message ||
                     'An error occurred while assigning standard to class'
             );
         } finally {
             setButtonLoading(false);
-            onClose();
         }
     };
 
