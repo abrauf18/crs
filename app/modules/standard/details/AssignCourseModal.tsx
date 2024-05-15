@@ -188,143 +188,151 @@ function AssignCourseModal({
                                         standardSummary.totalNonVideoUploads
                                     }
                                 />
-                                <div className="my-3 w-full">
-                                    <Label htmlFor="password ">
-                                        Select Class To Assign
-                                    </Label>
-                                    {watch('selectedClasses').map(
-                                        (
-                                            classItem: selectedClass,
-                                            index: number
-                                        ) => (
-                                            <div
-                                                // eslint-disable-next-line react/no-array-index-key
-                                                key={`selectedClasses.${index}`}
-                                            >
-                                                <div className="flex gap-1">
-                                                    <div className="mt-4 grow">
-                                                        <Select
-                                                            additionalClasses="!w-full"
-                                                            name={`selectedClasses.${index}.label`}
-                                                            options={
-                                                                gradeOptions
-                                                            }
-                                                            // eslint-disable-next-line prettier/prettier
-                                                        selectedOption={classItem?.value}
-                                                            handleClick={(
-                                                                label,
-                                                                value
-                                                            ) => {
-                                                                setValue(
-                                                                    `selectedClasses.${index}.value`,
+                                <div className="h-96 overflow-y-scroll">
+                                    <div className="my-3 w-full">
+                                        <Label htmlFor="password ">
+                                            Select Class To Assign
+                                        </Label>
+                                        {watch('selectedClasses').map(
+                                            (
+                                                classItem: selectedClass,
+                                                index: number
+                                            ) => (
+                                                <div
+                                                    // eslint-disable-next-line react/no-array-index-key
+                                                    key={`selectedClasses.${index}`}
+                                                >
+                                                    <div className="flex gap-1">
+                                                        <div className="mt-4 grow">
+                                                            <Select
+                                                                additionalClasses="!w-full"
+                                                                name={`selectedClasses.${index}.label`}
+                                                                options={
+                                                                    gradeOptions
+                                                                }
+                                                                // eslint-disable-next-line prettier/prettier
+                                                                selectedOption={
+                                                                    classItem?.value
+                                                                }
+                                                                handleClick={(
+                                                                    label,
                                                                     value
-                                                                );
-                                                            }}
-                                                            rules={{
-                                                                validate: (
-                                                                    currentLabel: string
                                                                 ) => {
-                                                                    const selectedLabels =
-                                                                        watch(
-                                                                            'selectedClasses'
-                                                                        ).map(
-                                                                            (
-                                                                                item: selectedClass
-                                                                            ) =>
-                                                                                item.label
-                                                                        );
-                                                                    // Remove the current label from the array of selected labels
-                                                                    const previousLabels =
-                                                                        selectedLabels.slice(
-                                                                            0,
-                                                                            index
-                                                                        );
-                                                                    // Check if the current label was selected before
-                                                                    return (
-                                                                        !previousLabels.includes(
-                                                                            currentLabel
-                                                                        ) ||
-                                                                        'This value has been selected before'
+                                                                    setValue(
+                                                                        `selectedClasses.${index}.value`,
+                                                                        value
                                                                     );
-                                                                },
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <button
-                                                        className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white"
-                                                        type="button"
-                                                        onClick={() => {
-                                                            const currentClasses =
-                                                                watch(
+                                                                }}
+                                                                rules={{
+                                                                    validate: (
+                                                                        currentLabel: string
+                                                                    ) => {
+                                                                        const selectedLabels =
+                                                                            watch(
+                                                                                'selectedClasses'
+                                                                            ).map(
+                                                                                (
+                                                                                    item: selectedClass
+                                                                                ) =>
+                                                                                    item.label
+                                                                            );
+                                                                        // Remove the current label from the array of selected labels
+                                                                        const previousLabels =
+                                                                            selectedLabels.slice(
+                                                                                0,
+                                                                                index
+                                                                            );
+                                                                        // Check if the current label was selected before
+                                                                        return (
+                                                                            !previousLabels.includes(
+                                                                                currentLabel
+                                                                            ) ||
+                                                                            'This value has been selected before'
+                                                                        );
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white"
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const currentClasses =
+                                                                    watch(
+                                                                        'selectedClasses'
+                                                                    );
+                                                                const updatedClasses =
+                                                                    currentClasses.filter(
+                                                                        (
+                                                                            currentClass: selectedClass,
+                                                                            idx: number
+                                                                        ) =>
+                                                                            idx !==
+                                                                            index
+                                                                    );
+                                                                setValue(
+                                                                    'selectedClasses',
+                                                                    updatedClasses
+                                                                );
+                                                                trigger(
                                                                     'selectedClasses'
                                                                 );
-                                                            const updatedClasses =
-                                                                currentClasses.filter(
-                                                                    (
-                                                                        currentClass: selectedClass,
-                                                                        idx: number
-                                                                    ) =>
-                                                                        idx !==
-                                                                        index
-                                                                );
-                                                            setValue(
-                                                                'selectedClasses',
-                                                                updatedClasses
-                                                            );
-                                                            trigger(
-                                                                'selectedClasses'
-                                                            );
-                                                        }}
-                                                    >
-                                                        remove
-                                                    </button>
-                                                </div>
-                                                <div className="mt-2">
-                                                    <span className="text-red-500 text-xs mt-2">
-                                                        <ErrorMessage
-                                                            errors={errors}
-                                                            name={`selectedClasses.${index}.label`}
-                                                            render={({
-                                                                message,
-                                                            }) => (
-                                                                <p className="flex items-center">
-                                                                    <X
-                                                                        size={
-                                                                            20
+                                                            }}
+                                                        >
+                                                            remove
+                                                        </button>
+                                                    </div>
+                                                    <div className="mt-2">
+                                                        <span className="text-red-500 text-xs mt-2">
+                                                            <ErrorMessage
+                                                                errors={errors}
+                                                                name={`selectedClasses.${index}.label`}
+                                                                render={({
+                                                                    message,
+                                                                }) => (
+                                                                    <p className="flex items-center">
+                                                                        <X
+                                                                            size={
+                                                                                20
+                                                                            }
+                                                                            color="#E6500D"
+                                                                        />
+                                                                        {
+                                                                            message
                                                                         }
-                                                                        color="#E6500D"
-                                                                    />
-                                                                    {message}
-                                                                </p>
-                                                            )}
-                                                        />
-                                                    </span>
+                                                                    </p>
+                                                                )}
+                                                            />
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
+                                            )
+                                        )}
+                                    </div>
+                                    {filteredGradeOptions.length > 0 && (
+                                        <div className="flex justify-end">
+                                            <p
+                                                className="text-dark-gray text-base cursor-pointer"
+                                                onClick={() => {
+                                                    const currentClasses =
+                                                        watch(
+                                                            'selectedClasses'
+                                                        );
+                                                    const updatedClasses = [
+                                                        ...currentClasses,
+                                                        filteredGradeOptions[0],
+                                                    ];
+                                                    setValue(
+                                                        'selectedClasses',
+                                                        updatedClasses
+                                                    );
+                                                }}
+                                            >
+                                                Add More
+                                            </p>
+                                        </div>
                                     )}
                                 </div>
-                                {filteredGradeOptions.length > 0 && (
-                                    <div className="flex justify-end">
-                                        <p
-                                            className="text-dark-gray text-base cursor-pointer"
-                                            onClick={() => {
-                                                const currentClasses =
-                                                    watch('selectedClasses');
-                                                const updatedClasses = [
-                                                    ...currentClasses,
-                                                    filteredGradeOptions[0],
-                                                ];
-                                                setValue(
-                                                    'selectedClasses',
-                                                    updatedClasses
-                                                );
-                                            }}
-                                        >
-                                            Add More
-                                        </p>
-                                    </div>
-                                )}
                             </div>
                         </div>
                         <ModalFooter text="Assign" loading={buttonLoading} />
