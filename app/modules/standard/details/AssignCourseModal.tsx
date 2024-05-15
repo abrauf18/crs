@@ -58,6 +58,7 @@ function AssignCourseModal({
     });
     const {
         formState: { errors },
+        trigger,
         watch,
         reset,
         setValue,
@@ -267,6 +268,9 @@ function AssignCourseModal({
                                                             setValue(
                                                                 'selectedClasses',
                                                                 updatedClasses
+                                                            );
+                                                            trigger(
+                                                                'selectedClasses'
                                                             );
                                                         }}
                                                     >
