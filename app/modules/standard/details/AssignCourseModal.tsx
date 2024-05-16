@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { FileVideoIcon, X } from 'lucide-react';
+import action from '@/app/action';
 import { OptionsInterface } from '@/app/components/common/AppDropDown';
 import { ErrorMessage } from '@hookform/error-message';
 import { Label } from '@/app/components/ui/label';
@@ -90,6 +91,7 @@ function AssignCourseModal({
                         'An error occurred while assigning standard to class'
                 );
             }
+            action('getTeacherDashboardStandardsOverview');
             toast.success('Standard assigned successfully');
             onClose();
         } catch (error: any) {
