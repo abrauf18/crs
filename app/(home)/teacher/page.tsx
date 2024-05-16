@@ -17,23 +17,22 @@ export default async function Home() {
 
     if (data) {
         try {
-            const classOverviewResponse = await getTeacherDashboardSummariesAPI(
-                {
+            const teacherDashboardResponse =
+                await getTeacherDashboardSummariesAPI({
                     accessToken: data.user.accessToken,
                     teacherId: data.user.id,
-                }
-            );
+                });
 
             const standardOverviewResponse = await getClassesAndCoursesAPI({
                 accessToken: data.user.accessToken,
                 teacherId: data.user.id,
             });
 
-            const classOverviewData = await classOverviewResponse.json();
+            const classesStandardsData = await teacherDashboardResponse.json();
             const standardOverviewData = await standardOverviewResponse.json();
 
-            if (!classOverviewResponse.ok) {
-                throw new Error(classOverviewData?.message);
+            if (!teacherDashboardResponse.ok) {
+                throw new Error(classesStandardsData?.message);
             }
             if (!standardOverviewResponse.ok) {
                 throw new Error(standardOverviewData?.message);
@@ -43,9 +42,10 @@ export default async function Home() {
                 <Dashboard
                     isTeacher
                     TeacherSummaries={{
-                        totalStudents: classOverviewData?.data?.totalStudents,
+                        totalStudents:
+                            classesStandardsData?.data?.totalStudents,
                         totalClassrooms:
-                            classOverviewData?.data?.totalClassrooms,
+                            classesStandardsData?.data?.totalClassrooms,
                         OverallPerformance: 100,
                     }}
                     StandardOverview={standardOverviewData?.data}
