@@ -91,7 +91,7 @@ function AssignCourseModal({
                         'An error occurred while assigning standard to class'
                 );
             }
-            action('getTeacherDashboardStandardsOverview');
+            action('getClassesAndCourses');
             toast.success('Standard assigned successfully');
             onClose();
         } catch (error: any) {

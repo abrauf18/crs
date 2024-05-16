@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'react-toastify';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { useSession } from 'next-auth/react';
@@ -15,8 +16,7 @@ import {
 } from '@/app/components/ui/table';
 import action from '@/app/action';
 import { LearningInterface } from '@/lib/utils';
-import { deleteClassCourseAPI } from '@/app/api/dashboard';
-import { toast } from 'react-toastify';
+import { deleteClassCourseAPI } from '@/app/api/classroom';
 
 interface LearningPlanProp {
     learnings: LearningInterface[];
@@ -32,25 +32,13 @@ function LearningPlanTable({ learnings, fontSize }: LearningPlanProp) {
     const { push } = useRouter();
     const { data } = useSession();
 
-    // const handleViewClick = (
-    //     event: React.MouseEvent<HTMLTableCellElement, MouseEvent>
-    // ) => {
-    //     const topicName = event.currentTarget.textContent;
-
-    //     if (topicName) {
-    //         const formattedTopicName = convertSpacesToDashes(topicName);
-    //         const newPath = `${path}/${formattedTopicName.toLowerCase()}`;
-    //         push(newPath);
-    //     }
-    // };
-
     const handleDeleteClassStandard = async (classStandardId: string) => {
         try {
             await deleteClassCourseAPI({
                 accessToken: data?.user.accessToken || '',
                 classroomCourseId: classStandardId,
             });
-            action('getTeacherDashboardStandardsOverview');
+            action('getClassesAndCourses');
             toast.success('Standard removed from class successfully.');
         } catch (error: any) {
             toast.error(

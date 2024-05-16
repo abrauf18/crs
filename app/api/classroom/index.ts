@@ -43,3 +43,46 @@ export const assignStandardToClassroomsAPI = async ({
 
     return response;
 };
+
+export const getClassesAndCoursesAPI = async ({
+    accessToken,
+    teacherId,
+}: {
+    accessToken: string;
+    teacherId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/getClassesAndCourses`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                teacherid: teacherId,
+            },
+            next: {
+                tags: ['getClassesAndCourses'],
+            },
+        }
+    );
+
+    return result;
+};
+
+export const deleteClassCourseAPI = async ({
+    accessToken,
+    classroomCourseId,
+}: {
+    accessToken: string;
+    classroomCourseId: string;
+}) => {
+    const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/deleteClassCourse`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                classroomcourseid: classroomCourseId,
+            },
+        }
+    );
+
+    return response;
+};
