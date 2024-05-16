@@ -78,7 +78,7 @@ function StandardDetails({
             {isShowModal && (
                 <div className="fixed right-0 top-0 z-50  md:w-[60%] lg:w-[30%] w-full">
                     <AssignCourseModal
-                        data={data!}
+                        data={data}
                         onClose={handleCloseModal}
                         standardId={params.id}
                     />

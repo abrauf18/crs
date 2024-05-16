@@ -38,7 +38,7 @@ function AssignCourseModal({
     standardId: string;
 }) {
     const [buttonLoading, setButtonLoading] = useState(false);
-    const [modalLoading, setModalLoading] = useState<boolean>(true);
+    const [modalLoading, setModalLoading] = useState<boolean>(false);
     const [standardSummary, setStandardSummary] = useState<{
         name: string;
         courseLength: string;
@@ -59,11 +59,13 @@ function AssignCourseModal({
         },
     });
     const {
-        formState: { errors },
+        formState: { errors, isValid },
         trigger,
         watch,
         reset,
         setValue,
+        setError,
+        clearErrors,
     } = methods;
     const watchedSelectedClasses = watch('selectedClasses');
     const selectedGradeOptions = watchedSelectedClasses?.map(
@@ -74,8 +76,31 @@ function AssignCourseModal({
             !selectedGradeOptions.includes(classItem?.label)
     );
 
+    const checkIfSelectedOptionPreExists = (
+        index: number,
+        currentLabel: string
+    ) => {
+        const selectedLabels = watch('selectedClasses').map(
+            (item: selectedClass) => item.label
+        );
+        const previousLabels = selectedLabels.slice(0, index);
+
+        if (!previousLabels.includes(currentLabel)) {
+            clearErrors(`selectedClasses.${index}.label`);
+        } else {
+            setError(`selectedClasses.${index}.label`, {
+                type: 'alreadySelected',
+                message: 'This value has been selected before',
+            });
+        }
+        return (
+            !previousLabels.includes(currentLabel) ||
+            'This value has been selected before'
+        );
+    };
     const onSubmit = async (formData: FormValues) => {
         try {
+            trigger('selectedClasses');
             setButtonLoading(true);
             const response = await assignStandardToClassroomsAPI({
                 accessToken: data?.user?.accessToken || '',
@@ -105,7 +130,7 @@ function AssignCourseModal({
     };
 
     useEffect(() => {
-        if (!data) {
+        if (!data || standardSummary.name.length) {
             return;
         }
         const getData = async () => {
@@ -160,7 +185,11 @@ function AssignCourseModal({
 
         getData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [data]);
+
+    if (!data) {
+        return null;
+    }
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg">
@@ -221,6 +250,10 @@ function AssignCourseModal({
                                                                     label,
                                                                     value
                                                                 ) => {
+                                                                    checkIfSelectedOptionPreExists(
+                                                                        index,
+                                                                        label
+                                                                    );
                                                                     setValue(
                                                                         `selectedClasses.${index}.value`,
                                                                         value
@@ -338,7 +371,11 @@ function AssignCourseModal({
                                 </div>
                             </div>
                         </div>
-                        <ModalFooter text="Assign" loading={buttonLoading} />
+                        <ModalFooter
+                            text="Assign"
+                            loading={buttonLoading}
+                            disabled={!isValid}
+                        />
                     </form>
                 </FormProvider>
             )}
