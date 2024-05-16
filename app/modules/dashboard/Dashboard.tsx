@@ -20,12 +20,18 @@ import LearningPlanTable from './LearningPlanTable';
 
 function Dashboard({
     isTeacher,
+    AdminSummaries,
     UserAPIData,
     ResourceAPIData,
     TeacherSummaries,
     StandardOverview,
 }: {
     isTeacher?: boolean;
+    AdminSummaries?: {
+        usersCount: number;
+        videosCount: number;
+        resourcesCount: number;
+    };
     UserAPIData?: { users: User[]; totalUsers: number; totalPages: number };
     ResourceAPIData?: {
         resources: Resource[];
@@ -56,14 +62,14 @@ function Dashboard({
                         <Card
                             Icon={UserIcon}
                             cardText="Total Users"
-                            count="20K"
+                            count={AdminSummaries?.usersCount ?? 0}
                             currentPath="/admin/users"
                             iconBackgroundColour="bg-indigo-100"
                         />
                         <Card
                             Icon={SlideShowIcon}
                             cardText="Video Uploads"
-                            count={200}
+                            count={AdminSummaries?.videosCount ?? 0}
                             currentPath="/admin/video"
                             iconBackgroundColour="bg-cyan-200"
                             iconViewBox="-7 1 37 22"
@@ -72,7 +78,7 @@ function Dashboard({
                         <Card
                             Icon={ResourceIcon}
                             cardText="Total Resources"
-                            count={150}
+                            count={AdminSummaries?.resourcesCount ?? 0}
                             currentPath="/admin/resources"
                             iconBackgroundColour="bg-amber-100"
                             iconViewBox="-7 1 37 22"

@@ -20,3 +20,23 @@ export const getTeacherDashboardSummariesAPI = async ({
 
     return result;
 };
+
+export const getAdminDashboardSummariesAPI = async ({
+    accessToken,
+}: {
+    accessToken: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/getAdminDashboardSummaries`,
+        {
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getAdminDashboardSummaries'],
+            },
+        }
+    );
+
+    return result;
+};
