@@ -15,7 +15,7 @@ import {
 } from '@/app/components/ui/table';
 import action from '@/app/action';
 import { LearningInterface } from '@/lib/utils';
-import { deleteClassCourseAPI } from '@/app/api/classroom';
+import { deleteClassCourseAPI } from '@/app/api/dashboard';
 import { toast } from 'react-toastify';
 
 interface LearningPlanProp {

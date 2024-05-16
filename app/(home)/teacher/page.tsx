@@ -6,7 +6,7 @@ import { options } from '@/app/api/auth/[...nextauth]/options';
 import {
     getTeacherDashboardClassroomsOverviewAPI,
     getTeacherDashboardStandardsOverviewAPI,
-} from '@/app/api/classroom';
+} from '@/app/api/dashboard';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 
 export const metadata: Metadata = {
