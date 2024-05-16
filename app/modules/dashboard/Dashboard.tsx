@@ -8,7 +8,7 @@ import UserIcon from '@/app/assets/icons/UserIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import graph from '@/app/assets/images/graph.svg';
-import { Resource } from '@/lib/utils';
+import { Resource, LearningInterface } from '@/lib/utils';
 import UsersTable, { User } from '../users/UsersTable';
 import ResourcesTable from '../resources/ResourcesTable';
 import Filters from '../../components/common/Filters';
@@ -16,64 +16,14 @@ import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
 import StudentsInfoTable from '../students/StudentsInfoTable';
 import { Studentinfo } from '../students/students';
-
-import LearningPlanTable, { LearningInterface } from './LearningPlanTable';
-
-export const learningPlans: LearningInterface[] = [
-    {
-        id: 1,
-        name: 'XYZ Resources',
-        grade: '5th grade',
-        topic: 'Topic xyz',
-    },
-    {
-        id: 2,
-        name: 'XYZ Resources',
-        grade: '5th grade',
-        topic: 'Topic 2',
-    },
-    {
-        id: 3,
-        name: 'XYZ Resources',
-        grade: '6th Grade',
-        topic: 'Topic 2',
-    },
-    {
-        id: 4,
-        name: 'XYZ Resources',
-        grade: '6th Grade',
-        topic: 'Topic 2',
-    },
-    {
-        id: 5,
-        name: 'XYZ Resources',
-        grade: '10th Grade',
-        topic: 'Topic 3',
-    },
-    {
-        id: 6,
-        name: 'XYZ Resources',
-        grade: '2nd Grade',
-        topic: 'Topic 3',
-    },
-    {
-        id: 7,
-        name: 'XYZ Resources',
-        grade: '2nd Grade',
-        topic: 'Topic 3',
-    },
-    {
-        id: 8,
-        name: 'XYZ Resources',
-        grade: '2nd Grade',
-        topic: 'Topic 3',
-    },
-];
+import LearningPlanTable from './LearningPlanTable';
 
 function Dashboard({
     isTeacher,
     UserAPIData,
     ResourceAPIData,
+    TeacherSummaries,
+    StandardOverview,
 }: {
     isTeacher?: boolean;
     UserAPIData?: { users: User[]; totalUsers: number; totalPages: number };
@@ -82,6 +32,12 @@ function Dashboard({
         totalResources: number;
         totalPages: number;
     };
+    TeacherSummaries?: {
+        totalStudents: number;
+        totalClassrooms: number;
+        OverallPerformance: number;
+    };
+    StandardOverview?: LearningInterface[];
 }) {
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
@@ -134,14 +90,14 @@ function Dashboard({
                         <Card
                             Icon={UserIcon}
                             cardText="Total Students"
-                            count="20K"
+                            count={TeacherSummaries?.totalStudents ?? 0}
                             currentPath="/teacher/students"
                             iconBackgroundColour="bg-indigo-100"
                         />
                         <Card
                             Icon={SlideShowIcon}
                             cardText="Your Assigned Classroom"
-                            count={200}
+                            count={TeacherSummaries?.totalClassrooms ?? 0}
                             currentPath="/teacher/classroom"
                             iconBackgroundColour="bg-cyan-200"
                             iconViewBox="-7 1 37 22"
@@ -151,7 +107,9 @@ function Dashboard({
                         <Card
                             Icon={DataIcon}
                             cardText="Overall Performance"
-                            count="70%"
+                            count={`${
+                                TeacherSummaries?.OverallPerformance ?? 0
+                            }%`}
                             currentPath="#"
                             iconBackgroundColour="bg-orange-100"
                         />
@@ -202,7 +160,7 @@ function Dashboard({
                             Learning Plan
                         </h1>
                         <LearningPlanTable
-                            learnings={learningPlans}
+                            learnings={StandardOverview ?? []}
                             fontSize="12"
                         />
                     </div>

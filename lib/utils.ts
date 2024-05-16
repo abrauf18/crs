@@ -195,3 +195,10 @@ export const secondsToString = (seconds: number) => {
     const timeString = `${hoursString}:${minutesString}:${secondsString}`;
     return timeString;
 }
+
+export interface LearningInterface {
+    id: string;
+    className: string;
+    standardName: string;
+    standardId: string;
+}
