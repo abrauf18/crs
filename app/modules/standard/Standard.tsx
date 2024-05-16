@@ -133,6 +133,7 @@ function Standard({
                 }
                 handleClick={() => handleClick()}
                 isHideFirstBtn={isShownFromTeacher}
+                isHideSecondBtn={isShownFromTeacher}
             />
             <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
                 {allStandards?.map((standard, index) => (
