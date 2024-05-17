@@ -277,6 +277,22 @@ function AssignCourseModal({
                                                                                 0,
                                                                                 index
                                                                             );
+                                                                        const selectedGradeOption =
+                                                                            gradeOptions.find(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.label ===
+                                                                                    currentLabel
+                                                                            );
+                                                                        if (
+                                                                            selectedGradeOption
+                                                                        ) {
+                                                                            setValue(
+                                                                                `selectedClasses.${index}.value`,
+                                                                                selectedGradeOption.value
+                                                                            );
+                                                                        }
                                                                         return (
                                                                             !previousLabels.includes(
                                                                                 currentLabel
