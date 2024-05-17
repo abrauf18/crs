@@ -64,8 +64,8 @@ function AssignCourseModal({
         watch,
         reset,
         setValue,
-        setError,
-        clearErrors,
+        // setError,
+        // clearErrors,
     } = methods;
     const watchedSelectedClasses = watch('selectedClasses');
     const selectedGradeOptions = watchedSelectedClasses?.map(
@@ -76,28 +76,28 @@ function AssignCourseModal({
             !selectedGradeOptions.includes(classItem?.label)
     );
 
-    const checkIfSelectedOptionPreExists = (
-        index: number,
-        currentLabel: string
-    ) => {
-        const selectedLabels = watch('selectedClasses').map(
-            (item: selectedClass) => item.label
-        );
-        const previousLabels = selectedLabels.slice(0, index);
+    // const checkIfSelectedOptionPreExists = (
+    //     index: number,
+    //     currentLabel: string
+    // ) => {
+    //     const selectedLabels = watch('selectedClasses').map(
+    //         (item: selectedClass) => item.label
+    //     );
+    //     const previousLabels = selectedLabels.slice(0, index);
 
-        if (!previousLabels.includes(currentLabel)) {
-            clearErrors(`selectedClasses.${index}.label`);
-        } else {
-            setError(`selectedClasses.${index}.label`, {
-                type: 'alreadySelected',
-                message: 'This value has been selected before',
-            });
-        }
-        return (
-            !previousLabels.includes(currentLabel) ||
-            'This value has been selected before'
-        );
-    };
+    //     if (!previousLabels.includes(currentLabel)) {
+    //         clearErrors(`selectedClasses.${index}.label`);
+    //     } else {
+    //         setError(`selectedClasses.${index}.label`, {
+    //             type: 'alreadySelected',
+    //             message: 'This value has been selected before',
+    //         });
+    //     }
+    //     return (
+    //         !previousLabels.includes(currentLabel) ||
+    //         'This value has been selected before'
+    //     );
+    // };
     const onSubmit = async (formData: FormValues) => {
         try {
             trigger('selectedClasses');
@@ -106,7 +106,7 @@ function AssignCourseModal({
                 accessToken: data?.user?.accessToken || '',
                 standardId,
                 classroomIds: formData.selectedClasses.map(
-                    (classItem: any) => classItem.label
+                    (classItem: any) => classItem?.label
                 ),
             });
 
@@ -246,19 +246,19 @@ function AssignCourseModal({
                                                                 selectedOption={
                                                                     classItem?.value
                                                                 }
-                                                                handleClick={(
-                                                                    label,
-                                                                    value
-                                                                ) => {
-                                                                    checkIfSelectedOptionPreExists(
-                                                                        index,
-                                                                        label
-                                                                    );
-                                                                    setValue(
-                                                                        `selectedClasses.${index}.value`,
-                                                                        value
-                                                                    );
-                                                                }}
+                                                                // handleClick={(
+                                                                //     label,
+                                                                //     value
+                                                                // ) => {
+                                                                //     checkIfSelectedOptionPreExists(
+                                                                //         index,
+                                                                //         label
+                                                                //     );
+                                                                //     setValue(
+                                                                //         `selectedClasses.${index}.value`,
+                                                                //         value
+                                                                //     );
+                                                                // }}
                                                                 rules={{
                                                                     validate: (
                                                                         currentLabel: string
@@ -270,15 +270,13 @@ function AssignCourseModal({
                                                                                 (
                                                                                     item: selectedClass
                                                                                 ) =>
-                                                                                    item.label
+                                                                                    item?.label
                                                                             );
-                                                                        // Remove the current label from the array of selected labels
                                                                         const previousLabels =
                                                                             selectedLabels.slice(
                                                                                 0,
                                                                                 index
                                                                             );
-                                                                        // Check if the current label was selected before
                                                                         return (
                                                                             !previousLabels.includes(
                                                                                 currentLabel
