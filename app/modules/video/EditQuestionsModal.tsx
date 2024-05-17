@@ -119,7 +119,7 @@ function EditQuestionsModal({
                 options: question.type === 'mcq' ? question.options : {},
                 correctOption: question.correctOption,
                 correctOptionExplanation: question.correctOptionExplanation,
-                totalMarks: 0,
+                totalMarks: question.totalMarks,
                 popUpTime: question.popUpTime,
             })
         );
@@ -410,6 +410,7 @@ function EditQuestionsModal({
                                                           >
                                                               <Input
                                                                   type="text"
+                                                                  placeholder="Enter Option Statement"
                                                                   inputValue={
                                                                       question
                                                                           .options[
@@ -522,7 +523,8 @@ function EditQuestionsModal({
                                                     },
                                                 }}
                                                 selectedOption={
-                                                    question.correctOption
+                                                    question.correctOption ||
+                                                    'option1'
                                                 }
                                             />
                                             <span className="text-red-500 text-xs">
@@ -577,6 +579,47 @@ function EditQuestionsModal({
                                             </span>
                                         </div>
                                     )}
+                                    <div className="flex flex-col space-y-1 mt-2">
+                                        <Label
+                                            htmlFor={`video.questions[${index}].totalMarks`}
+                                            className="font-semibold text-md"
+                                        >
+                                            Marks
+                                        </Label>
+                                        <Input
+                                            name={`video.questions[${index}].totalMarks`}
+                                            inputValue={question.totalMarks.toString()}
+                                            placeholder="Enter Question Statement"
+                                            type="number"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                                pattern: {
+                                                    value: /^\d+$/,
+                                                    message:
+                                                        'Enter only numbers',
+                                                },
+                                            }}
+                                        />
+                                        <span className="text-red-500 text-xs">
+                                            <ErrorMessage
+                                                errors={errors}
+                                                name={`video.questions[${index}].totalMarks`}
+                                                render={({ message }) => (
+                                                    <p className="flex items-center">
+                                                        <X
+                                                            size={20}
+                                                            color="#E6500D"
+                                                        />
+                                                        {message}
+                                                    </p>
+                                                )}
+                                            />
+                                        </span>
+                                    </div>
                                     <button
                                         type="button"
                                         onClick={() => removeQuestion(index)}
