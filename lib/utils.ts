@@ -61,7 +61,7 @@ export const ResourceToPath = {
 };
 
 export const PathToResource = {
-    "Total-Video's": ResourceType.VIDEO,
+    "Total-Videos": ResourceType.VIDEO,
     Slideshows: ResourceType.SLIDESHOW,
     Worksheets: ResourceType.WORKSHEET,
     'Exit-Ticket-Test': ResourceType.EXIT_TICKET_TEST,
@@ -90,6 +90,7 @@ export const DEFAULT_RESOURCE = {
     topic: '',
     url: '',
     show: '',
+    videoId: '',
 };
 
 export interface Resource {
@@ -97,8 +98,9 @@ export interface Resource {
     name: string;
     type: ResourceType;
     topic: string;
-    url?: string; // remove ? after completion of CRS to prevent breakages
-    show?: string; // remove ? after completion of CRS to prevent breakages
+    url?: string;
+    show?: string;
+    videoId?: string;
 }
 
 export interface VideoSummary {

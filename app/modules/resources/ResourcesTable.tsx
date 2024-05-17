@@ -22,6 +22,7 @@ import {
     DEFAULT_RESOURCE,
     convertSpacesToDashes,
     ResourceToPath,
+    ResourceType,
 } from '@/lib/utils';
 
 interface ResourcesProp {
@@ -122,7 +123,7 @@ function ResourcesTable({
                 </TableHeader>
                 <TableBody>
                     {resources
-                        .map((resource: any, index: number) => (
+                        .map((resource: Resource, index: number) => (
                             <TableRow className="border-none" key={resource.id}>
                                 <TableCell className="font-medium ">
                                     <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
@@ -159,7 +160,15 @@ function ResourcesTable({
                                             height={18}
                                             onClick={() => {
                                                 if (isDashboard) {
-                                                    push(
+                                                    if (
+                                                        resource.type ===
+                                                        ResourceType.VIDEO
+                                                    ) {
+                                                        return push(
+                                                            `${path}/video/${resource.videoId}`
+                                                        );
+                                                    }
+                                                    return push(
                                                         `${path}/resources/${convertSpacesToDashes(
                                                             resource.topic
                                                         )}/${
@@ -168,17 +177,24 @@ function ResourcesTable({
                                                             ]
                                                         }/${resource.id}`
                                                     );
-                                                } else {
-                                                    push(
-                                                        `${path}/${convertSpacesToDashes(
-                                                            resource.topic
-                                                        )}/${
-                                                            ResourceToPath[
-                                                                resource.type as keyof typeof ResourceToPath
-                                                            ]
-                                                        }/${resource.id}`
+                                                }
+                                                if (
+                                                    resource.type ===
+                                                    ResourceType.VIDEO
+                                                ) {
+                                                    return push(
+                                                        `/admin/video/${resource.videoId}`
                                                     );
                                                 }
+                                                return push(
+                                                    `${path}/${convertSpacesToDashes(
+                                                        resource.topic
+                                                    )}/${
+                                                        ResourceToPath[
+                                                            resource.type as keyof typeof ResourceToPath
+                                                        ]
+                                                    }/${resource.id}`
+                                                );
                                             }}
                                         />
                                     </div>

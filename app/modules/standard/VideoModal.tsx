@@ -42,7 +42,13 @@ function VideoModal({
 }) {
     const { data } = useSession();
     const [allResources, setAllResources] = useState<
-        { id: string; name: string; url: string }[]
+        {
+            id: string;
+            name: string;
+            url: string;
+            type: ResourceType;
+            thumbnail?: string;
+        }[]
     >([]);
     const [resourceCards, setResourceCards] = useState<
         { id: string; Text: string; imageUrl: string }[]
@@ -54,13 +60,28 @@ function VideoModal({
     const [isLoading, setIsLoading] = useState(false);
 
     const convertResourceToCard = (
-        rawResources: { id: string; name: string; url: string }[]
+        rawResources: {
+            id: string;
+            name: string;
+            url: string;
+            type: ResourceType;
+            thumbnail?: string;
+        }[]
     ) => {
-        const transformedData = rawResources.map((resource) => ({
-            id: resource.id,
-            imageUrl: DEFAULT_IMAGE,
-            Text: resource.name,
-        }));
+        const transformedData = rawResources.map((resource) => {
+            if (resource.type === ResourceType.VIDEO) {
+                return {
+                    id: resource.id,
+                    imageUrl: resource.thumbnail!,
+                    Text: resource.name,
+                };
+            }
+            return {
+                id: resource.id,
+                imageUrl: resource.url,
+                Text: resource.name,
+            };
+        });
 
         setResourceCards(transformedData);
     };

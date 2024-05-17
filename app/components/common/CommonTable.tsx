@@ -14,7 +14,7 @@ import DialogBox from '@/app/components/common/DialogBox';
 import RecorderIcon from '@/app/assets/icons/RecorderIcon';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 import UpdateResourceModal from '@/app/modules/resources/UpdateResourceModal';
-import { DEFAULT_RESOURCE, Resource } from '@/lib/utils';
+import { DEFAULT_RESOURCE, Resource, ResourceType } from '@/lib/utils';
 import {
     Table,
     TableHeader,
@@ -135,7 +135,17 @@ function CommonTable({
                                         width={18}
                                         height={18}
                                         onClick={() => {
-                                            push(`${pathname}/${resource.id}`);
+                                            if (
+                                                resource.type ===
+                                                ResourceType.VIDEO
+                                            ) {
+                                                return push(
+                                                    `/admin/video/${resource.videoId}`
+                                                );
+                                            }
+                                            return push(
+                                                `${pathname}/${resource.id}`
+                                            );
                                         }}
                                     />
                                 </div>

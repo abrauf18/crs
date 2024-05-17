@@ -43,7 +43,7 @@ function TopicPage({
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card
                     Icon={VideoIcon}
-                    cardText="Total Video's"
+                    cardText="Total Videos"
                     count={APIdata.videoCount}
                 />
                 <Card
