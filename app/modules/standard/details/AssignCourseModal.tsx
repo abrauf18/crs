@@ -20,12 +20,8 @@ import {
 import { getSummarizedStandardAPI } from '@/app/api/standard';
 import CourseCard from './CourseCard';
 
-interface selectedClass {
-    label: string;
-    value: string;
-}
 interface FormValues {
-    selectedClasses: selectedClass[];
+    selectedClasses: string[];
 }
 
 function AssignCourseModal({
@@ -55,7 +51,7 @@ function AssignCourseModal({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: {
-            selectedClasses: [gradeOptions[0]],
+            selectedClasses: [gradeOptions[0]?.label],
         },
     });
     const {
@@ -67,13 +63,10 @@ function AssignCourseModal({
         // setError,
         // clearErrors,
     } = methods;
-    const watchedSelectedClasses = watch('selectedClasses');
-    const selectedGradeOptions = watchedSelectedClasses?.map(
-        (classItem: selectedClass) => classItem?.label
-    );
+    const selectedGradeIds = watch('selectedClasses');
     const filteredGradeOptions = gradeOptions?.filter(
-        (classItem: selectedClass) =>
-            !selectedGradeOptions.includes(classItem?.label)
+        (classItem: OptionsInterface) =>
+            !selectedGradeIds?.includes(classItem?.label)
     );
 
     // const checkIfSelectedOptionPreExists = (
@@ -105,9 +98,7 @@ function AssignCourseModal({
             const response = await assignStandardToClassroomsAPI({
                 accessToken: data?.user?.accessToken || '',
                 standardId,
-                classroomIds: formData.selectedClasses.map(
-                    (classItem: any) => classItem?.label
-                ),
+                classroomIds: formData?.selectedClasses,
             });
 
             if (response.status !== 200) {
@@ -137,7 +128,7 @@ function AssignCourseModal({
             try {
                 setModalLoading(true);
                 const standardAPIdata = await getSummarizedStandardAPI({
-                    accessToken: data.user.accessToken,
+                    accessToken: data?.user?.accessToken,
                     standardId,
                 });
                 if (!standardAPIdata.ok) {
@@ -158,8 +149,8 @@ function AssignCourseModal({
                 });
 
                 const teacherAPIdata = await getAllClassroomsOfTeacherAPI({
-                    accessToken: data.user.accessToken,
-                    teacherId: data.user.id,
+                    accessToken: data?.user?.accessToken,
+                    teacherId: data?.user?.id,
                 });
                 if (!teacherAPIdata.ok) {
                     const errorData = await teacherAPIdata.json();
@@ -171,11 +162,11 @@ function AssignCourseModal({
                 const teacherResponseData = await teacherAPIdata.json();
                 setGradeOptions(teacherResponseData?.data);
                 reset({
-                    selectedClasses: [teacherResponseData?.data[0]],
+                    selectedClasses: [teacherResponseData?.data[0].label],
                 });
             } catch (error: any) {
                 toast.error(
-                    error.message ??
+                    error?.message ??
                         'An error occurred while fetching teachers classes'
                 );
             } finally {
@@ -225,9 +216,9 @@ function AssignCourseModal({
                                         <Label htmlFor="password ">
                                             Select Class To Assign
                                         </Label>
-                                        {watch('selectedClasses').map(
+                                        {watch('selectedClasses')?.map(
                                             (
-                                                classItem: selectedClass,
+                                                classItem: string,
                                                 index: number
                                             ) => (
                                                 <div
@@ -238,13 +229,13 @@ function AssignCourseModal({
                                                         <div className="mt-4 grow">
                                                             <Select
                                                                 additionalClasses="!w-full"
-                                                                name={`selectedClasses.${index}.label`}
+                                                                name={`selectedClasses.${index}`}
                                                                 options={
                                                                     gradeOptions
                                                                 }
                                                                 // eslint-disable-next-line prettier/prettier
                                                                 selectedOption={
-                                                                    classItem?.value
+                                                                    classItem
                                                                 }
                                                                 // handleClick={(
                                                                 //     label,
@@ -263,38 +254,17 @@ function AssignCourseModal({
                                                                     validate: (
                                                                         currentLabel: string
                                                                     ) => {
-                                                                        const selectedLabels =
+                                                                        const allSelectedGradeIds =
                                                                             watch(
                                                                                 'selectedClasses'
-                                                                            ).map(
-                                                                                (
-                                                                                    item: selectedClass
-                                                                                ) =>
-                                                                                    item?.label
                                                                             );
-                                                                        const previousLabels =
-                                                                            selectedLabels.slice(
+                                                                        const previousSelectedGradeIds =
+                                                                            allSelectedGradeIds.slice(
                                                                                 0,
                                                                                 index
                                                                             );
-                                                                        const selectedGradeOption =
-                                                                            gradeOptions.find(
-                                                                                (
-                                                                                    option
-                                                                                ) =>
-                                                                                    option.label ===
-                                                                                    currentLabel
-                                                                            );
-                                                                        if (
-                                                                            selectedGradeOption
-                                                                        ) {
-                                                                            setValue(
-                                                                                `selectedClasses.${index}.value`,
-                                                                                selectedGradeOption.value
-                                                                            );
-                                                                        }
                                                                         return (
-                                                                            !previousLabels.includes(
+                                                                            !previousSelectedGradeIds.includes(
                                                                                 currentLabel
                                                                             ) ||
                                                                             'This value has been selected before'
@@ -314,7 +284,7 @@ function AssignCourseModal({
                                                                 const updatedClasses =
                                                                     currentClasses.filter(
                                                                         (
-                                                                            currentClass: selectedClass,
+                                                                            currentClass: string,
                                                                             idx: number
                                                                         ) =>
                                                                             idx !==
@@ -336,7 +306,7 @@ function AssignCourseModal({
                                                         <span className="text-red-500 text-xs mt-2">
                                                             <ErrorMessage
                                                                 errors={errors}
-                                                                name={`selectedClasses.${index}.label`}
+                                                                name={`selectedClasses.${index}`}
                                                                 render={({
                                                                     message,
                                                                 }) => (
@@ -370,7 +340,8 @@ function AssignCourseModal({
                                                         );
                                                     const updatedClasses = [
                                                         ...currentClasses,
-                                                        filteredGradeOptions[0],
+                                                        filteredGradeOptions[0]
+                                                            .label,
                                                     ];
                                                     setValue(
                                                         'selectedClasses',
