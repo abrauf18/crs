@@ -9,7 +9,7 @@ interface SelectPropsInterface extends SelectHTMLAttributes<HTMLSelectElement> {
     options: { value: string; label: string }[];
     selectedOption?: string;
     additionalClasses?: string;
-    handleClick?: (label: string, value: string) => void;
+    // handleClick?: (label: string, value: string) => void;
 }
 
 function Select({
@@ -18,18 +18,18 @@ function Select({
     options,
     selectedOption,
     additionalClasses,
-    handleClick,
+    // handleClick,
 }: SelectPropsInterface): JSX.Element {
     const { register } = useFormContext();
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedOption = options.find(
-            (option) => option?.label === event?.target?.value
-        );
-        if (selectedOption && handleClick) {
-            handleClick(selectedOption?.label, selectedOption?.value);
-        }
-    };
+    // const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    //     const selectedOption = options.find(
+    //         (option) => option?.label === event?.target?.value
+    //     );
+    //     if (selectedOption && handleClick) {
+    //         handleClick(selectedOption?.label, selectedOption?.value);
+    //     }
+    // };
 
     return (
         <div className={`relative w-full ${additionalClasses}`}>
@@ -37,19 +37,10 @@ function Select({
                 className="pl-4 p-3 py-3 pr-8 bg-slate-100 border rounded-lg focus:outline-none focus:border-sky-500 
                 focus:ring-1 focus:ring-sky-500 font-medium appearance-none w-full text-sm"
                 {...register(name, rules)}
-                onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-                    handleChange(event)
-                }
+                defaultValue={selectedOption}
             >
                 {options?.map((option) => (
-                    <option
-                        key={option.label}
-                        value={option.label}
-                        selected={
-                            option?.value?.toLowerCase() ===
-                            selectedOption?.toLowerCase()
-                        }
-                    >
+                    <option key={option.label} value={option.label}>
                         {option.value}
                     </option>
                 ))}
