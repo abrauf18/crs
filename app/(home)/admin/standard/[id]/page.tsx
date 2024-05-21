@@ -75,10 +75,7 @@ async function DetailsPage({ params }: { params: { id: string } }) {
             return (
                 <UnhandledError
                     error={{
-                        message:
-                            error?.message !== 'Token expired, please signin'
-                                ? 'Can Not Find The Resource'
-                                : error?.message,
+                        message: error?.message,
                         name: error?.name,
                     }}
                 />
