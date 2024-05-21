@@ -84,6 +84,7 @@ export const createResourceAPI = async ({
     accessToken,
     thumbnailURL,
     duration,
+    totalMarks,
     onUploadProgress,
 }: {
     name: string;
@@ -93,6 +94,7 @@ export const createResourceAPI = async ({
     accessToken: string;
     thumbnailURL?: string;
     duration?: number;
+    totalMarks?: number;
     onUploadProgress: (progressEvent: any) => void;
 }) => {
     const response = await axios.post(
@@ -105,6 +107,7 @@ export const createResourceAPI = async ({
             accessToken,
             thumbnailURL,
             duration,
+            totalMarks,
         },
         {
             onUploadProgress,
@@ -120,12 +123,14 @@ export const updateResourceAPI = async ({
     type,
     topic,
     accessToken,
+    totalMarks,
 }: {
     resourceId: string;
     name: string;
     type: string;
     topic: string;
     accessToken: string;
+    totalMarks?: number;
 }) => {
     const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/resource/updateResource`,
@@ -135,6 +140,7 @@ export const updateResourceAPI = async ({
             type,
             topic,
             accessToken,
+            totalMarks,
         }
     );
 

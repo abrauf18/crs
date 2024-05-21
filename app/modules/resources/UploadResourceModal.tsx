@@ -36,6 +36,7 @@ type ResourceFormData = {
     type: string;
     name: string;
     thumbnail?: File;
+    totalMarks?: number;
 };
 
 function UploadResourceModal({ onClose }: any) {
@@ -79,6 +80,7 @@ function UploadResourceModal({ onClose }: any) {
             name: formData.name,
             topic: formData.topic,
             type: formData.type,
+            totalMarks: formData.totalMarks,
             url,
             onUploadProgress: (progressEvent: {
                 loaded: number;
@@ -223,6 +225,30 @@ function UploadResourceModal({ onClose }: any) {
                                     name="thumbnail"
                                     placeholder="Select Thumbnail"
                                     type="file"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
+                        {(resourceType === ResourceType.QUIZ ||
+                            resourceType === ResourceType.WORKSHEET ||
+                            resourceType === ResourceType.EXIT_TICKET_TEST) && (
+                            <div className="flex flex-col space-y-1 mt-5">
+                                <Label
+                                    htmlFor="totalMarks"
+                                    className="font-semibold text-md"
+                                >
+                                    Marks
+                                </Label>
+                                <Input
+                                    name="totalMarks"
+                                    placeholder="Add Total Marks"
+                                    type="number"
                                     rules={{
                                         required: {
                                             value: true,

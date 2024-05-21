@@ -9,7 +9,7 @@ import {
     set,
 } from 'react-hook-form';
 import action from '@/app/action';
-import { validationError, Resource } from '@/lib/utils';
+import { validationError, Resource, ResourceType } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import Select from '@/app/components/common/DropDown';
@@ -24,6 +24,7 @@ type ResourceFormData = {
     topic: string;
     type: string;
     name: string;
+    totalMarks?: number;
 };
 
 function UpdateResourceModal({
@@ -50,6 +51,7 @@ function UpdateResourceModal({
                     name: formData.name,
                     type: formData.type,
                     topic: formData.topic,
+                    totalMarks: formData.totalMarks,
                     accessToken: data?.user?.accessToken,
                 });
                 if (updateResponse?.status !== 200) {
@@ -146,6 +148,34 @@ function UpdateResourceModal({
                                 inputValue={resource.name}
                             />
                         </div>
+                        {(resource.type === ResourceType.QUIZ ||
+                            resource.type === ResourceType.WORKSHEET ||
+                            resource.type ===
+                                ResourceType.EXIT_TICKET_TEST) && (
+                            <div className="flex flex-col space-y-1 mt-5">
+                                <Label
+                                    htmlFor="totalMarks"
+                                    className="font-semibold text-md"
+                                >
+                                    Marks
+                                </Label>
+                                <Input
+                                    name="totalMarks"
+                                    placeholder="Add Total Marks"
+                                    type="number"
+                                    inputValue={
+                                        resource.totalMarks?.toString() ?? '0'
+                                    }
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
                     <ModalFooter text="Update" loading={loading} />
                 </form>
