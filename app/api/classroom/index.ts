@@ -86,3 +86,26 @@ export const deleteClassCourseAPI = async ({
 
     return response;
 };
+
+export const getSummarizedClassroomsOfTeacherAPI = async ({
+    accessToken,
+    teacherId,
+}: {
+    accessToken: string;
+    teacherId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/getSummarizedClassroomsOfTeacher`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                teacherid: teacherId,
+            },
+            next: {
+                tags: ['getSummarizedClassroomsOfTeacher'],
+            },
+        }
+    );
+
+    return result;
+};
