@@ -33,7 +33,6 @@ export default async function RootLayout({
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                    theme="colored"
                 />
                 <StoreProvider>
                     <SessionProvider>

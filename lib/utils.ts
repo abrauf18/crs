@@ -1,5 +1,6 @@
-import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { LucideIcon } from 'lucide-react';
+import { type ClassValue, clsx } from 'clsx';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import TicketIcon from '@/app/assets/icons/TicketIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';

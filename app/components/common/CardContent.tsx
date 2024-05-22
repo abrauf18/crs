@@ -18,6 +18,7 @@ interface CardContentProps {
     Icons: IconProps;
     isModal?: boolean;
     isHideEditIcon?: boolean;
+    isFromStandard?: boolean;
     isShownFromStudent?: boolean;
     handleOpenEditModal?: (id: string) => void;
 }
@@ -33,6 +34,7 @@ function CardContent({
     isModal,
     isHideEditIcon,
     isShownFromStudent,
+    isFromStandard,
     handleOpenEditModal,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
@@ -76,15 +78,23 @@ function CardContent({
                     </Link>
                     {!isHideEditIcon && (
                         <div className="bg-orange-100 p-2 rounded-md cursor-pointer">
-                            <EditIcon
-                                height={20}
-                                width={20}
-                                color="#F59A3B"
-                                onClick={() =>
-                                    handleOpenEditModal &&
-                                    handleOpenEditModal(id ?? '')
+                            <Link
+                                href={
+                                    isFromStandard && route && id
+                                        ? `${route}/edit/${id}`
+                                        : '#'
                                 }
-                            />
+                            >
+                                <EditIcon
+                                    height={20}
+                                    width={20}
+                                    color="#F59A3B"
+                                    onClick={() =>
+                                        handleOpenEditModal &&
+                                        handleOpenEditModal(id ?? '')
+                                    }
+                                />
+                            </Link>
                         </div>
                     )}
                 </div>

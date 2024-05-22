@@ -4,14 +4,11 @@ import { ResourceType } from '@/lib/utils';
 import { getStandardAPI } from '@/app/api/standard';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import StandardDetails from '@/app/modules/standard/details/StandardDetails';
+import CreateStandard from '@/app/modules/standard/createStandard/CreateStandard';
 
 interface Topic {
-    name: string;
     resourceId: string;
     type: ResourceType;
-    topic: string;
-    videoId?: string;
 }
 interface DailyUpload {
     date: string;
@@ -31,16 +28,15 @@ const DEFAULT_STANDARD = {
             date: '',
             topics: [
                 {
-                    name: '',
                     resourceId: '',
                     type: ResourceType.VIDEO,
-                    topic: '',
                 },
             ],
         },
     ],
 };
-async function DetailsPage({ params }: { params: { id: string } }) {
+
+async function VideoDetailsPage({ params }: { params: { id: string } }) {
     const data: Session | null = await getServerSession(options);
 
     let APIdata: APIData = DEFAULT_STANDARD;
@@ -58,11 +54,12 @@ async function DetailsPage({ params }: { params: { id: string } }) {
                 APIdata = APIResponse?.data;
                 const { name, description, dailyUploads } = APIdata;
                 return (
-                    <StandardDetails
-                        params={params}
+                    <CreateStandard
+                        standardId={params.id}
                         name={name}
                         description={description}
                         dailyUploads={dailyUploads}
+                        update
                     />
                 );
             }
@@ -86,4 +83,4 @@ async function DetailsPage({ params }: { params: { id: string } }) {
     }
 }
 
-export default DetailsPage;
+export default VideoDetailsPage;

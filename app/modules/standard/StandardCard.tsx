@@ -1,24 +1,26 @@
 import React from 'react';
-import GetDate from './GetDate';
-import StandardTable from './StandardTable';
+import { ResourceType } from '@/lib/utils';
+import GetDate from '@/app/modules/standard/GetDate';
+import StandardTable from '@/app/modules/standard/StandardTable';
 
-export interface Data {
-    id: number;
+interface Topic {
     name: string;
-    duration: string;
-    question: string;
+    resourceId: string;
+    type: ResourceType;
+    topic: string;
+    videoId?: string;
+}
+interface DailyUpload {
+    date: string;
+    topics: Topic[];
 }
 
-export interface StandardProps {
-    data: Data[];
-}
-
-function StandardCard({ data }: StandardProps) {
+function StandardCard({ dailyUpload }: { dailyUpload: DailyUpload }) {
     return (
         <section className="mt-5 w-full rounded-lg border p-3">
-            <GetDate date="22nd November, 2023" />
+            <GetDate date={dailyUpload.date} />
             <div className="mt-5 w-full">
-                <StandardTable data={data} />
+                <StandardTable topicList={dailyUpload.topics} />
             </div>
         </section>
     );

@@ -163,3 +163,52 @@ export const getResourceAPI = async ({
 
     return response;
 };
+
+export const getResourcesByTypeAPI = async ({
+    resourceType,
+    accessToken,
+}: {
+    resourceType: string;
+    accessToken: string;
+}) => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/resource/getResourcesByType`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                resourcetype: resourceType,
+            },
+            next: {
+                tags: ['getResourcesByType'],
+            },
+        }
+    );
+
+    return response;
+};
+
+export const getResourcesByNameAPI = async ({
+    resourceName,
+    resourceType,
+    accessToken,
+}: {
+    resourceName: string;
+    resourceType: string;
+    accessToken: string;
+}) => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/resource/getResourcesByName`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                resourcename: resourceName,
+                resourcetype: resourceType,
+            },
+            next: {
+                tags: ['getResourcesByName'],
+            },
+        }
+    );
+
+    return response;
+};

@@ -1,77 +1,258 @@
 'use client';
 
-import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import { CalendarDays, X } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import React, { useEffect, useRef, useState } from 'react';
+import { FieldErrors, useFieldArray, useFormContext } from 'react-hook-form';
+import { validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
-import QuizModal from './QuizModal';
+import Input from '@/app/components/common/Input';
+import Select from '@/app/components/common/DropDown';
+import { ErrorMessage } from '@hookform/error-message';
 import VideoModal from './VideoModal';
 
-function CreateTopic() {
-    const [selectedType, setSelectedType] = useState('video');
-    const [isDisplayModal, setIsDisplayModal] = useState(false);
+export enum ResourceType {
+    VIDEO = 'video',
+    SLIDESHOW = 'slideshow',
+    WORKSHEET = 'worksheet',
+    EXIT_TICKET_TEST = 'exit-ticket-test',
+    QUIZ = 'quiz',
+}
+export const resourceDropDownOptions = [
+    { label: ResourceType.QUIZ, value: 'Quiz' },
+    { label: ResourceType.VIDEO, value: 'Video' },
+    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
+    { label: ResourceType.WORKSHEET, value: 'Worksheet' },
+    { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
+];
+interface Topic {
+    resourceId: string;
+    type: ResourceType;
+}
+interface DailyUpload {
+    id: string;
+    date: string;
+    topics: Topic[];
+}
+interface Standard {
+    id: string;
+    name: string;
+    description: string;
+    dailyUploads: DailyUpload[];
+}
+interface FormValues {
+    standard: Standard;
+}
 
-    const handleOpenModal = () => {
+function CreateTopic({
+    index,
+    allSelectedResources,
+    setAllSelectedResources,
+    errors,
+}: {
+    index: number;
+    allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
+    setAllSelectedResources: (
+        resources: { resourceId: string; resourceType: ResourceType }[]
+    ) => void;
+    errors: FieldErrors<FormValues>;
+}) {
+    const { data } = useSession();
+    const topicAddedRef = useRef(false);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [isDisplayModal, setIsDisplayModal] = useState(false);
+    const { control, watch, setValue } = useFormContext<FormValues>();
+
+    const {
+        fields: topicFields,
+        append: appendTopic,
+        remove: removeTopic,
+    } = useFieldArray<FormValues>({
+        control,
+        name: `standard.dailyUploads.${index}.topics`,
+    });
+
+    const handleOpenModal = (topicIndex: number) => {
+        setSelectedIndex(topicIndex);
         setIsDisplayModal(true);
     };
 
     const handleCloseModal = () => {
         setIsDisplayModal(false);
     };
+
+    useEffect(() => {
+        if (!data) {
+            return;
+        }
+        if (topicFields.length === 0 && !topicAddedRef.current) {
+            appendTopic({
+                resourceId: '',
+                type: ResourceType.VIDEO,
+            });
+            topicAddedRef.current = true;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
+
+    const handleResourceSelect = (topicIndex: number, resourceId: string) => {
+        setValue(
+            `standard.dailyUploads.${index}.topics.${topicIndex}.resourceId`,
+            resourceId
+        );
+    };
     return (
-        <div>
-            <div className="sm:flex justify-between items-center gap-5 w-full mt-3">
-                <div className="basis-1/2">
-                    <Label htmlFor="topicName">Topic Name</Label>
-                    <input
-                        className="mb-5 mt-2 block w-full px-3 py-2 bg-slate-100 border rounded-lg text-sm placeholder-slate-400
-                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                        placeholder="Topic Name"
-                    />
-                </div>
-                <div className="basis-1/2 relative">
-                    <Label htmlFor="description">Type</Label>
-                    <div className="flex justify-between items-start gap-1">
-                        <select
-                            className="mb-5 mt-2 block w-full px-3 py-2 bg-slate-100 border rounded-lg text-sm placeholder-slate-400
-            focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 appearance-none"
-                            onChange={(e) => setSelectedType(e.target.value)}
+        <>
+            <div className="cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg absolute right-6 z-10 hover:bg-slate-100">
+                <button
+                    type="button"
+                    onClick={() => {
+                        if (
+                            allSelectedResources &&
+                            allSelectedResources.length > 0 &&
+                            allSelectedResources[topicFields.length - 1]
+                                .resourceId === ''
+                        ) {
+                            toast.error(
+                                'Please select a resource before adding a new one'
+                            );
+                            return;
+                        }
+                        appendTopic({
+                            resourceId: '',
+                            type: ResourceType.VIDEO,
+                        });
+                        setAllSelectedResources([
+                            ...(allSelectedResources || []),
+                            {
+                                resourceId: '',
+                                resourceType: ResourceType.VIDEO,
+                            },
+                        ]);
+                    }}
+                >
+                    Add More
+                </button>
+            </div>
+            {topicFields.map((topic, topicIndex) => (
+                <div key={topic.id}>
+                    <div className="sm:flex justify-between items-center gap-5 w-full mt-3">
+                        <div className="basis-full relative">
+                            <Label
+                                htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
+                                className="font-semibold mt-4"
+                            >
+                                Type
+                            </Label>
+                            <div className="flex items-center gap-5 sm:my-4 mt-12 mb-8">
+                                <Select
+                                    additionalClasses="!w-2/4"
+                                    name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
+                                    options={resourceDropDownOptions}
+                                    selectedOption={ResourceType.VIDEO}
+                                />
+                                <div
+                                    className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center px-4 py-3 hover:bg-slate-100"
+                                    onClick={() => handleOpenModal(topicIndex)}
+                                >
+                                    <button
+                                        className="text-sm text-center"
+                                        type="button"
+                                    >
+                                        Select
+                                    </button>
+                                </div>
+                                <div>
+                                    {allSelectedResources &&
+                                        allSelectedResources.length >
+                                            topicIndex &&
+                                        allSelectedResources[topicIndex]
+                                            .resourceId}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
+                        {isDisplayModal && (
+                            <VideoModal
+                                onClose={handleCloseModal}
+                                resourceType={watch(
+                                    `standard.dailyUploads.${index}.topics.${selectedIndex}.type`
+                                )}
+                                setAllSelectedResources={
+                                    setAllSelectedResources
+                                }
+                                allSelectedResources={allSelectedResources}
+                                selectedIndex={selectedIndex}
+                                updateSelectedResource={(resourceId: string) =>
+                                    handleResourceSelect(
+                                        selectedIndex,
+                                        resourceId
+                                    )
+                                }
+                            />
+                        )}
+                    </div>
+                    <div className=" cursor-pointer px-4 py-2 border text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600 ">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                // Remove the topic from allSelectedResources
+                                const updatedSelectedResources =
+                                    allSelectedResources
+                                        ? allSelectedResources.filter(
+                                              (_, index) => index !== topicIndex
+                                          )
+                                        : [];
+                                setAllSelectedResources(
+                                    updatedSelectedResources
+                                );
+
+                                // Remove the topic from the form
+                                removeTopic(topicIndex);
+                            }}
                         >
-                            <option value="Video">Video</option>
-                            <option value="Quiz">Quiz</option>
-                        </select>
-                        <div className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center w-24 px-1 py-2 mt-2">
-                            <button
-                                className="text-sm text-center"
-                                type="button"
-                                onClick={handleOpenModal}
-                            >
-                                Select
-                            </button>
-                        </div>
-                        <div className="absolute right-24 top-10 border rounded-full flex items-center pointer-events-none">
-                            <svg
-                                className="h-4 w-4 text-slate-400"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            ))}
+            <div className="sm:flex justify-between items-center my-5 gap-5 border-b">
+                <div className="basis-1/2 relative">
+                    <Label htmlFor={`standard.dailyUploads.${index}.date`}>
+                        Date
+                    </Label>
+                    <Input
+                        type="date"
+                        placeholder="Write Date"
+                        name={`standard.dailyUploads.${index}.date`}
+                        additionalClasses="date-input"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: validationError.REQUIRED_FIELD,
+                            },
+                        }}
+                    />
+                    <span className="text-red-500 text-xs">
+                        <ErrorMessage
+                            errors={errors}
+                            name={`standard.dailyUploads.${index}.date`}
+                            render={({ message }) => (
+                                <p className="flex items-center">
+                                    <X size={20} color="#E6500D" />
+                                    {message}
+                                </p>
+                            )}
+                        />
+                    </span>
+                    <div className="absolute top-11 right-2">
+                        <CalendarDays size={20} color="#85878D" />
                     </div>
                 </div>
             </div>
-            <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                {isDisplayModal && selectedType.toLowerCase() === 'video' && (
-                    <VideoModal onClose={handleCloseModal} />
-                )}
-                {isDisplayModal && selectedType.toLowerCase() === 'quiz' && (
-                    <QuizModal onClose={handleCloseModal} />
-                )}
-            </div>
-        </div>
+        </>
     );
 }
 
