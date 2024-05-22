@@ -109,3 +109,52 @@ export const getSummarizedClassroomsOfTeacherAPI = async ({
 
     return result;
 };
+
+export const getClassroomStudentsAPI = async ({
+    accessToken,
+    classroomId,
+    page,
+    limit,
+}: {
+    accessToken: string;
+    classroomId: string;
+    page: number;
+    limit: number;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/getClassroomStudents`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                classroomid: classroomId,
+                page: page.toString(),
+                limit: limit.toString(),
+            },
+            next: {
+                tags: ['getClassroomStudents'],
+            },
+        }
+    );
+
+    return result;
+};
+
+export const removeStudentFromClassroomAPI = async ({
+    accessToken,
+    classroomStudentId,
+}: {
+    accessToken: string;
+    classroomStudentId: string;
+}) => {
+    const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/removeStudentFromClassroom`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                classroomstudentid: classroomStudentId,
+            },
+        }
+    );
+
+    return response;
+};
