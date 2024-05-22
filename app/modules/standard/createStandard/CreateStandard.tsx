@@ -177,7 +177,6 @@ function CreateStandard({
                 `Standard ${update ? `updated ` : `created`} successfully`
             );
         } catch (error: any) {
-            // console.log(error);
             toast.error(
                 error?.response?.data?.message ||
                     `Failed to ${update ? `update ` : `create`} a standard`

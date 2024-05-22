@@ -63,6 +63,7 @@ async function DetailsPage({ params }: { params: { id: string } }) {
                         name={name}
                         description={description}
                         dailyUploads={dailyUploads}
+                        isShownFromTeacher={false}
                     />
                 );
             }

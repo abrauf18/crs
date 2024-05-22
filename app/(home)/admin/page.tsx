@@ -8,6 +8,7 @@ import { getAllUsersProfileAPI } from '@/app/api/user';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { getResourcesAPI } from '@/app/api/resource';
 import { Resource } from '@/lib/utils';
+import { getAdminDashboardSummariesAPI } from '@/app/api/dashboard';
 
 export const metadata: Metadata = {
     title: 'Dashboard',
@@ -38,11 +39,23 @@ async function DashboardPage() {
 
     if (data) {
         try {
+            const adminDashboardResponse = await getAdminDashboardSummariesAPI({
+                accessToken: data.user.accessToken,
+            });
+            const adminDashboardAPIResponse =
+                await adminDashboardResponse.json();
+            if (!adminDashboardResponse.ok) {
+                throw new Error(adminDashboardAPIResponse?.message);
+            }
+
             const userResponse = await getAllUsersProfileAPI(
                 data?.user.accessToken
             );
-
             const UserAPIResponse = await userResponse.json();
+            if (!userResponse.ok) {
+                throw new Error(UserAPIResponse?.message);
+            }
+
             const resourceResponse = await getResourcesAPI({
                 accessToken: data?.user?.accessToken,
                 topic: '',
@@ -52,9 +65,13 @@ async function DashboardPage() {
                 orderBy: '',
                 sortBy: '',
             });
-
             const ResourceAPIResponse = await resourceResponse.json();
+            if (!resourceResponse.ok) {
+                throw new Error(ResourceAPIResponse?.message);
+            }
+
             if (
+                adminDashboardAPIResponse.status !== 'error' &&
                 UserAPIResponse.status !== 'error' &&
                 ResourceAPIResponse.status !== 'error'
             ) {
@@ -62,13 +79,11 @@ async function DashboardPage() {
                 ResourceAPIData = ResourceAPIResponse?.data;
                 return (
                     <Dashboard
+                        AdminSummaries={adminDashboardAPIResponse.data} 
                         UserAPIData={UserAPIdata}
                         ResourceAPIData={ResourceAPIData}
                     />
                 );
-            }
-            if (!userResponse.ok) {
-                throw new Error(UserAPIResponse?.message);
             }
         } catch (error: any) {
             return (
