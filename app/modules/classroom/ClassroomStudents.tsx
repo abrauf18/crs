@@ -20,6 +20,7 @@ function ClassroomStudents({
         email: string;
         grade: string;
         performance: number;
+        gradeId: string;
     }[];
 }) {
     const router = useRouter();

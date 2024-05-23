@@ -25,6 +25,7 @@ async function ClassroomStudentsPage({
             email: string;
             grade: string;
             performance: number;
+            gradeId: string;
         }[];
     } = {
         className: 'Class',
@@ -38,7 +39,7 @@ async function ClassroomStudentsPage({
                 accessToken: data?.user.accessToken,
                 classroomId: params?.classId,
                 page: parseInt(page, 10),
-                limit: 2,
+                limit: 10,
             });
 
             const APIResponse = await response.json();

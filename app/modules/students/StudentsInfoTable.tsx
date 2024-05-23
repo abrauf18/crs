@@ -19,6 +19,7 @@ import action from '@/app/action';
 import { DEFAULT_IMAGE } from '@/lib/utils';
 import EditIcon from '@/app/assets/icons/EditIcon';
 import DialogBox from '@/app/components/common/DialogBox';
+import PageLoader from '@/app/components/common/PageLoader';
 import { removeStudentFromClassroomAPI } from '@/app/api/classroom';
 import ClassroomModal from '../classroom/ClassroomModal';
 
@@ -30,6 +31,7 @@ export interface StudentInfoInterface {
     email: string;
     grade: string;
     performance: number;
+    gradeId: string;
 }
 
 const DEFAULT_CLASSROOM_STUDENT = {
@@ -40,6 +42,7 @@ const DEFAULT_CLASSROOM_STUDENT = {
     grade: 'Grade',
     performance: 100,
     image: DEFAULT_IMAGE,
+    gradeId: '0',
 };
 
 export interface StudentsInfoProp {
@@ -65,23 +68,23 @@ function StudentsInfoTable({
     handlePageChange,
 }: StudentsInfoProp) {
     const { push } = useRouter();
-    const { data } = useSession();
     const pathname = usePathname();
+    const { data, status } = useSession();
     const [disableButton, setDisableButton] = useState(false);
     const [isShowDialogBox, setIsShowDialogBox] = useState(false);
     const [isShowStudentModal, setIsShowStudentModal] = useState(false);
     const [selectedStudent, setSelectedStudent] =
         useState<StudentInfoInterface>(DEFAULT_CLASSROOM_STUDENT);
 
-    // const handleOpenProfileModal = (user: StudentInfoInterface) => {
-    //     setSelectedStudent(user);
-    //     setIsShowStudentModal(true);
-    // };
+    const handleOpenStudentModal = (user: StudentInfoInterface) => {
+        setSelectedStudent(user);
+        setIsShowStudentModal(true);
+    };
 
-    // const handleCloseProfileModal = () => {
-    //     setIsShowStudentModal(false);
-    //     setSelectedStudent(DEFAULT_CLASSROOM_STUDENT);
-    // };
+    const handleCloseStudentModal = () => {
+        setIsShowStudentModal(false);
+        setSelectedStudent(DEFAULT_CLASSROOM_STUDENT);
+    };
 
     const handleDeleteStudents = async (idToRemove: string) => {
         if (data?.user?.accessToken) {
@@ -126,15 +129,9 @@ function StudentsInfoTable({
         push(`/teacher/students/${id}`);
     };
 
-    const handleOpenStudentModal = () => {
-        setIsShowStudentModal(true);
-    };
-
-    const handleCloseStudentModal = () => {
-        setIsShowStudentModal(false);
-    };
-
-    return (
+    return status === 'loading' ? (
+        <PageLoader />
+    ) : (
         <section>
             <Table
                 className={`text-[${fontSize || '18'}px] mobile:text-sm ${
@@ -209,7 +206,9 @@ function StudentsInfoTable({
                                         onClick={() =>
                                             !isClassroomTable
                                                 ? handleClick(index)
-                                                : handleOpenStudentModal()
+                                                : handleOpenStudentModal(
+                                                      student
+                                                  )
                                         }
                                     >
                                         <Eye
@@ -222,7 +221,9 @@ function StudentsInfoTable({
                                 {!isTeacherDashboardTable && (
                                     <div
                                         className="bg-green-100 rounded-md p-1 cursor-pointer"
-                                        onClick={() => handleOpenStudentModal()}
+                                        onClick={() =>
+                                            handleOpenStudentModal(student)
+                                        }
                                     >
                                         <EditIcon width={22} height={22} />
                                     </div>
@@ -253,7 +254,11 @@ function StudentsInfoTable({
             </Table>
             {isShowStudentModal && (
                 <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[40%] md:w-[60%] lg:max-w-[400px] xl:max-w-[400px] 2xl:max-w-[400px]">
-                    <ClassroomModal onClose={handleCloseStudentModal} />
+                    <ClassroomModal
+                        data={data}
+                        student={selectedStudent}
+                        onClose={handleCloseStudentModal}
+                    />
                 </div>
             )}
             {isShowDialogBox && (
