@@ -158,3 +158,33 @@ export const removeStudentFromClassroomAPI = async ({
 
     return response;
 };
+
+export const updateClassroomStudentAPI = async ({
+    accessToken,
+    name,
+    email,
+    image,
+    classroomId,
+    classroomStudentId,
+}: {
+    accessToken: string;
+    name: string;
+    email: string;
+    image: string;
+    classroomId: string;
+    classroomStudentId: string;
+}) => {
+    const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/updateClassroomStudent`,
+        {
+            accessToken,
+            name,
+            email,
+            image,
+            classroomId,
+            classroomStudentId,
+        }
+    );
+
+    return response;
+};
