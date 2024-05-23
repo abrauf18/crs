@@ -92,6 +92,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
     {
         id: '2',
@@ -101,6 +102,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
     {
         id: '3',
@@ -110,6 +112,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
     {
         id: '4',
@@ -119,6 +122,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
     {
         id: '5',
@@ -128,6 +132,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
     {
         id: '6',
@@ -137,6 +142,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
     {
         id: '7',
@@ -146,6 +152,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
     {
         id: '8',
@@ -155,6 +162,7 @@ export const Studentinfo: StudentInfoInterface[] = [
         grade: '7th',
         performance: 100,
         image: DEFAULT_IMAGE,
+        gradeId: '',
     },
 ];
 function Students() {
