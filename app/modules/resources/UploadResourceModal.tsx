@@ -163,61 +163,87 @@ function UploadResourceModal({ onClose }: any) {
     const handleUpload = async (formData: ResourceFormData) => {
         try {
             setLoading(true);
-            if (!data?.user.accessToken) {
-                return toast.error('Token Expire, Please Signin Again');
-            }
 
-            let resourceURL = '';
-            let videoDuration = 0;
+            if (!data?.user.accessToken) {
+                return toast.error('Token Expired, Please Sign in Again');
+            }
 
             if (resourceType === ResourceType.VIDEO) {
-                if (!formData.thumbnail) {
-                    return toast.error('Please Select Thumbnail');
-                }
-                const thumbnailURL = await uploadFile(thumbnailFile['0']);
-                if (selectedUploadOption === 'youtube') {
-                    if (!formData.youtubeURL) {
-                        return toast.error('Please Enter Youtube URL');
-                    }
-                    resourceURL = formData.youtubeURL;
-                    videoDuration = await getVideoDuration(formData.youtubeURL);
-                } else {
-                    if (!selectedFile) {
-                        return toast.error('Please Select File');
-                    }
-                    videoDuration = await getVideoDuration(selectedFile);
-                    resourceURL = await uploadFile(selectedFile);
-                    if (!resourceURL) {
-                        return null;
-                    }
-                }
-                await createResource(
-                    resourceURL,
-                    formData,
-                    thumbnailURL,
-                    secondsToString(videoDuration) || '00:00:00'
-                );
+                await handleVideoUpload(formData);
             } else {
-                if (!selectedFile) {
-                    return toast.error('Please Select File');
-                }
-                resourceURL = await uploadFile(selectedFile);
-                if (!resourceURL) {
-                    return null;
-                }
-                await createResource(resourceURL, formData);
+                await handleFileUpload(formData);
             }
 
-            action('getResources');
-            action('getResourcesCount');
-            onClose();
+            await refreshResources();
 
+            onClose();
             return toast.success('Resource Uploaded Successfully');
         } catch (error: any) {
-            return toast.error(error?.message);
+            return toast.error(
+                error?.message || 'An unexpected error occurred'
+            );
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleVideoUpload = async (formData: ResourceFormData) => {
+        if (!formData.thumbnail) {
+            return toast.error('Please Select Thumbnail');
+        }
+        const thumbnailURL = await uploadFile(thumbnailFile['0']);
+
+        let resourceURL = '';
+        let videoDuration = 0;
+
+        if (selectedUploadOption === 'youtube') {
+            if (!formData.youtubeURL) {
+                return toast.error('Please Enter Youtube URL');
+            }
+            resourceURL = formData.youtubeURL;
+            videoDuration = await getVideoDuration(formData.youtubeURL);
+        } else {
+            if (!selectedFile) {
+                return toast.error('Please Select File');
+            }
+            videoDuration = await getVideoDuration(selectedFile);
+            resourceURL = await uploadFile(selectedFile);
+        }
+
+        if (!resourceURL) {
+            return toast.error('Failed to upload resource');
+        }
+
+        await createResource(
+            resourceURL,
+            formData,
+            thumbnailURL,
+            secondsToString(videoDuration) || '00:00:00'
+        );
+
+        return null;
+    };
+
+    const handleFileUpload = async (formData: ResourceFormData) => {
+        if (!selectedFile) {
+            return toast.error('Please Select File');
+        }
+
+        const resourceURL = await uploadFile(selectedFile);
+        if (!resourceURL) {
+            return toast.error('Failed to upload file');
+        }
+
+        await createResource(resourceURL, formData);
+
+        return null;
+    };
+
+    const refreshResources = async () => {
+        await Promise.all([
+            action('getResources'),
+            action('getResourcesCount'),
+        ]);
     };
 
     const Icon = resourceTypeToIcon(resourceType);
