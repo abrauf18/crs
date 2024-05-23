@@ -60,8 +60,6 @@ function AssignCourseModal({
         watch,
         reset,
         setValue,
-        // setError,
-        // clearErrors,
     } = methods;
     const selectedGradeIds = watch('selectedClasses');
     const filteredGradeOptions = gradeOptions?.filter(
@@ -69,28 +67,6 @@ function AssignCourseModal({
             !selectedGradeIds?.includes(classItem?.label)
     );
 
-    // const checkIfSelectedOptionPreExists = (
-    //     index: number,
-    //     currentLabel: string
-    // ) => {
-    //     const selectedLabels = watch('selectedClasses').map(
-    //         (item: selectedClass) => item.label
-    //     );
-    //     const previousLabels = selectedLabels.slice(0, index);
-
-    //     if (!previousLabels.includes(currentLabel)) {
-    //         clearErrors(`selectedClasses.${index}.label`);
-    //     } else {
-    //         setError(`selectedClasses.${index}.label`, {
-    //             type: 'alreadySelected',
-    //             message: 'This value has been selected before',
-    //         });
-    //     }
-    //     return (
-    //         !previousLabels.includes(currentLabel) ||
-    //         'This value has been selected before'
-    //     );
-    // };
     const onSubmit = async (formData: FormValues) => {
         try {
             trigger('selectedClasses');
@@ -237,19 +213,6 @@ function AssignCourseModal({
                                                                 selectedOption={
                                                                     classItem
                                                                 }
-                                                                // handleClick={(
-                                                                //     label,
-                                                                //     value
-                                                                // ) => {
-                                                                //     checkIfSelectedOptionPreExists(
-                                                                //         index,
-                                                                //         label
-                                                                //     );
-                                                                //     setValue(
-                                                                //         `selectedClasses.${index}.value`,
-                                                                //         value
-                                                                //     );
-                                                                // }}
                                                                 rules={{
                                                                     validate: (
                                                                         currentLabel: string
