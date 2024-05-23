@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import {
@@ -12,6 +12,7 @@ import {
     resourceDropDownOptions,
     ResourceType,
     resourceTypeToIcon,
+    secondsToString,
 } from '@/lib/utils';
 import action from '@/app/action';
 import Input from '@/app/components/common/Input';
@@ -37,18 +38,71 @@ type ResourceFormData = {
     name: string;
     thumbnail?: File;
     totalMarks?: number;
+    youtubeURL?: string;
+    selectedUploadOption: string;
 };
+
+const uploadOptions = [
+    { label: 'file', value: 'file' },
+    { label: 'youtube', value: 'youtube' },
+];
 
 function UploadResourceModal({ onClose }: any) {
     const { data } = useSession();
-    const [progress, setProgress] = React.useState(0);
-    const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+    const [progress, setProgress] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
+    const resourceName = methods.watch('name');
     const resourceType = methods.watch('type');
     const thumbnailFile = methods.watch('thumbnail');
+    const selectedUploadOption = methods.watch('selectedUploadOption');
+
+    const convertYouTubeDuration = (duration: string) => {
+        const match = duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/);
+
+        const hours = (match && parseInt(match[2], 10)) || 0;
+        const minutes = (match && parseInt(match[4], 10)) || 0;
+        const seconds = (match && parseInt(match[6], 10)) || 0;
+
+        return hours * 3600 + minutes * 60 + seconds;
+    };
+
+    const getVideoDuration = async (videoSource: string | File) => {
+        let videoDuration = 0;
+
+        if (
+            typeof videoSource === 'string' &&
+            videoSource.includes('youtube')
+        ) {
+            const videoId = new URL(videoSource).searchParams.get('v');
+            const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${process.env.NEXT_PUBLIC_YOUTUBE_KEY}`
+            );
+            const data = await response.json();
+            videoDuration = convertYouTubeDuration(
+                data.items[0].contentDetails.duration
+            );
+        } else if (typeof videoSource !== 'string') {
+            videoDuration = await new Promise((resolve, reject) => {
+                const video = document.createElement('video');
+                video.preload = 'metadata';
+                video.onloadedmetadata = () => {
+                    URL.revokeObjectURL(video.src);
+                    resolve(video.duration);
+                };
+                video.onerror = () => {
+                    reject(new Error('Failed to load video metadata.'));
+                };
+                video.src = URL.createObjectURL(videoSource);
+            });
+        }
+
+        return videoDuration;
+    };
 
     const uploadFile = async (file: File) => {
         const response: any = await UploadResource({
@@ -73,7 +127,8 @@ function UploadResourceModal({ onClose }: any) {
     const createResource = async (
         url: string,
         formData: ResourceFormData,
-        thumbnailURL?: string
+        thumbnailURL?: string,
+        duration?: string
     ) => {
         const resourceData: any = {
             accessToken: data?.user?.accessToken ?? '',
@@ -82,6 +137,7 @@ function UploadResourceModal({ onClose }: any) {
             type: formData.type,
             totalMarks: formData.totalMarks,
             url,
+            duration,
             onUploadProgress: (progressEvent: {
                 loaded: number;
                 total: number;
@@ -106,25 +162,49 @@ function UploadResourceModal({ onClose }: any) {
 
     const handleUpload = async (formData: ResourceFormData) => {
         try {
+            setLoading(true);
             if (!data?.user.accessToken) {
                 return toast.error('Token Expire, Please Signin Again');
             }
-            if (!selectedFile) {
-                return toast.error('Please Select File');
-            }
 
-            const resourceURL = await uploadFile(selectedFile);
-            if (!resourceURL) {
-                return null;
-            }
+            let resourceURL = '';
+            let videoDuration = 0;
 
             if (resourceType === ResourceType.VIDEO) {
                 if (!formData.thumbnail) {
                     return toast.error('Please Select Thumbnail');
                 }
                 const thumbnailURL = await uploadFile(thumbnailFile['0']);
-                await createResource(resourceURL, formData, thumbnailURL);
+                if (selectedUploadOption === 'youtube') {
+                    if (!formData.youtubeURL) {
+                        return toast.error('Please Enter Youtube URL');
+                    }
+                    resourceURL = formData.youtubeURL;
+                    videoDuration = await getVideoDuration(formData.youtubeURL);
+                } else {
+                    if (!selectedFile) {
+                        return toast.error('Please Select File');
+                    }
+                    videoDuration = await getVideoDuration(selectedFile);
+                    resourceURL = await uploadFile(selectedFile);
+                    if (!resourceURL) {
+                        return null;
+                    }
+                }
+                await createResource(
+                    resourceURL,
+                    formData,
+                    thumbnailURL,
+                    secondsToString(videoDuration) || '00:00:00'
+                );
             } else {
+                if (!selectedFile) {
+                    return toast.error('Please Select File');
+                }
+                resourceURL = await uploadFile(selectedFile);
+                if (!resourceURL) {
+                    return null;
+                }
                 await createResource(resourceURL, formData);
             }
 
@@ -135,6 +215,8 @@ function UploadResourceModal({ onClose }: any) {
             return toast.success('Resource Uploaded Successfully');
         } catch (error: any) {
             return toast.error(error?.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -259,19 +341,81 @@ function UploadResourceModal({ onClose }: any) {
                                 />
                             </div>
                         )}
+                        {resourceType === ResourceType.VIDEO && (
+                            <div className="flex flex-col space-y-1 mt-4">
+                                <Label
+                                    htmlFor="selectedUploadOption"
+                                    className="font-semibold mt-3"
+                                >
+                                    Upload Type
+                                </Label>
+                                <Select
+                                    name="selectedUploadOption"
+                                    options={uploadOptions}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
                         <div className="mt-4">
-                            {!selectedFile && (
-                                <UploadItem
-                                    itemName="Resource"
-                                    setSelectedFile={setSelectedFile}
-                                />
-                            )}
-                            {selectedFile && (
-                                <FileUploading
-                                    fileName={selectedFile.name}
-                                    progress={progress}
-                                    Icon={Icon}
-                                />
+                            {resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption === 'youtube' &&
+                                progress === 0 && (
+                                    <>
+                                        <div className="flex flex-col space-y-1 mt-5">
+                                            <Label
+                                                htmlFor="youtubeURL"
+                                                className="font-semibold text-md"
+                                            >
+                                                Youtube URL
+                                            </Label>
+                                            <Input
+                                                name="youtubeURL"
+                                                placeholder="Provide youtube URL"
+                                                type="input"
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            validationError.REQUIRED_FIELD,
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                        {progress !== 0 && (
+                                            <div className="mt-4">
+                                                <FileUploading
+                                                    fileName={resourceName}
+                                                    progress={progress}
+                                                    Icon={Icon}
+                                                />
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                            {((resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption !== 'youtube') ||
+                                resourceType !== ResourceType.VIDEO) && (
+                                <>
+                                    {!selectedFile && (
+                                        <UploadItem
+                                            itemName="Resource"
+                                            setSelectedFile={setSelectedFile}
+                                        />
+                                    )}
+                                    {selectedFile && (
+                                        <FileUploading
+                                            fileName={selectedFile.name}
+                                            progress={progress}
+                                            Icon={Icon}
+                                        />
+                                    )}
+                                </>
                             )}
                             <div className="p-2 rounded-lg border w-32 text-center mt-3">
                                 <button
@@ -284,7 +428,7 @@ function UploadResourceModal({ onClose }: any) {
                             </div>
                         </div>
                     </div>
-                    <ModalFooter text="Upload" />
+                    <ModalFooter text="Upload" loading={loading} />
                 </form>
             </FormProvider>
         </section>
