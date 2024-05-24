@@ -31,7 +31,7 @@ const DEFAULT_ALL_STANDARD_SUMMARY = {
     ],
 };
 
-async function StandardPage({ params }: { params: { id: string } }) {
+async function StandardPage() {
     const data: Session | null = await getServerSession(options);
 
     let APIdata: APIData = DEFAULT_ALL_STANDARD_SUMMARY;
