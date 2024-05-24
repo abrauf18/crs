@@ -142,7 +142,7 @@ function ClassroomModal({
             action('getClassroomStudents');
         } catch (error: any) {
             toast.error(
-                error?.message ??
+                error?.response?.data?.message ??
                     'An error occurred while updating student data'
             );
         } finally {
