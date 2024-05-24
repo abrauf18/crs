@@ -307,16 +307,6 @@ export default function SideBar() {
                                 onClick={item.onClick}
                             />
                         ))}
-                        {/* <NavigationItem
-                            to="/admin/setting"
-                            ItemIcon={Settings}
-                            itemText="Settings"
-                        />
-                        <NavigationItem
-                            to="#"
-                            ItemIcon={LogOut}
-                            itemText="Logout"
-                        /> */}
                     </div>
                 )}
             </ul>

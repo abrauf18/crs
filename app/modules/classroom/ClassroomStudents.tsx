@@ -56,11 +56,13 @@ function ClassroomStudents({
                 />
             </div>
             <div className="flex items-center w-full justify-center mt-5">
-                <Pagintaion
-                    currentPage={Number(page) > 0 ? Number(page) : 1}
-                    totalPages={totalPages > 0 ? totalPages : 1}
-                    onPageChange={handlePageChange}
-                />
+                {totalPages > 1 && (
+                    <Pagintaion
+                        currentPage={Number(page) > 0 ? Number(page) : 1}
+                        totalPages={totalPages > 0 ? totalPages : 1}
+                        onPageChange={handlePageChange}
+                    />
+                )}
             </div>
         </div>
     );

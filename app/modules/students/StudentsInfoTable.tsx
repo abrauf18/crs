@@ -133,125 +133,135 @@ function StudentsInfoTable({
         <PageLoader />
     ) : (
         <section>
-            <Table
-                className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                    poppins.className
-                }`}
-            >
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className=" text-dark-gray font-bold">
-                            SNO.
-                        </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
-                            Name
-                        </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
-                            Email
-                        </TableHead>
-                        {!isTeacherDashboardTable && (
-                            <TableHead className="text-dark-gray font-bold">
-                                Grade
+            {students[0] ? (
+                <Table
+                    className={`text-[${fontSize || '18'}px] mobile:text-sm ${
+                        poppins.className
+                    }`}
+                >
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className=" text-dark-gray font-bold">
+                                SNO.
                             </TableHead>
-                        )}
-                        <TableHead className="text-dark-gray font-bold">
-                            Performance
-                        </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
-                            Action
-                        </TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {students.map((student, index) => (
-                        <TableRow className="border-none" key={student.id}>
-                            <TableCell className="font-medium">
-                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {student.index}
-                                </span>
-                            </TableCell>
-                            <TableCell>
-                                <span className="rounded flex gap-x-2 items-center">
-                                    <Image
-                                        src={student.image || DEFAULT_IMAGE}
-                                        width={30}
-                                        height={30}
-                                        alt="user"
-                                        style={{
-                                            width: '30px',
-                                            height: '30px',
-                                            objectFit: 'fill',
-                                            borderRadius: '50%',
-                                        }}
-                                    />
-                                    <span>{student.name}</span>
-                                </span>
-                            </TableCell>
-
-                            <TableCell className="text-dark-gray">
-                                {student.email}
-                            </TableCell>
+                            <TableHead className="text-dark-gray font-bold">
+                                Name
+                            </TableHead>
+                            <TableHead className="text-dark-gray font-bold">
+                                Email
+                            </TableHead>
                             {!isTeacherDashboardTable && (
-                                <TableCell className="text-dark-gray">
-                                    {student.grade}
-                                </TableCell>
+                                <TableHead className="text-dark-gray font-bold">
+                                    Grade
+                                </TableHead>
                             )}
-                            <TableCell className="text-dark-gray">
-                                {`${student.performance} %`}
-                            </TableCell>
-                            <TableCell className="flex justify-start space-x-2 items-center p-0 mt-5 ml-3">
-                                {!isClassroomTable && (
-                                    <div
-                                        className=" bg-light-orange rounded-md p-1 cursor-pointer"
-                                        onClick={() =>
-                                            !isClassroomTable
-                                                ? handleClick(index)
-                                                : handleOpenStudentModal(
-                                                      student
-                                                  )
-                                        }
-                                    >
-                                        <Eye
-                                            color="#F59A3B"
-                                            width={18}
-                                            height={18}
-                                        />
-                                    </div>
-                                )}
-                                {!isTeacherDashboardTable && (
-                                    <div
-                                        className="bg-green-100 rounded-md p-1 cursor-pointer"
-                                        onClick={() =>
-                                            handleOpenStudentModal(student)
-                                        }
-                                    >
-                                        <EditIcon width={22} height={22} />
-                                    </div>
-                                )}
-                                {!isTeacherDashboardTable && (
-                                    <div
-                                        className={`bg-red-100 rounded-md p-1 cursor-pointer ${
-                                            disableButton ? 'opacity-50' : ''
-                                        }`}
-                                        onClick={() => {
-                                            if (!disableButton) {
-                                                setSelectedStudent(student);
-                                                setIsShowDialogBox(true);
-                                            }
-                                        }}
-                                    >
-                                        <Trash
-                                            color="#D34645"
-                                            width={18}
-                                            height={18}
-                                        />
-                                    </div>
-                                )}
-                            </TableCell>
+                            <TableHead className="text-dark-gray font-bold">
+                                Performance
+                            </TableHead>
+                            <TableHead className="text-dark-gray font-bold">
+                                Action
+                            </TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody>
+                        {students.map((student, index) => (
+                            <TableRow className="border-none" key={student.id}>
+                                <TableCell className="font-medium">
+                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                        {student.index}
+                                    </span>
+                                </TableCell>
+                                <TableCell>
+                                    <span className="rounded flex gap-x-2 items-center">
+                                        <Image
+                                            src={student.image || DEFAULT_IMAGE}
+                                            width={30}
+                                            height={30}
+                                            alt="user"
+                                            style={{
+                                                width: '30px',
+                                                height: '30px',
+                                                objectFit: 'fill',
+                                                borderRadius: '50%',
+                                            }}
+                                        />
+                                        <span>{student.name}</span>
+                                    </span>
+                                </TableCell>
+
+                                <TableCell className="text-dark-gray">
+                                    {student.email}
+                                </TableCell>
+                                {!isTeacherDashboardTable && (
+                                    <TableCell className="text-dark-gray">
+                                        {student.grade}
+                                    </TableCell>
+                                )}
+                                <TableCell className="text-dark-gray">
+                                    {`${student.performance} %`}
+                                </TableCell>
+                                <TableCell className="flex justify-start space-x-2 items-center p-0 mt-5 ml-3">
+                                    {!isClassroomTable && (
+                                        <div
+                                            className=" bg-light-orange rounded-md p-1 cursor-pointer"
+                                            onClick={() =>
+                                                !isClassroomTable
+                                                    ? handleClick(index)
+                                                    : handleOpenStudentModal(
+                                                          student
+                                                      )
+                                            }
+                                        >
+                                            <Eye
+                                                color="#F59A3B"
+                                                width={18}
+                                                height={18}
+                                            />
+                                        </div>
+                                    )}
+                                    {!isTeacherDashboardTable && (
+                                        <div
+                                            className="bg-green-100 rounded-md p-1 cursor-pointer"
+                                            onClick={() =>
+                                                handleOpenStudentModal(student)
+                                            }
+                                        >
+                                            <EditIcon width={22} height={22} />
+                                        </div>
+                                    )}
+                                    {!isTeacherDashboardTable && (
+                                        <div
+                                            className={`bg-red-100 rounded-md p-1 cursor-pointer ${
+                                                disableButton
+                                                    ? 'opacity-50'
+                                                    : ''
+                                            }`}
+                                            onClick={() => {
+                                                if (!disableButton) {
+                                                    setSelectedStudent(student);
+                                                    setIsShowDialogBox(true);
+                                                }
+                                            }}
+                                        >
+                                            <Trash
+                                                color="#D34645"
+                                                width={18}
+                                                height={18}
+                                            />
+                                        </div>
+                                    )}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            ) : (
+                <div className="flex justify-center items-center">
+                    {' '}
+                    No student found!
+                </div>
+            )}
+
             {isShowStudentModal && (
                 <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[40%] md:w-[60%] lg:max-w-[400px] xl:max-w-[400px] 2xl:max-w-[400px]">
                     <ClassroomModal
