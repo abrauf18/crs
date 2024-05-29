@@ -13,9 +13,7 @@ import FormError from './FormError';
 
 export default function AttempVideoQuestion({
     question,
-    setCurrentQuestion,
-    setPlaying,
-    handlePlayAfterQuestion,
+    continueVideo,
 }: {
     question: {
         statement: string;
@@ -29,9 +27,7 @@ export default function AttempVideoQuestion({
             obtainedMarks: number;
         };
     };
-    setCurrentQuestion: (question: null) => void;
-    setPlaying: (isPlaying: boolean) => void;
-    handlePlayAfterQuestion: () => void;
+    continueVideo: () => void;
 }) {
     const methods = useForm({
         mode: 'onChange',
@@ -52,10 +48,17 @@ export default function AttempVideoQuestion({
     }, [question]);
 
     function handleUpload(formData: any) {
-        const { selectedOption } = methods.getValues();
-        setCurrentQuestion(null);
-        setPlaying(true);
-        handlePlayAfterQuestion();
+        if (questionType === 'mcq') {
+            // Check if selected option is correct
+            if (formData.selectedOption === question.correctOption) {
+                // Handle correct answer
+            } else {
+                // Handle incorrect answer
+            }
+        } else {
+            console.log(formData);
+        }
+        continueVideo();
     }
 
     return (
