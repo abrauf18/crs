@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Poppins } from 'next/font/google';
-import { Eye, LucideFileQuestion, Trash } from 'lucide-react';
+import { Eye, LucideFileQuestion, PlayIcon, Trash } from 'lucide-react';
 import {
     DEFAULT_RESOURCE,
     Resource,
@@ -38,14 +38,22 @@ interface Topic {
     type: ResourceType;
     topic: string;
     videoId?: string;
+    watched?: boolean;
+    completed?: boolean;
 }
 
 function StandardTable({
     topicList,
+    released,
+    isShownFromAdmin,
     isShownFromTeacher,
+    isShownFromStudent,
 }: {
     topicList: Topic[];
+    released?: boolean;
+    isShownFromAdmin?: boolean;
     isShownFromTeacher?: boolean;
+    isShownFromStudent?: boolean;
 }) {
     const router = useRouter();
     const pathname = usePathname();
@@ -88,18 +96,22 @@ function StandardTable({
         contentId: string,
         topic: string
     ) => {
+        if (isShownFromAdmin) {
+            if (type === ResourceType.VIDEO) {
+                return router.push(`/admin/video/${contentId}`);
+            }
+            return router.push(
+                `/admin/resources/${convertSpacesToDashes(topic)}/${
+                    ResourceToPath[type]
+                }/${contentId}`
+            );
+        }
+
         if (isShownFromTeacher) {
             return router.push(`${pathname}/${type}/${contentId}`);
         }
 
-        if (type === ResourceType.VIDEO) {
-            return router.push(`/admin/video/${contentId}`);
-        }
-        return router.push(
-            `/admin/resources/${convertSpacesToDashes(topic)}/${
-                ResourceToPath[type]
-            }/${contentId}`
-        );
+        return router.push(`${pathname}/${type}/${contentId}`);
     };
 
     return (
@@ -147,13 +159,44 @@ function StandardTable({
                                 {topic.type}
                             </TableCell>
                             <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
-                                <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
-                                    <Eye
-                                        color="#F59A3B"
-                                        width={18}
-                                        height={18}
-                                        onClick={() =>
-                                            topic.type !== ResourceType.VIDEO
+                                {!isShownFromStudent && (
+                                    <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
+                                        <Eye
+                                            color="#F59A3B"
+                                            width={18}
+                                            height={18}
+                                            onClick={() =>
+                                                topic.type !==
+                                                ResourceType.VIDEO
+                                                    ? viewResource(
+                                                          topic.type,
+                                                          topic.resourceId,
+                                                          topic.topic
+                                                      )
+                                                    : viewResource(
+                                                          topic.type,
+                                                          topic.videoId ?? '',
+                                                          topic.name
+                                                      )
+                                            }
+                                        />
+                                    </div>
+                                )}
+                                {isShownFromStudent && (
+                                    <div
+                                        className={`flex space-x-2 items-center border w-fit py-2 px-4 rounded-xl cursor-pointer ${
+                                            !released
+                                                ? 'bg-gray-300 text-white'
+                                                : topic.completed
+                                                  ? 'bg-white text-black border-green-500'
+                                                  : 'bg-primary-color text-white'
+                                        }`}
+                                        onClick={() => {
+                                            if (!released) {
+                                                return null;
+                                            }
+                                            return topic.type !==
+                                                ResourceType.VIDEO
                                                 ? viewResource(
                                                       topic.type,
                                                       topic.resourceId,
@@ -163,11 +206,35 @@ function StandardTable({
                                                       topic.type,
                                                       topic.videoId ?? '',
                                                       topic.name
-                                                  )
-                                        }
-                                    />
-                                </div>
-                                {!isShownFromTeacher && (
+                                                  );
+                                        }}
+                                    >
+                                        {topic.type === ResourceType.VIDEO ? (
+                                            <>
+                                                <PlayIcon
+                                                    stroke={
+                                                        topic.watched &&
+                                                        topic.completed
+                                                            ? `black`
+                                                            : `white`
+                                                    }
+                                                />
+                                                <p>
+                                                    {!topic.watched
+                                                        ? 'Play'
+                                                        : topic.completed
+                                                          ? 'Play'
+                                                          : 'Continue'}
+                                                </p>
+                                            </>
+                                        ) : (
+                                            <p className="py-0.5 px-2.5">
+                                                Open
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                                {isShownFromAdmin && (
                                     <div className="mr-2 rounded-md cursor-pointer">
                                         <EditIcon
                                             width={28}

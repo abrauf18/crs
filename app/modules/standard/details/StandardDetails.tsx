@@ -14,27 +14,34 @@ interface Topic {
     type: ResourceType;
     topic: string;
     videoId?: string;
+    watched?: boolean;
+    completed?: boolean;
 }
 interface DailyUpload {
     date: string;
+    released?: boolean;
     topics: Topic[];
 }
 type StandardDetailsProps = {
     params: {
         id: string;
     };
-    isShownFromTeacher?: boolean;
     name?: string;
     description?: string;
     dailyUploads?: DailyUpload[];
+    isShownFromAdmin?: boolean;
+    isShownFromTeacher?: boolean;
+    isShownFromStudent?: boolean;
 };
 
 function StandardDetails({
     params,
-    isShownFromTeacher,
     name,
     description,
     dailyUploads,
+    isShownFromAdmin = false,
+    isShownFromTeacher = false,
+    isShownFromStudent = false,
 }: StandardDetailsProps) {
     const { data, status } = useSession();
     const [isShowModal, setIsShowModal] = useState(false);
@@ -74,7 +81,9 @@ function StandardDetails({
                 <StandardCard
                     key={dailyUpload.date}
                     dailyUpload={dailyUpload}
+                    isShownFromAdmin={isShownFromAdmin}
                     isShownFromTeacher={isShownFromTeacher}
+                    isShownFromStudent={isShownFromStudent}
                 />
             ))}
 
