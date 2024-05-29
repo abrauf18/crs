@@ -25,7 +25,13 @@ export default function StudentVideo({
         options: { [key: string]: string };
         correctOption: string;
         correctOptionExplanation: string;
+        totalMarks: number;
         popUpTime: string;
+        attempt: {
+            id: string;
+            answer: string;
+            obtainedMarks: number;
+        };
     }[];
     lastSeenTime: string;
 }) {

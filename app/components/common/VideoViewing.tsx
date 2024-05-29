@@ -45,6 +45,12 @@ export default function VideoViewing({
         correctOption: string;
         correctOptionExplanation: string;
         popUpTime: string;
+        totalMarks: number;
+        answer?: {
+            id: string;
+            answer: string;
+            obtainedMarks: number;
+        };
     }[];
     studentLastPlayedTime?: React.MutableRefObject<number>;
     lastSeenTime?: string;
@@ -65,6 +71,12 @@ export default function VideoViewing({
         options: { [key: string]: string };
         correctOption: string;
         correctOptionExplanation: string;
+        totalMarks: number;
+        attempt?: {
+            id: string;
+            answer: string;
+            obtainedMarks: number;
+        };
     } | null>(null);
 
     const topicsArray = Object.entries(topics).map(([popupTime, topic]) => ({

@@ -3,11 +3,36 @@ import { Session, getServerSession } from 'next-auth';
 import { getResourceAPI } from '@/app/api/resource';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import { Resource, ResourceType, Video } from '@/lib/utils';
+import { Resource, ResourceType } from '@/lib/utils';
 import FileViewing from '@/app/components/common/FileViewing';
 import VideoViewing from '@/app/components/common/VideoViewing';
 import { getStudentVideoAPI } from '@/app/api/student';
 import StudentVideo from '@/app/components/common/StudentVideo';
+
+export interface Video {
+    id: string;
+    resourceId: string;
+    thumbnailURL: string;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    videoUrl: string;
+    questions: {
+        statement: string;
+        options: { [key: string]: string };
+        correctOption: string;
+        correctOptionExplanation: string;
+        totalMarks: number;
+        popUpTime: string;
+        attempt: {
+            id: string;
+            answer: string;
+            obtainedMarks: number;
+        };
+    }[];
+    topics: { [key: string]: string };
+    lastSeenTime?: string;
+}
 
 async function ResourceDetailsPage({
     params,
