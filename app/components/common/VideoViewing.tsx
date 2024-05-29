@@ -1,25 +1,40 @@
 'use client';
 
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useRef, useState } from 'react';
+import { Session } from 'next-auth';
 import ReactPlayer from 'react-player';
-import { useSession } from 'next-auth/react';
-import { timeStringToSeconds } from '@/lib/utils';
-import MovieIcon from '@/app/assets/icons/MovieIcon';
-
+import { toast } from 'react-toastify';
+import { usePathname } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Table,
     TableBody,
     TableCell,
     TableRow,
 } from '@/app/components/ui/table';
+import {
+    UpdateStudentVideoCompletedAPI,
+    UpdateStudentVideoLastSeenTime,
+} from '@/app/api/student';
+import action from '@/app/action';
+import MovieIcon from '@/app/assets/icons/MovieIcon';
+import { secondsToString, timeStringToSeconds } from '@/lib/utils';
 import VideoQuestion from './VideoQuestion';
+// import PageLoader from './PageLoader';
+
+function getVideoIdFromPathname(path: string) {
+    const parts = path.split('/');
+    return parts[parts.length - 1];
+}
 
 export default function VideoViewing({
     videoURL,
     thumbnailURL,
     topics,
     questions,
+    studentLastPlayedTime,
+    lastSeenTime,
+    data,
 }: {
     videoURL: string;
     thumbnailURL: string;
@@ -31,11 +46,20 @@ export default function VideoViewing({
         correctOptionExplanation: string;
         popUpTime: string;
     }[];
+    studentLastPlayedTime?: React.MutableRefObject<number>;
+    lastSeenTime?: string;
+    data?: Session;
 }) {
-    const { data } = useSession();
+    const pathname = usePathname();
+    const isMountedRef = useRef(true);
     const playerRef = useRef<ReactPlayer>(null);
     const [playing, setPlaying] = useState(true);
-    const [lastPlayedTime, setLastPlayedTime] = useState<number>(0);
+    const videoId = getVideoIdFromPathname(pathname);
+    const [videoReady, setVideoReady] = useState(false);
+    // const [isMounted, setIsMounted] = useState(false);
+    const [lastPlayedTime, setLastPlayedTime] = useState<number>(
+        lastSeenTime ? timeStringToSeconds(lastSeenTime) : 0
+    );
     const [currentQuestion, setCurrentQuestion] = useState<{
         statement: string;
         options: { [key: string]: string };
@@ -71,21 +95,16 @@ export default function VideoViewing({
                 ) < 1
         );
 
+        if (studentLastPlayedTime) {
+            studentLastPlayedTime.current = currentPlayedSeconds;
+        }
+
         if (matchedQuestion) {
             setLastPlayedTime(currentPlayedSeconds + 2);
             setPlaying(false);
             setCurrentQuestion(matchedQuestion);
         }
     };
-
-    useEffect(() => {
-        if (currentQuestion === null && lastPlayedTime !== null) {
-            setPlaying(true);
-            if (playerRef.current) {
-                playerRef.current.seekTo(lastPlayedTime);
-            }
-        }
-    }, [currentQuestion, lastPlayedTime]);
 
     const handlePlayAfterQuestion = () => {
         if (currentQuestion === null && lastPlayedTime !== null) {
@@ -95,6 +114,128 @@ export default function VideoViewing({
             }
         }
     };
+
+    const handleVideoEnd = async () => {
+        try {
+            if (!data || !videoId || data?.user?.role !== 'student') {
+                return;
+            }
+
+            const APIresponse = await UpdateStudentVideoCompletedAPI({
+                accessToken: data?.user?.accessToken,
+                studentId: data?.user?.id,
+                videoId,
+                lastSeenTime: secondsToString(
+                    studentLastPlayedTime?.current ?? 0
+                ),
+                watchedCompletely: true,
+            });
+
+            if (APIresponse.status !== 200) {
+                throw new Error('Error updating video last seen time');
+            }
+
+            action('getStudentStandardAPI');
+            // toast.success('Video last seen time updated successfully');
+        } catch (error: any) {
+            // toast.error(error.message || 'Error updating video last seen time');
+        }
+    };
+
+    useEffect(() => {
+        if (currentQuestion === null && lastPlayedTime !== null && videoReady) {
+            setPlaying(true);
+            if (playerRef.current) {
+                playerRef.current.seekTo(lastPlayedTime);
+            }
+        }
+    }, [videoReady, currentQuestion, lastPlayedTime]);
+
+    useEffect(() => {
+        const handleBeforeUnload = async (event: BeforeUnloadEvent) => {
+            try {
+                if (!data || !videoId || data?.user?.role !== 'student') {
+                    return;
+                }
+
+                const APIresponse = await UpdateStudentVideoLastSeenTime({
+                    accessToken: data?.user?.accessToken,
+                    studentId: data?.user?.id,
+                    videoId,
+                    lastSeenTime: secondsToString(
+                        studentLastPlayedTime?.current ?? 0
+                    ),
+                });
+
+                if (APIresponse.status !== 200) {
+                    throw new Error('Error updating video last seen time');
+                }
+
+                action('getStudentStandardAPI');
+                // toast.success('Video last seen time updated successfully');
+            } catch (error: any) {
+                // toast.error(
+                //     error.message || 'Error updating video last seen time'
+                // );
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            isMountedRef.current = false;
+            if (!isMountedRef.current) {
+                window.removeEventListener('beforeunload', handleBeforeUnload);
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        const updateLastSeenTime = async () => {
+            try {
+                if (!data || !videoId || data?.user?.role !== 'student') {
+                    return;
+                }
+
+                const APIresponse = await UpdateStudentVideoLastSeenTime({
+                    accessToken: data?.user?.accessToken,
+                    studentId: data?.user?.id,
+                    videoId,
+                    lastSeenTime: secondsToString(
+                        studentLastPlayedTime?.current ?? 0
+                    ),
+                });
+
+                if (APIresponse.status !== 200) {
+                    throw new Error('Error updating video last seen time');
+                }
+
+                action('getStudentStandardAPI');
+                // toast.success('Video last seen time updated successfully');
+            } catch (error: any) {
+                // toast.error(
+                //     error.message || 'Error updating video last seen time'
+                // );
+            }
+        };
+
+        return () => {
+            isMountedRef.current = false;
+            if (!isMountedRef.current) {
+                updateLastSeenTime();
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // useEffect(() => {
+    //     setIsMounted(true);
+    // }, []);
+
+    // if (!isMounted) {
+    //     return <PageLoader />;
+    // }
 
     return (
         <div>
@@ -119,6 +260,8 @@ export default function VideoViewing({
                             playing={playing}
                             onProgress={handleVideoProgress}
                             className="mb-4"
+                            onEnded={handleVideoEnd}
+                            onReady={() => setVideoReady(true)}
                         />
                     </div>
                     {topicsArray.length > 0 && (

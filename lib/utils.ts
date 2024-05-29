@@ -175,6 +175,7 @@ export interface Video {
         popUpTime: string
     }[],
     topics: { [key: string]: string }
+    lastSeenTime?: string
 }
 
 
