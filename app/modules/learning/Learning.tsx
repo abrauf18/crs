@@ -136,8 +136,15 @@ export const standards = [
         third: 'Course Length (2 Weeks)',
     },
 ];
+type StandardData = {
+    id: string;
+    name: string;
+    courseLength: string;
+    totalVideoUploads: string;
+    totalNonVideoUploads: string;
+};
 
-function Learning() {
+function Learning({ standards }: { standards: StandardData[] }) {
     return (
         <div>
             <Searchbar
@@ -151,41 +158,7 @@ function Learning() {
             </div>
 
             <div className="my-8">
-                <LearningCard />
-            </div>
-
-            <div className="flex flex-col lg:flex-row justify-between mt-8  items-end lg:items-center  ">
-                <div>
-                    <div className="flex items-center space-x-2">
-                        <File color="green" />
-                        <p className="font-semibold text-2xl ">
-                            Artificial Intelligence - AI
-                        </p>
-                    </div>
-                    <p className="text-dark-gray font-medium  mt-1">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore
-                    </p>
-                </div>
-                {/* <p className="border py-3 px-4 mt-2 lg:mt-0 text-center rounded-lg h-fit lg:w-fit font-semibold bg-sky-400 lg:hover:bg-sky-500 text-white ">
-                    Continue Learning
-                </p> */}
-            </div>
-
-            <div className="border rounded-lg p-5 mt-5">
-                <div className="flex space-x-2 items-center mb-2">
-                    <CalendarDays color="orange" size={20} />
-                    <p className="font-semibold text-lg">Day 1</p>
-                </div>
-                <LearningTable learnings={LearningRecord} isSubmitAssignment />
-            </div>
-
-            <div className="border rounded-lg p-5 mt-5">
-                <div className="flex space-x-2 items-center mb-2">
-                    <CalendarDays color="orange" size={20} />
-                    <p className="font-semibold text-lg">Day 2</p>
-                </div>
-                <LearningTable learnings={LearningRecord2} />
+                <LearningCard standards={standards} />
             </div>
         </div>
     );
