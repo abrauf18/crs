@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import CharacterImage from '@/app/assets/images/character.svg';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
+import AngryCharacter from '@/app/assets/images/angryCharacter.svg';
 
 export default function AnsweredVideoMCQ({
     question,
@@ -25,12 +26,21 @@ export default function AnsweredVideoMCQ({
     return (
         <div className="flex h-[480px] bg-light-gray rounded-lg items-center justify-center gap-24">
             <div className="text-center mobile:hidden">
-                <Image
-                    src={CharacterImage}
-                    width={150}
-                    height={150}
-                    alt="quiz"
-                />
+                {question.attempt?.obtainedMarks === question.totalMarks ? (
+                    <Image
+                        src={CharacterImage}
+                        width={150}
+                        height={150}
+                        alt="quiz"
+                    />
+                ) : (
+                    <Image
+                        src={AngryCharacter}
+                        width={150}
+                        height={150}
+                        alt="quiz"
+                    />
+                )}
             </div>
             <div className="sm:basis-2/5">
                 <div className="text-lg">
