@@ -37,21 +37,20 @@ function VideoQuestion({
         handlePlayAfterQuestion();
     };
 
-    return (
-        // <AttempVideoQuestion
-        //     question={question}
-        //     continueVideo={continueVideo}
-        // />
-
-        // <AnsweredOpenVideoQuestion
-        //     answer={question?.attempt?.answer ?? ''}
-        //     answerWasCorrect={
-        //         (question?.attempt?.obtainedMarks ?? 0) >
-        //         question.totalMarks / 2
-        //     }
-        //     continueVideo={continueVideo}
-        // />
-
+    return !question.attempt ? (
+        <AttempVideoQuestion
+            question={question}
+            continueVideo={continueVideo}
+        />
+    ) : Object.keys(question.options).length === 0 ? (
+        <AnsweredOpenVideoQuestion
+            answer={question.attempt.answer ?? ''}
+            answerWasCorrect={
+                (question.attempt.obtainedMarks ?? 0) > question.totalMarks / 2
+            }
+            continueVideo={continueVideo}
+        />
+    ) : (
         <AnsweredVideoMCQ question={question} continueVideo={continueVideo} />
     );
 }
