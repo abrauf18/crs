@@ -34,7 +34,7 @@ export default function AnsweredOpenVideoQuestion({
                         />
                     </div>
                     <div className="flex flex-col items-baseline mb-3 justify-center">
-                        <span className="mt-12 text-sm font-semibold text-center">
+                        <span className="text-sm font-semibold text-center">
                             &quot;{answer}&quot;
                         </span>
                     </div>

@@ -107,7 +107,7 @@ export default function AttempVideoQuestion({
                             )}
                         >
                             <div className="flex items-center justify-center flex-col mb-8">
-                                <span className="flex items-center font-semibold">
+                                <span className="flex items-center font-semibold text-2xl">
                                     Question
                                     <QuestionMarkIcon fill="#7AA43E" />
                                 </span>
@@ -116,8 +116,8 @@ export default function AttempVideoQuestion({
                                 </span>
                             </div>
                             <div className="flex flex-col items-baseline mb-3">
-                                <span className="mt-12 text-sm font-semibold">
-                                    {question?.statement}
+                                <span className="text-xl font-semibold">
+                                    Question: {question?.statement}
                                 </span>
                                 <span className="mt-1 text-sm font-medium">
                                     Answer:
@@ -143,13 +143,10 @@ export default function AttempVideoQuestion({
                             {questionType === 'mcq' && (
                                 <>
                                     {Object.entries(question?.options).map(
-                                        (
-                                            [optionKey, optionValue],
-                                            optionIndex
-                                        ) => (
+                                        ([optionKey, optionValue]) => (
                                             <div
                                                 key={optionKey}
-                                                className="mt-2"
+                                                className="mt-3 bg-white px-4 py-1 rounded-xl"
                                             >
                                                 <input
                                                     type="radio"
