@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
+import action from '@/app/action';
 import { validationError } from '@/lib/utils';
 import CharacterImage from '@/app/assets/images/character.svg';
 import { createVideoQuestionAnswerAPI } from '@/app/api/student';
@@ -80,6 +81,7 @@ export default function AttempVideoQuestion({
                     'An error occured while submitting your answer'
             );
         }
+        action('getStudentVideo');
         continueVideo();
     };
 
