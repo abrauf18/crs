@@ -1,21 +1,26 @@
-import Image from 'next/image';
 import {
     useForm,
     SubmitHandler,
     FieldValues,
     FormProvider,
 } from 'react-hook-form';
+import Image from 'next/image';
+import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 import { validationError } from '@/lib/utils';
 import CharacterImage from '@/app/assets/images/character.svg';
+import { createVideoQuestionAnswerAPI } from '@/app/api/student';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 import FormError from './FormError';
+import PageLoader from './PageLoader';
 
 export default function AttempVideoQuestion({
     question,
     continueVideo,
 }: {
     question: {
+        id: string;
         statement: string;
         options: { [key: string]: string };
         correctOption: string;
@@ -29,6 +34,7 @@ export default function AttempVideoQuestion({
     };
     continueVideo: () => void;
 }) {
+    const { data } = useSession();
     const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -47,21 +53,39 @@ export default function AttempVideoQuestion({
         }
     }, [question]);
 
-    function handleUpload(formData: any) {
-        if (questionType === 'mcq') {
-            // Check if selected option is correct
-            if (formData.selectedOption === question.correctOption) {
-                // Handle correct answer
-            } else {
-                // Handle incorrect answer
+    const handleUpload = async (formData: any) => {
+        if (!data) {
+            return;
+        }
+        try {
+            const APIresponse = await createVideoQuestionAnswerAPI({
+                accessToken: data?.user?.accessToken,
+                userId: data?.user?.id,
+                questionId: question.id,
+                answer:
+                    questionType === 'mcq'
+                        ? formData.selectedOption
+                        : formData.statement,
+            });
+            if (APIresponse.status !== 200) {
+                throw new Error(
+                    APIresponse?.data?.message ||
+                        'An error occured while submitting your answer'
+                );
             }
-        } else {
-            console.log(formData);
+            toast.success('Answer submitted successfully');
+        } catch (error: any) {
+            toast.error(
+                error?.response?.data?.message ||
+                    'An error occured while submitting your answer'
+            );
         }
         continueVideo();
-    }
+    };
 
-    return (
+    return !data ? (
+        <PageLoader />
+    ) : (
         <div className="flex h-[480px] bg-light-gray rounded-lg items-center justify-center gap-24">
             <div className="text-center mobile:hidden">
                 <Image

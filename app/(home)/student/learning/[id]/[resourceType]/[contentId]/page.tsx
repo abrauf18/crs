@@ -18,6 +18,7 @@ export interface Video {
     name: string;
     videoUrl: string;
     questions: {
+        id: string;
         statement: string;
         options: { [key: string]: string };
         correctOption: string;

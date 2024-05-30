@@ -125,3 +125,27 @@ export const UpdateStudentVideoLastSeenTime = async ({
 
     return result;
 };
+
+export const createVideoQuestionAnswerAPI = async ({
+    accessToken,
+    userId,
+    questionId,
+    answer,
+}: {
+    accessToken: string;
+    userId: string;
+    questionId: string;
+    answer: string;
+}) => {
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/videoQuestionAnswer/createVideoQuestionAnswer`,
+        {
+            accessToken,
+            userId,
+            questionId,
+            answer,
+        }
+    );
+
+    return result;
+};

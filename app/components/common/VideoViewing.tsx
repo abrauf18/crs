@@ -40,6 +40,7 @@ export default function VideoViewing({
     thumbnailURL: string;
     topics: { [key: string]: string };
     questions: {
+        id: string;
         statement: string;
         options: { [key: string]: string };
         correctOption: string;
@@ -67,6 +68,7 @@ export default function VideoViewing({
         lastSeenTime ? timeStringToSeconds(lastSeenTime) : 0
     );
     const [currentQuestion, setCurrentQuestion] = useState<{
+        id: string;
         statement: string;
         options: { [key: string]: string };
         correctOption: string;
@@ -169,7 +171,6 @@ export default function VideoViewing({
                 if (!data || !videoId || data?.user?.role !== 'student') {
                     return;
                 }
-
                 const APIresponse = await UpdateStudentVideoLastSeenTime({
                     accessToken: data?.user?.accessToken,
                     studentId: data?.user?.id,

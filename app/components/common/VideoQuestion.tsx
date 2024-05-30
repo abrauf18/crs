@@ -14,6 +14,7 @@ function VideoQuestion({
     handlePlayAfterQuestion,
 }: {
     question: {
+        id: string;
         statement: string;
         options: { [key: string]: string };
         correctOption: string;
@@ -36,19 +37,19 @@ function VideoQuestion({
     };
 
     return (
-        // <AttempVideoQuestion
-        //     question={question}
-        //     continueVideo={continueVideo}
-        // />
-
-        <AnsweredOpenVideoQuestion
-            answer={question?.attempt?.answer ?? ''}
-            answerWasCorrect={
-                (question?.attempt?.obtainedMarks ?? 0) >
-                question.totalMarks / 2
-            }
+        <AttempVideoQuestion
+            question={question}
             continueVideo={continueVideo}
         />
+
+        // <AnsweredOpenVideoQuestion
+        //     answer={question?.attempt?.answer ?? ''}
+        //     answerWasCorrect={
+        //         (question?.attempt?.obtainedMarks ?? 0) >
+        //         question.totalMarks / 2
+        //     }
+        //     continueVideo={continueVideo}
+        // />
     );
 }
 

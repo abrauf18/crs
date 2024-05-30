@@ -21,6 +21,7 @@ export default function StudentVideo({
     thumbnailURL: string;
     topics: { [key: string]: string };
     questions: {
+        id: string;
         statement: string;
         options: { [key: string]: string };
         correctOption: string;
