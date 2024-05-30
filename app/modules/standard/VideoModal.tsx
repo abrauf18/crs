@@ -33,9 +33,17 @@ function VideoModal({
 }: {
     onClose: () => void;
     resourceType: ResourceType;
-    allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
+    allSelectedResources: {
+        resourceId: string;
+        resourceType: ResourceType;
+        name: string;
+    }[];
     setAllSelectedResources: (
-        resources: { resourceId: string; resourceType: ResourceType }[]
+        resources: {
+            resourceId: string;
+            resourceType: ResourceType;
+            name: string;
+        }[]
     ) => void;
     selectedIndex: number;
     updateSelectedResource: (resourceId: string) => void;
@@ -56,6 +64,7 @@ function VideoModal({
     const [selectedResource, setSelectedResource] = useState({
         resourceId: allSelectedResources[selectedIndex].resourceId ?? '',
         resourceType,
+        name: allSelectedResources[selectedIndex].name ?? '',
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -183,6 +192,7 @@ function VideoModal({
                                     setSelectedResource({
                                         resourceId: id,
                                         resourceType,
+                                        name: card.Text,
                                     });
                                     updateSelectedResource(id);
                                 }}
@@ -202,7 +212,11 @@ function VideoModal({
                             return resource;
                         })
                     );
-                    setSelectedResource({ resourceId: '', resourceType });
+                    setSelectedResource({
+                        resourceId: '',
+                        resourceType,
+                        name: '',
+                    });
                     onClose();
                 }}
             >

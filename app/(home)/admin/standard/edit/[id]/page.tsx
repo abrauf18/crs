@@ -9,6 +9,7 @@ import CreateStandard from '@/app/modules/standard/createStandard/CreateStandard
 interface Topic {
     resourceId: string;
     type: ResourceType;
+    name: string;
 }
 interface DailyUpload {
     date: string;
@@ -30,6 +31,7 @@ const DEFAULT_STANDARD = {
                 {
                     resourceId: '',
                     type: ResourceType.VIDEO,
+                    name: '',
                 },
             ],
         },

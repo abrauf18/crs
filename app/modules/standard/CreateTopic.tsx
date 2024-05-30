@@ -29,6 +29,7 @@ export const resourceDropDownOptions = [
 interface Topic {
     resourceId: string;
     type: ResourceType;
+    name: string;
 }
 interface DailyUpload {
     id: string;
@@ -52,9 +53,17 @@ function CreateTopic({
     errors,
 }: {
     index: number;
-    allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
+    allSelectedResources: {
+        resourceId: string;
+        resourceType: ResourceType;
+        name: string;
+    }[];
     setAllSelectedResources: (
-        resources: { resourceId: string; resourceType: ResourceType }[]
+        resources: {
+            resourceId: string;
+            resourceType: ResourceType;
+            name: string;
+        }[]
     ) => void;
     errors: FieldErrors<FormValues>;
 }) {
@@ -90,6 +99,7 @@ function CreateTopic({
             appendTopic({
                 resourceId: '',
                 type: ResourceType.VIDEO,
+                name: '',
             });
             topicAddedRef.current = true;
         }
@@ -122,12 +132,14 @@ function CreateTopic({
                         appendTopic({
                             resourceId: '',
                             type: ResourceType.VIDEO,
+                            name: '',
                         });
                         setAllSelectedResources([
                             ...(allSelectedResources || []),
                             {
                                 resourceId: '',
                                 resourceType: ResourceType.VIDEO,
+                                name: '',
                             },
                         ]);
                     }}
@@ -167,8 +179,7 @@ function CreateTopic({
                                     {allSelectedResources &&
                                         allSelectedResources.length >
                                             topicIndex &&
-                                        allSelectedResources[topicIndex]
-                                            .resourceId}
+                                        allSelectedResources[topicIndex].name}
                                 </div>
                             </div>
                         </div>

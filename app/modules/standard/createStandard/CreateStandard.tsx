@@ -24,6 +24,7 @@ export enum ResourceType {
 interface Topic {
     resourceId: string;
     type: ResourceType;
+    name: string;
 }
 interface DailyUpload {
     date: string;
@@ -92,17 +93,27 @@ function CreateStandard({
             upload.topics.map((resource) => ({
                 resourceId: resource.resourceId,
                 resourceType: resource.type,
+                name: resource.name,
             }))
         );
     const [allSelectedResources, setAllSelectedResources] = useState<
         {
             resourceId: string;
             resourceType: ResourceType;
+            name: string;
         }[][]
     >(
         defaultSelectedResources && defaultSelectedResources.length > 0
             ? defaultSelectedResources
-            : [[{ resourceId: '', resourceType: ResourceType.VIDEO }]]
+            : [
+                  [
+                      {
+                          resourceId: '',
+                          resourceType: ResourceType.VIDEO,
+                          name: '',
+                      },
+                  ],
+              ]
     );
     const methods = useForm<FormValues>({
         defaultValues: update ? transformedData : DEFAULT_FORM_VALUES,
@@ -198,6 +209,7 @@ function CreateStandard({
                     {
                         resourceId: '',
                         type: ResourceType.VIDEO,
+                        name: '',
                     },
                 ],
             });
@@ -300,6 +312,7 @@ function CreateStandard({
                                         resources: {
                                             resourceId: string;
                                             resourceType: ResourceType;
+                                            name: string;
                                         }[]
                                     ) => {
                                         const updatedResources = [
@@ -346,6 +359,7 @@ function CreateStandard({
                                         {
                                             resourceId: '',
                                             type: ResourceType.VIDEO,
+                                            name: '',
                                         },
                                     ],
                                 });
@@ -355,6 +369,7 @@ function CreateStandard({
                                         {
                                             resourceId: '',
                                             resourceType: ResourceType.VIDEO,
+                                            name: '',
                                         },
                                     ],
                                 ]);
