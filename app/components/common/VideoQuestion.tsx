@@ -6,6 +6,7 @@ import CharacterImage from '@/app/assets/images/character.svg';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 import AttempVideoQuestion from './AttempVideoQuestion';
 import AnsweredOpenVideoQuestion from './AnsweredOpenVideoQuestion';
+import AnsweredVideoMCQ from './AnsweredVideoMCQ';
 
 function VideoQuestion({
     question,
@@ -37,10 +38,10 @@ function VideoQuestion({
     };
 
     return (
-        <AttempVideoQuestion
-            question={question}
-            continueVideo={continueVideo}
-        />
+        // <AttempVideoQuestion
+        //     question={question}
+        //     continueVideo={continueVideo}
+        // />
 
         // <AnsweredOpenVideoQuestion
         //     answer={question?.attempt?.answer ?? ''}
@@ -50,6 +51,8 @@ function VideoQuestion({
         //     }
         //     continueVideo={continueVideo}
         // />
+
+        <AnsweredVideoMCQ question={question} continueVideo={continueVideo} />
     );
 }
 
