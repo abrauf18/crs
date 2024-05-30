@@ -3,7 +3,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Session } from 'next-auth';
 import ReactPlayer from 'react-player';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -15,11 +15,13 @@ import {
 import {
     UpdateStudentVideoCompletedAPI,
     UpdateStudentVideoLastSeenTime,
+    createVideoQuestionAnswerAPI,
 } from '@/app/api/student';
 import action from '@/app/action';
 import MovieIcon from '@/app/assets/icons/MovieIcon';
 import { secondsToString, timeStringToSeconds } from '@/lib/utils';
 import VideoQuestion from './VideoQuestion';
+import DialogBox from './DialogBox';
 // import PageLoader from './PageLoader';
 
 function getVideoIdFromPathname(path: string) {
@@ -47,7 +49,7 @@ export default function VideoViewing({
         correctOptionExplanation: string;
         popUpTime: string;
         totalMarks: number;
-        answer?: {
+        attempt?: {
             id: string;
             answer: string;
             obtainedMarks: number;
@@ -60,6 +62,10 @@ export default function VideoViewing({
     const pathname = usePathname();
     const isMountedRef = useRef(true);
     const playerRef = useRef<ReactPlayer>(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [answeredQuestions, setAnsweredQuestions] = useState(
+        questions.map((question) => question.attempt !== undefined)
+    );
     const [playing, setPlaying] = useState(true);
     const videoId = getVideoIdFromPathname(pathname);
     const [videoReady, setVideoReady] = useState(false);
@@ -129,12 +135,38 @@ export default function VideoViewing({
         }
     };
 
-    const handleVideoEnd = async () => {
-        try {
-            if (!data || !videoId || data?.user?.role !== 'student') {
-                return;
+    const handleConfirmLeavingQuestions = async () => {
+        setIsDialogOpen(false);
+        if (!data || !videoId || data?.user?.role !== 'student') {
+            return;
+        }
+        answeredQuestions.forEach(async (isAnswered, i) => {
+            if (!isAnswered) {
+                try {
+                    const question = questions[i];
+                    const APIresponse = await createVideoQuestionAnswerAPI({
+                        accessToken: data?.user?.accessToken,
+                        userId: data?.user?.id,
+                        questionId: question.id,
+                        answer: '',
+                    });
+                    if (APIresponse.status !== 200) {
+                        throw new Error(
+                            APIresponse?.data?.message ||
+                                'An error occured while submitting your answer'
+                        );
+                    }
+                    // toast.success('Answer submitted successfully');
+                } catch (error: any) {
+                    // toast.error(
+                    //     error?.response?.data?.message ||
+                    //         'An error occured while submitting your answer'
+                    // );
+                }
             }
-
+        });
+        action('getStudentVideo');
+        try {
             const APIresponse = await UpdateStudentVideoCompletedAPI({
                 accessToken: data?.user?.accessToken,
                 studentId: data?.user?.id,
@@ -142,7 +174,7 @@ export default function VideoViewing({
                 lastSeenTime: secondsToString(
                     studentLastPlayedTime?.current ?? 0
                 ),
-                watchedCompletely: true,
+                watchedCompletely: false,
             });
 
             if (APIresponse.status !== 200) {
@@ -150,10 +182,43 @@ export default function VideoViewing({
             }
 
             action('getStudentStandardAPI');
-            // toast.success('Video last seen time updated successfully');
         } catch (error: any) {
             // toast.error(error.message || 'Error updating video last seen time');
         }
+    };
+
+    const handleCancelLeavingQuestions = () => {
+        setIsDialogOpen(false);
+    };
+
+    const handleVideoEnd = async () => {
+        if (!data || !videoId || data?.user?.role !== 'student') {
+            return;
+        }
+        if (answeredQuestions.some((answered) => answered === false)) {
+            setIsDialogOpen(true);
+        } else {
+            try {
+                const APIresponse = await UpdateStudentVideoCompletedAPI({
+                    accessToken: data?.user?.accessToken,
+                    studentId: data?.user?.id,
+                    videoId,
+                    lastSeenTime: secondsToString(
+                        studentLastPlayedTime?.current ?? 0
+                    ),
+                    watchedCompletely: true,
+                });
+
+                if (APIresponse.status !== 200) {
+                    throw new Error('Error updating video last seen time');
+                }
+
+                action('getStudentStandardAPI');
+            } catch (error: any) {
+                // toast.error(error.message || 'Error updating video last seen time');
+            }
+        }
+        // toast.success('Video last seen time updated successfully');
     };
 
     useEffect(() => {
@@ -249,78 +314,100 @@ export default function VideoViewing({
     // if (!isMounted) {
     //     return <PageLoader />;
     // }
-
+    console.log(isDialogOpen);
     return (
-        <div>
-            {currentQuestion ? (
-                <div>
-                    <VideoQuestion
-                        question={currentQuestion}
-                        setCurrentQuestion={setCurrentQuestion}
-                        setPlaying={setPlaying}
-                        handlePlayAfterQuestion={handlePlayAfterQuestion}
-                    />
-                </div>
-            ) : (
-                <div>
-                    <div className="text-lg flex justify-center">
-                        <ReactPlayer
-                            ref={playerRef}
-                            url={videoURL}
-                            width="800px"
-                            height="450px"
-                            controls
-                            playing={playing}
-                            onProgress={handleVideoProgress}
-                            className="mb-4"
-                            onEnded={handleVideoEnd}
-                            onReady={() => setVideoReady(true)}
+        <>
+            <div>
+                {currentQuestion ? (
+                    <div>
+                        <VideoQuestion
+                            question={currentQuestion}
+                            setCurrentQuestion={setCurrentQuestion}
+                            setPlaying={setPlaying}
+                            handlePlayAfterQuestion={handlePlayAfterQuestion}
                         />
                     </div>
-                    {topicsArray.length > 0 && (
-                        <div className="mt-4 border-2 border-light-gray p-2">
-                            <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
-                                Checkpoints
-                            </h2>
-                            <Table className="text-center">
-                                <TableBody>
-                                    {sortedTopics.map(
-                                        ({ popupTime, topic }, index) => (
-                                            <TableRow key={topic}>
-                                                <TableCell>
-                                                    {index + 1}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <span className="rounded flex gap-x-2 items-center justify-center">
-                                                        <MovieIcon />
-                                                        {topic}
-                                                    </span>
-                                                </TableCell>
-                                                <TableCell>
-                                                    {popupTime}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <button
-                                                        type="button"
-                                                        className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
-                                                        onClick={() =>
-                                                            handlePlayTopic(
-                                                                popupTime
-                                                            )
-                                                        }
-                                                    >
-                                                        Play
-                                                    </button>
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    )}
-                                </TableBody>
-                            </Table>
+                ) : (
+                    <div>
+                        <div className="text-lg flex justify-center">
+                            <ReactPlayer
+                                ref={playerRef}
+                                url={videoURL}
+                                width="800px"
+                                height="450px"
+                                controls
+                                playing={playing}
+                                onProgress={handleVideoProgress}
+                                className="mb-4"
+                                onEnded={handleVideoEnd}
+                                onReady={() => setVideoReady(true)}
+                            />
                         </div>
-                    )}
-                </div>
+                        {topicsArray.length > 0 && (
+                            <div className="mt-4 border-2 border-light-gray p-2">
+                                <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    Checkpoints
+                                </h2>
+                                <Table className="text-center">
+                                    <TableBody>
+                                        {sortedTopics.map(
+                                            ({ popupTime, topic }, index) => (
+                                                <TableRow key={topic}>
+                                                    <TableCell>
+                                                        {index + 1}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <span className="rounded flex gap-x-2 items-center justify-center">
+                                                            <MovieIcon />
+                                                            {topic}
+                                                        </span>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {popupTime}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <button
+                                                            type="button"
+                                                            className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
+                                                            onClick={() =>
+                                                                handlePlayTopic(
+                                                                    popupTime
+                                                                )
+                                                            }
+                                                        >
+                                                            Play
+                                                        </button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+            {isDialogOpen && (
+                <DialogBox
+                    isOpen={isDialogOpen}
+                    message={`There ${
+                        answeredQuestions.filter((answered) => !answered)
+                            .length > 1
+                            ? 'are'
+                            : 'is'
+                    } still ${
+                        answeredQuestions.filter((answered) => !answered).length
+                    } ${
+                        answeredQuestions.filter((answered) => !answered)
+                            .length > 1
+                            ? 'questions'
+                            : 'question'
+                    } remaining to be answered. Are you sure you want submit them empty ?`}
+                    onYes={handleConfirmLeavingQuestions}
+                    onNo={handleCancelLeavingQuestions}
+                />
             )}
-        </div>
+        </>
     );
 }
