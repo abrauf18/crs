@@ -18,23 +18,23 @@ export default function AnsweredOpenVideoQuestion({
                 <div className="text-lg">
                     <div className="flex items-center justify-center flex-col mb-8">
                         <span className="flex items-center font-semibold">
-                            Correct Answer
+                            Submitted Answer
                             <QuestionMarkIcon fill="#7AA43E" />
                         </span>
-                        <span className="text-dark-gray text-sm font-medium flex items-center justify-center">
-                            The Answer is Correct Continue Watching
+                        <span className="text-dark-gray text-sm font-medium text-center flex items-center justify-center">
+                            Your Answer has been submitted Continue Watching
                         </span>
                     </div>
-                    <div className="flex justify-center mobile:hidden">
+                    <div className="flex justify-center">
                         <Image
                             src={CharacterImage}
-                            width={150}
-                            height={150}
+                            width={100}
+                            height={100}
                             alt="quiz"
                         />
                     </div>
                     <div className="flex flex-col items-baseline mb-3 justify-center">
-                        <span className="mt-12 text-sm font-semibold">
+                        <span className="mt-12 text-sm font-semibold text-center">
                             &quot;{answer}&quot;
                         </span>
                     </div>
