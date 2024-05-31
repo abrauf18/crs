@@ -28,7 +28,7 @@ async function uploadFileToS3(
     const params: PutObjectRequest = {
         Bucket: process.env.AWS_BUCKET || 'default-bucket',
         Key: userId
-            ? `${fileSaveDirectory}/${fileName}-${userId}`
+            ? `${fileSaveDirectory}/${userId}-${fileName}`
             : `${fileSaveDirectory}/${fileName}`,
         Body: fileBuffer,
         ContentType: contentType,
