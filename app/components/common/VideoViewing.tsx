@@ -83,12 +83,16 @@ export default function VideoViewing({
         popupTime,
         topic,
     }));
-
     const sortedTopics = topicsArray.sort((a, b) => {
         const popupTimeA = timeStringToSeconds(a.popupTime);
         const popupTimeB = timeStringToSeconds(b.popupTime);
         return popupTimeA - popupTimeB;
     });
+
+    const questionsArray = questions.map((question) => ({
+        popupTime: question.popUpTime,
+        totalMarks: question.totalMarks,
+    }));
 
     const handlePlayTopic = (popupTime: string) => {
         if (playerRef.current) {
@@ -381,6 +385,54 @@ export default function VideoViewing({
                                                             }
                                                         >
                                                             Play
+                                                        </button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        )}
+                        {questionsArray.length > 0 && (
+                            <div className="mt-4 border-2 border-light-gray p-2">
+                                <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    Questions
+                                </h2>
+                                <Table className="text-center">
+                                    <TableBody>
+                                        {questionsArray.map(
+                                            (
+                                                { popupTime, totalMarks },
+                                                index
+                                            ) => (
+                                                <TableRow key={popupTime}>
+                                                    <TableCell>
+                                                        {index + 1}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <span className="rounded flex gap-x-2 items-center justify-center">
+                                                            {String(totalMarks)}
+                                                        </span>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {popupTime}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <button
+                                                            type="button"
+                                                            className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
+                                                            onClick={() =>
+                                                                handlePlayTopic(
+                                                                    popupTime
+                                                                )
+                                                            }
+                                                        >
+                                                            {answeredQuestions[
+                                                                index
+                                                            ] === false
+                                                                ? 'Give Answer'
+                                                                : 'View Answer'}
                                                         </button>
                                                     </TableCell>
                                                 </TableRow>
