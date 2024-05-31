@@ -10,6 +10,8 @@ import {
     Table,
     TableBody,
     TableCell,
+    TableHead,
+    TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
 import {
@@ -352,96 +354,114 @@ export default function VideoViewing({
                                 onReady={() => setVideoReady(true)}
                             />
                         </div>
-                        {topicsArray.length > 0 && (
-                            <div className="mt-4 border-2 border-light-gray p-2">
-                                <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
-                                    Checkpoints
-                                </h2>
-                                <Table className="text-center">
-                                    <TableBody>
-                                        {sortedTopics.map(
-                                            ({ popupTime, topic }, index) => (
-                                                <TableRow key={topic}>
-                                                    <TableCell>
-                                                        {index + 1}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <span className="rounded flex gap-x-2 items-center justify-center">
-                                                            <MovieIcon />
+                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4">
+                            {topicsArray.length > 0 && (
+                                <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                        Checkpoints
+                                    </h2>
+                                    <Table className="text-center">
+                                        <TableHeader className="font-semibold whitespace-nowrap	">
+                                            <TableRow>
+                                                <TableCell>S.No</TableCell>
+                                                <TableCell>Topic</TableCell>
+                                                <TableCell>Time</TableCell>
+                                                <TableCell>Action</TableCell>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody className="whitespace-nowrap	">
+                                            {sortedTopics.map(
+                                                (
+                                                    { popupTime, topic },
+                                                    index
+                                                ) => (
+                                                    <TableRow key={topic}>
+                                                        <TableCell>
+                                                            {index + 1}
+                                                        </TableCell>
+                                                        <TableCell>
                                                             {topic}
-                                                        </span>
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {popupTime}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <button
-                                                            type="button"
-                                                            className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
-                                                            onClick={() =>
-                                                                handlePlayTopic(
-                                                                    popupTime
-                                                                )
-                                                            }
-                                                        >
-                                                            Play
-                                                        </button>
-                                                    </TableCell>
-                                                </TableRow>
-                                            )
-                                        )}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        )}
-                        {questionsArray.length > 0 && (
-                            <div className="mt-4 border-2 border-light-gray p-2">
-                                <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
-                                    Questions
-                                </h2>
-                                <Table className="text-center">
-                                    <TableBody>
-                                        {questionsArray.map(
-                                            (
-                                                { popupTime, totalMarks },
-                                                index
-                                            ) => (
-                                                <TableRow key={popupTime}>
-                                                    <TableCell>
-                                                        {index + 1}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <span className="rounded flex gap-x-2 items-center justify-center">
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {popupTime}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <button
+                                                                type="button"
+                                                                className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
+                                                                onClick={() =>
+                                                                    handlePlayTopic(
+                                                                        popupTime
+                                                                    )
+                                                                }
+                                                            >
+                                                                Play
+                                                            </button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+                            )}
+                            {questionsArray.length > 0 && (
+                                <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                        Questions
+                                    </h2>
+                                    <Table className="text-center">
+                                        <TableHeader className="font-semibold whitespace-nowrap	">
+                                            <TableRow>
+                                                <TableCell>Q.No</TableCell>
+                                                <TableCell>
+                                                    Total Marks
+                                                </TableCell>
+                                                <TableCell>Time</TableCell>
+                                                <TableCell>Action</TableCell>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody className="whitespace-nowrap	">
+                                            {questionsArray.map(
+                                                (
+                                                    { popupTime, totalMarks },
+                                                    index
+                                                ) => (
+                                                    <TableRow key={popupTime}>
+                                                        <TableCell>
+                                                            {index + 1}
+                                                        </TableCell>
+                                                        <TableCell>
                                                             {String(totalMarks)}
-                                                        </span>
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {popupTime}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <button
-                                                            type="button"
-                                                            className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
-                                                            onClick={() =>
-                                                                handlePlayTopic(
-                                                                    popupTime
-                                                                )
-                                                            }
-                                                        >
-                                                            {answeredQuestions[
-                                                                index
-                                                            ] === false
-                                                                ? 'Give Answer'
-                                                                : 'View Answer'}
-                                                        </button>
-                                                    </TableCell>
-                                                </TableRow>
-                                            )
-                                        )}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        )}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {popupTime}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <button
+                                                                type="button"
+                                                                className="bg-primary-color text-white px-2 py-2 rounded-lg hover:bg-orange-400"
+                                                                onClick={() =>
+                                                                    handlePlayTopic(
+                                                                        popupTime
+                                                                    )
+                                                                }
+                                                            >
+                                                                {answeredQuestions[
+                                                                    index
+                                                                ] === false
+                                                                    ? 'Give Answer'
+                                                                    : 'View Answer'}
+                                                            </button>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>

@@ -91,7 +91,7 @@ export default function AttempVideoQuestion({
     return !data ? (
         <PageLoader />
     ) : (
-        <div className="flex h-[480px] bg-light-gray rounded-lg items-center justify-center gap-24">
+        <div className="flex h-[480px] bg-light-gray rounded-lg items-center justify-center gap-24 relative">
             <div className="text-center mobile:hidden">
                 <Image
                     src={CharacterImage}
@@ -188,6 +188,9 @@ export default function AttempVideoQuestion({
                         </form>
                     </FormProvider>
                 </div>
+            </div>
+            <div className="absolute bottom-0 right-0 mb-6 text-dark-gray mr-6 text-[10px] font-semibold border p-2 rounded-lg">
+                <button type="button">I’ll Do it Later</button>
             </div>
         </div>
     );
