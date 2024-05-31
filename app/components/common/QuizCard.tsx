@@ -22,11 +22,19 @@ function VideoCard({
     selectedResource,
     setSelectResource,
 }: VideoCardProps) {
+    let resourceRenderingLink = '';
+    if (selectedResource?.resourceType === ResourceType.SLIDESHOW) {
+        resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+            card?.imageUrl?.toString()
+        )}`;
+    } else {
+        resourceRenderingLink = card?.imageUrl?.toString();
+    }
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
             <Link href="#" className="relative">
                 <iframe
-                    src={card?.imageUrl?.toString()}
+                    src={resourceRenderingLink}
                     title="Thumbnail Viewer"
                     className="w-72"
                     style={{ width: '20vh', height: '20vh' }}
