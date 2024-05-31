@@ -190,7 +190,9 @@ export default function AttempVideoQuestion({
                 </div>
             </div>
             <div className="absolute bottom-0 right-0 mb-6 text-dark-gray mr-6 text-[10px] font-semibold border p-2 rounded-lg">
-                <button type="button">I’ll Do it Later</button>
+                <button type="button" onClick={continueVideo}>
+                    I’ll Do it Later
+                </button>
             </div>
         </div>
     );
