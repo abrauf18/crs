@@ -1,9 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
-import CharacterImage from '@/app/assets/images/character.svg';
-import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
+import React from 'react';
 import AttempVideoQuestion from './AttempVideoQuestion';
 import AnsweredOpenVideoQuestion from './AnsweredOpenVideoQuestion';
 import AnsweredVideoMCQ from './AnsweredVideoMCQ';
@@ -13,6 +10,7 @@ function VideoQuestion({
     setCurrentQuestion,
     setPlaying,
     handlePlayAfterQuestion,
+    markQuestionAsAnswered,
 }: {
     question: {
         id: string;
@@ -30,6 +28,7 @@ function VideoQuestion({
     setCurrentQuestion: (question: null) => void;
     setPlaying: (isPlaying: boolean) => void;
     handlePlayAfterQuestion: () => void;
+    markQuestionAsAnswered: () => void;
 }) {
     const continueVideo = () => {
         setCurrentQuestion(null);
@@ -41,6 +40,7 @@ function VideoQuestion({
         <AttempVideoQuestion
             question={question}
             continueVideo={continueVideo}
+            markQuestionAsAnswered={markQuestionAsAnswered}
         />
     ) : Object.keys(question.options).length === 0 ? (
         <AnsweredOpenVideoQuestion

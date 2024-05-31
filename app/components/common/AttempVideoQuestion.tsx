@@ -19,6 +19,7 @@ import PageLoader from './PageLoader';
 export default function AttempVideoQuestion({
     question,
     continueVideo,
+    markQuestionAsAnswered,
 }: {
     question: {
         id: string;
@@ -34,6 +35,7 @@ export default function AttempVideoQuestion({
         };
     };
     continueVideo: () => void;
+    markQuestionAsAnswered: () => void;
 }) {
     const { data } = useSession();
     const methods = useForm({
@@ -74,6 +76,7 @@ export default function AttempVideoQuestion({
                         'An error occured while submitting your answer'
                 );
             }
+            markQuestionAsAnswered();
             toast.success('Answer submitted successfully');
         } catch (error: any) {
             toast.error(

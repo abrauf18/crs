@@ -29,6 +29,21 @@ function getVideoIdFromPathname(path: string) {
     return parts[parts.length - 1];
 }
 
+type Question = {
+    id: string;
+    statement: string;
+    options: { [key: string]: string };
+    correctOption: string;
+    correctOptionExplanation: string;
+    popUpTime: string;
+    totalMarks: number;
+    attempt?: {
+        id: string;
+        answer: string;
+        obtainedMarks: number;
+    };
+};
+
 export default function VideoViewing({
     videoURL,
     thumbnailURL,
@@ -41,20 +56,7 @@ export default function VideoViewing({
     videoURL: string;
     thumbnailURL: string;
     topics: { [key: string]: string };
-    questions: {
-        id: string;
-        statement: string;
-        options: { [key: string]: string };
-        correctOption: string;
-        correctOptionExplanation: string;
-        popUpTime: string;
-        totalMarks: number;
-        attempt?: {
-            id: string;
-            answer: string;
-            obtainedMarks: number;
-        };
-    }[];
+    questions: Question[];
     studentLastPlayedTime?: React.MutableRefObject<number>;
     lastSeenTime?: string;
     data?: Session;
@@ -73,19 +75,9 @@ export default function VideoViewing({
     const [lastPlayedTime, setLastPlayedTime] = useState<number>(
         lastSeenTime ? timeStringToSeconds(lastSeenTime) : 0
     );
-    const [currentQuestion, setCurrentQuestion] = useState<{
-        id: string;
-        statement: string;
-        options: { [key: string]: string };
-        correctOption: string;
-        correctOptionExplanation: string;
-        totalMarks: number;
-        attempt?: {
-            id: string;
-            answer: string;
-            obtainedMarks: number;
-        };
-    } | null>(null);
+    const [currentQuestion, setCurrentQuestion] = useState<Question | null>(
+        null
+    );
 
     const topicsArray = Object.entries(topics).map(([popupTime, topic]) => ({
         popupTime,
@@ -132,6 +124,19 @@ export default function VideoViewing({
             if (playerRef.current) {
                 playerRef.current.seekTo(lastPlayedTime);
             }
+        }
+    };
+
+    const markQuestionAsAnswered = () => {
+        const index = questions.findIndex(
+            (question) => question.id === currentQuestion?.id
+        );
+        if (index !== -1) {
+            setAnsweredQuestions((prevState) => {
+                const newState = [...prevState];
+                newState[index] = true;
+                return newState;
+            });
         }
     };
 
@@ -314,7 +319,6 @@ export default function VideoViewing({
     // if (!isMounted) {
     //     return <PageLoader />;
     // }
-    console.log(isDialogOpen);
     return (
         <>
             <div>
@@ -325,6 +329,7 @@ export default function VideoViewing({
                             setCurrentQuestion={setCurrentQuestion}
                             setPlaying={setPlaying}
                             handlePlayAfterQuestion={handlePlayAfterQuestion}
+                            markQuestionAsAnswered={markQuestionAsAnswered}
                         />
                     </div>
                 ) : (
