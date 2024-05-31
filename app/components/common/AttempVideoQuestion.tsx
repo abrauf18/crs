@@ -168,12 +168,23 @@ export default function AttempVideoQuestion({
                                     )}
                                 </>
                             )}
-                            <button
-                                className="bg-primary-color text-sm text-white px-6 py-2 rounded-lg hover:bg-orange-400 float-right mt-2"
-                                type="submit"
-                            >
-                                Submit
-                            </button>
+                            {data?.user?.role === 'student' && (
+                                <button
+                                    className="bg-primary-color text-sm text-white px-6 py-2 rounded-lg hover:bg-orange-400 float-right mt-2"
+                                    type="submit"
+                                >
+                                    Submit
+                                </button>
+                            )}
+                            {data?.user?.role !== 'student' && (
+                                <button
+                                    className="bg-primary-color text-sm text-white px-6 py-2 rounded-lg hover:bg-orange-400 float-right mt-2"
+                                    type="button"
+                                    onClick={continueVideo}
+                                >
+                                    Continue
+                                </button>
+                            )}
                         </form>
                     </FormProvider>
                 </div>
