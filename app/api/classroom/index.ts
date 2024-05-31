@@ -86,3 +86,105 @@ export const deleteClassCourseAPI = async ({
 
     return response;
 };
+
+export const getSummarizedClassroomsOfTeacherAPI = async ({
+    accessToken,
+    teacherId,
+}: {
+    accessToken: string;
+    teacherId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/getSummarizedClassroomsOfTeacher`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                teacherid: teacherId,
+            },
+            next: {
+                tags: ['getSummarizedClassroomsOfTeacher'],
+            },
+        }
+    );
+
+    return result;
+};
+
+export const getClassroomStudentsAPI = async ({
+    accessToken,
+    classroomId,
+    page,
+    limit,
+}: {
+    accessToken: string;
+    classroomId: string;
+    page: number;
+    limit: number;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/getClassroomStudents`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                classroomid: classroomId,
+                page: page.toString(),
+                limit: limit.toString(),
+            },
+            next: {
+                tags: ['getClassroomStudents'],
+            },
+        }
+    );
+
+    return result;
+};
+
+export const removeStudentFromClassroomAPI = async ({
+    accessToken,
+    classroomStudentId,
+}: {
+    accessToken: string;
+    classroomStudentId: string;
+}) => {
+    const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/removeStudentFromClassroom`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                classroomstudentid: classroomStudentId,
+            },
+        }
+    );
+
+    return response;
+};
+
+export const updateClassroomStudentAPI = async ({
+    accessToken,
+    name,
+    email,
+    image,
+    classroomId,
+    classroomStudentId,
+}: {
+    accessToken: string;
+    name: string;
+    email: string;
+    image: string;
+    classroomId: string;
+    classroomStudentId: string;
+}) => {
+    const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/updateClassroomStudent`,
+        {
+            accessToken,
+            name,
+            email,
+            image,
+            classroomId,
+            classroomStudentId,
+        }
+    );
+
+    return response;
+};

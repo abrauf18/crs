@@ -9,7 +9,6 @@ interface SelectPropsInterface extends SelectHTMLAttributes<HTMLSelectElement> {
     options: { value: string; label: string }[];
     selectedOption?: string;
     additionalClasses?: string;
-    // handleClick?: (label: string, value: string) => void;
 }
 
 function Select({
@@ -18,18 +17,8 @@ function Select({
     options,
     selectedOption,
     additionalClasses,
-    // handleClick,
 }: SelectPropsInterface): JSX.Element {
     const { register } = useFormContext();
-
-    // const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //     const selectedOption = options.find(
-    //         (option) => option?.label === event?.target?.value
-    //     );
-    //     if (selectedOption && handleClick) {
-    //         handleClick(selectedOption?.label, selectedOption?.value);
-    //     }
-    // };
 
     return (
         <div className={`relative w-full ${additionalClasses}`}>

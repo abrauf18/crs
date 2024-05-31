@@ -1,128 +1,312 @@
 'use client';
 
-import React, { useState } from 'react';
-import { FileLineChart, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
-import Avatar from '@/app/assets/images/UserImage.svg';
+import { Session } from 'next-auth';
+import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { FileLineChart, Trash2, X } from 'lucide-react';
+import {
+    getAllClassroomsOfTeacherAPI,
+    updateClassroomStudentAPI,
+} from '@/app/api/classroom';
 import { Label } from '@/app/components/ui/label';
-import AppInput from '@/app/components/common/AppInput';
-import AppDropDown, {
-    OptionsInterface,
-} from '@/app/components/common/AppDropDown';
+import Input from '@/app/components/common/Input';
+import Select from '@/app/components/common/DropDown';
+import PageLoader from '@/app/components/common/PageLoader';
+import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
+import useProfileImage from '@/lib/custom-hooks/useProfileImage';
+import { OptionsInterface } from '@/app/components/common/AppDropDown';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
+import action from '@/app/action';
 
-function ClassroomModal({ onClose }: any) {
-    const [selectedOption, setSelectedOption] = useState('9th Grade - B');
+export interface StudentInfoInterface {
+    image: string;
+    id: string;
+    index: number;
+    name: string;
+    email: string;
+    grade: string;
+    performance: number;
+    gradeId: string;
+}
+interface FormValues {
+    name: string;
+    email: string;
+    classroom: string;
+}
 
-    const handleSelectChange = (
-        event: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-        setSelectedOption(event.target.value);
+function ClassroomModal({
+    data,
+    student,
+    onClose,
+}: {
+    data: Session | null;
+    student: StudentInfoInterface;
+    onClose: () => void;
+}) {
+    const {
+        currentImage,
+        setOriginalImage,
+        setCurrentImage,
+        removeImage,
+        undoImageChange,
+        shouldResetProfilePicture,
+        deleteProfilePicture,
+    } = useProfileImage();
+    const [modalLoading, setModalLoading] = useState(false);
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const [gradeOptions, setGradeOptions] = useState<OptionsInterface[]>([]);
+    const methods = useForm<FormValues>({
+        mode: 'onChange',
+        reValidateMode: 'onChange',
+        defaultValues: {
+            name: student.name,
+            email: student.email,
+            classroom: student.gradeId,
+        },
+    });
+    const { reset, watch } = methods;
+    const watchedStudent = watch();
+
+    const handleReset = () => {
+        reset({
+            name: student.name,
+            email: student.email,
+            classroom: student.gradeId,
+        });
+        undoImageChange();
     };
 
-    const gradeOptions: OptionsInterface[] = [
-        { label: '9th Grade - B', value: '9th Grade - B' },
-        { label: '9th Grade - A', value: '9th Grade - A' },
-    ];
-    return (
-        <section className="w-full bg-white h-screen  py-4  shadow-lg">
-            <div className="h-[80%] lg:h-[90%] overflow-y-auto px-6 w-full">
-                <div className="flex justify-between items-center">
-                    <div className="flex  my-7">
-                        <div className="flex flex-col ml-2">
-                            <h3 className="text-xl font-semibold  mr-1">
-                                Kathryn Murphy
-                            </h3>
-                            <p className="text-sm text-dark-gray mb-2">
-                                nathan.roberts@gmail.com
-                            </p>
-                        </div>
-                    </div>
-                    <div className="rounded-full bg-white border p-1 cursor-pointer">
-                        <X size={20} onClick={onClose} />
-                    </div>
-                </div>
+    useEffect(() => {
+        if (!data || gradeOptions.length > 0) {
+            return;
+        }
+        setCurrentImage(student.image);
+        setOriginalImage(student.image);
+        const getData = async () => {
+            try {
+                setModalLoading(true);
 
-                <div className="flex flex-col items-center w-full">
-                    <div className="ml-0 lg:ml-8 mb-6 lg:mb-0">
-                        <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
-                            <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
-                                <div className="border-2 border-primary-color rounded-full w-fit flex items-center p-2">
-                                    <Image
-                                        src={Avatar}
-                                        alt="Avatar"
-                                        className="rounded-full"
-                                        width={150}
-                                        height={150}
-                                        objectFit="contain"
+                const teacherAPIdata = await getAllClassroomsOfTeacherAPI({
+                    accessToken: data?.user?.accessToken,
+                    teacherId: data?.user?.id,
+                });
+                if (!teacherAPIdata.ok) {
+                    const errorData = await teacherAPIdata.json();
+                    throw new Error(
+                        errorData?.message ??
+                            'An error occurred while fetching video data'
+                    );
+                }
+                const teacherResponseData = await teacherAPIdata.json();
+                setGradeOptions(teacherResponseData?.data);
+            } catch (error: any) {
+                toast.error(
+                    error?.message ??
+                        'An error occurred while fetching teachers classes'
+                );
+            } finally {
+                setModalLoading(false);
+            }
+        };
+
+        getData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
+
+    const onSubmit = async (values: FormValues) => {
+        if (!data) {
+            return;
+        }
+        try {
+            setButtonLoading(true);
+            if (shouldResetProfilePicture()) {
+                await deleteProfilePicture();
+            }
+
+            const APIresponse = await updateClassroomStudentAPI({
+                accessToken: data?.user?.accessToken,
+                name: values.name,
+                email: values.email,
+                image: currentImage,
+                classroomId: values.classroom,
+                classroomStudentId: student.id,
+            });
+            if (APIresponse.status !== 200) {
+                throw new Error(
+                    'An error occurred while updating student data'
+                );
+            }
+            toast.success('Student data updated successfully');
+            action('getClassroomStudents');
+        } catch (error: any) {
+            toast.error(
+                error?.response?.data?.message ??
+                    'An error occurred while updating student data'
+            );
+        } finally {
+            setButtonLoading(false);
+        }
+    };
+
+    if (!data) {
+        return null;
+    }
+    return (
+        <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-auto">
+            {modalLoading ? (
+                <div>
+                    <PageLoader />
+                </div>
+            ) : (
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                        <div className="h-[80%] lg:h-[90%] overflow-y-auto px-6 w-full">
+                            <div className="flex justify-between items-center">
+                                <div className="flex  my-7">
+                                    <div className="flex flex-col ml-2">
+                                        <h3 className="text-xl font-semibold  mr-1">
+                                            {watchedStudent.name}
+                                        </h3>
+                                        <p className="text-sm text-dark-gray mb-2">
+                                            {watchedStudent.email}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="rounded-full bg-white border p-1 cursor-pointer">
+                                    <X size={20} onClick={onClose} />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col items-center w-full">
+                                <div className="ml-0 lg:ml-8 mb-6 lg:mb-0">
+                                    <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
+                                        <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
+                                            <div className="border-2 border-primary-color rounded-full w-fit flex items-center p-2">
+                                                <Image
+                                                    src={
+                                                        currentImage ||
+                                                        DEFAULT_IMAGE
+                                                    }
+                                                    alt="Avatar"
+                                                    className="rounded-full"
+                                                    width={150}
+                                                    height={150}
+                                                    objectFit="contain"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className="text-dark-gray cursor-pointer justify-center font-semibold mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg mt-3 ml-0 lg:ml-8 mb-6 lg:mb-0 flex items-center space-x-2"
+                                    onClick={removeImage}
+                                >
+                                    <Trash2 color="#E6500D" />
+                                    <span>Remove Photo</span>
+                                </button>
+                            </div>
+
+                            <div className="flex items-center mt-3 py-3 px-2 lg:px-5 rounded-lg  border-2 border-primary-color justify-between">
+                                <div>
+                                    <FileLineChart color="#F59A3B" />
+                                    <p className="font-medium mt-2">
+                                        Overall Performance
+                                    </p>
+                                </div>
+                                <p className="font-bold text-lg">
+                                    {student.performance}%
+                                </p>
+                            </div>
+
+                            <div className="my-3 h-fit">
+                                <div className="flex flex-col space-y-2">
+                                    <Label
+                                        className="font-semibold"
+                                        htmlFor="name"
+                                    >
+                                        Username
+                                    </Label>
+                                    <Input
+                                        name="name"
+                                        placeholder="Enter Name"
+                                        type="text"
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col space-y-2 mt-5">
+                                    <Label
+                                        className="font-semibold"
+                                        htmlFor="email"
+                                    >
+                                        Email Address
+                                    </Label>
+                                    <Input
+                                        name="email"
+                                        placeholder="Enter Email"
+                                        type="email"
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col space-y-2 mt-5">
+                                    <Label
+                                        className="font-semibold"
+                                        htmlFor="classroom"
+                                    >
+                                        Classroom
+                                    </Label>
+                                    <Select
+                                        additionalClasses="!w-full"
+                                        name="classroom"
+                                        options={gradeOptions}
+                                        selectedOption={student.gradeId}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    'Classroom is required',
+                                            },
+                                        }}
                                     />
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <button
-                        type="button"
-                        className="text-dark-gray  justify-center font-semibold mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg mt-3 ml-0 lg:ml-8 mb-6 lg:mb-0 flex items-center space-x-2"
-                    >
-                        <Trash2 color="#E6500D" />
-                        <span>Remove Photo</span>
-                    </button>
-                </div>
-
-                <div className="flex items-center mt-3 py-3 px-2 lg:px-5 rounded-lg  border-2 border-primary-color justify-between">
-                    <div>
-                        <FileLineChart color="#F59A3B" />
-                        <p className="font-medium mt-2">Overall Performance</p>
-                    </div>
-                    <p className="font-bold text-lg">75%</p>
-                </div>
-
-                <div className="my-3 h-fit">
-                    <div className="flex flex-col space-y-2">
-                        <Label className="font-semibold" htmlFor="name">
-                            Username
-                        </Label>
-                        <AppInput
-                            name="name"
-                            id="name"
-                            placeholder="Enter name"
-                        />
-                    </div>
-
-                    <div className="flex flex-col space-y-2 mt-5">
-                        <Label className="font-semibold" htmlFor="email">
-                            Email Address
-                        </Label>
-
-                        <AppInput
-                            name="email"
-                            id="email"
-                            placeholder="Enter email"
-                        />
-                    </div>
-
-                    <div className="flex flex-col space-y-2 mt-5">
-                        <Label className="font-semibold" htmlFor="invite">
-                            Classroom
-                        </Label>
-
-                        <AppDropDown
-                            name="invite"
-                            options={gradeOptions}
-                            value={selectedOption}
-                            onChange={handleSelectChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="absolute bottom-0 left-0 w-full p-4 border bg-white lg:flex lg:justify-between ">
-                <div className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg border-2 text-dark-gray text-center mt-1 font-bold">
-                    <button type="button">Discard Changes</button>
-                </div>
-                <div className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-bold">
-                    <button type="button">Save Changes</button>
-                </div>
-            </div>
+                        <div className="w-full p-4 border bg-white lg:flex lg:justify-between ">
+                            <div className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg border-2 text-dark-gray text-center mt-1 font-bold">
+                                <button type="button" onClick={handleReset}>
+                                    Discard Changes
+                                </button>
+                            </div>
+                            <div className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-bold">
+                                <button type="submit">
+                                    {buttonLoading ? (
+                                        <ButtonLoader />
+                                    ) : (
+                                        'Save Changes'
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </FormProvider>
+            )}
         </section>
     );
 }

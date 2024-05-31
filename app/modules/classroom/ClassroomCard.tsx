@@ -1,5 +1,5 @@
-import { LucideIcon } from 'lucide-react';
 import React, { useState } from 'react';
+import { LucideIcon } from 'lucide-react';
 
 interface ClassroomCardProps {
     Icon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
@@ -51,7 +51,7 @@ function ClassroomCard({
             {isActive && (
                 <button
                     type="button"
-                    className="absolute top-6 right-7 bg-primary-color text-white py-2 px-4 rounded-lg "
+                    className="absolute top-6 right-7 bg-primary-color text-white py-2 px-4 rounded-lg"
                 >
                     Details
                 </button>

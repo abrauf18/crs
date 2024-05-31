@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
 import { File } from 'lucide-react';
-import { ResourceType } from '@/lib/utils';
+import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { ResourceType } from '@/lib/utils';
+import PageLoader from '@/app/components/common/PageLoader';
 import StandardCard from '@/app/modules/standard/StandardCard';
 import AssignCourseModal from './AssignCourseModal';
 
@@ -35,7 +36,7 @@ function StandardDetails({
     description,
     dailyUploads,
 }: StandardDetailsProps) {
-    const { data } = useSession();
+    const { data, status } = useSession();
     const [isShowModal, setIsShowModal] = useState(false);
 
     const handleOpenModal = () => {
@@ -46,7 +47,9 @@ function StandardDetails({
         setIsShowModal(false);
     };
 
-    return (
+    return status === 'loading' ? (
+        <PageLoader />
+    ) : (
         <>
             <div className="mt-5">
                 <div className="flex justify-between items-center mobile:items-start mb-1 mobile:flex-col">

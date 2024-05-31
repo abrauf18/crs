@@ -101,6 +101,7 @@ export interface Resource {
     url?: string;
     show?: string;
     videoId?: string;
+    totalMarks?: number;
 }
 
 export interface VideoSummary {
@@ -113,9 +114,9 @@ export interface VideoSummary {
 }
 
 export const resourceDropDownOptions = [
+    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
     { label: ResourceType.QUIZ, value: 'Quiz' },
     { label: ResourceType.VIDEO, value: 'Video' },
-    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
     { label: ResourceType.WORKSHEET, value: 'Worksheet' },
     { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
 ];
