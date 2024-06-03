@@ -2,6 +2,11 @@
   "name": "crs",
   "version": "0.1.0",
   "private": true,
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -19,6 +24,8 @@
     "babel-eslint": "^10.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "file-saver": "^2.0.5",
+    "html-to-docx": "^1.8.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.294.0",
     "mammoth": "^1.7.2",
@@ -37,6 +44,8 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.0.4",
+    "@types/file-saver": "^2.0.7",
+    "@types/html-docx-js": "^0.3.4",
     "@types/mime-types": "^2.1.4",
     "@types/node": "^20",
     "@types/react": "^18",
