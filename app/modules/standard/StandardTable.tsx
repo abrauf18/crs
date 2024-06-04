@@ -114,6 +114,9 @@ function StandardTable({
         return router.push(`${pathname}/${type}/${contentId}`);
     };
 
+    const takeAssessment = (assessmentId: string) =>
+        router.push(`/student/learning/assessment/${assessmentId}`);
+
     return (
         <>
             <Table
@@ -197,10 +200,8 @@ function StandardTable({
                                             }
                                             return topic.type !==
                                                 ResourceType.VIDEO
-                                                ? viewResource(
-                                                      topic.type,
-                                                      topic.resourceId,
-                                                      topic.topic
+                                                ? takeAssessment(
+                                                      topic.resourceId
                                                   )
                                                 : viewResource(
                                                       topic.type,
