@@ -95,6 +95,7 @@ export const UploadResource = async ({
         );
         return response;
     } catch (error) {
+        console.log(error);
         return {
             status: 500,
             message: 'Error Uploading Resource',

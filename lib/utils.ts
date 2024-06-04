@@ -6,6 +6,7 @@ import TicketIcon from '@/app/assets/icons/TicketIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
+import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 
 export function cn(...inputs: ClassValue[]) {
@@ -50,6 +51,7 @@ export enum ResourceType {
     WORKSHEET = 'worksheet',
     EXIT_TICKET_TEST = 'exit-ticket-test',
     QUIZ = 'quiz',
+    ASSIGNMENT = 'assignment',
 }
 
 export const ResourceToPath = {
@@ -58,6 +60,7 @@ export const ResourceToPath = {
     [ResourceType.WORKSHEET]: 'Worksheets',
     [ResourceType.EXIT_TICKET_TEST]: 'Exit-Ticket-Test',
     [ResourceType.QUIZ]: 'Quizzes',
+    [ResourceType.ASSIGNMENT]: 'Assignments',
 };
 
 export const PathToResource = {
@@ -66,6 +69,7 @@ export const PathToResource = {
     Worksheets: ResourceType.WORKSHEET,
     'Exit-Ticket-Test': ResourceType.EXIT_TICKET_TEST,
     Quizzes: ResourceType.QUIZ,
+    Assignments: ResourceType.ASSIGNMENT,
 };
 
 export const commonFilterOptions = [
@@ -119,6 +123,7 @@ export const resourceDropDownOptions = [
     { label: ResourceType.VIDEO, value: 'Video' },
     { label: ResourceType.WORKSHEET, value: 'Worksheet' },
     { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
+    { label: ResourceType.ASSIGNMENT, value: 'Assignment' },
 ];
 
 export const resourceTypeToIcon = (resourceType: ResourceType) => {
@@ -138,6 +143,9 @@ export const resourceTypeToIcon = (resourceType: ResourceType) => {
             break;
         case 'quiz':
             Icon = QuestionMarkIcon;
+            break;
+        case 'assignment':
+            Icon = AssignmentIcon;
             break;
         default:
             Icon = ResourceIcon;

@@ -345,7 +345,8 @@ function UploadResourceModal({ onClose }: any) {
                         )}
                         {(resourceType === ResourceType.QUIZ ||
                             resourceType === ResourceType.WORKSHEET ||
-                            resourceType === ResourceType.EXIT_TICKET_TEST) && (
+                            resourceType === ResourceType.EXIT_TICKET_TEST ||
+                            resourceType === ResourceType.ASSIGNMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"

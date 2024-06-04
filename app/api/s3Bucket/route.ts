@@ -85,6 +85,7 @@ export async function POST(request: Request) {
             url,
         });
     } catch (err: any) {
+        console.log(err)
         throw new Error(err.message);
     }
 }

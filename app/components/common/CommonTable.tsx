@@ -15,6 +15,7 @@ import RecorderIcon from '@/app/assets/icons/RecorderIcon';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 import UpdateResourceModal from '@/app/modules/resources/UpdateResourceModal';
 import { DEFAULT_RESOURCE, Resource, ResourceType } from '@/lib/utils';
+import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import {
     Table,
     TableHeader,
@@ -122,6 +123,8 @@ function CommonTable({
                                 {resourcesType?.toLowerCase() === 'quizzes' && (
                                     <QuestionMarkIcon />
                                 )}
+                                {resourcesType?.toLowerCase() ===
+                                    'assignments' && <AssignmentIcon />}
 
                                 <span>{resource.name}</span>
                             </TableCell>
