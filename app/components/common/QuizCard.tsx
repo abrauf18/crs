@@ -27,6 +27,13 @@ function VideoCard({
         resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
             card?.imageUrl?.toString()
         )}`;
+    } else if (
+        selectedResource?.resourceType === ResourceType.ASSIGNMENT ||
+        selectedResource?.resourceType === ResourceType.QUIZ
+    ) {
+        resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+            card?.imageUrl?.toString()
+        )}`;
     } else {
         resourceRenderingLink = card?.imageUrl?.toString();
     }
