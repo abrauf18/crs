@@ -320,6 +320,7 @@ function UploadResourceModal({
                                 <div className="mt-4 mb-3">
                                     {!selectedFile && (
                                         <UploadItem
+                                            resourceType={ResourceType.VIDEO}
                                             itemName="Video"
                                             setSelectedFile={setSelectedFile}
                                         />

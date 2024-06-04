@@ -1,5 +1,6 @@
 import React from 'react';
 import { FileVideoIcon } from 'lucide-react';
+import { ResourceType } from '@/lib/utils';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import UploadItem from '../../components/common/UploadItem';
 import FileUploading from '../../components/common/FileUploading';
@@ -17,6 +18,7 @@ function UploadModal() {
                     Icon={FileVideoIcon}
                 />
                 <UploadItem
+                    resourceType={ResourceType.VIDEO}
                     itemName="Video"
                     setSelectedFile={(file: File | null) => {}}
                 />

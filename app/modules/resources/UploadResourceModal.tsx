@@ -431,6 +431,10 @@ function UploadResourceModal({ onClose }: any) {
                                 <>
                                     {!selectedFile && (
                                         <UploadItem
+                                            resourceType={
+                                                resourceType ??
+                                                ResourceType.SLIDESHOW
+                                            }
                                             itemName="Resource"
                                             setSelectedFile={setSelectedFile}
                                         />
