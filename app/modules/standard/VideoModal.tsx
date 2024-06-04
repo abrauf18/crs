@@ -11,17 +11,9 @@ import {
     getResourcesByNameAPI,
     getResourcesByTypeAPI,
 } from '@/app/api/resource';
+import { ResourceType } from '@/lib/utils';
 import QuizCard from '@/app/components/common/QuizCard';
-import { DEFAULT_IMAGE } from '@/lib/utils';
 import PageLoader from '@/app/components/common/PageLoader';
-
-export enum ResourceType {
-    VIDEO = 'video',
-    SLIDESHOW = 'slideshow',
-    WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
-    QUIZ = 'quiz',
-}
 
 function VideoModal({
     onClose,

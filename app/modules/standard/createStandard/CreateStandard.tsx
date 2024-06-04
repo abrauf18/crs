@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import action from '@/app/action';
-import { validationError } from '@/lib/utils';
+import { validationError, ResourceType } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { ErrorMessage } from '@hookform/error-message';
@@ -14,13 +14,6 @@ import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { createStandardAPI, updateStandardAPI } from '@/app/api/standard';
 import CreateTopic from '../CreateTopic';
 
-export enum ResourceType {
-    VIDEO = 'video',
-    SLIDESHOW = 'slideshow',
-    WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
-    QUIZ = 'quiz',
-}
 interface Topic {
     resourceId: string;
     type: ResourceType;

@@ -5,27 +5,17 @@ import { CalendarDays, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { FieldErrors, useFieldArray, useFormContext } from 'react-hook-form';
-import { validationError } from '@/lib/utils';
+import {
+    validationError,
+    ResourceType,
+    resourceDropDownOptions,
+} from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import Select from '@/app/components/common/DropDown';
 import { ErrorMessage } from '@hookform/error-message';
 import VideoModal from './VideoModal';
 
-export enum ResourceType {
-    VIDEO = 'video',
-    SLIDESHOW = 'slideshow',
-    WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
-    QUIZ = 'quiz',
-}
-export const resourceDropDownOptions = [
-    { label: ResourceType.QUIZ, value: 'Quiz' },
-    { label: ResourceType.VIDEO, value: 'Video' },
-    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
-    { label: ResourceType.WORKSHEET, value: 'Worksheet' },
-    { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
-];
 interface Topic {
     resourceId: string;
     type: ResourceType;
