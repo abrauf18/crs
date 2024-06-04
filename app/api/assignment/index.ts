@@ -1,21 +1,24 @@
 import axios from 'axios';
 
-export const getAssessmentAnswerAPI = async ({
+export const getAssessmentAnswerToCreateOrEditAPI = async ({
     accessToken,
-    assessmentAnswerId,
+    userId,
+    resourceId,
 }: {
     accessToken: string;
-    assessmentAnswerId: string;
+    userId: string;
+    resourceId: string;
 }) => {
     const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/assessmentAnswer/getAssessmentAnswer`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/assessmentAnswer/getAssessmentAnswerToCreateOrEdit`,
         {
             headers: {
                 accesstoken: accessToken,
-                assessmentanswerid: assessmentAnswerId,
+                userid: userId,
+                resourceid: resourceId,
             },
             next: {
-                tags: ['getAssessmentAnswer'],
+                tags: ['getAssessmentAnswerToCreateOrEdit'],
             },
         }
     );
@@ -26,12 +29,12 @@ export const getAssessmentAnswerAPI = async ({
 export const createAssessmentAnswerAPI = async ({
     accessToken,
     userId,
-    assessmentResourcesDetailId,
+    resourceId,
     answerURL,
 }: {
     accessToken: string;
     userId: string;
-    assessmentResourcesDetailId: string;
+    resourceId: string;
     answerURL: string;
 }) => {
     const response = await axios.post(
@@ -39,7 +42,7 @@ export const createAssessmentAnswerAPI = async ({
         {
             accessToken,
             userId,
-            assessmentResourcesDetailId,
+            resourceId,
             answerURL,
         }
     );
