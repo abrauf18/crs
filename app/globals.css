@@ -21,6 +21,6 @@ input[type='date']::-webkit-calendar-picker-indicator {
     width: auto;
 }
 
-.quill {
-    height: 100%;
+.jodit-container:not(.jodit_inline) .jodit-wysiwyg {
+    padding: 50px !important;
 }
