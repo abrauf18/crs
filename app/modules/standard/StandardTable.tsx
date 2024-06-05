@@ -198,16 +198,34 @@ function StandardTable({
                                             if (!released) {
                                                 return null;
                                             }
-                                            return topic.type !==
+                                            if (
+                                                topic.type ===
                                                 ResourceType.VIDEO
-                                                ? takeAssessment(
-                                                      topic.resourceId
-                                                  )
-                                                : viewResource(
-                                                      topic.type,
-                                                      topic.videoId ?? '',
-                                                      topic.name
-                                                  );
+                                            ) {
+                                                return viewResource(
+                                                    topic.type,
+                                                    topic.videoId ?? '',
+                                                    topic.name
+                                                );
+                                            }
+                                            if (
+                                                topic.type ===
+                                                    ResourceType.WORKSHEET ||
+                                                topic.type ===
+                                                    ResourceType.ASSIGNMENT ||
+                                                topic.type ===
+                                                    ResourceType.EXIT_TICKET_TEST ||
+                                                topic.type === ResourceType.QUIZ
+                                            ) {
+                                                return takeAssessment(
+                                                    topic.resourceId
+                                                );
+                                            }
+                                            return viewResource(
+                                                topic.type,
+                                                topic.resourceId,
+                                                topic.topic
+                                            );
                                         }}
                                     >
                                         {topic.type === ResourceType.VIDEO ? (

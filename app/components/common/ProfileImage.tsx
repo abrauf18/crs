@@ -78,7 +78,7 @@ function ProfileImage({
                     <input
                         type="file"
                         id="profilePicInput"
-                        accept=".pdf, .jpg, .jpeg, .png, .gif, .mp4, .avi, .mov, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
+                        accept=".jpg, .jpeg, .png"
                         onChange={handleFileChange}
                         ref={hiddenFileInput}
                         style={{ display: 'none' }}
