@@ -29,7 +29,9 @@ function VideoCard({
         )}`;
     } else if (
         selectedResource?.resourceType === ResourceType.ASSIGNMENT ||
-        selectedResource?.resourceType === ResourceType.QUIZ
+        selectedResource?.resourceType === ResourceType.QUIZ ||
+        selectedResource?.resourceType === ResourceType.WORKSHEET ||
+        selectedResource?.resourceType === ResourceType.EXIT_TICKET_TEST
     ) {
         resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
             card?.imageUrl?.toString()

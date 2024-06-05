@@ -37,7 +37,12 @@ export default function FileViewing({
     //     );
     // }
     let resourceRenderingLink = '';
-    if (type === ResourceType.ASSIGNMENT || type === ResourceType.QUIZ) {
+    if (
+        type === ResourceType.ASSIGNMENT ||
+        type === ResourceType.QUIZ ||
+        type === ResourceType.WORKSHEET ||
+        type === ResourceType.EXIT_TICKET_TEST
+    ) {
         resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
             resourceURL
         )}`;
