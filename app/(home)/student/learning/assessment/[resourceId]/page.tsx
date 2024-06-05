@@ -6,6 +6,7 @@ import UnhandledError from '@/app/modules/error/UnhandledError';
 import S3DocxEditor from '@/app/modules/learning/create-assignment/CreateAssignment';
 
 interface APIData {
+    name: string;
     documentURL: string;
     answerURL: string;
     totalMarks: number;
@@ -16,6 +17,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
     const data: Session | null = await getServerSession(options);
 
     let APIdata: APIData = {
+        name: '',
         documentURL: '',
         answerURL: '',
         totalMarks: 0,
@@ -34,14 +36,19 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { documentURL, answerURL, totalMarks, obtainedMarks } =
-                    APIdata;
-                console.log(APIdata);
+                const {
+                    name,
+                    documentURL,
+                    answerURL,
+                    totalMarks,
+                    obtainedMarks,
+                } = APIdata;
                 return (
                     <S3DocxEditor
                         documentURL={answerURL || documentURL}
                         attempted={!!answerURL}
                         resourceId={params.resourceId}
+                        name={name}
                     />
                 );
             }
