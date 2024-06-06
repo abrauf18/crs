@@ -8,6 +8,7 @@ function EditAssignmentPage() {
             documentURL=""
             attempted={false}
             name=""
+            canWrite={false}
         />
     );
 }

@@ -11,6 +11,7 @@ interface APIData {
     answerURL: string;
     totalMarks: number;
     obtainedMarks: number;
+    canWrite: boolean;
 }
 
 async function DetailsPage({ params }: { params: { resourceId: string } }) {
@@ -22,6 +23,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
         answerURL: '',
         totalMarks: 0,
         obtainedMarks: -1,
+        canWrite: false,
     };
 
     if (data) {
@@ -42,6 +44,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
                     answerURL,
                     totalMarks,
                     obtainedMarks,
+                    canWrite,
                 } = APIdata;
                 return (
                     <S3DocxEditor
@@ -49,6 +52,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
                         attempted={!!answerURL}
                         resourceId={params.resourceId}
                         name={name}
+                        canWrite={canWrite}
                     />
                 );
             }

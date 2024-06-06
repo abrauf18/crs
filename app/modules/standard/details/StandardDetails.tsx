@@ -16,6 +16,7 @@ interface Topic {
     videoId?: string;
     watched?: boolean;
     completed?: boolean;
+    canWrite?: boolean;
 }
 interface DailyUpload {
     date: string;

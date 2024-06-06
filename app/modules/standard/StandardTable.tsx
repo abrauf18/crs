@@ -41,6 +41,7 @@ interface Topic {
     videoId?: string;
     watched?: boolean;
     completed?: boolean;
+    canWrite?: boolean;
 }
 
 function StandardTable({
@@ -251,6 +252,18 @@ function StandardTable({
                                                           : 'Continue'}
                                                 </p>
                                             </>
+                                        ) : topic.type === ResourceType.QUIZ ||
+                                          topic.type ===
+                                              ResourceType.ASSIGNMENT ||
+                                          topic.type ===
+                                              ResourceType.EXIT_TICKET_TEST ||
+                                          topic.type ===
+                                              ResourceType.WORKSHEET ? (
+                                            <p className="py-0.5 px-2.5">
+                                                {topic.canWrite
+                                                    ? 'Start'
+                                                    : 'View'}
+                                            </p>
                                         ) : (
                                             <p className="py-0.5 px-2.5">
                                                 Open
