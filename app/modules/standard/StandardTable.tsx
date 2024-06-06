@@ -158,8 +158,7 @@ function StandardTable({
                                 {topic.type?.toLowerCase() === 'quiz' && (
                                     <QuestionMarkIcon className="shrink-0" />
                                 )}
-                                {topic.type?.toLowerCase() ===
-                                    'assignments' && (
+                                {topic.type?.toLowerCase() === 'assignment' && (
                                     <AssignmentIcon className="shrink-0" />
                                 )}
                                 {topic.name}
