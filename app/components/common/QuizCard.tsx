@@ -34,7 +34,7 @@ function VideoCard({
         selectedResource?.resourceType === ResourceType.EXIT_TICKET_TEST
     ) {
         resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
-            card?.imageUrl?.toString()
+            card?.imageUrl as string
         )}`;
     } else {
         resourceRenderingLink = card?.imageUrl?.toString();
