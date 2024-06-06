@@ -12,6 +12,7 @@ interface APIData {
     totalMarks: number;
     obtainedMarks: number;
     canWrite: boolean;
+    deadline: string;
 }
 
 async function DetailsPage({ params }: { params: { resourceId: string } }) {
@@ -24,6 +25,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
         totalMarks: 0,
         obtainedMarks: -1,
         canWrite: false,
+        deadline: '',
     };
 
     if (data) {
@@ -45,6 +47,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
                     totalMarks,
                     obtainedMarks,
                     canWrite,
+                    deadline,
                 } = APIdata;
                 return (
                     <S3DocxEditor
@@ -53,6 +56,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
                         resourceId={params.resourceId}
                         name={name}
                         canWrite={canWrite}
+                        deadline={deadline}
                     />
                 );
             }
