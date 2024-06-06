@@ -106,6 +106,7 @@ export interface Resource {
     show?: string;
     videoId?: string;
     totalMarks?: number;
+    deadline?: string;
 }
 
 export interface VideoSummary {

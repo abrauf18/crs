@@ -23,6 +23,7 @@ import TicketIcon from '@/app/assets/icons/TicketIcon';
 import RecorderIcon from '@/app/assets/icons/RecorderIcon';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import EditQuestionsModal from '../video/EditQuestionsModal';
 import EditTopicsModal from '../video/EditTopicsModal';
 import UpdateResourceModal from '../resources/UpdateResourceModal';
@@ -155,6 +156,10 @@ function StandardTable({
                                 )}
                                 {topic.type?.toLowerCase() === 'quiz' && (
                                     <QuestionMarkIcon className="shrink-0" />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    'assignments' && (
+                                    <AssignmentIcon className="shrink-0" />
                                 )}
                                 {topic.name}
                             </TableCell>

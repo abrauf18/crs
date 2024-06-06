@@ -40,6 +40,7 @@ type ResourceFormData = {
     totalMarks?: number;
     youtubeURL?: string;
     selectedUploadOption: string;
+    deadline?: number;
 };
 
 const uploadOptions = [
@@ -135,7 +136,8 @@ function UploadResourceModal({ onClose }: any) {
             name: formData.name,
             topic: formData.topic,
             type: formData.type,
-            totalMarks: formData.totalMarks,
+            totalMarks: formData?.totalMarks,
+            deadline: formData?.deadline,
             url,
             duration,
             onUploadProgress: (progressEvent: {
@@ -163,7 +165,6 @@ function UploadResourceModal({ onClose }: any) {
     const handleUpload = async (formData: ResourceFormData) => {
         try {
             setLoading(true);
-
             if (!data?.user.accessToken) {
                 return toast.error('Token Expired, Please Sign in Again');
             }
@@ -180,7 +181,7 @@ function UploadResourceModal({ onClose }: any) {
             return toast.success('Resource Uploaded Successfully');
         } catch (error: any) {
             return toast.error(
-                error?.message || 'An unexpected error occurred'
+                error?.response?.data?.message || 'An unexpected error occurred'
             );
         } finally {
             setLoading(false);
@@ -363,6 +364,41 @@ function UploadResourceModal({ onClose }: any) {
                                             value: true,
                                             message:
                                                 validationError.REQUIRED_FIELD,
+                                        },
+                                        min: {
+                                            value: 0,
+                                            message:
+                                                'Marks must be a minimum of 0',
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
+                        {(resourceType === ResourceType.QUIZ ||
+                            resourceType === ResourceType.WORKSHEET ||
+                            resourceType === ResourceType.EXIT_TICKET_TEST ||
+                            resourceType === ResourceType.ASSIGNMENT) && (
+                            <div className="flex flex-col space-y-1 mt-5">
+                                <Label
+                                    htmlFor="deadline"
+                                    className="font-semibold text-md"
+                                >
+                                    Deadline
+                                </Label>
+                                <Input
+                                    name="deadline"
+                                    placeholder="Add Number of Days as Deadline For Submission"
+                                    type="number"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                        min: {
+                                            value: 0,
+                                            message:
+                                                'Deadline must have a minimum of 0 day',
                                         },
                                     }}
                                 />
