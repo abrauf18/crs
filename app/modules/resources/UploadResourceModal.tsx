@@ -169,10 +169,15 @@ function UploadResourceModal({ onClose }: any) {
                 return toast.error('Token Expired, Please Sign in Again');
             }
 
+            let response: { status: number } = { status: 200 };
             if (resourceType === ResourceType.VIDEO) {
-                await handleVideoUpload(formData);
+                response = await handleVideoUpload(formData);
             } else {
-                await handleFileUpload(formData);
+                response = await handleFileUpload(formData);
+            }
+
+            if (response.status !== 200) {
+                return toast.error('Failed to upload resource');
             }
 
             await refreshResources();
@@ -190,7 +195,8 @@ function UploadResourceModal({ onClose }: any) {
 
     const handleVideoUpload = async (formData: ResourceFormData) => {
         if (!formData.thumbnail) {
-            return toast.error('Please Select Thumbnail');
+            toast.error('Please Select Thumbnail');
+            return { status: 400 };
         }
         const thumbnailURL = await uploadFile(thumbnailFile['0']);
 
@@ -199,20 +205,23 @@ function UploadResourceModal({ onClose }: any) {
 
         if (selectedUploadOption === 'youtube') {
             if (!formData.youtubeURL) {
-                return toast.error('Please Enter Youtube URL');
+                toast.error('Please Enter Youtube URL');
+                return { status: 400 };
             }
             resourceURL = formData.youtubeURL;
             videoDuration = await getVideoDuration(formData.youtubeURL);
         } else {
             if (!selectedFile) {
-                return toast.error('Please Select File');
+                toast.error('Please Select File');
+                return { status: 400 };
             }
             videoDuration = await getVideoDuration(selectedFile);
             resourceURL = await uploadFile(selectedFile);
         }
 
         if (!resourceURL) {
-            return toast.error('Failed to upload resource');
+            toast.error('Failed to upload resource');
+            return { status: 400 };
         }
 
         await createResource(
@@ -222,22 +231,24 @@ function UploadResourceModal({ onClose }: any) {
             secondsToString(videoDuration) || '00:00:00'
         );
 
-        return null;
+        return { status: 200 };
     };
 
     const handleFileUpload = async (formData: ResourceFormData) => {
         if (!selectedFile) {
-            return toast.error('Please Select File');
+            toast.error('Please Select File');
+            return { status: 400 };
         }
 
         const resourceURL = await uploadFile(selectedFile);
         if (!resourceURL) {
-            return toast.error('Failed to upload file');
+            toast.error('Failed to upload file');
+            return { status: 400 };
         }
 
         await createResource(resourceURL, formData);
 
-        return null;
+        return { status: 200 };
     };
 
     const refreshResources = async () => {
