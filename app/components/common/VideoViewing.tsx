@@ -3,7 +3,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Session } from 'next-auth';
 import ReactPlayer from 'react-player';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -15,6 +15,7 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 import {
+    SaveOrRemoveVideoAPI,
     UpdateStudentVideoCompletedAPI,
     UpdateStudentVideoLastSeenTime,
     createVideoQuestionAnswerAPI,
@@ -235,6 +236,32 @@ export default function VideoViewing({
         // toast.success('Video last seen time updated successfully');
     };
 
+    const handleSavingVideo = async () => {
+        if (!data || data?.user?.role !== 'student') {
+            return;
+        }
+        try {
+            const APIresponse = await SaveOrRemoveVideoAPI({
+                accessToken: data?.user?.accessToken,
+                studentId: data?.user?.id,
+                videoId,
+                save: true,
+            });
+
+            if (APIresponse.status !== 200) {
+                throw new Error('Error updating video last seen time');
+            }
+
+            action('getSavedVideos');
+            toast.success('Video saved successfully');
+        } catch (error: any) {
+            toast.error(
+                error?.response?.data?.message ||
+                    'Error updating video last seen time'
+            );
+        }
+    };
+
     useEffect(() => {
         if (currentQuestion === null && lastPlayedTime !== null && videoReady) {
             setPlaying(true);
@@ -359,6 +386,13 @@ export default function VideoViewing({
                                 onReady={() => setVideoReady(true)}
                             />
                         </div>
+                        <button
+                            type="button"
+                            className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
+                            onClick={handleSavingVideo}
+                        >
+                            Save
+                        </button>
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4">
                             {topicsArray.length > 0 && (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">

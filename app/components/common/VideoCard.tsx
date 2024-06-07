@@ -1,9 +1,15 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 import { PlayIcon } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+import action from '@/app/action';
 import { timeStringToSeconds } from '@/lib/utils';
+import { SaveOrRemoveVideoAPI } from '@/app/api/student';
 import QuestionIcon from '@/app/assets/icons/QuestionIcon';
 import CheckPointIcon from '@/app/assets/icons/CheckPointIcon';
 
@@ -25,11 +31,36 @@ interface VideoCardProps {
 }
 
 function VideoCard({ card }: VideoCardProps) {
+    const { data } = useSession();
     const progress = Math.ceil(
         (timeStringToSeconds(card.lastSeenTime) /
             timeStringToSeconds(card.duration)) *
             100
     );
+    const handleRemoveSavedVideo = async () => {
+        if (!data) {
+            return;
+        }
+        try {
+            const APIresponse = await SaveOrRemoveVideoAPI({
+                accessToken: data?.user?.accessToken,
+                studentId: data?.user?.id,
+                videoId: card.id,
+                save: false,
+            });
+
+            if (APIresponse.status !== 200) {
+                throw new Error('Error updating video last seen time');
+            }
+            action('getSavedVideos');
+            toast.success('Removed saved video successfully');
+        } catch (error: any) {
+            toast.error(
+                error?.response?.data?.message ||
+                    'Error updating video last seen time'
+            );
+        }
+    };
     return (
         <div className=" bg-white border rounded-2xl shadow flex flex-col justify-center md:p-4 mobile:p-2">
             <Link href="/student/learning/1/video" className="relative">
@@ -97,6 +128,13 @@ function VideoCard({ card }: VideoCardProps) {
                             Continue
                         </button>
                     </Link>
+                    <button
+                        type="button"
+                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 lg:hover:bg-primary-color lg:hover:text-white"
+                        onClick={handleRemoveSavedVideo}
+                    >
+                        Remove
+                    </button>
                 </div>
             </div>
         </div>
