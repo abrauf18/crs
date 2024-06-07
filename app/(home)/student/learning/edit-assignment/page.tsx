@@ -9,6 +9,7 @@ function EditAssignmentPage() {
             attempted={false}
             name=""
             canWrite={false}
+            deadline=""
         />
     );
 }
