@@ -23,6 +23,10 @@ const cards: Video[] = [
         Questions: 5,
         Checkpoints: 3,
         Resources: 8,
+        lastSeenTime: '',
+        duration: '',
+        completed: false,
+        standardId: '',
     },
     {
         id: '2',
@@ -31,6 +35,10 @@ const cards: Video[] = [
         Questions: 5,
         Checkpoints: 3,
         Resources: 8,
+        lastSeenTime: '',
+        duration: '',
+        completed: false,
+        standardId: '',
     },
     {
         id: '3',
@@ -39,6 +47,10 @@ const cards: Video[] = [
         Questions: 5,
         Checkpoints: 3,
         Resources: 8,
+        lastSeenTime: '',
+        duration: '',
+        completed: false,
+        standardId: '',
     },
     {
         id: '4',
@@ -47,6 +59,10 @@ const cards: Video[] = [
         Questions: 5,
         Checkpoints: 3,
         Resources: 8,
+        lastSeenTime: '',
+        duration: '',
+        completed: false,
+        standardId: '',
     },
     {
         id: '5',
@@ -55,6 +71,10 @@ const cards: Video[] = [
         Questions: 5,
         Checkpoints: 3,
         Resources: 8,
+        lastSeenTime: '',
+        duration: '',
+        completed: false,
+        standardId: '',
     },
     {
         id: '6',
@@ -63,6 +83,10 @@ const cards: Video[] = [
         Questions: 5,
         Checkpoints: 3,
         Resources: 8,
+        lastSeenTime: '',
+        duration: '',
+        completed: false,
+        standardId: '',
     },
 ];
 function Dashboard() {

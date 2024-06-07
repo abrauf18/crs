@@ -149,3 +149,50 @@ export const createVideoQuestionAnswerAPI = async ({
 
     return result;
 };
+
+export const getSavedVideosAPI = async ({
+    accessToken,
+    studentId,
+}: {
+    accessToken: string;
+    studentId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getSavedVideos`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+            },
+            next: {
+                tags: ['getSavedVideos'],
+            },
+        }
+    );
+
+    return result;
+};
+
+export const SaveOrRemoveVideoAPI = async ({
+    accessToken,
+    studentId,
+    videoId,
+    save,
+}: {
+    accessToken: string;
+    studentId: string;
+    videoId: string;
+    save: boolean;
+}) => {
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/SaveOrRemoveVideo`,
+        {
+            accessToken,
+            studentId,
+            videoId,
+            save,
+        }
+    );
+
+    return result;
+};

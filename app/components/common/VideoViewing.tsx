@@ -177,6 +177,7 @@ export default function VideoViewing({
             }
         });
         action('getStudentVideo');
+        // action('getSavedVideos');
         try {
             const APIresponse = await UpdateStudentVideoCompletedAPI({
                 accessToken: data?.user?.accessToken,
@@ -193,6 +194,7 @@ export default function VideoViewing({
             }
 
             action('getStudentStandardAPI');
+            // action('getSavedVideos');
         } catch (error: any) {
             // toast.error(error.message || 'Error updating video last seen time');
         }
@@ -225,6 +227,7 @@ export default function VideoViewing({
                 }
 
                 action('getStudentStandardAPI');
+                // action('getSavedVideos');
             } catch (error: any) {
                 // toast.error(error.message || 'Error updating video last seen time');
             }
@@ -261,6 +264,7 @@ export default function VideoViewing({
                 }
 
                 action('getStudentStandardAPI');
+                // action('getSavedVideos');
                 // toast.success('Video last seen time updated successfully');
             } catch (error: any) {
                 // toast.error(
@@ -301,6 +305,7 @@ export default function VideoViewing({
                 }
 
                 action('getStudentStandardAPI');
+                // action('getSavedVideos');
                 // toast.success('Video last seen time updated successfully');
             } catch (error: any) {
                 // toast.error(
