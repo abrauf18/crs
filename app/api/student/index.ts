@@ -196,3 +196,32 @@ export const SaveOrRemoveVideoAPI = async ({
 
     return result;
 };
+
+export const getStandardsResourcesAndCountAPI = async ({
+    accessToken,
+    studentId,
+    page,
+    limit,
+}: {
+    accessToken: string;
+    studentId: string;
+    page: string;
+    limit: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getStandardsResourcesAndCount`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+                page,
+                limit,
+            },
+            next: {
+                tags: ['getStandardsResourcesAndCount'],
+            },
+        }
+    );
+
+    return result;
+};
