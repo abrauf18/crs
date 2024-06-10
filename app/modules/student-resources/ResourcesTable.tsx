@@ -1,8 +1,6 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
 import React, { useState } from 'react';
-import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
     Table,
@@ -12,7 +10,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import EditIcon from '@/app/assets/icons/EditIcon';
 import ResourceDownloadModal from './ResourceDownloadModal';
 
 export interface ResourcesInterface {
@@ -98,14 +95,7 @@ function ResourcesTable({ standards }: { standards: Standard[] }) {
                                 {standard.resourceCount}
                             </TableCell>
 
-                            <TableCell className="flex lg:justify-end items-center p-0  lg:pr-10 space-x-2 font-medium mt-6 md:mt-5 lg:mt-2 ">
-                                <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer ">
-                                    <Eye
-                                        color="#F59A3B"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
+                            <TableCell className="flex lg:justify-end items-center p-0  lg:pr-10 space-x-2 font-medium mt-6 md:mt-5 lg:mt-2">
                                 <button
                                     type="button"
                                     className="border rounded-lg px-4 py-2 text-dark-gray "
