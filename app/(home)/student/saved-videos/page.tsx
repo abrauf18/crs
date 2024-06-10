@@ -31,9 +31,15 @@ type VideoData = {
 
 async function SavedVideosPage() {
     const data: Session | null = await getServerSession(options);
+    const wait = (ms: number) =>
+        new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
 
     if (data) {
         try {
+            await wait(1500);
+
             const response = await getSavedVideosAPI({
                 accessToken: data?.user?.accessToken,
                 studentId: data?.user?.id,
