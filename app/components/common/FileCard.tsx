@@ -1,8 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import download from 'downloadjs';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import PptIcon from '@/app/assets/icons/PptIcon';
 import XlsIcon from '@/app/assets/icons/XlsIcon';
@@ -32,8 +30,8 @@ function FileCard({ card, released, handleDownload }: FileCardProp) {
                 <iframe
                     src={resourceRenderingLink}
                     title="Thumbnail Viewer"
-                    className="w-72"
-                    style={{ width: '20vh', height: '20vh' }}
+                    className="w-full"
+                    style={{ width: '100%', height: '100%' }}
                 />
                 <div className="bg-sky-400 w-fit p-2 absolute left-3 top-3 z-10 rounded-lg">
                     {card.resourceType === 'ppt' && <PptIcon />}

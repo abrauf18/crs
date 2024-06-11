@@ -91,7 +91,7 @@ function ResourceDownloadModal({
                     className="flex justify-end px-4"
                     onClick={handleDownloadAll}
                 >
-                    <p className="px-5 py-3 bg-primary-color rounded-2xl text-white w-fit ">
+                    <p className="px-5 py-3 bg-primary-color rounded-2xl text-white w-fit cursor-pointer">
                         Download All
                     </p>
                 </div>

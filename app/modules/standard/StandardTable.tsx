@@ -124,19 +124,21 @@ function StandardTable({
             <Table
                 className={`text-sm mobile:text-xs ${poppins.className} lg:table-fixed`}
             >
-                <TableBody>
+                <TableBody className="whitespace-nowrap w-full">
                     {topicList.map((topic, index) => (
                         <TableRow key={topic.resourceId}>
-                            <TableCell className="font-medium">
+                            <TableCell className="font-medium w-[20%]">
                                 <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {index}
+                                    {index + 1}
                                 </span>
                             </TableCell>
-                            <TableCell className="flex items-start gap-2 ">
+                            <TableCell className="flex gap-2 items-center p-8">
                                 {topic.type?.toLowerCase() === 'slideshow' && (
                                     <PptIcon
                                         fill="#1ebeff"
                                         className="shrink-0"
+                                        height={20}
+                                        width={20}
                                     />
                                 )}
                                 {topic.type?.toLowerCase() === 'video' && (
@@ -146,6 +148,8 @@ function StandardTable({
                                     <XlsIcon
                                         color="#54C3F4"
                                         className="shrink-0"
+                                        height={20}
+                                        width={20}
                                     />
                                 )}
                                 {topic.type?.toLowerCase() ===
@@ -153,20 +157,30 @@ function StandardTable({
                                     <TicketIcon
                                         color="#54C3F4"
                                         className="shrink-0"
+                                        height={20}
+                                        width={20}
                                     />
                                 )}
                                 {topic.type?.toLowerCase() === 'quiz' && (
-                                    <QuestionMarkIcon className="shrink-0" />
+                                    <QuestionMarkIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
                                 )}
                                 {topic.type?.toLowerCase() === 'assignment' && (
-                                    <AssignmentIcon className="shrink-0" />
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
                                 )}
                                 {topic.name}
                             </TableCell>
-                            <TableCell className="text-dark-gray">
+                            <TableCell className="text-dark-gray text-center">
                                 {topic.type}
                             </TableCell>
-                            <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
+                            <TableCell className="flex justify-center items-center">
                                 {!isShownFromStudent && (
                                     <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
                                         <Eye

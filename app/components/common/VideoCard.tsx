@@ -63,11 +63,11 @@ function VideoCard({ card }: VideoCardProps) {
     };
     return (
         <div className=" bg-white border rounded-2xl shadow flex flex-col justify-center md:p-4 mobile:p-2">
-            <Link href="/student/learning/1/video" className="relative">
+            <Link href="/student/learning/1/video" className="relative h-[70%]">
                 <Image
                     src={card.imageUrl}
                     alt="video"
-                    className="w-full"
+                    className="w-full h-full object-fill"
                     width={200}
                     height={200}
                 />

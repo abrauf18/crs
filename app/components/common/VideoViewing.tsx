@@ -21,11 +21,10 @@ import {
     createVideoQuestionAnswerAPI,
 } from '@/app/api/student';
 import action from '@/app/action';
-import MovieIcon from '@/app/assets/icons/MovieIcon';
 import { secondsToString, timeStringToSeconds } from '@/lib/utils';
+import { Bookmark } from 'lucide-react';
 import VideoQuestion from './VideoQuestion';
 import DialogBox from './DialogBox';
-// import PageLoader from './PageLoader';
 
 function getVideoIdFromPathname(path: string) {
     const parts = path.split('/');
@@ -372,6 +371,14 @@ export default function VideoViewing({
                     </div>
                 ) : (
                     <div>
+                        <button
+                            type="button"
+                            className="bg-primary-color text-white px-5 py-2 xl:float-right xl:mb-0 mb-5 rounded-lg hover:bg-orange-400 flex items-center gap-2"
+                            onClick={handleSavingVideo}
+                        >
+                            <Bookmark />
+                            <span>Save Video</span>
+                        </button>
                         <div className="text-lg flex justify-center">
                             <ReactPlayer
                                 ref={playerRef}
@@ -386,13 +393,7 @@ export default function VideoViewing({
                                 onReady={() => setVideoReady(true)}
                             />
                         </div>
-                        <button
-                            type="button"
-                            className="bg-primary-color text-white px-5 py-2 rounded-lg hover:bg-orange-400"
-                            onClick={handleSavingVideo}
-                        >
-                            Save
-                        </button>
+
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4">
                             {topicsArray.length > 0 && (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
