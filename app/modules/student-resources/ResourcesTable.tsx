@@ -29,6 +29,7 @@ type Resource = {
     type: string;
     topic: string;
     url: string;
+    released: boolean;
 };
 
 type Standard = {

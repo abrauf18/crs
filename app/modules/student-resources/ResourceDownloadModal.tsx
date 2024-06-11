@@ -11,6 +11,7 @@ type Resource = {
     type: string;
     topic: string;
     url: string;
+    released: boolean;
 };
 
 type Standard = {
@@ -69,7 +70,10 @@ function ResourceDownloadModal({
 
     const handleDownloadAll = () => {
         standard.resources.forEach((resource) => {
-            handleDownload({ url: resource.url, name: resource.name });
+            if (!resource.released) {
+                return null;
+            }
+            return handleDownload({ url: resource.url, name: resource.name });
         });
     };
 
@@ -96,6 +100,7 @@ function ResourceDownloadModal({
                         <FileCard
                             key={resource.id}
                             handleDownload={handleDownload}
+                            released={resource.released}
                             card={{
                                 id: resource.id,
                                 imageUrl: resource.url,

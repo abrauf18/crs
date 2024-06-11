@@ -17,10 +17,11 @@ export interface FileInterface {
 
 interface FileCardProp {
     card: FileInterface;
+    released: boolean;
     handleDownload: ({ url, name }: { url: string; name: string }) => void;
 }
 
-function FileCard({ card, handleDownload }: FileCardProp) {
+function FileCard({ card, released, handleDownload }: FileCardProp) {
     const resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
         card?.imageUrl as string
     )}`;
@@ -44,14 +45,24 @@ function FileCard({ card, handleDownload }: FileCardProp) {
             </h5>
             <div
                 className="flex justify-end px-4 cursor-pointer"
-                onClick={() =>
-                    handleDownload({
+                onClick={() => {
+                    if (!released) {
+                        return null;
+                    }
+                    return handleDownload({
                         url: card.imageUrl as string,
                         name: card.name,
-                    })
-                }
+                    });
+                }}
             >
-                <p className="px-5 py-3 bg-primary-color rounded-2xl text-white w-fit ">
+                <p
+                    className={` px-5 py-3 w-fit rounded-2xl
+                        ${
+                            !released
+                                ? 'bg-gray-300 text-white'
+                                : 'bg-primary-color text-white'
+                        }`}
+                >
                     {card.btnText}
                 </p>
             </div>

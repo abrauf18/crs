@@ -18,6 +18,7 @@ type Resource = {
     type: string;
     topic: string;
     url: string;
+    released: boolean;
 };
 
 type Standard = {
@@ -46,6 +47,7 @@ const defaultAPIData: APIData = {
                     type: '',
                     topic: '',
                     url: '',
+                    released: false,
                 },
             ],
         },
