@@ -9,6 +9,7 @@ import ClientSearchbar from '@/app/components/common/ClientSearchBar';
 import PageLoader from './PageLoader';
 
 export default function StudentVideo({
+    standardId,
     headerText,
     videoURL,
     thumbnailURL,
@@ -16,6 +17,7 @@ export default function StudentVideo({
     questions,
     lastSeenTime,
 }: {
+    standardId: string;
     headerText: string;
     videoURL: string;
     thumbnailURL: string;
@@ -50,6 +52,7 @@ export default function StudentVideo({
             />
             {data ? (
                 <VideoViewing
+                    standardId={standardId}
                     videoURL={videoURL}
                     thumbnailURL={thumbnailURL}
                     topics={topics}

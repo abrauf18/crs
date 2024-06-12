@@ -81,12 +81,14 @@ export const UpdateStudentVideoCompletedAPI = async ({
     videoId,
     lastSeenTime,
     watchedCompletely,
+    standardId,
 }: {
     accessToken: string;
     studentId: string;
     videoId: string;
     lastSeenTime: string;
     watchedCompletely: boolean;
+    standardId: string;
 }) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/student/UpdateStudentVideoCompleted`,
@@ -96,6 +98,7 @@ export const UpdateStudentVideoCompletedAPI = async ({
             videoId,
             last_seen_time: lastSeenTime,
             watchedCompletely,
+            standardId,
         }
     );
 
@@ -107,11 +110,13 @@ export const UpdateStudentVideoLastSeenTime = async ({
     studentId,
     videoId,
     lastSeenTime,
+    standardId,
 }: {
     accessToken: string;
     studentId: string;
     videoId: string;
     lastSeenTime: string;
+    standardId: string;
 }) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/student/UpdateStudentVideoLastSeenTime`,
@@ -120,6 +125,7 @@ export const UpdateStudentVideoLastSeenTime = async ({
             studentId,
             videoId,
             last_seen_time: lastSeenTime,
+            standardId,
         }
     );
 
@@ -175,10 +181,12 @@ export const getSavedVideosAPI = async ({
 
 export const SaveOrRemoveVideoAPI = async ({
     accessToken,
+    standardId,
     studentId,
     videoId,
     save,
 }: {
+    standardId: string;
     accessToken: string;
     studentId: string;
     videoId: string;
@@ -188,6 +196,7 @@ export const SaveOrRemoveVideoAPI = async ({
         `${process.env.NEXT_PUBLIC_BASE_URL}/student/SaveOrRemoveVideo`,
         {
             accessToken,
+            standardId,
             studentId,
             videoId,
             save,

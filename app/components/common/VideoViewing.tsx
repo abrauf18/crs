@@ -47,6 +47,7 @@ type Question = {
 };
 
 export default function VideoViewing({
+    standardId,
     videoURL,
     thumbnailURL,
     topics,
@@ -55,6 +56,7 @@ export default function VideoViewing({
     lastSeenTime,
     data,
 }: {
+    standardId?: string;
     videoURL: string;
     thumbnailURL: string;
     topics: { [key: string]: string };
@@ -187,6 +189,7 @@ export default function VideoViewing({
                     studentLastPlayedTime?.current ?? 0
                 ),
                 watchedCompletely: false,
+                standardId: standardId || '',
             });
 
             if (APIresponse.status !== 200) {
@@ -220,6 +223,7 @@ export default function VideoViewing({
                         studentLastPlayedTime?.current ?? 0
                     ),
                     watchedCompletely: true,
+                    standardId: standardId || '',
                 });
 
                 if (APIresponse.status !== 200) {
@@ -242,6 +246,7 @@ export default function VideoViewing({
         try {
             const APIresponse = await SaveOrRemoveVideoAPI({
                 accessToken: data?.user?.accessToken,
+                standardId: standardId || '',
                 studentId: data?.user?.id,
                 videoId,
                 save: true,
@@ -283,6 +288,7 @@ export default function VideoViewing({
                     lastSeenTime: secondsToString(
                         studentLastPlayedTime?.current ?? 0
                     ),
+                    standardId: standardId || '',
                 });
 
                 if (APIresponse.status !== 200) {
@@ -324,6 +330,7 @@ export default function VideoViewing({
                     lastSeenTime: secondsToString(
                         studentLastPlayedTime?.current ?? 0
                     ),
+                    standardId: standardId || '',
                 });
 
                 if (APIresponse.status !== 200) {
