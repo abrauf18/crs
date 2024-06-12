@@ -5,7 +5,6 @@ import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { Resource, ResourceType } from '@/lib/utils';
 import FileViewing from '@/app/components/common/FileViewing';
-import VideoViewing from '@/app/components/common/VideoViewing';
 import { getStudentVideoAPI } from '@/app/api/student';
 import StudentVideo from '@/app/components/common/StudentVideo';
 
@@ -38,7 +37,7 @@ export interface Video {
 async function ResourceDetailsPage({
     params,
 }: {
-    params: { resourceType: string; contentId: string };
+    params: { id: string; resourceType: string; contentId: string };
 }) {
     const data: Session | null = await getServerSession(options);
 
@@ -81,6 +80,7 @@ async function ResourceDetailsPage({
                         topics={topics}
                         questions={questions}
                         lastSeenTime={lastSeenTime ?? '00:00:00'}
+                        standardId={params.id}
                     />
                 );
             }

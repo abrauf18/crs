@@ -44,6 +44,7 @@ function VideoCard({ card }: VideoCardProps) {
         try {
             const APIresponse = await SaveOrRemoveVideoAPI({
                 accessToken: data?.user?.accessToken,
+                standardId: card.standardId,
                 studentId: data?.user?.id,
                 videoId: card.id,
                 save: false,
