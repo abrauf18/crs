@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarDays } from 'lucide-react';
+import { CalendarDays, ShieldAlert } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import VideoCard from '@/app/components/common/VideoCard';
 
@@ -33,9 +33,10 @@ function SavedVideos({
                 tagline="Your All Saved Videos"
             />
             {SavedVideosByDays?.length === 0 ? (
-                <div className="flex justify-center items-center h-96">
-                    <p className="text-lg font-semibold text-gray-500">
-                        No saved videos found
+                <div className="flex flex-col items-center justify-center w-full h-96  bg-white rounded-lg shadow-lg">
+                    <ShieldAlert size={48} />
+                    <p className="text-lg font-semibold mt-4">
+                        No Videos Found
                     </p>
                 </div>
             ) : (
