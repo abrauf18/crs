@@ -89,11 +89,32 @@ const cards: Video[] = [
         standardId: '',
     },
 ];
-function Dashboard() {
+
+type VideoData = {
+    lastSeenTime: string;
+    duration: string;
+    thumbnailURL: string;
+};
+
+type StandardData = {
+    standardName: string;
+    videoResourcesCount: number;
+    nonVideoResourcesCount: number;
+};
+
+type DashboardData = {
+    studentName: string;
+    standardsCount: number;
+    classroomName: string;
+    standardsData: StandardData[];
+    videosData: VideoData[];
+};
+
+function Dashboard({ APIdata }: { APIdata: DashboardData }) {
     return (
         <div className="pb-4">
             <Searchbar
-                headerText="Hello Dany"
+                headerText={`Hello ${APIdata.studentName}!`}
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
@@ -101,8 +122,8 @@ function Dashboard() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
                 <Card
                     Icon={LibraryBig}
-                    header="Subjects"
-                    description="05"
+                    header="Standards"
+                    description={APIdata.standardsCount}
                     iconBg="bg-yellow-50"
                     border="border-2 border-yellow-300"
                     iconColor="#F1E333"
@@ -118,7 +139,7 @@ function Dashboard() {
                 <Card
                     Icon={ClassroomIcon}
                     header="Classroom"
-                    description="10th Grade"
+                    description={APIdata.classroomName}
                     iconBg="bg-green-100"
                     border="border-2 border-green-600"
                     iconColor="#7AA43E"
