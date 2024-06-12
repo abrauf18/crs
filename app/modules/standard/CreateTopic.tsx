@@ -1,7 +1,7 @@
 'use client';
 
 import { toast } from 'react-toastify';
-import { CalendarDays, X } from 'lucide-react';
+import { CalendarDays, FileUpIcon, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { FieldErrors, useFieldArray, useFormContext } from 'react-hook-form';
@@ -103,8 +103,8 @@ function CreateTopic({
         );
     };
     return (
-        <>
-            <div className="cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg absolute right-6 z-10 hover:bg-slate-100">
+        <div className="relative">
+            <div className="cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg absolute mobile:right-0 right-6 -top-2 z-10 hover:bg-slate-100 ">
                 <button
                     type="button"
                     onClick={() => {
@@ -147,34 +147,53 @@ function CreateTopic({
                             >
                                 Type
                             </Label>
-                            <div className="flex items-center gap-5 sm:my-4 mt-12 mb-8">
+                            <div className="flex items-center gap-5 sm:my-8 my-6 mobile:flex-col mobile:items-start mobile:w-full">
                                 <Select
-                                    additionalClasses="!w-2/4"
+                                    additionalClasses="!w-2/4 mobile:!w-full"
                                     name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                     options={resourceDropDownOptions}
                                     selectedOption={ResourceType.VIDEO}
+                                    disabled={
+                                        watch(
+                                            `standard.dailyUploads.${index}.topics.${topicIndex}.resourceId`
+                                        ) !== ''
+                                    }
                                 />
-                                <div
-                                    className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center px-4 py-3 hover:bg-slate-100"
-                                    onClick={() => handleOpenModal(topicIndex)}
-                                >
-                                    <button
-                                        className="text-sm text-center"
-                                        type="button"
+                                <div className="flex gap-2 items-center justify-center">
+                                    <div
+                                        className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center p-3 hover:bg-slate-100"
+                                        onClick={() =>
+                                            handleOpenModal(topicIndex)
+                                        }
                                     >
-                                        Select
-                                    </button>
-                                </div>
-                                <div>
-                                    {allSelectedResources &&
-                                        allSelectedResources.length >
-                                            topicIndex &&
-                                        allSelectedResources[topicIndex].name}
+                                        <button
+                                            className="text-sm text-center"
+                                            type="button"
+                                        >
+                                            Select
+                                        </button>
+                                    </div>
+                                    {allSelectedResources[topicIndex].name && (
+                                        <div className="border text-sm text-dark-gray rounded-lg text-center p-3  flex gap-2 items-center">
+                                            {allSelectedResources &&
+                                                allSelectedResources.length >
+                                                    topicIndex && (
+                                                    <>
+                                                        <FileUpIcon />
+                                                        {
+                                                            allSelectedResources[
+                                                                topicIndex
+                                                            ].name
+                                                        }
+                                                    </>
+                                                )}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
+                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[33%]">
                         {isDisplayModal && (
                             <VideoModal
                                 onClose={handleCloseModal}
@@ -219,8 +238,8 @@ function CreateTopic({
                     </div>
                 </div>
             ))}
-            <div className="sm:flex justify-between items-center my-5 gap-5 border-b">
-                <div className="basis-1/2 relative">
+            <div className="mobile:w-full w-1/2 my-5">
+                <div className="basis-1/2 mobile:w-full relative">
                     <Label htmlFor={`standard.dailyUploads.${index}.date`}>
                         Date
                     </Label>
@@ -253,7 +272,8 @@ function CreateTopic({
                     </div>
                 </div>
             </div>
-        </>
+            <hr className="my-5" />
+        </div>
     );
 }
 

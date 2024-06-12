@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
-import { FileVideoIcon } from 'lucide-react';
+import { FileTypeIcon, FileVideoIcon } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import SearchInput from '@/app/components/common/SearchInput';
@@ -87,39 +87,44 @@ function VideoModal({
         setResourceCards(transformedData);
     };
 
-    const searchResources = async (searchInput: string) => {
-        if (!data) {
-            return;
-        }
-        if (searchInput === '') {
-            convertResourceToCard(allResources);
-            return;
-        }
-
-        try {
-            const APIData = await getResourcesByNameAPI({
-                accessToken: data?.user?.accessToken,
-                resourceType,
-                resourceName: searchInput,
-            });
-
-            if (!APIData.ok) {
-                const errorData = await APIData.json();
-                throw new Error(
-                    errorData?.message ??
-                        'An error occurred while fetching video data'
-                );
+    const searchResources = useCallback(
+        async (searchInput: string) => {
+            if (!data) {
+                return;
+            }
+            if (searchInput === '') {
+                convertResourceToCard(allResources);
+                return;
             }
 
-            const responseData = await APIData.json();
-            const searchedResources = responseData?.data;
-            convertResourceToCard(searchedResources);
-        } catch (error: any) {
-            toast.error(
-                error.message ?? 'An error occurred while searching resources'
-            );
-        }
-    };
+            try {
+                const APIData = await getResourcesByNameAPI({
+                    accessToken: data?.user?.accessToken,
+                    resourceType,
+                    resourceName: searchInput,
+                });
+
+                if (!APIData.ok) {
+                    const errorData = await APIData.json();
+                    throw new Error(
+                        errorData?.message ??
+                            'An error occurred while fetching video data'
+                    );
+                }
+
+                const responseData = await APIData.json();
+                const searchedResources = responseData?.data;
+                convertResourceToCard(searchedResources);
+            } catch (error: any) {
+                toast.error(
+                    error.message ??
+                        'An error occurred while searching resources'
+                );
+            }
+        },
+        [allResources, data, resourceType]
+    );
+
     useEffect(() => {
         if (!data) {
             return;
@@ -162,14 +167,21 @@ function VideoModal({
         <section className="w-full bg-white h-screen p-4 shadow-md">
             <ModalHeader
                 headerText={{
-                    heading: 'Select Video',
-                    tagline: 'Select Video For your plan',
+                    heading: `Select ${
+                        resourceType.charAt(0).toUpperCase() +
+                        resourceType.slice(1)
+                    }`,
+                    tagline: `Select ${resourceType} For your plan`,
                 }}
-                Icon={FileVideoIcon}
+                Icon={
+                    resourceType === ResourceType.VIDEO
+                        ? FileVideoIcon
+                        : FileTypeIcon
+                }
                 onClose={onClose}
             />
             <div className="mb-5">
-                <SearchInput handleClick={searchResources} />
+                <SearchInput handleChange={searchResources} />
             </div>
             {isLoading ? (
                 <PageLoader additionalClasses="!h-2/3" />

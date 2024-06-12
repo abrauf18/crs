@@ -131,11 +131,9 @@ function CreateStandard({
         if (!data) {
             return;
         }
-
         const allResourcesSelected = allSelectedResources.every((resources) =>
             resources.every((resource) => resource.resourceId !== '')
         );
-
         if (!allResourcesSelected) {
             toast.error('Please select all resources before submitting');
             return;
@@ -290,7 +288,60 @@ function CreateStandard({
                         </div>
                     </div>
                     <div>
-                        <div className="flex justify-between items-center my-5 w-full">
+                        <div className="flex justify-between items-center pb-6 mt-5 mb-2">
+                            <button
+                                type="submit"
+                                className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-32"
+                            >
+                                {isLoading ? <ButtonLoader /> : `submit`}
+                            </button>
+                            <button
+                                type="button"
+                                className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg"
+                                onClick={() => {
+                                    if (
+                                        allSelectedResources[
+                                            allSelectedResources.length - 1
+                                        ] &&
+                                        allSelectedResources[
+                                            allSelectedResources.length - 1
+                                        ].some(
+                                            (resource) =>
+                                                resource.resourceId === ''
+                                        )
+                                    ) {
+                                        toast.error(
+                                            'Please select all resources in last day before adding a new one'
+                                        );
+                                        return;
+                                    }
+                                    appendDailyUpload({
+                                        date: '',
+                                        topics: [
+                                            {
+                                                resourceId: '',
+                                                type: ResourceType.VIDEO,
+                                                name: '',
+                                            },
+                                        ],
+                                    });
+                                    setAllSelectedResources([
+                                        ...allSelectedResources,
+                                        [
+                                            {
+                                                resourceId: '',
+                                                resourceType:
+                                                    ResourceType.VIDEO,
+                                                name: '',
+                                            },
+                                        ],
+                                    ]);
+                                }}
+                            >
+                                Add TimeLine
+                            </button>
+                        </div>
+                        <div className="flex justify-between items-center mb-5 w-full">
                             <h3 className="text-xl font-semibold">Topic:</h3>
                         </div>
                         {dailyUploadFields.map((dailyUpload, index) => (
@@ -319,57 +370,6 @@ function CreateStandard({
                                 />
                             </div>
                         ))}
-                    </div>
-                    <div className="flex justify-between items-center border-b pb-6">
-                        <button
-                            type="submit"
-                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-32"
-                        >
-                            {isLoading ? <ButtonLoader /> : `submit`}
-                        </button>
-                        <button
-                            type="button"
-                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg"
-                            onClick={() => {
-                                if (
-                                    allSelectedResources[
-                                        allSelectedResources.length - 1
-                                    ] &&
-                                    allSelectedResources[
-                                        allSelectedResources.length - 1
-                                    ].some(
-                                        (resource) => resource.resourceId === ''
-                                    )
-                                ) {
-                                    toast.error(
-                                        'Please select all resources in last day before adding a new one'
-                                    );
-                                    return;
-                                }
-                                appendDailyUpload({
-                                    date: '',
-                                    topics: [
-                                        {
-                                            resourceId: '',
-                                            type: ResourceType.VIDEO,
-                                            name: '',
-                                        },
-                                    ],
-                                });
-                                setAllSelectedResources([
-                                    ...allSelectedResources,
-                                    [
-                                        {
-                                            resourceId: '',
-                                            resourceType: ResourceType.VIDEO,
-                                            name: '',
-                                        },
-                                    ],
-                                ]);
-                            }}
-                        >
-                            Add TimeLine
-                        </button>
                     </div>
                 </form>
             </FormProvider>

@@ -41,12 +41,11 @@ function VideoCard({
     }
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
-            <Link href="#" className="relative">
+            <Link href="#" className="relative ">
                 <iframe
                     src={resourceRenderingLink}
                     title="Thumbnail Viewer"
-                    className="w-72"
-                    style={{ width: '20vh', height: '20vh' }}
+                    style={{ width: '100%', height: '20vh' }}
                 />
                 <div className="absolute left-3 top-3 transform -translate-x-1/2 -translate-y-1/2">
                     <HelpCircle fill="#54C3F4" color="white" size={35} />
