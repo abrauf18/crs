@@ -11,6 +11,39 @@ export const metadata: Metadata = {
     description: 'Here’s a Quick Overview',
 };
 
+type VideoData = {
+    standardId: string;
+    videoId: string;
+    videoName: string;
+    questionsCount: number;
+    topicsCount: number;
+    lastSeenTime: string;
+    duration: string;
+    thumbnailURL: string;
+    completed: boolean;
+};
+
+type StandardData = {
+    standardId: string;
+    standardName: string;
+    videoResourcesCount: number;
+    nonVideoResourcesCount: number;
+};
+
+type DashboardData = {
+    studentName: string;
+    standardsCount: number;
+    classroomName: string;
+    standardsData: StandardData[];
+    videosData: VideoData[];
+};
+
+type ApiResponse = {
+    status: string;
+    data?: DashboardData;
+    message?: string;
+};
+
 async function DashboardPage() {
     const data: Session | null = await getServerSession(options);
 
@@ -21,12 +54,12 @@ async function DashboardPage() {
                     accessToken: data?.user?.accessToken,
                     studentId: data?.user?.id,
                 });
-            const studentDashboardAPIResponse =
+            const studentDashboardAPIResponse: ApiResponse =
                 await studentDashboardResponse.json();
             if (!studentDashboardResponse.ok) {
                 throw new Error(studentDashboardAPIResponse?.message);
             }
-            return <Dashboard APIdata={studentDashboardAPIResponse.data} />;
+            return <Dashboard APIdata={studentDashboardAPIResponse.data!} />;
         } catch (error: any) {
             return (
                 <UnhandledError

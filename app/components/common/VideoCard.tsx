@@ -19,7 +19,7 @@ export interface Card {
     Text: string;
     Questions: number;
     Checkpoints: number;
-    Resources: number;
+    Resources?: number;
     lastSeenTime: string;
     duration: string;
     completed: boolean;
@@ -53,6 +53,7 @@ function VideoCard({ card }: VideoCardProps) {
                 throw new Error('Error updating video last seen time');
             }
             action('getSavedVideos');
+            action('getStudentDashboardSummaries');
             toast.success('Removed saved video successfully');
         } catch (error: any) {
             toast.error(

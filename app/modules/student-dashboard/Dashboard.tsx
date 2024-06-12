@@ -91,12 +91,19 @@ const cards: Video[] = [
 ];
 
 type VideoData = {
+    standardId: string;
+    videoId: string;
+    videoName: string;
+    questionsCount: number;
+    topicsCount: number;
     lastSeenTime: string;
     duration: string;
     thumbnailURL: string;
+    completed: boolean;
 };
 
 type StandardData = {
+    standardId: string;
     standardName: string;
     videoResourcesCount: number;
     nonVideoResourcesCount: number;
@@ -119,7 +126,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 Icon={WavingHandIcon}
             />
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
+            <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-5 my-5">
                 <Card
                     Icon={LibraryBig}
                     header="Standards"
@@ -144,15 +151,6 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                     border="border-2 border-green-600"
                     iconColor="#7AA43E"
                 />
-                <Card
-                    Icon={ShieldAlert}
-                    header="Standard 02"
-                    description="25%"
-                    iconBg="bg-red-100"
-                    border="border-2 border-red-400"
-                    iconColor="#E6500D"
-                    isShowAlert
-                />
             </div>
 
             <div className="flex mobile:flex-col  md:justify-between mt-8 w-full">
@@ -167,7 +165,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
             </div>
 
             <div className="my-8">
-                <Learning />
+                <Learning standards={APIdata.standardsData} />
             </div>
 
             <div className="flex mobile:flex-col  md:justify-between mt-8">
@@ -181,8 +179,21 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
 
             <div className="mt-8">
                 <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
-                    {cards.map((card) => (
-                        <VideoCard card={card} key={card.Questions} />
+                    {APIdata.videosData.map((video) => (
+                        <VideoCard
+                            card={{
+                                id: video.videoId,
+                                imageUrl: video.thumbnailURL,
+                                Text: video.videoName,
+                                Questions: video.questionsCount,
+                                Checkpoints: video.topicsCount,
+                                lastSeenTime: video.lastSeenTime,
+                                duration: video.duration,
+                                completed: video.completed,
+                                standardId: video.standardId,
+                            }}
+                            key={video.videoId}
+                        />
                     ))}
                 </div>
             </div>

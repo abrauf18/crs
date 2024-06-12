@@ -26,7 +26,14 @@ export const learnings = [
     },
 ];
 
-async function Learning() {
+type StandardData = {
+    standardId: string;
+    standardName: string;
+    videoResourcesCount: number;
+    nonVideoResourcesCount: number;
+};
+
+async function Learning({ standards }: { standards: StandardData[] }) {
     const Icons = {
         FirstIcon: PlayIcon,
         SecondIcon: File,
@@ -34,18 +41,17 @@ async function Learning() {
     };
     return (
         <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
-            {learnings.map((learning, index) => (
+            {standards.map((standard, index) => (
                 <div
-                    key={learning.id || index}
+                    key={standard.standardId || index}
                     className="rounded-lg border p-4"
                 >
                     <CardContent
-                        id={learning.id}
-                        // route="/learning"
-                        heading={learning.heading}
-                        first={learning.first}
-                        second={learning.second}
-                        third={learning.third}
+                        id={standard.standardId}
+                        route="/student/learning"
+                        heading={standard.standardName}
+                        first={`Videos (${standard.videoResourcesCount})`}
+                        second={`Exercises (${standard.nonVideoResourcesCount})`}
                         Icons={Icons}
                         isHideEditIcon
                         isShownFromStudent
