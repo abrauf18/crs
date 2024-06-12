@@ -115,17 +115,6 @@ function Profile() {
                     <MyAnswersTable myRecord={MyAnswersRecord} />
                 </div>
             </div>
-
-            <div>
-                <h1 className="font-semibold text-2xl mb-4 mt-8">
-                    My Resources
-                </h1>
-                <div className="grid lg:grid-cols-3 gap-5">
-                    {resources.map((resource) => (
-                        <FileCard key={resource.id} card={resource} />
-                    ))}
-                </div>
-            </div>
         </div>
     );
 }
