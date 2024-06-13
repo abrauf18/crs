@@ -117,7 +117,7 @@ function StandardTable({
     };
 
     const takeAssessment = (assessmentId: string) =>
-        router.push(`/student/learning/assessment/${assessmentId}`);
+        router.push(`${pathname}/assessment/${assessmentId}`);
 
     return (
         <>

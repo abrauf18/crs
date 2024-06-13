@@ -15,7 +15,11 @@ interface APIData {
     deadline: string;
 }
 
-async function DetailsPage({ params }: { params: { resourceId: string } }) {
+async function DetailsPage({
+    params,
+}: {
+    params: { id: string; resourceId: string };
+}) {
     const data: Session | null = await getServerSession(options);
 
     let APIdata: APIData = {
@@ -34,6 +38,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
                 accessToken: data?.user?.accessToken,
                 userId: data?.user?.id,
                 resourceId: params.resourceId,
+                standardId: params.id,
             });
 
             const APIResponse = await response.json();
@@ -57,6 +62,7 @@ async function DetailsPage({ params }: { params: { resourceId: string } }) {
                         name={name}
                         canWrite={canWrite}
                         deadline={deadline}
+                        standardId={params.id}
                     />
                 );
             }
