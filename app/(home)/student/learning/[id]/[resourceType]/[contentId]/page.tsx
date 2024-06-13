@@ -50,6 +50,7 @@ async function ResourceDetailsPage({
                     accessToken: data?.user?.accessToken,
                     studentId: data?.user?.id,
                     videoId: params.contentId,
+                    standardId: params.id,
                 });
             } else {
                 response = await getResourceAPI({

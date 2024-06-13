@@ -53,10 +53,12 @@ export const getStudentVideoAPI = async ({
     accessToken,
     videoId,
     studentId,
+    standardId,
 }: {
     accessToken: string;
     videoId: string;
     studentId: string;
+    standardId: string;
 }) => {
     const result = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/student/getStudentVideo`,
@@ -65,6 +67,7 @@ export const getStudentVideoAPI = async ({
                 accesstoken: accessToken,
                 videoid: videoId,
                 studentid: studentId,
+                standardid: standardId,
             },
             next: {
                 tags: ['getStudentVideo'],
