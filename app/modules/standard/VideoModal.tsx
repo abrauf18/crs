@@ -18,6 +18,7 @@ import PageLoader from '@/app/components/common/PageLoader';
 function VideoModal({
     onClose,
     resourceType,
+    weightage,
     allSelectedResources,
     setAllSelectedResources,
     selectedIndex,
@@ -25,16 +26,19 @@ function VideoModal({
 }: {
     onClose: () => void;
     resourceType: ResourceType;
+    weightage: number;
     allSelectedResources: {
         resourceId: string;
         resourceType: ResourceType;
         name: string;
+        weightage: number;
     }[];
     setAllSelectedResources: (
         resources: {
             resourceId: string;
             resourceType: ResourceType;
             name: string;
+            weightage: number;
         }[]
     ) => void;
     selectedIndex: number;
@@ -211,7 +215,10 @@ function VideoModal({
                     setAllSelectedResources(
                         allSelectedResources.map((resource, index) => {
                             if (index === selectedIndex) {
-                                return selectedResource;
+                                return {
+                                    ...selectedResource,
+                                    weightage,
+                                };
                             }
                             return resource;
                         })

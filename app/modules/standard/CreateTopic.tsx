@@ -20,6 +20,7 @@ interface Topic {
     resourceId: string;
     type: ResourceType;
     name: string;
+    weightage: number;
 }
 interface DailyUpload {
     id: string;
@@ -47,12 +48,14 @@ function CreateTopic({
         resourceId: string;
         resourceType: ResourceType;
         name: string;
+        weightage: number;
     }[];
     setAllSelectedResources: (
         resources: {
             resourceId: string;
             resourceType: ResourceType;
             name: string;
+            weightage: number;
         }[]
     ) => void;
     errors: FieldErrors<FormValues>;
@@ -90,6 +93,7 @@ function CreateTopic({
                 resourceId: '',
                 type: ResourceType.VIDEO,
                 name: '',
+                weightage: 0,
             });
             topicAddedRef.current = true;
         }
@@ -123,6 +127,7 @@ function CreateTopic({
                             resourceId: '',
                             type: ResourceType.VIDEO,
                             name: '',
+                            weightage: 0,
                         });
                         setAllSelectedResources([
                             ...(allSelectedResources || []),
@@ -130,6 +135,7 @@ function CreateTopic({
                                 resourceId: '',
                                 resourceType: ResourceType.VIDEO,
                                 name: '',
+                                weightage: 0,
                             },
                         ]);
                     }}
@@ -190,6 +196,50 @@ function CreateTopic({
                                         </div>
                                     )}
                                 </div>
+                                <div className="basis-1/2">
+                                    <Label
+                                        htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
+                                    >
+                                        weightage
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="Assign Weightage to this resource"
+                                        name={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                            min: {
+                                                value: 0,
+                                                message:
+                                                    'Weightage must be at least 0',
+                                            },
+                                            max: {
+                                                value: 100,
+                                                message:
+                                                    'Weightage must not be more than 100',
+                                            },
+                                        }}
+                                    />
+                                    <span className="text-red-500 text-xs">
+                                        <ErrorMessage
+                                            errors={errors}
+                                            name={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
+                                            render={({ message }) => (
+                                                <p className="flex items-center">
+                                                    <X
+                                                        size={20}
+                                                        color="#E6500D"
+                                                    />
+                                                    {message}
+                                                </p>
+                                            )}
+                                        />
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,6 +249,9 @@ function CreateTopic({
                                 onClose={handleCloseModal}
                                 resourceType={watch(
                                     `standard.dailyUploads.${index}.topics.${selectedIndex}.type`
+                                )}
+                                weightage={watch(
+                                    `standard.dailyUploads.${index}.topics.${selectedIndex}.weightage`
                                 )}
                                 setAllSelectedResources={
                                     setAllSelectedResources

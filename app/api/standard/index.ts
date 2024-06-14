@@ -8,7 +8,11 @@ export const createStandardAPI = async ({
 }: {
     name: string;
     description: string;
-    dailyUploads: { resourceId: string; accessDate: string }[];
+    dailyUploads: {
+        resourceId: string;
+        accessDate: string;
+        weightage: number;
+    }[];
     accessToken: string;
 }) => {
     const response = await axios.post(
@@ -57,7 +61,11 @@ export const updateStandardAPI = async ({
     standardId: string;
     name: string;
     description: string;
-    dailyUploads: { resourceId: string; accessDate: string }[];
+    dailyUploads: {
+        resourceId: string;
+        accessDate: string;
+        weightage: number;
+    }[];
     accessToken: string;
 }) => {
     const response = await axios.put(

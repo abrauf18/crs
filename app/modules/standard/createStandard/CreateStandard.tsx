@@ -18,6 +18,7 @@ interface Topic {
     resourceId: string;
     type: ResourceType;
     name: string;
+    weightage: number;
 }
 interface DailyUpload {
     date: string;
@@ -41,6 +42,8 @@ const DEFAULT_STANDARD = {
                 {
                     resourceId: '',
                     type: ResourceType.VIDEO,
+                    name: '',
+                    weightage: 0,
                 },
             ],
         },
@@ -75,7 +78,9 @@ function CreateStandard({
                     date: upload.date,
                     topics: upload.topics.map((resource) => ({
                         resourceId: resource.resourceId,
+                        name: resource.name,
                         type: resource.type,
+                        weightage: resource.weightage,
                     })),
                 })) ?? [],
         },
@@ -87,6 +92,7 @@ function CreateStandard({
                 resourceId: resource.resourceId,
                 resourceType: resource.type,
                 name: resource.name,
+                weightage: resource.weightage,
             }))
         );
     const [allSelectedResources, setAllSelectedResources] = useState<
@@ -94,6 +100,7 @@ function CreateStandard({
             resourceId: string;
             resourceType: ResourceType;
             name: string;
+            weightage: number;
         }[][]
     >(
         defaultSelectedResources && defaultSelectedResources.length > 0
@@ -104,6 +111,7 @@ function CreateStandard({
                           resourceId: '',
                           resourceType: ResourceType.VIDEO,
                           name: '',
+                          weightage: 0,
                       },
                   ],
               ]
@@ -139,12 +147,29 @@ function CreateStandard({
             return;
         }
 
+        const totalWeightage = formdata.standard.dailyUploads.reduce(
+            (total, dailyUpload) => {
+                const dailyTotal = dailyUpload.topics.reduce(
+                    (dailySum, topic) => dailySum + Number(topic.weightage),
+                    0
+                );
+                return total + dailyTotal;
+            },
+            0
+        );
+        if (totalWeightage > 100) {
+            toast.error('The sum of all weightages should not exceed 100');
+            return;
+        }
+
         const transformedDailyUploads = formdata.standard.dailyUploads
             .map((dailyUpload, index) =>
                 dailyUpload.topics.map((topic, topicIndex) => ({
                     resourceId:
                         allSelectedResources[index][topicIndex]?.resourceId,
                     accessDate: dailyUpload.date,
+                    weightage:
+                        allSelectedResources[index][topicIndex]?.weightage,
                 }))
             )
             .flat();
@@ -201,6 +226,7 @@ function CreateStandard({
                         resourceId: '',
                         type: ResourceType.VIDEO,
                         name: '',
+                        weightage: 0,
                     },
                 ],
             });
@@ -322,6 +348,7 @@ function CreateStandard({
                                                 resourceId: '',
                                                 type: ResourceType.VIDEO,
                                                 name: '',
+                                                weightage: 0,
                                             },
                                         ],
                                     });
@@ -333,6 +360,7 @@ function CreateStandard({
                                                 resourceType:
                                                     ResourceType.VIDEO,
                                                 name: '',
+                                                weightage: 0,
                                             },
                                         ],
                                     ]);
@@ -357,6 +385,7 @@ function CreateStandard({
                                             resourceId: string;
                                             resourceType: ResourceType;
                                             name: string;
+                                            weightage: number;
                                         }[]
                                     ) => {
                                         const updatedResources = [
