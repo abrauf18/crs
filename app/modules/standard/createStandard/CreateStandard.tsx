@@ -168,8 +168,7 @@ function CreateStandard({
                     resourceId:
                         allSelectedResources[index][topicIndex]?.resourceId,
                     accessDate: dailyUpload.date,
-                    weightage:
-                        allSelectedResources[index][topicIndex]?.weightage,
+                    weightage: topic?.weightage || 0,
                 }))
             )
             .flat();
