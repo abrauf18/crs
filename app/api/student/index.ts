@@ -237,3 +237,29 @@ export const getStandardsResourcesAndCountAPI = async ({
 
     return result;
 };
+
+export const getStudentProfileStandardResultsAPI = async ({
+    accessToken,
+    studentId,
+    standardId,
+}: {
+    accessToken: string;
+    studentId: string;
+    standardId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getStudentProfileStandardResults`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+                standardid: standardId,
+            },
+            next: {
+                tags: ['getStudentProfileStandardResults'],
+            },
+        }
+    );
+
+    return result;
+};
