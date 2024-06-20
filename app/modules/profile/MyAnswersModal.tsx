@@ -196,11 +196,11 @@ function MyAnswersModal({
                             ?.assessmentAnswers[0]?.answerURL && (
                             <iframe
                                 title={test.resource?.name}
-                                src={`https://docs.google.com/gview?url=${encodeURIComponent(
+                                src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
                                     test.resource?.AssessmentResourcesDetail
                                         ?.assessmentAnswers[0]
                                         ?.answerURL as string
-                                )}&embedded=true`}
+                                )}`}
                                 className="w-full h-full"
                             />
                         )}
