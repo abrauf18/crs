@@ -13,16 +13,22 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 
-export interface MyAnswers {
-    question: string;
-    id: number;
-    topicName: string;
-    correctAnswer: string;
-    score: string;
+// export interface MyAnswers {
+//     question: string;
+//     id: number;
+//     topicName: string;
+//     correctAnswer: string;
+//     score: string;
+// }
+interface SummarizedStandardResult {
+    standardId: string;
+    standardName: string;
+    totalWeightage: number;
+    obtainedWeightage: number;
 }
 
 interface MyAnswersProp {
-    myRecord: MyAnswers[];
+    myRecord: SummarizedStandardResult[];
     fontSize?: string;
 }
 
@@ -33,7 +39,7 @@ const poppins = Poppins({
 function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
     const { push } = useRouter();
 
-    const handleClick = (id: number) => {
+    const handleClick = (id: string) => {
         push(`/student/profile/${id}`);
     };
 
@@ -49,16 +55,13 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
                         SNO.
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
-                        Topic Name
+                        Standard Name
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold text-center">
-                        Questions
+                        Obtained Marks
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold text-center">
-                        Correct Answers
-                    </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
-                        Score
+                        Total Marks
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold text-center">
                         Action
@@ -66,30 +69,27 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {myRecord.map((record, index) => (
-                    <TableRow className="border-none" key={record.id}>
+                {myRecord?.map((record, index) => (
+                    <TableRow className="border-none" key={record.standardId}>
                         <TableCell className="font-medium">
                             <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
                                 {index + 1}
                             </span>
                         </TableCell>
                         <TableCell className="font-medium">
-                            {record.topicName}
+                            {record.standardName}
                         </TableCell>
 
                         <TableCell className="text-dark-gray text-center">
-                            {record.question}
+                            {record.obtainedWeightage}
                         </TableCell>
                         <TableCell className="text-dark-gray text-center">
-                            {record.correctAnswer}
-                        </TableCell>
-                        <TableCell className="text-dark-gray text-center">
-                            {record.score}
+                            {record.totalWeightage}
                         </TableCell>
                         <TableCell className="flex justify-center items-center p-0 mt-5 ml-3 md:mt-6 lg:mt-4 text-center">
                             <div
                                 className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
-                                onClick={() => handleClick(index)}
+                                onClick={() => handleClick(record.standardId)}
                             >
                                 <Eye color="#F59A3B" width={18} height={18} />
                             </div>
