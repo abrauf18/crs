@@ -29,6 +29,8 @@ interface DailyUpload {
     resource: Resource;
     accessible: boolean;
     performance: number;
+    yetToMarkWeightage: number;
+    unAnsweredWeightage: number;
 }
 
 interface Resource {
@@ -46,8 +48,12 @@ interface Video {
 
 interface Question {
     id: string;
+    statement: string;
     totalMarks: number;
     answers: Answer[];
+    options?: { [key: string]: string };
+    correctOption?: string;
+    correctOptionExplanation?: string;
 }
 
 interface Answer {

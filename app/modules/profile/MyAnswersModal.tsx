@@ -1,7 +1,64 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
 
-function MyAnswersModal({ onClose }: any) {
+interface DailyUpload {
+    id: string;
+    accessDate: string;
+    weightage: number;
+    resource: Resource;
+    accessible: boolean;
+    performance: number;
+    yetToMarkWeightage: number;
+    unAnsweredWeightage: number;
+}
+
+interface Resource {
+    id: string;
+    name: string;
+    type: string;
+    video: Video | null;
+    AssessmentResourcesDetail: AssessmentDetail | null;
+}
+
+interface Video {
+    id: string;
+    questions: Question[];
+}
+
+interface Question {
+    id: string;
+    statement: string;
+    totalMarks: number;
+    answers: Answer[];
+    options?: { [key: string]: string };
+    correctOption?: string;
+    correctOptionExplanation?: string;
+}
+
+interface Answer {
+    obtainedMarks: number;
+    answer?: string;
+}
+
+interface AssessmentDetail {
+    id: string;
+    totalMarks: number;
+    deadline: number;
+    assessmentAnswers: AssessmentAnswer[];
+}
+
+interface AssessmentAnswer {
+    obtainedMarks: number;
+    answerURL: string;
+}
+
+function MyAnswersModal({
+    onClose,
+    test,
+}: {
+    onClose: () => void;
+    test: DailyUpload;
+}) {
     return (
         <section className="w-full bg-white h-screen  py-4  shadow-lg items-center">
             <div className="h-[100%] overflow-y-auto w-full px-6">
@@ -9,108 +66,173 @@ function MyAnswersModal({ onClose }: any) {
                     <div className="flex  my-7">
                         <div className="flex flex-col ml-2">
                             <h3 className="text-xl font-semibold  mr-1">
-                                Artificial Intelligence - AI
+                                {test.resource.name}
                             </h3>
                             <p className="text-sm text-dark-gray mb-2">
                                 My Answer&apos;s Report
                             </p>
                         </div>
                     </div>
-                    <div className="rounded-full bg-white border p-1">
+                    <div className="rounded-full bg-white border p-1 cursor-pointer">
                         <X size={15} onClick={onClose} />
                     </div>
                 </div>
 
                 <div className="flex   w-full">
                     <div className="p-4 border-2 border-green-600 bg-green-100 rounded-lg w-full">
-                        <h1 className="font-medium">Right Answer&apos;s</h1>
+                        <h1 className="font-medium">Obtained Marks</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
-                                15
-                            </span>{' '}
-                            Answer&apos;s
+                                {test.performance}
+                            </span>
                         </h1>
                     </div>
                     <div className="p-4 border-2 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">Wrong Answer&apos;s</h1>
+                        <h1 className="font-medium">Total Marks</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold ">
                             <span className="font-bold text-lg text-black">
-                                15
-                            </span>{' '}
-                            Answer&apos;s
+                                {test.weightage}
+                            </span>
+                        </h1>
+                    </div>
+                </div>
+
+                <div className="flex mt-2  w-full">
+                    <div className="p-4 border-2 rounded-lg w-full">
+                        <h1 className="font-medium">
+                            Marks Awaiting Evaluation
+                        </h1>
+                        <h1 className="mt-2 text-gray-600 font-semibold">
+                            <span className="font-bold text-lg text-black">
+                                {test.yetToMarkWeightage}
+                            </span>
+                        </h1>
+                    </div>
+                    <div className="p-4 border-2 border-red-600 bg-red-100 rounded-lg w-full ml-4">
+                        <h1 className="font-medium">
+                            Marks of Unattempted Questions
+                        </h1>
+                        <h1 className="mt-2 text-gray-600 font-semibold ">
+                            <span className="font-bold text-lg text-black">
+                                {test.unAnsweredWeightage}
+                            </span>
                         </h1>
                     </div>
                 </div>
 
                 <hr className="my-5" />
 
-                <div>
-                    <p className="font-bold">
-                        If you had $40,000 to build your own business, what
-                        would you do?
-                    </p>
-                    <p className="p-4 mt-2 border rounded-lg bg-gray-50">
-                        Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id es”
-                    </p>
-                    <p className="mt-2 text-dark-gray font-semibold text-lg border p-4 rounded-lg">
-                        Marked: <span className=" text-primary-color">25</span>
-                    </p>
-                </div>
+                {test.resource?.video &&
+                    test.resource.video.questions?.map((question, index) => (
+                        <div key={question.id}>
+                            <h1 className="font-bold">{question.statement}</h1>
+                            {(!question.options ||
+                                Object.keys(question.options).length === 0) && (
+                                <p className="p-4 mt-2 border rounded-lg bg-gray-50">
+                                    {question.answers[0]?.answer ||
+                                        'No answer provided'}
+                                </p>
+                            )}
+                            {question.options &&
+                                Object.keys(question.options).length > 0 &&
+                                Object.entries(question.options).map(
+                                    ([key, option], optionIndex) => (
+                                        <p
+                                            key={key}
+                                            className={`p-3 my-2 border rounded-lg font-medium ${
+                                                question?.answers[0] &&
+                                                question.correctOption === key
+                                                    ? 'flex justify-between border-green-600 text-green-600 items-center'
+                                                    : 'text-gray-500'
+                                            } ${
+                                                question?.answers[0] &&
+                                                question?.answers[0]?.answer ===
+                                                    key &&
+                                                question.correctOption !== key
+                                                    ? 'flex justify-between border-red-600 text-red-600 items-center'
+                                                    : 'text-gray-500'
+                                            }`}
+                                        >
+                                            {option}
+                                            {question?.answers[0] &&
+                                                question.correctOption ===
+                                                    key && (
+                                                    <Check color="green" />
+                                                )}
+                                            {question?.answers[0] &&
+                                                question?.answers[0]?.answer ===
+                                                    key &&
+                                                question.correctOption !==
+                                                    key && <X color="red" />}
+                                        </p>
+                                    )
+                                )}
+                            <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                                {question?.answers[0] ? (
+                                    question.answers[0].obtainedMarks === -1 ? (
+                                        'Not Marked'
+                                    ) : (
+                                        <>
+                                            Marked:{' '}
+                                            <span className="text-primary-color">
+                                                {
+                                                    question.answers[0]
+                                                        .obtainedMarks
+                                                }
+                                            </span>
+                                        </>
+                                    )
+                                ) : (
+                                    'Not Answered'
+                                )}
+                            </p>
 
-                <hr className="my-5" />
-                <div>
-                    <h1 className="font-bold">
-                        What super power do you wish you had?
-                    </h1>
-                    <p className="p-3 my-2 border rounded-lg font-medium text-gray-500">
-                        Option 1
+                            <hr className="my-5" />
+                        </div>
+                    ))}
+                {test.resource?.AssessmentResourcesDetail
+                    ?.assessmentAnswers[0] ? (
+                    <div>
+                        {test.resource?.AssessmentResourcesDetail
+                            ?.assessmentAnswers[0]?.answerURL && (
+                            <iframe
+                                title={test.resource?.name}
+                                src={`https://docs.google.com/gview?url=${encodeURIComponent(
+                                    test.resource?.AssessmentResourcesDetail
+                                        ?.assessmentAnswers[0]
+                                        ?.answerURL as string
+                                )}&embedded=true`}
+                                className="w-full h-full"
+                            />
+                        )}
+                        {test.resource?.AssessmentResourcesDetail
+                            ?.assessmentAnswers[0]?.obtainedMarks !==
+                        undefined ? (
+                            test.resource?.AssessmentResourcesDetail
+                                ?.assessmentAnswers[0]?.obtainedMarks === -1 ? (
+                                <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                                    Not Marked
+                                </p>
+                            ) : (
+                                <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                                    Marked:{' '}
+                                    <span className="text-primary-color">
+                                        {
+                                            test.resource
+                                                ?.AssessmentResourcesDetail
+                                                ?.assessmentAnswers[0]
+                                                ?.obtainedMarks
+                                        }
+                                    </span>
+                                </p>
+                            )
+                        ) : null}
+                    </div>
+                ) : (
+                    <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                        Not Answered
                     </p>
-                    <p className="p-3 my-2 border rounded-lg font-medium flex justify-between border-green-600 text-green-600 items-center">
-                        Option 2
-                        <Check color="green" />
-                    </p>
-                    <p className="p-3 my-2 border rounded-lg font-medium text-gray-500 ">
-                        Option 3
-                    </p>
-                    <p className="p-3 my-2 border rounded-lg font-medium text-gray-500">
-                        Option 4
-                    </p>
-                </div>
-                <hr className="my-5" />
-                <div>
-                    <p className="font-bold">
-                        If you had $40,000 to build your own business, what
-                        would you do?
-                    </p>
-                    <p className="p-4 mt-2 border rounded-lg bg-gray-50">
-                        Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id es”
-                    </p>
-                    <p className="mt-2 text-dark-gray font-semibold text-lg border p-4 rounded-lg">
-                        Marked: <span className=" text-primary-color">25</span>
-                    </p>
-                </div>
-
-                <hr className="my-5" />
-                <div>
-                    <h1 className="font-bold">
-                        What super power do you wish you had?
-                    </h1>
-                    <p className="p-3 my-2 border rounded-lg font-medium text-gray-500">
-                        Option 1
-                    </p>
-                    <p className="p-3 my-2 border rounded-lg font-medium flex justify-between border-green-600 text-green-600 items-center">
-                        Option 2
-                        <Check color="green" />
-                    </p>
-                    <p className="p-3 my-2 border rounded-lg font-medium text-gray-500 ">
-                        Option 3
-                    </p>
-                    <p className="p-3 my-2 border rounded-lg font-medium text-gray-500">
-                        Option 4
-                    </p>
-                </div>
+                )}
             </div>
         </section>
     );

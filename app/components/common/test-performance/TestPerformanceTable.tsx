@@ -36,6 +36,8 @@ interface DailyUpload {
     resource: Resource;
     accessible: boolean;
     performance: number;
+    yetToMarkWeightage: number;
+    unAnsweredWeightage: number;
 }
 
 interface Resource {
@@ -53,8 +55,12 @@ interface Video {
 
 interface Question {
     id: string;
+    statement: string;
     totalMarks: number;
     answers: Answer[];
+    options?: { [key: string]: string };
+    correctOption?: string;
+    correctOptionExplanation?: string;
 }
 
 interface Answer {
@@ -85,9 +91,10 @@ function TestPerformanceTable({
     isShownFromStudent,
     isShownFromTeacher,
 }: TestPerformanceProp) {
-    const [isShowModal, setIsShowModal] = useState(false);
-    const [isDisplayCourseModalOpen, setIsDisplayCourseModalOpen] =
-        useState(false);
+    const [currentTest, setCurrentTest] = useState<{
+        showModal: boolean;
+        testDetails?: DailyUpload;
+    }>({ showModal: false });
     return (
         <section>
             <Table
@@ -146,15 +153,20 @@ function TestPerformanceTable({
                                 <TableCell className="flex justify-center items-center">
                                     <div
                                         className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer md:mt-5 lg:mt-0"
-                                        onClick={() =>
-                                            isShownFromStudent
-                                                ? setIsShowModal(true)
-                                                : isShownFromTeacher
-                                                  ? setIsDisplayCourseModalOpen(
-                                                        true
-                                                    )
-                                                  : null
-                                        }
+                                        onClick={() => {
+                                            const testDetails = test; // Capture the current test's details
+                                            if (isShownFromStudent) {
+                                                setCurrentTest({
+                                                    showModal: true,
+                                                    testDetails,
+                                                });
+                                            } else if (isShownFromTeacher) {
+                                                setCurrentTest({
+                                                    showModal: true,
+                                                    testDetails,
+                                                }); // Assuming you want to use the same state for simplicity
+                                            }
+                                        }}
                                     >
                                         <Eye
                                             color="#F59A3B"
@@ -167,16 +179,28 @@ function TestPerformanceTable({
                         ))}
                 </TableBody>
             </Table>
-            {isShowModal && (
-                <div className="fixed right-0 top-0 z-50  text-sm md:w-[60%] lg:w-[30%]">
-                    <MyAnswersModal onClose={() => setIsShowModal(false)} />
+            {currentTest.showModal && isShownFromStudent && (
+                <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[30%]">
+                    <MyAnswersModal
+                        onClose={() =>
+                            setCurrentTest({
+                                showModal: false,
+                            })
+                        }
+                        test={currentTest.testDetails!}
+                    />
                 </div>
             )}
 
-            {isDisplayCourseModalOpen && (
-                <div className="fixed right-0 top-0 z-50  text-sm md:w-[60%] lg:w-[25%]">
+            {currentTest.showModal && isShownFromTeacher && (
+                <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[25%]">
                     <TestReportModal
-                        onClose={() => setIsDisplayCourseModalOpen(false)}
+                        onClose={() =>
+                            setCurrentTest({
+                                showModal: false,
+                            })
+                        }
+                        test={currentTest.testDetails}
                     />
                 </div>
             )}
