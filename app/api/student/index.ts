@@ -263,3 +263,26 @@ export const getStudentProfileStandardResultsAPI = async ({
 
     return result;
 };
+
+export const getStudentProfileSummarizedStandardsAPI = async ({
+    accessToken,
+    studentId,
+}: {
+    accessToken: string;
+    studentId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getStudentProfileSummarizedStandards`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+            },
+            next: {
+                tags: ['getStudentProfileSummarizedStandards'],
+            },
+        }
+    );
+
+    return result;
+};
