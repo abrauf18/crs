@@ -11,6 +11,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
+import { ResourceType, StudentProfileResourceType } from '@/lib/utils';
 import MyAnswersModal from '@/app/modules/profile/MyAnswersModal';
 import TestReportModal from '@/app/modules/students/courses/TestReportModal';
 
@@ -21,10 +22,56 @@ export interface TestRecordInterface {
 }
 
 interface TestPerformanceProp {
-    test: TestRecordInterface[];
+    test: DailyUpload[];
+    activeTab: StudentProfileResourceType;
     fontSize?: string;
     isShownFromStudent?: boolean;
     isShownFromTeacher?: boolean;
+}
+
+interface DailyUpload {
+    id: string;
+    accessDate: string;
+    weightage: number;
+    resource: Resource;
+    accessible: boolean;
+    performance: number;
+}
+
+interface Resource {
+    id: string;
+    name: string;
+    type: string;
+    video: Video | null;
+    AssessmentResourcesDetail: AssessmentDetail | null;
+}
+
+interface Video {
+    id: string;
+    questions: Question[];
+}
+
+interface Question {
+    id: string;
+    totalMarks: number;
+    answers: Answer[];
+}
+
+interface Answer {
+    obtainedMarks: number;
+    answer?: string;
+}
+
+interface AssessmentDetail {
+    id: string;
+    totalMarks: number;
+    deadline: number;
+    assessmentAnswers: AssessmentAnswer[];
+}
+
+interface AssessmentAnswer {
+    obtainedMarks: number;
+    answerURL: string;
 }
 
 const poppins = Poppins({
@@ -33,6 +80,7 @@ const poppins = Poppins({
 });
 function TestPerformanceTable({
     test,
+    activeTab,
     fontSize,
     isShownFromStudent,
     isShownFromTeacher,
@@ -53,10 +101,12 @@ function TestPerformanceTable({
                             Q NO.
                         </TableHead>
                         <TableHead className="w-[900px] text-dark-gray font-semibold">
-                            Question
+                            {activeTab === StudentProfileResourceType.VIDEO
+                                ? 'Video'
+                                : 'Assessment'}
                         </TableHead>
                         <TableHead className="text-dark-gray font-semibold">
-                            Answer
+                            Performance
                         </TableHead>
 
                         <TableHead className="text-dark-gray font-semibold">
@@ -65,49 +115,56 @@ function TestPerformanceTable({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {test.map((test, index) => (
-                        <TableRow className="border-none" key={test.id}>
-                            <TableCell className="font-normal">
-                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {index + 1}
-                                </span>
-                            </TableCell>
-                            <TableCell className="text-dark-gray font-normal">
-                                <span>{test.question}</span>
-                            </TableCell>
+                    {test
+                        ?.filter(
+                            (dailyUpload) =>
+                                (activeTab ===
+                                    StudentProfileResourceType.VIDEO &&
+                                    dailyUpload.resource.type ===
+                                        ResourceType.VIDEO) ||
+                                (activeTab !==
+                                    StudentProfileResourceType.VIDEO &&
+                                    dailyUpload.resource.type !==
+                                        ResourceType.VIDEO)
+                        )
+                        ?.map((test, index) => (
+                            <TableRow className="border-none" key={test.id}>
+                                <TableCell className="font-normal">
+                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                        {index + 1}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="text-dark-gray font-normal">
+                                    <span>{test.resource.name}</span>
+                                </TableCell>
 
-                            <TableCell
-                                className={`text-dark-gray font-normal ${
-                                    test.answer.toLowerCase() === 'wrong'
-                                        ? 'text-red-500'
-                                        : 'text-green-600'
-                                }`}
-                            >
-                                {test.answer}
-                            </TableCell>
+                                <TableCell className="text-dark-gray font-normal">
+                                    {test.performance ?? 0} /{' '}
+                                    {test.weightage ?? 0}
+                                </TableCell>
 
-                            <TableCell className="flex justify-center items-center">
-                                <div
-                                    className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer md:mt-5 lg:mt-0"
-                                    onClick={() =>
-                                        isShownFromStudent
-                                            ? setIsShowModal(true)
-                                            : isShownFromTeacher
-                                              ? setIsDisplayCourseModalOpen(
-                                                    true
-                                                )
-                                              : null
-                                    }
-                                >
-                                    <Eye
-                                        color="#F59A3B"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                                <TableCell className="flex justify-center items-center">
+                                    <div
+                                        className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer md:mt-5 lg:mt-0"
+                                        onClick={() =>
+                                            isShownFromStudent
+                                                ? setIsShowModal(true)
+                                                : isShownFromTeacher
+                                                  ? setIsDisplayCourseModalOpen(
+                                                        true
+                                                    )
+                                                  : null
+                                        }
+                                    >
+                                        <Eye
+                                            color="#F59A3B"
+                                            width={18}
+                                            height={18}
+                                        />
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
             {isShowModal && (

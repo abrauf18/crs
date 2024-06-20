@@ -1,11 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { StudentProfileResourceType } from '@/lib/utils';
 
-function Tabs() {
-    const [activeTab, setActiveTabLocal] = useState('test');
-
-    const handleTabClick = (tab: string) => {
+function Tabs({
+    activeTab,
+    setActiveTabLocal,
+}: {
+    activeTab: StudentProfileResourceType;
+    setActiveTabLocal: (tab: StudentProfileResourceType) => void;
+}) {
+    const handleTabClick = (tab: StudentProfileResourceType) => {
         setActiveTabLocal(tab);
     };
 
@@ -14,24 +19,26 @@ function Tabs() {
             <button
                 type="button"
                 className={`py-2 px-4 border-2 rounded-xl ${
-                    activeTab === 'test'
+                    activeTab === StudentProfileResourceType.VIDEO
                         ? ' border-primary-color  bg-orange-50'
                         : ''
                 }`}
-                onClick={() => handleTabClick('test')}
+                onClick={() => handleTabClick(StudentProfileResourceType.VIDEO)}
             >
-                Test
+                {StudentProfileResourceType.VIDEO}
             </button>
             <button
                 type="button"
                 className={`py-2 px-4 border-2 rounded-xl ${
-                    activeTab === 'quiz'
+                    activeTab === StudentProfileResourceType.ASSESSMENT
                         ? ' border-primary-color  bg-orange-50'
                         : ''
                 }`}
-                onClick={() => handleTabClick('quiz')}
+                onClick={() =>
+                    handleTabClick(StudentProfileResourceType.ASSESSMENT)
+                }
             >
-                Quizzes
+                {StudentProfileResourceType.ASSESSMENT}
             </button>
         </div>
     );

@@ -9,7 +9,7 @@ import { getStudentProfileStandardResultsAPI } from '@/app/api/student';
 interface APIResponse {
     status: string;
     data?: CourseData;
-    message: string;
+    message?: string;
 }
 
 interface CourseData {
@@ -18,6 +18,8 @@ interface CourseData {
     description: string;
     courseLength: string;
     dailyUploads: DailyUpload[];
+    currentTotalWeightage: number;
+    currentAcheivedWeightage: number;
 }
 
 interface DailyUpload {
@@ -25,6 +27,8 @@ interface DailyUpload {
     accessDate: string;
     weightage: number;
     resource: Resource;
+    accessible: boolean;
+    performance: number;
 }
 
 interface Resource {
@@ -49,7 +53,6 @@ interface Question {
 interface Answer {
     obtainedMarks: number;
     answer?: string;
-    answerURL?: string;
 }
 
 interface AssessmentDetail {
@@ -92,7 +95,7 @@ async function Page({ params }: { params: { id: string } }) {
             }
 
             if (!response.ok) {
-                throw new Error(APIResponse?.message);
+                throw new Error(APIResponse?.message!);
             }
         } catch (error: any) {
             return (

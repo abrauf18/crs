@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { LucideMoveUpRight } from 'lucide-react';
+import { StudentProfileResourceType } from '@/lib/utils';
 import Searchbar from '@/app/components/common/Searchbar';
 import Tabs from './Tabs';
 import TestPerformanceTable, {
@@ -17,6 +18,8 @@ interface CourseData {
     description: string;
     courseLength: string;
     dailyUploads: DailyUpload[];
+    currentTotalWeightage: number;
+    currentAcheivedWeightage: number;
 }
 
 interface DailyUpload {
@@ -24,6 +27,8 @@ interface DailyUpload {
     accessDate: string;
     weightage: number;
     resource: Resource;
+    accessible: boolean;
+    performance: number;
 }
 
 interface Resource {
@@ -48,7 +53,6 @@ interface Question {
 interface Answer {
     obtainedMarks: number;
     answer?: string;
-    answerURL?: string;
 }
 
 interface AssessmentDetail {
@@ -63,56 +67,56 @@ interface AssessmentAnswer {
     answerURL: string;
 }
 
-export const TestRecord: TestRecordInterface[] = [
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Right',
-    },
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Wrong',
-    },
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Right',
-    },
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Wrong',
-    },
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Right',
-    },
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Right',
-    },
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Wrong',
-    },
-    {
-        id: 1,
-        question:
-            'What did say as a kid when asked: What do you want to be when you grow up?',
-        answer: 'Right',
-    },
-];
+// export const TestRecord: TestRecordInterface[] = [
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Right',
+//     },
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Wrong',
+//     },
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Right',
+//     },
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Wrong',
+//     },
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Right',
+//     },
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Right',
+//     },
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Wrong',
+//     },
+//     {
+//         id: 1,
+//         question:
+//             'What did say as a kid when asked: What do you want to be when you grow up?',
+//         answer: 'Right',
+//     },
+// ];
 
 function TestPerformance({
     isShownFromStudent,
@@ -125,6 +129,10 @@ function TestPerformance({
 }) {
     const { back } = useRouter();
     const { data, status } = useSession();
+    const [activeTab, setActiveTabLocal] = useState<StudentProfileResourceType>(
+        StudentProfileResourceType.VIDEO
+    );
+
     return (
         <div>
             {status === 'loading' ? (
@@ -151,16 +159,22 @@ function TestPerformance({
                                     />
                                 </div>
                                 <span className="text-green-600 font-bold text-2xl">
-                                    80%
+                                    {`${APIdata.currentAcheivedWeightage ?? 0}
+                                    of ${APIdata.currentTotalWeightage ?? 0}`}
+                                    %
                                 </span>
                                 <span className="ml-1">
                                     Overall Performance
                                 </span>
                             </div>
                         </div>
-                        <Tabs />
+                        <Tabs
+                            activeTab={activeTab}
+                            setActiveTabLocal={setActiveTabLocal}
+                        />
                         <TestPerformanceTable
-                            test={TestRecord}
+                            test={APIdata.dailyUploads}
+                            activeTab={activeTab}
                             isShownFromStudent={isShownFromStudent}
                             isShownFromTeacher={isShownFromTeacher}
                         />

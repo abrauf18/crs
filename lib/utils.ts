@@ -216,3 +216,8 @@ export interface LearningInterface {
     standardName: string;
     standardId: string;
 }
+
+export enum StudentProfileResourceType {
+    VIDEO = 'video',
+    ASSESSMENT = 'assessment',
+}
