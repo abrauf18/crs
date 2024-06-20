@@ -190,8 +190,7 @@ function MyAnswersModal({
                             <hr className="my-5" />
                         </div>
                     ))}
-                {test.resource?.AssessmentResourcesDetail
-                    ?.assessmentAnswers[0] ? (
+                {test.resource?.AssessmentResourcesDetail ? (
                     <div>
                         {test.resource?.AssessmentResourcesDetail
                             ?.assessmentAnswers[0]?.answerURL && (
@@ -205,9 +204,8 @@ function MyAnswersModal({
                                 className="w-full h-full"
                             />
                         )}
-                        {test.resource?.AssessmentResourcesDetail
-                            ?.assessmentAnswers[0]?.obtainedMarks !==
-                        undefined ? (
+                        {typeof test.resource?.AssessmentResourcesDetail
+                            ?.assessmentAnswers[0] !== 'undefined' ? (
                             test.resource?.AssessmentResourcesDetail
                                 ?.assessmentAnswers[0]?.obtainedMarks === -1 ? (
                                 <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
@@ -226,13 +224,13 @@ function MyAnswersModal({
                                     </span>
                                 </p>
                             )
-                        ) : null}
+                        ) : (
+                            <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                                Not Answered
+                            </p>
+                        )}
                     </div>
-                ) : (
-                    <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
-                        Not Answered
-                    </p>
-                )}
+                ) : null}
             </div>
         </section>
     );
