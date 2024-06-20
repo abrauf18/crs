@@ -114,7 +114,7 @@ function Profile({ APIdata }: { APIdata: APIdata }) {
                 <Card
                     Icon={StatsIcon}
                     header="Overall Performance"
-                    description={`${APIdata.averageObtainedWeightage} of ${APIdata.averageTotalWeightage}`}
+                    description={`${APIdata.averageObtainedWeightage} of ${APIdata.averageTotalWeightage} %`}
                     iconBg="bg-orange-100"
                     border="border-1 border-orange-600"
                     iconColor="#F59A3B"
