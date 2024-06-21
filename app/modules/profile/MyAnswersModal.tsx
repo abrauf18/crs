@@ -201,9 +201,9 @@ function MyAnswersModal({
                                         ?.assessmentAnswers[0]
                                         ?.answerURL as string
                                 )}`}
-                                className="w-full h-full"
-                                width="400"
-                                height="315"
+                                width="100%"
+                                height="280"
+                                loading="lazy"
                             />
                         )}
                         {typeof test.resource?.AssessmentResourcesDetail

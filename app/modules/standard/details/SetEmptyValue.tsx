@@ -25,9 +25,9 @@ function SetEmptyValue({
 
         // Update the allSelectedResources state
         setAllSelectedResources((prevResources: any) =>
-            prevResources.map((resourceArray, i: number) =>
+            prevResources.map((resourceArray: any, i: number) =>
                 i === index
-                    ? resourceArray.map((resource, j: number) =>
+                    ? resourceArray.map((resource: any, j: number) =>
                           j === topicIndex
                               ? {
                                     ...resource,
