@@ -309,3 +309,26 @@ export const getSummarizedStudentStandardsForTeacherAPI = async ({
 
     return result;
 };
+
+export const getStudentNameEmailForTeacherAPI = async ({
+    accessToken,
+    studentId,
+}: {
+    accessToken: string;
+    studentId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getStudentNameEmailForTeacher`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+            },
+            next: {
+                tags: ['getStudentNameEmailForTeacher'],
+            },
+        }
+    );
+
+    return result;
+};
