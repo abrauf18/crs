@@ -1,100 +1,75 @@
 import React from 'react';
-import { CalendarDays } from 'lucide-react';
+import { CalendarDays, ShieldAlert } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
-import VideoCard, { Card as Video } from '@/app/components/common/VideoCard';
-import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
-import videoImage2 from '@/app/assets/images/videoImages/videoImage2.svg';
-import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
-import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
-import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
-import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
+import VideoCard from '@/app/components/common/VideoCard';
 
-function SavedVideos() {
-    const day1Videos: Video[] = [
-        {
-            id: '1',
-            imageUrl: videoImage1 as string,
-            Text: 'Master Digital Product Design..',
-            Questions: 5,
-            Checkpoints: 3,
-            Resources: 8,
-        },
-        {
-            id: '2',
-            imageUrl: videoImage2 as string,
-            Text: 'User Experience Design Fund...',
-            Questions: 5,
-            Checkpoints: 3,
-            Resources: 8,
-        },
-    ];
-    const day2Videos: Video[] = [
-        {
-            id: '1',
-            imageUrl: videoImage1 as string,
-            Text: 'Master Digital Product Design..',
-            Questions: 5,
-            Checkpoints: 3,
-            Resources: 8,
-        },
-        {
-            id: '2',
-            imageUrl: videoImage2 as string,
-            Text: 'User Experience Design Fund...',
-            Questions: 5,
-            Checkpoints: 3,
-            Resources: 8,
-        },
-        {
-            id: '3',
-            imageUrl: videoImage3 as string,
-            Text: 'Learn Figma: Basic Fundemen..',
-            Questions: 5,
-            Checkpoints: 3,
-            Resources: 8,
-        },
-        {
-            id: '4',
-            imageUrl: videoImage4 as string,
-            Text: 'learn Figma: User Interface..',
-            Questions: 5,
-            Checkpoints: 3,
-            Resources: 8,
-        },
-    ];
+type Video = {
+    videoId: string;
+    name: string;
+    lastSeenTime: string;
+    thumbnailURL: string;
+    duration: string;
+    questionCount: number;
+    topicCount: number;
+    accessDate: string;
+    completed: boolean;
+    standardId: string;
+};
+
+type VideoData = {
+    date: string;
+    videos: Video[];
+};
+
+function SavedVideos({
+    SavedVideosByDays,
+}: {
+    SavedVideosByDays: VideoData[];
+}) {
     return (
         <section>
             <Searchbar
                 headerText="My Saved Videos"
                 tagline="Your All Saved Videos"
             />
-            <div className="mt-8">
-                <div className="flex space-x-2 items-center mb-4 ">
-                    <CalendarDays color="orange" size={20} />
-                    <p className="font-semibold text-lg">Day 01</p>
+            {SavedVideosByDays?.length === 0 ? (
+                <div className="flex flex-col items-center justify-center w-full h-96  bg-white rounded-lg shadow-lg">
+                    <ShieldAlert size={48} />
+                    <p className="text-lg font-semibold mt-4">
+                        No Videos Found
+                    </p>
                 </div>
-                <div className="">
-                    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6">
-                        {day1Videos.map((card) => (
-                            <VideoCard card={card} key={card.Questions} />
-                        ))}
+            ) : (
+                SavedVideosByDays.map((day) => (
+                    <div className="mt-8" key={day.date}>
+                        <div className="flex space-x-2 items-center mb-4">
+                            <CalendarDays color="orange" size={20} />
+                            <p className="font-semibold text-lg">
+                                Date {day.date}
+                            </p>
+                        </div>
+                        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6">
+                            {day.videos.map((savedVideo) => (
+                                <VideoCard
+                                    card={{
+                                        id: savedVideo.videoId,
+                                        imageUrl: savedVideo.thumbnailURL,
+                                        Text: savedVideo.name,
+                                        Questions: savedVideo.questionCount,
+                                        Checkpoints: savedVideo.topicCount,
+                                        Resources: 8,
+                                        lastSeenTime: savedVideo.lastSeenTime,
+                                        duration: savedVideo.duration,
+                                        completed: savedVideo.completed,
+                                        standardId: savedVideo.standardId,
+                                    }}
+                                    key={savedVideo.videoId}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div className="mt-10 lg:mt-8">
-                <div className="flex space-x-2 items-center mb-4 ">
-                    <CalendarDays color="orange" size={20} />
-                    <p className="font-semibold text-lg">Day 02</p>
-                </div>
-                <div className="">
-                    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 place-content-center">
-                        {day2Videos.map((card) => (
-                            <VideoCard card={card} key={card.Questions} />
-                        ))}
-                    </div>
-                </div>
-            </div>
+                ))
+            )}
         </section>
     );
 }

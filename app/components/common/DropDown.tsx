@@ -15,6 +15,7 @@ function Select({
     name,
     rules,
     options,
+    disabled,
     selectedOption,
     additionalClasses,
 }: SelectPropsInterface): JSX.Element {
@@ -29,7 +30,11 @@ function Select({
                 defaultValue={selectedOption}
             >
                 {options?.map((option) => (
-                    <option key={option.label} value={option.label}>
+                    <option
+                        key={option.label}
+                        value={option.label}
+                        disabled={disabled}
+                    >
                         {option.value}
                     </option>
                 ))}

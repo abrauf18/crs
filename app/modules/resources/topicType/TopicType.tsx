@@ -7,6 +7,7 @@ import Card from '@/app/components/common/Card';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import WorksheetIcon from '@/app/assets/icons/WorksheetIcon';
+import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
 import UploadResourceModal from '../UploadResourceModal';
 
 function TopicPage({
@@ -57,7 +58,7 @@ function TopicPage({
                     count={APIdata.worksheetCount}
                 />
             </div>
-            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-2 gap-4 mt-4 mobile:place-items-center">
+            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card
                     Icon={TicketIcon}
                     cardText="Exit Ticket Test"
@@ -67,6 +68,11 @@ function TopicPage({
                     Icon={HelpCircle}
                     cardText="Quizzes"
                     count={APIdata.quizCount}
+                />
+                <Card
+                    Icon={AssignmentIcon}
+                    cardText="Assignments"
+                    count={APIdata.assignmentCount}
                 />
             </div>
             {isShowUploadModal && (

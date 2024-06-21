@@ -7,78 +7,49 @@ import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import Searchbar from '@/app/components/common/Searchbar';
 import Card from '@/app/modules/student-dashboard/Card';
 import Learning from '@/app/modules/student-dashboard/Learning';
-import videoImage1 from '@/app/assets/images/videoImages/videoImage1.svg';
-import videoImage2 from '@/app/assets/images/videoImages/videoImage2.svg';
-import videoImage3 from '@/app/assets/images/videoImages/videoImage3.svg';
-import videoImage4 from '@/app/assets/images/videoImages/videoImage4.svg';
-import videoImage5 from '@/app/assets/images/videoImages/videoImage5.svg';
-import videoImage6 from '@/app/assets/images/videoImages/videoImage6.svg';
 import VideoCard, { Card as Video } from '@/app/components/common/VideoCard';
 
-const cards: Video[] = [
-    {
-        id: '1',
-        imageUrl: videoImage1 as string,
-        Text: 'Master Digital Product Design..',
-        Questions: 5,
-        Checkpoints: 3,
-        Resources: 8,
-    },
-    {
-        id: '2',
-        imageUrl: videoImage2 as string,
-        Text: 'User Experience Design Fund...',
-        Questions: 5,
-        Checkpoints: 3,
-        Resources: 8,
-    },
-    {
-        id: '3',
-        imageUrl: videoImage3 as string,
-        Text: 'Learn Figma: Basic Fundemen..',
-        Questions: 5,
-        Checkpoints: 3,
-        Resources: 8,
-    },
-    {
-        id: '4',
-        imageUrl: videoImage4 as string,
-        Text: 'learn Figma: User Interface..',
-        Questions: 5,
-        Checkpoints: 3,
-        Resources: 8,
-    },
-    {
-        id: '5',
-        imageUrl: videoImage5 as string,
-        Text: 'Essentials Principal for UI UX...',
-        Questions: 5,
-        Checkpoints: 3,
-        Resources: 8,
-    },
-    {
-        id: '6',
-        imageUrl: videoImage6 as string,
-        Text: 'Master Digital Product Design..',
-        Questions: 5,
-        Checkpoints: 3,
-        Resources: 8,
-    },
-];
-function Dashboard() {
+type VideoData = {
+    standardId: string;
+    videoId: string;
+    videoName: string;
+    questionsCount: number;
+    topicsCount: number;
+    lastSeenTime: string;
+    duration: string;
+    thumbnailURL: string;
+    completed: boolean;
+};
+
+type StandardData = {
+    standardId: string;
+    standardName: string;
+    videoResourcesCount: number;
+    nonVideoResourcesCount: number;
+};
+
+type DashboardData = {
+    studentName: string;
+    standardsCount: number;
+    classroomName: string;
+    standardsData: StandardData[];
+    videosData: VideoData[];
+};
+
+function Dashboard({ APIdata }: { APIdata: DashboardData }) {
     return (
         <div className="pb-4">
             <Searchbar
-                headerText="Hello Dany"
+                headerText={`Hello ${APIdata.studentName}!`}
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
+            <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-5 my-5">
                 <Card
                     Icon={LibraryBig}
-                    header="Subjects"
-                    description="05"
+                    header="Standards"
+                    description={APIdata.standardsCount}
                     iconBg="bg-yellow-50"
                     border="border-2 border-yellow-300"
                     iconColor="#F1E333"
@@ -94,19 +65,10 @@ function Dashboard() {
                 <Card
                     Icon={ClassroomIcon}
                     header="Classroom"
-                    description="10th Grade"
+                    description={APIdata.classroomName}
                     iconBg="bg-green-100"
                     border="border-2 border-green-600"
                     iconColor="#7AA43E"
-                />
-                <Card
-                    Icon={ShieldAlert}
-                    header="Standard 02"
-                    description="25%"
-                    iconBg="bg-red-100"
-                    border="border-2 border-red-400"
-                    iconColor="#E6500D"
-                    isShowAlert
                 />
             </div>
 
@@ -115,31 +77,53 @@ function Dashboard() {
                     Your Assigned Learnings
                 </p>
                 <div className="mobile:flex mobile:justify-end mobile:mt-2">
-                    <p className="border cursor-pointer py-2 px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray ">
+                    <p className="border cursor-pointer py-2 px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray hover:bg-primary-color hover:text-white">
                         <Link href="/student/learning">Show All</Link>
                     </p>
                 </div>
             </div>
 
             <div className="my-8">
-                <Learning />
+                <Learning standards={APIdata.standardsData} />
             </div>
 
             <div className="flex mobile:flex-col  md:justify-between mt-8">
                 <p className="font-semibold text-2xl ">Saved Videos</p>
                 <div className="mobile:flex mobile:justify-end">
-                    <p className=" border cursor-pointer py-2  px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray ">
+                    <p className=" border cursor-pointer py-2  px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray  hover:bg-primary-color hover:text-white">
                         <Link href="/student/saved-videos">Show All</Link>
                     </p>
                 </div>
             </div>
 
             <div className="mt-8">
-                <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
-                    {cards.map((card) => (
-                        <VideoCard card={card} key={card.Questions} />
-                    ))}
-                </div>
+                {APIdata.videosData.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center w-full h-96  bg-white rounded-lg shadow-lg">
+                        <ShieldAlert size={48} />
+                        <p className="text-lg font-semibold mt-4">
+                            No Videos Found
+                        </p>
+                    </div>
+                ) : (
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
+                        {APIdata.videosData.map((video) => (
+                            <VideoCard
+                                card={{
+                                    id: video.videoId,
+                                    imageUrl: video.thumbnailURL,
+                                    Text: video.videoName,
+                                    Questions: video.questionsCount,
+                                    Checkpoints: video.topicsCount,
+                                    lastSeenTime: video.lastSeenTime,
+                                    duration: video.duration,
+                                    completed: video.completed,
+                                    standardId: video.standardId,
+                                }}
+                                key={video.videoId}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

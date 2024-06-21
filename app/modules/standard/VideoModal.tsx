@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
-import { FileVideoIcon } from 'lucide-react';
+import { FileTypeIcon, FileVideoIcon } from 'lucide-react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import SearchInput from '@/app/components/common/SearchInput';
@@ -11,21 +11,14 @@ import {
     getResourcesByNameAPI,
     getResourcesByTypeAPI,
 } from '@/app/api/resource';
+import { ResourceType } from '@/lib/utils';
 import QuizCard from '@/app/components/common/QuizCard';
-import { DEFAULT_IMAGE } from '@/lib/utils';
 import PageLoader from '@/app/components/common/PageLoader';
-
-export enum ResourceType {
-    VIDEO = 'video',
-    SLIDESHOW = 'slideshow',
-    WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
-    QUIZ = 'quiz',
-}
 
 function VideoModal({
     onClose,
     resourceType,
+    weightage,
     allSelectedResources,
     setAllSelectedResources,
     selectedIndex,
@@ -33,9 +26,20 @@ function VideoModal({
 }: {
     onClose: () => void;
     resourceType: ResourceType;
-    allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
+    weightage: number;
+    allSelectedResources: {
+        resourceId: string;
+        resourceType: ResourceType;
+        name: string;
+        weightage: number;
+    }[];
     setAllSelectedResources: (
-        resources: { resourceId: string; resourceType: ResourceType }[]
+        resources: {
+            resourceId: string;
+            resourceType: ResourceType;
+            name: string;
+            weightage: number;
+        }[]
     ) => void;
     selectedIndex: number;
     updateSelectedResource: (resourceId: string) => void;
@@ -56,6 +60,7 @@ function VideoModal({
     const [selectedResource, setSelectedResource] = useState({
         resourceId: allSelectedResources[selectedIndex].resourceId ?? '',
         resourceType,
+        name: allSelectedResources[selectedIndex].name ?? '',
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -86,39 +91,44 @@ function VideoModal({
         setResourceCards(transformedData);
     };
 
-    const searchResources = async (searchInput: string) => {
-        if (!data) {
-            return;
-        }
-        if (searchInput === '') {
-            convertResourceToCard(allResources);
-            return;
-        }
-
-        try {
-            const APIData = await getResourcesByNameAPI({
-                accessToken: data?.user?.accessToken,
-                resourceType,
-                resourceName: searchInput,
-            });
-
-            if (!APIData.ok) {
-                const errorData = await APIData.json();
-                throw new Error(
-                    errorData?.message ??
-                        'An error occurred while fetching video data'
-                );
+    const searchResources = useCallback(
+        async (searchInput: string) => {
+            if (!data) {
+                return;
+            }
+            if (searchInput === '') {
+                convertResourceToCard(allResources);
+                return;
             }
 
-            const responseData = await APIData.json();
-            const searchedResources = responseData?.data;
-            convertResourceToCard(searchedResources);
-        } catch (error: any) {
-            toast.error(
-                error.message ?? 'An error occurred while searching resources'
-            );
-        }
-    };
+            try {
+                const APIData = await getResourcesByNameAPI({
+                    accessToken: data?.user?.accessToken,
+                    resourceType,
+                    resourceName: searchInput,
+                });
+
+                if (!APIData.ok) {
+                    const errorData = await APIData.json();
+                    throw new Error(
+                        errorData?.message ??
+                            'An error occurred while fetching video data'
+                    );
+                }
+
+                const responseData = await APIData.json();
+                const searchedResources = responseData?.data;
+                convertResourceToCard(searchedResources);
+            } catch (error: any) {
+                toast.error(
+                    error.message ??
+                        'An error occurred while searching resources'
+                );
+            }
+        },
+        [allResources, data, resourceType]
+    );
+
     useEffect(() => {
         if (!data) {
             return;
@@ -161,14 +171,21 @@ function VideoModal({
         <section className="w-full bg-white h-screen p-4 shadow-md">
             <ModalHeader
                 headerText={{
-                    heading: 'Select Video',
-                    tagline: 'Select Video For your plan',
+                    heading: `Select ${
+                        resourceType.charAt(0).toUpperCase() +
+                        resourceType.slice(1)
+                    }`,
+                    tagline: `Select ${resourceType} For your plan`,
                 }}
-                Icon={FileVideoIcon}
+                Icon={
+                    resourceType === ResourceType.VIDEO
+                        ? FileVideoIcon
+                        : FileTypeIcon
+                }
                 onClose={onClose}
             />
             <div className="mb-5">
-                <SearchInput handleClick={searchResources} />
+                <SearchInput handleChange={searchResources} />
             </div>
             {isLoading ? (
                 <PageLoader additionalClasses="!h-2/3" />
@@ -183,6 +200,7 @@ function VideoModal({
                                     setSelectedResource({
                                         resourceId: id,
                                         resourceType,
+                                        name: card.Text,
                                     });
                                     updateSelectedResource(id);
                                 }}
@@ -197,12 +215,19 @@ function VideoModal({
                     setAllSelectedResources(
                         allSelectedResources.map((resource, index) => {
                             if (index === selectedIndex) {
-                                return selectedResource;
+                                return {
+                                    ...selectedResource,
+                                    weightage,
+                                };
                             }
                             return resource;
                         })
                     );
-                    setSelectedResource({ resourceId: '', resourceType });
+                    setSelectedResource({
+                        resourceId: '',
+                        resourceType,
+                        name: '',
+                    });
                     onClose();
                 }}
             >

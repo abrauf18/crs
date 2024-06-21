@@ -1,8 +1,6 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
 import React, { useState } from 'react';
-import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
     Table,
@@ -12,7 +10,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import EditIcon from '@/app/assets/icons/EditIcon';
 import ResourceDownloadModal from './ResourceDownloadModal';
 
 export interface ResourcesInterface {
@@ -26,29 +23,46 @@ export interface ResourcesProp {
     fontSize?: string;
 }
 
+type Resource = {
+    id: string;
+    name: string;
+    type: string;
+    topic: string;
+    url: string;
+    released: boolean;
+};
+
+type Standard = {
+    id: string;
+    name: string;
+    resourceCount: number;
+    resources: Resource[];
+};
+
 const poppins = Poppins({
     subsets: ['latin'],
     weight: ['100', '400', '700'],
 });
-function ResourcesTable({ resources, fontSize }: ResourcesProp) {
-    const { push } = useRouter();
-    const pathname = usePathname();
+function ResourcesTable({ standards }: { standards: Standard[] }) {
     const [isShowDownloadModal, setIsShowDownloadModal] = useState(false);
+    const [selectedStandard, setSelectedStandard] = useState<Standard | null>(
+        null
+    );
 
-    const handleOpenDownloadModal = () => {
+    const handleOpenDownloadModal = (standard: Standard) => {
+        setSelectedStandard(standard);
         setIsShowDownloadModal(true);
     };
 
     const handleCloseDownloadModal = () => {
         setIsShowDownloadModal(false);
+        setSelectedStandard(null);
     };
 
     return (
         <section>
             <Table
-                className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                    poppins.className
-                }`}
+                className={`text-['18']px] mobile:text-sm ${poppins.className}`}
             >
                 <TableHeader>
                     <TableRow>
@@ -67,33 +81,28 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {resources.map((resource, index) => (
-                        <TableRow className="border-none" key={resource.id}>
+                    {standards?.map((standard, index) => (
+                        <TableRow className="border-none" key={standard.id}>
                             <TableCell className="font-medium">
                                 <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
                                     {index + 1}
                                 </span>
                             </TableCell>
                             <TableCell>
-                                <span>{resource.topic}</span>
+                                <span>{standard.name}</span>
                             </TableCell>
 
                             <TableCell className="text-dark-gray text-center">
-                                {resource.assignedResources}
+                                {standard.resourceCount}
                             </TableCell>
 
-                            <TableCell className="flex lg:justify-end items-center p-0  lg:pr-10 space-x-2 font-medium mt-6 md:mt-5 lg:mt-2 ">
-                                <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer ">
-                                    <Eye
-                                        color="#F59A3B"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
+                            <TableCell className="flex lg:justify-end items-center p-0  lg:pr-10 space-x-2 font-medium mt-6 md:mt-5 lg:mt-2">
                                 <button
                                     type="button"
                                     className="border rounded-lg px-4 py-2 text-dark-gray "
-                                    onClick={handleOpenDownloadModal}
+                                    onClick={() =>
+                                        handleOpenDownloadModal(standard)
+                                    }
                                 >
                                     Download
                                 </button>
@@ -104,7 +113,10 @@ function ResourcesTable({ resources, fontSize }: ResourcesProp) {
             </Table>
             {isShowDownloadModal && (
                 <div className="fixed right-0 top-0 z-50 lg:w-[30%] w-full md:w-[60%]">
-                    <ResourceDownloadModal onClose={handleCloseDownloadModal} />
+                    <ResourceDownloadModal
+                        onClose={handleCloseDownloadModal}
+                        standard={selectedStandard!}
+                    />
                 </div>
             )}
         </section>

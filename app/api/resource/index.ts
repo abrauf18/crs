@@ -85,6 +85,7 @@ export const createResourceAPI = async ({
     thumbnailURL,
     duration,
     totalMarks,
+    deadline,
     onUploadProgress,
 }: {
     name: string;
@@ -95,6 +96,7 @@ export const createResourceAPI = async ({
     thumbnailURL?: string;
     duration?: number;
     totalMarks?: number;
+    deadline?: number;
     onUploadProgress: (progressEvent: any) => void;
 }) => {
     const response = await axios.post(
@@ -108,6 +110,7 @@ export const createResourceAPI = async ({
             thumbnailURL,
             duration,
             totalMarks,
+            deadline,
         },
         {
             onUploadProgress,

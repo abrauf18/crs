@@ -8,9 +8,9 @@ interface CustomFile extends File {
 }
 
 const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_DEFAULT_REGION,
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+    region: process.env.NEXT_PUBLIC_AWS_DEFAULT_REGION,
     //   signatureVersion: "v4",
 });
 
@@ -26,9 +26,9 @@ async function uploadFileToS3(
     fileName = fileName.replace(/ /g, '');
 
     const params: PutObjectRequest = {
-        Bucket: process.env.AWS_BUCKET || 'default-bucket',
+        Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET || 'default-bucket',
         Key: userId
-            ? `${fileSaveDirectory}/${fileName}-${userId}`
+            ? `${fileSaveDirectory}/${userId}-${fileName}`
             : `${fileSaveDirectory}/${fileName}`,
         Body: fileBuffer,
         ContentType: contentType,
@@ -41,7 +41,7 @@ async function uploadFileToS3(
     }
 
     const url = s3.getSignedUrl('getObject', {
-        Bucket: process.env.AWS_BUCKET,
+        Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET,
         Key: response.Key,
     });
     return url.split('?')[0];

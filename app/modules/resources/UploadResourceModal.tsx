@@ -40,6 +40,7 @@ type ResourceFormData = {
     totalMarks?: number;
     youtubeURL?: string;
     selectedUploadOption: string;
+    deadline?: number;
 };
 
 const uploadOptions = [
@@ -135,7 +136,8 @@ function UploadResourceModal({ onClose }: any) {
             name: formData.name,
             topic: formData.topic,
             type: formData.type,
-            totalMarks: formData.totalMarks,
+            totalMarks: formData?.totalMarks,
+            deadline: formData?.deadline,
             url,
             duration,
             onUploadProgress: (progressEvent: {
@@ -163,15 +165,19 @@ function UploadResourceModal({ onClose }: any) {
     const handleUpload = async (formData: ResourceFormData) => {
         try {
             setLoading(true);
-
             if (!data?.user.accessToken) {
                 return toast.error('Token Expired, Please Sign in Again');
             }
 
+            let response: { status: number } = { status: 200 };
             if (resourceType === ResourceType.VIDEO) {
-                await handleVideoUpload(formData);
+                response = await handleVideoUpload(formData);
             } else {
-                await handleFileUpload(formData);
+                response = await handleFileUpload(formData);
+            }
+
+            if (response.status !== 200) {
+                return toast.error('Failed to upload resource');
             }
 
             await refreshResources();
@@ -180,7 +186,7 @@ function UploadResourceModal({ onClose }: any) {
             return toast.success('Resource Uploaded Successfully');
         } catch (error: any) {
             return toast.error(
-                error?.message || 'An unexpected error occurred'
+                error?.response?.data?.message || 'An unexpected error occurred'
             );
         } finally {
             setLoading(false);
@@ -189,7 +195,8 @@ function UploadResourceModal({ onClose }: any) {
 
     const handleVideoUpload = async (formData: ResourceFormData) => {
         if (!formData.thumbnail) {
-            return toast.error('Please Select Thumbnail');
+            toast.error('Please Select Thumbnail');
+            return { status: 400 };
         }
         const thumbnailURL = await uploadFile(thumbnailFile['0']);
 
@@ -198,20 +205,23 @@ function UploadResourceModal({ onClose }: any) {
 
         if (selectedUploadOption === 'youtube') {
             if (!formData.youtubeURL) {
-                return toast.error('Please Enter Youtube URL');
+                toast.error('Please Enter Youtube URL');
+                return { status: 400 };
             }
             resourceURL = formData.youtubeURL;
             videoDuration = await getVideoDuration(formData.youtubeURL);
         } else {
             if (!selectedFile) {
-                return toast.error('Please Select File');
+                toast.error('Please Select File');
+                return { status: 400 };
             }
             videoDuration = await getVideoDuration(selectedFile);
             resourceURL = await uploadFile(selectedFile);
         }
 
         if (!resourceURL) {
-            return toast.error('Failed to upload resource');
+            toast.error('Failed to upload resource');
+            return { status: 400 };
         }
 
         await createResource(
@@ -221,22 +231,24 @@ function UploadResourceModal({ onClose }: any) {
             secondsToString(videoDuration) || '00:00:00'
         );
 
-        return null;
+        return { status: 200 };
     };
 
     const handleFileUpload = async (formData: ResourceFormData) => {
         if (!selectedFile) {
-            return toast.error('Please Select File');
+            toast.error('Please Select File');
+            return { status: 400 };
         }
 
         const resourceURL = await uploadFile(selectedFile);
         if (!resourceURL) {
-            return toast.error('Failed to upload file');
+            toast.error('Failed to upload file');
+            return { status: 400 };
         }
 
         await createResource(resourceURL, formData);
 
-        return null;
+        return { status: 200 };
     };
 
     const refreshResources = async () => {
@@ -345,7 +357,8 @@ function UploadResourceModal({ onClose }: any) {
                         )}
                         {(resourceType === ResourceType.QUIZ ||
                             resourceType === ResourceType.WORKSHEET ||
-                            resourceType === ResourceType.EXIT_TICKET_TEST) && (
+                            resourceType === ResourceType.EXIT_TICKET_TEST ||
+                            resourceType === ResourceType.ASSIGNMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -362,6 +375,41 @@ function UploadResourceModal({ onClose }: any) {
                                             value: true,
                                             message:
                                                 validationError.REQUIRED_FIELD,
+                                        },
+                                        min: {
+                                            value: 0,
+                                            message:
+                                                'Marks must be a minimum of 0',
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
+                        {(resourceType === ResourceType.QUIZ ||
+                            resourceType === ResourceType.WORKSHEET ||
+                            resourceType === ResourceType.EXIT_TICKET_TEST ||
+                            resourceType === ResourceType.ASSIGNMENT) && (
+                            <div className="flex flex-col space-y-1 mt-5">
+                                <Label
+                                    htmlFor="deadline"
+                                    className="font-semibold text-md"
+                                >
+                                    Deadline
+                                </Label>
+                                <Input
+                                    name="deadline"
+                                    placeholder="Add Number of Days as Deadline For Submission"
+                                    type="number"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                        min: {
+                                            value: 0,
+                                            message:
+                                                'Deadline must have a minimum of 0 day',
                                         },
                                     }}
                                 />
@@ -430,6 +478,10 @@ function UploadResourceModal({ onClose }: any) {
                                 <>
                                     {!selectedFile && (
                                         <UploadItem
+                                            resourceType={
+                                                resourceType ??
+                                                ResourceType.SLIDESHOW
+                                            }
                                             itemName="Resource"
                                             setSelectedFile={setSelectedFile}
                                         />

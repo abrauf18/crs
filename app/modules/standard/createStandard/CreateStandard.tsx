@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import action from '@/app/action';
-import { validationError } from '@/lib/utils';
+import { validationError, ResourceType } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { ErrorMessage } from '@hookform/error-message';
@@ -14,16 +14,11 @@ import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { createStandardAPI, updateStandardAPI } from '@/app/api/standard';
 import CreateTopic from '../CreateTopic';
 
-export enum ResourceType {
-    VIDEO = 'video',
-    SLIDESHOW = 'slideshow',
-    WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
-    QUIZ = 'quiz',
-}
 interface Topic {
     resourceId: string;
     type: ResourceType;
+    name: string;
+    weightage: number;
 }
 interface DailyUpload {
     date: string;
@@ -47,6 +42,8 @@ const DEFAULT_STANDARD = {
                 {
                     resourceId: '',
                     type: ResourceType.VIDEO,
+                    name: '',
+                    weightage: 0,
                 },
             ],
         },
@@ -81,7 +78,9 @@ function CreateStandard({
                     date: upload.date,
                     topics: upload.topics.map((resource) => ({
                         resourceId: resource.resourceId,
+                        name: resource.name,
                         type: resource.type,
+                        weightage: resource.weightage,
                     })),
                 })) ?? [],
         },
@@ -92,17 +91,30 @@ function CreateStandard({
             upload.topics.map((resource) => ({
                 resourceId: resource.resourceId,
                 resourceType: resource.type,
+                name: resource.name,
+                weightage: resource.weightage,
             }))
         );
     const [allSelectedResources, setAllSelectedResources] = useState<
         {
             resourceId: string;
             resourceType: ResourceType;
+            name: string;
+            weightage: number;
         }[][]
     >(
         defaultSelectedResources && defaultSelectedResources.length > 0
             ? defaultSelectedResources
-            : [[{ resourceId: '', resourceType: ResourceType.VIDEO }]]
+            : [
+                  [
+                      {
+                          resourceId: '',
+                          resourceType: ResourceType.VIDEO,
+                          name: '',
+                          weightage: 0,
+                      },
+                  ],
+              ]
     );
     const methods = useForm<FormValues>({
         defaultValues: update ? transformedData : DEFAULT_FORM_VALUES,
@@ -127,13 +139,26 @@ function CreateStandard({
         if (!data) {
             return;
         }
-
         const allResourcesSelected = allSelectedResources.every((resources) =>
             resources.every((resource) => resource.resourceId !== '')
         );
-
         if (!allResourcesSelected) {
             toast.error('Please select all resources before submitting');
+            return;
+        }
+
+        const totalWeightage = formdata.standard.dailyUploads.reduce(
+            (total, dailyUpload) => {
+                const dailyTotal = dailyUpload.topics.reduce(
+                    (dailySum, topic) => dailySum + Number(topic.weightage),
+                    0
+                );
+                return total + dailyTotal;
+            },
+            0
+        );
+        if (totalWeightage > 100) {
+            toast.error('The sum of all weightages should not exceed 100');
             return;
         }
 
@@ -143,6 +168,7 @@ function CreateStandard({
                     resourceId:
                         allSelectedResources[index][topicIndex]?.resourceId,
                     accessDate: dailyUpload.date,
+                    weightage: topic?.weightage || 0,
                 }))
             )
             .flat();
@@ -198,6 +224,8 @@ function CreateStandard({
                     {
                         resourceId: '',
                         type: ResourceType.VIDEO,
+                        name: '',
+                        weightage: 0,
                     },
                 ],
             });
@@ -285,7 +313,62 @@ function CreateStandard({
                         </div>
                     </div>
                     <div>
-                        <div className="flex justify-between items-center my-5 w-full">
+                        <div className="flex justify-between items-center pb-6 mt-5 mb-2">
+                            <button
+                                type="submit"
+                                className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-32"
+                            >
+                                {isLoading ? <ButtonLoader /> : `submit`}
+                            </button>
+                            <button
+                                type="button"
+                                className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg"
+                                onClick={() => {
+                                    if (
+                                        allSelectedResources[
+                                            allSelectedResources.length - 1
+                                        ] &&
+                                        allSelectedResources[
+                                            allSelectedResources.length - 1
+                                        ].some(
+                                            (resource) =>
+                                                resource.resourceId === ''
+                                        )
+                                    ) {
+                                        toast.error(
+                                            'Please select all resources in last day before adding a new one'
+                                        );
+                                        return;
+                                    }
+                                    appendDailyUpload({
+                                        date: '',
+                                        topics: [
+                                            {
+                                                resourceId: '',
+                                                type: ResourceType.VIDEO,
+                                                name: '',
+                                                weightage: 0,
+                                            },
+                                        ],
+                                    });
+                                    setAllSelectedResources([
+                                        ...allSelectedResources,
+                                        [
+                                            {
+                                                resourceId: '',
+                                                resourceType:
+                                                    ResourceType.VIDEO,
+                                                name: '',
+                                                weightage: 0,
+                                            },
+                                        ],
+                                    ]);
+                                }}
+                            >
+                                Add TimeLine
+                            </button>
+                        </div>
+                        <div className="flex justify-between items-center mb-5 w-full">
                             <h3 className="text-xl font-semibold">Topic:</h3>
                         </div>
                         {dailyUploadFields.map((dailyUpload, index) => (
@@ -300,6 +383,8 @@ function CreateStandard({
                                         resources: {
                                             resourceId: string;
                                             resourceType: ResourceType;
+                                            name: string;
+                                            weightage: number;
                                         }[]
                                     ) => {
                                         const updatedResources = [
@@ -313,55 +398,6 @@ function CreateStandard({
                                 />
                             </div>
                         ))}
-                    </div>
-                    <div className="flex justify-between items-center border-b pb-6">
-                        <button
-                            type="submit"
-                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-32"
-                        >
-                            {isLoading ? <ButtonLoader /> : `submit`}
-                        </button>
-                        <button
-                            type="button"
-                            className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg"
-                            onClick={() => {
-                                if (
-                                    allSelectedResources[
-                                        allSelectedResources.length - 1
-                                    ] &&
-                                    allSelectedResources[
-                                        allSelectedResources.length - 1
-                                    ].some(
-                                        (resource) => resource.resourceId === ''
-                                    )
-                                ) {
-                                    toast.error(
-                                        'Please select all resources in last day before adding a new one'
-                                    );
-                                    return;
-                                }
-                                appendDailyUpload({
-                                    date: '',
-                                    topics: [
-                                        {
-                                            resourceId: '',
-                                            type: ResourceType.VIDEO,
-                                        },
-                                    ],
-                                });
-                                setAllSelectedResources([
-                                    ...allSelectedResources,
-                                    [
-                                        {
-                                            resourceId: '',
-                                            resourceType: ResourceType.VIDEO,
-                                        },
-                                    ],
-                                ]);
-                            }}
-                        >
-                            Add TimeLine
-                        </button>
                     </div>
                 </form>
             </FormProvider>

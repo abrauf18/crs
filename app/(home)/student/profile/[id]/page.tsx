@@ -1,28 +1,119 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import React from 'react';
-import Searchbar from '@/app/components/common/Searchbar';
+import { Session, getServerSession } from 'next-auth';
 import TestPerformance from '@/app/components/common/test-performance/TestPerformance';
 import MyAnswersModal from '@/app/modules/profile/MyAnswersModal';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import UnhandledError from '@/app/modules/error/UnhandledError';
+import { getStudentProfileStandardResultsAPI } from '@/app/api/student';
 
-function Page({ params }: any) {
-    const { back } = useRouter();
+interface APIResponse {
+    status: string;
+    data?: CourseData;
+    message?: string;
+}
 
-    return (
-        <section>
-            <Searchbar
-                headerText="Kathryn Murphy"
-                tagline="nathan.roberts@example.com"
-                isShowBackArrow
-                onBackClick={back}
-            />
-            <TestPerformance isShownFromStudent />
-            {/* <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[30%]">
-                <MyAnswersModal />
-            </div> */}
-        </section>
-    );
+interface CourseData {
+    id: string;
+    name: string;
+    description: string;
+    courseLength: string;
+    dailyUploads: DailyUpload[];
+    currentTotalWeightage: number;
+    currentAcheivedWeightage: number;
+}
+
+interface DailyUpload {
+    id: string;
+    accessDate: string;
+    weightage: number;
+    resource: Resource;
+    accessible: boolean;
+    performance: number;
+    yetToMarkWeightage: number;
+    unAnsweredWeightage: number;
+}
+
+interface Resource {
+    id: string;
+    name: string;
+    type: string;
+    video: Video | null;
+    AssessmentResourcesDetail: AssessmentDetail | null;
+}
+
+interface Video {
+    id: string;
+    questions: Question[];
+}
+
+interface Question {
+    id: string;
+    statement: string;
+    totalMarks: number;
+    answers: Answer[];
+    options?: { [key: string]: string };
+    correctOption?: string;
+    correctOptionExplanation?: string;
+}
+
+interface Answer {
+    obtainedMarks: number;
+    answer?: string;
+}
+
+interface AssessmentDetail {
+    id: string;
+    totalMarks: number;
+    deadline: number;
+    assessmentAnswers: AssessmentAnswer[];
+}
+
+interface AssessmentAnswer {
+    obtainedMarks: number;
+    answerURL: string;
+}
+
+async function Page({ params }: { params: { id: string } }) {
+    const data: Session | null = await getServerSession(options);
+
+    if (data) {
+        try {
+            const response = await getStudentProfileStandardResultsAPI({
+                accessToken: data?.user?.accessToken,
+                studentId: data?.user?.id,
+                standardId: params.id,
+            });
+
+            const APIResponse: APIResponse = await response.json();
+
+            if (APIResponse.status !== 'error') {
+                return (
+                    <section>
+                        <TestPerformance
+                            isShownFromStudent
+                            APIdata={APIResponse?.data!}
+                        />
+                        {/* <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[30%]">
+                            <MyAnswersModal />
+                        </div> */}
+                    </section>
+                );
+            }
+
+            if (!response.ok) {
+                throw new Error(APIResponse?.message!);
+            }
+        } catch (error: any) {
+            return (
+                <UnhandledError
+                    error={{
+                        message: error?.message,
+                        name: error?.name,
+                    }}
+                />
+            );
+        }
+    }
 }
 
 export default Page;

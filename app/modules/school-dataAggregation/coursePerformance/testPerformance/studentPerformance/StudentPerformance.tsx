@@ -1,4 +1,5 @@
 import React from 'react';
+import { StudentProfileResourceType } from '@/lib/utils';
 import Tabs from '@/app/components/common/test-performance/Tabs';
 import StudentPerformanceTable, {
     StudentPerformanceInterface,
@@ -85,7 +86,14 @@ function StudentPerformance() {
                         Test Performance - HealthTech
                     </h1>
                 </div>
-                <Tabs />
+                <Tabs
+                    activeTab=""
+                    setActiveTabLocal={() => {}}
+                    tabOptions={[
+                        StudentProfileResourceType.VIDEO,
+                        StudentProfileResourceType.ASSESSMENT,
+                    ]}
+                />
             </div>
             <div className="rounded-xl  mt-5 py-3 md:px-6 mobile:px-3">
                 <StudentPerformanceTable students={studentsRecord} />d

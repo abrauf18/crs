@@ -4,17 +4,29 @@
 
 import React from 'react';
 import { Upload } from 'lucide-react';
+import { ResourceType } from '@/lib/utils';
 
 function UploadItem({
+    resourceType,
     itemName,
     setSelectedFile,
 }: {
+    resourceType: ResourceType;
     itemName: string;
     setSelectedFile: (file: File | null) => void;
 }) {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         setSelectedFile(file);
+    };
+
+    const resourceTypeToFileTypes = {
+        [ResourceType.VIDEO]: '.gif, .mp4, .avi, .mov',
+        [ResourceType.WORKSHEET]: '.doc, .docx',
+        [ResourceType.SLIDESHOW]: '.ppt, .pptx',
+        [ResourceType.QUIZ]: '.doc, .docx',
+        [ResourceType.EXIT_TICKET_TEST]: '.doc, .docx',
+        [ResourceType.ASSIGNMENT]: '.doc, .docx',
     };
 
     return (
@@ -29,7 +41,7 @@ function UploadItem({
                 <input
                     type="file"
                     id="fileInput"
-                    accept=".pdf, .jpg, .jpeg, .png, .gif, .mp4, .avi, .mov, .doc, .docx, .xls, .xlsx, .ppt, .pptx"
+                    accept={resourceTypeToFileTypes[resourceType]}
                     onChange={handleFileChange}
                     className="hidden"
                 />

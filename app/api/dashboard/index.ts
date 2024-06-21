@@ -40,3 +40,26 @@ export const getAdminDashboardSummariesAPI = async ({
 
     return result;
 };
+
+export const getStudentDashboardSummariesAPI = async ({
+    accessToken,
+    studentId,
+}: {
+    accessToken: string;
+    studentId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/getStudentDashboardSummaries`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+            },
+            next: {
+                tags: ['getStudentDashboardSummaries'],
+            },
+        }
+    );
+
+    return result;
+};

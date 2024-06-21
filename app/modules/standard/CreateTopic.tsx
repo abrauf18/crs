@@ -1,34 +1,26 @@
 'use client';
 
 import { toast } from 'react-toastify';
-import { CalendarDays, X } from 'lucide-react';
+import { CalendarDays, FileUpIcon, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { FieldErrors, useFieldArray, useFormContext } from 'react-hook-form';
-import { validationError } from '@/lib/utils';
+import {
+    validationError,
+    ResourceType,
+    resourceDropDownOptions,
+} from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import Select from '@/app/components/common/DropDown';
 import { ErrorMessage } from '@hookform/error-message';
 import VideoModal from './VideoModal';
 
-export enum ResourceType {
-    VIDEO = 'video',
-    SLIDESHOW = 'slideshow',
-    WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
-    QUIZ = 'quiz',
-}
-export const resourceDropDownOptions = [
-    { label: ResourceType.QUIZ, value: 'Quiz' },
-    { label: ResourceType.VIDEO, value: 'Video' },
-    { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
-    { label: ResourceType.WORKSHEET, value: 'Worksheet' },
-    { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
-];
 interface Topic {
     resourceId: string;
     type: ResourceType;
+    name: string;
+    weightage: number;
 }
 interface DailyUpload {
     id: string;
@@ -52,9 +44,19 @@ function CreateTopic({
     errors,
 }: {
     index: number;
-    allSelectedResources: { resourceId: string; resourceType: ResourceType }[];
+    allSelectedResources: {
+        resourceId: string;
+        resourceType: ResourceType;
+        name: string;
+        weightage: number;
+    }[];
     setAllSelectedResources: (
-        resources: { resourceId: string; resourceType: ResourceType }[]
+        resources: {
+            resourceId: string;
+            resourceType: ResourceType;
+            name: string;
+            weightage: number;
+        }[]
     ) => void;
     errors: FieldErrors<FormValues>;
 }) {
@@ -90,6 +92,8 @@ function CreateTopic({
             appendTopic({
                 resourceId: '',
                 type: ResourceType.VIDEO,
+                name: '',
+                weightage: 0,
             });
             topicAddedRef.current = true;
         }
@@ -103,8 +107,8 @@ function CreateTopic({
         );
     };
     return (
-        <>
-            <div className="cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg absolute right-6 z-10 hover:bg-slate-100">
+        <div className="relative">
+            <div className="cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg absolute mobile:right-0 right-6 -top-2 z-10 hover:bg-slate-100 ">
                 <button
                     type="button"
                     onClick={() => {
@@ -122,12 +126,16 @@ function CreateTopic({
                         appendTopic({
                             resourceId: '',
                             type: ResourceType.VIDEO,
+                            name: '',
+                            weightage: 0,
                         });
                         setAllSelectedResources([
                             ...(allSelectedResources || []),
                             {
                                 resourceId: '',
                                 resourceType: ResourceType.VIDEO,
+                                name: '',
+                                weightage: 0,
                             },
                         ]);
                     }}
@@ -145,40 +153,105 @@ function CreateTopic({
                             >
                                 Type
                             </Label>
-                            <div className="flex items-center gap-5 sm:my-4 mt-12 mb-8">
+                            <div className="flex items-center gap-5 sm:my-8 my-6 mobile:flex-col mobile:items-start mobile:w-full">
                                 <Select
-                                    additionalClasses="!w-2/4"
+                                    additionalClasses="!w-2/4 mobile:!w-full"
                                     name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                     options={resourceDropDownOptions}
                                     selectedOption={ResourceType.VIDEO}
+                                    disabled={
+                                        watch(
+                                            `standard.dailyUploads.${index}.topics.${topicIndex}.resourceId`
+                                        ) !== ''
+                                    }
                                 />
-                                <div
-                                    className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center px-4 py-3 hover:bg-slate-100"
-                                    onClick={() => handleOpenModal(topicIndex)}
-                                >
-                                    <button
-                                        className="text-sm text-center"
-                                        type="button"
+                                <div className="flex gap-2 items-center justify-center">
+                                    <div
+                                        className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center p-3 hover:bg-slate-100"
+                                        onClick={() =>
+                                            handleOpenModal(topicIndex)
+                                        }
                                     >
-                                        Select
-                                    </button>
+                                        <button
+                                            className="text-sm text-center"
+                                            type="button"
+                                        >
+                                            Select
+                                        </button>
+                                    </div>
+                                    {allSelectedResources[topicIndex].name && (
+                                        <div className="border text-sm text-dark-gray rounded-lg text-center p-3  flex gap-2 items-center">
+                                            {allSelectedResources &&
+                                                allSelectedResources.length >
+                                                    topicIndex && (
+                                                    <>
+                                                        <FileUpIcon />
+                                                        {
+                                                            allSelectedResources[
+                                                                topicIndex
+                                                            ].name
+                                                        }
+                                                    </>
+                                                )}
+                                        </div>
+                                    )}
                                 </div>
-                                <div>
-                                    {allSelectedResources &&
-                                        allSelectedResources.length >
-                                            topicIndex &&
-                                        allSelectedResources[topicIndex]
-                                            .resourceId}
+                                <div className="basis-1/2">
+                                    <Label
+                                        htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
+                                    >
+                                        weightage
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="Assign Weightage to this resource"
+                                        name={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                            min: {
+                                                value: 0,
+                                                message:
+                                                    'Weightage must be at least 0',
+                                            },
+                                            max: {
+                                                value: 100,
+                                                message:
+                                                    'Weightage must not be more than 100',
+                                            },
+                                        }}
+                                    />
+                                    <span className="text-red-500 text-xs">
+                                        <ErrorMessage
+                                            errors={errors}
+                                            name={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
+                                            render={({ message }) => (
+                                                <p className="flex items-center">
+                                                    <X
+                                                        size={20}
+                                                        color="#E6500D"
+                                                    />
+                                                    {message}
+                                                </p>
+                                            )}
+                                        />
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
+                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[33%]">
                         {isDisplayModal && (
                             <VideoModal
                                 onClose={handleCloseModal}
                                 resourceType={watch(
                                     `standard.dailyUploads.${index}.topics.${selectedIndex}.type`
+                                )}
+                                weightage={watch(
+                                    `standard.dailyUploads.${index}.topics.${selectedIndex}.weightage`
                                 )}
                                 setAllSelectedResources={
                                     setAllSelectedResources
@@ -218,8 +291,8 @@ function CreateTopic({
                     </div>
                 </div>
             ))}
-            <div className="sm:flex justify-between items-center my-5 gap-5 border-b">
-                <div className="basis-1/2 relative">
+            <div className="mobile:w-full w-1/2 my-5">
+                <div className="basis-1/2 mobile:w-full relative">
                     <Label htmlFor={`standard.dailyUploads.${index}.date`}>
                         Date
                     </Label>
@@ -252,7 +325,8 @@ function CreateTopic({
                     </div>
                 </div>
             </div>
-        </>
+            <hr className="my-5" />
+        </div>
     );
 }
 

@@ -9,18 +9,26 @@ interface Topic {
     type: ResourceType;
     topic: string;
     videoId?: string;
+    watched?: boolean;
+    completed?: boolean;
+    canWrite?: boolean;
 }
 interface DailyUpload {
     date: string;
+    released?: boolean;
     topics: Topic[];
 }
 
 function StandardCard({
     dailyUpload,
+    isShownFromAdmin,
     isShownFromTeacher,
+    isShownFromStudent,
 }: {
     dailyUpload: DailyUpload;
+    isShownFromAdmin?: boolean;
     isShownFromTeacher?: boolean;
+    isShownFromStudent?: boolean;
 }) {
     return (
         <section className="mt-5 w-full rounded-lg border p-3">
@@ -28,7 +36,10 @@ function StandardCard({
             <div className="mt-5 w-full">
                 <StandardTable
                     topicList={dailyUpload.topics}
+                    released={dailyUpload.released}
+                    isShownFromAdmin={isShownFromAdmin}
                     isShownFromTeacher={isShownFromTeacher}
+                    isShownFromStudent={isShownFromStudent}
                 />
             </div>
         </section>

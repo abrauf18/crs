@@ -49,8 +49,15 @@ export const standards = [
         third: 'Course Length (2 Weeks)',
     },
 ];
+type StandardData = {
+    id: string;
+    name: string;
+    courseLength: string;
+    totalVideoUploads: string;
+    totalNonVideoUploads: string;
+};
 
-function LearningCard() {
+function LearningCard({ standards }: { standards: StandardData[] }) {
     const [activeStandard, setActiveStandard] = useState<string | null>('4');
 
     const Icons = {
@@ -63,13 +70,13 @@ function LearningCard() {
 
     function handleClick(standardId: string): void {
         setActiveStandard(standardId);
-        // push(`${pathname}/create`);
+        push(`${pathname}/${standardId}`);
     }
     return (
         <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
-            {standards.map((standard: any, index: any) => (
+            {standards.map((standard: StandardData) => (
                 <div
-                    key={standard.id || index}
+                    key={standard.id}
                     className={`rounded-lg border p-4 `}
 
                     // className={`rounded-lg border p-4 ${
@@ -79,7 +86,7 @@ function LearningCard() {
                 >
                     <div className="mt-2">
                         <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-900">
-                            {standard.heading}
+                            {standard.name}
                         </h5>
                         <div>
                             <div className="flex gap-2 mb-2">
@@ -89,7 +96,7 @@ function LearningCard() {
                                         width={17}
                                         color="#F59A3B"
                                     />
-                                    <p>{standard.first}</p>
+                                    <p>{`Videos(${standard.totalVideoUploads})`}</p>
                                 </div>
                                 <div className="flex gap-1 items-center text-dark-gray text-sm">
                                     <File
@@ -97,7 +104,7 @@ function LearningCard() {
                                         height={17}
                                         color="#7AA43E"
                                     />
-                                    <p>{standard.second}</p>
+                                    <p>{`Other Resouces(${standard.totalNonVideoUploads})`}</p>
                                 </div>
                             </div>
                             <div className="flex gap-1 items-center mb-5 text-dark-gray text-sm">
@@ -106,7 +113,7 @@ function LearningCard() {
                                     width={17}
                                     color="#54C3F4"
                                 />
-                                <p>{standard.third}</p>
+                                <p>{`Course Length(${standard.courseLength})`}</p>
                             </div>
                         </div>
 
@@ -114,11 +121,6 @@ function LearningCard() {
                             <div
                                 onClick={() => handleClick(standard.id)}
                                 className={`border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 cursor-pointer lg:hover:bg-primary-color lg:hover:text-white
-                                ${
-                                    // standard.id === activeStandard &&
-                                    // 'bg-primary-color text-white'
-                                    standard.id === activeStandard && ''
-                                }
                                 `}
                             >
                                 View

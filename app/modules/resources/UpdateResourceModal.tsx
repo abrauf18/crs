@@ -19,12 +19,12 @@ import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { updateResourceAPI } from '@/app/api/resource';
 import { resourceTypeOptions } from '@/app/modules/resources/UploadResourceModal';
 
-// type for the form data
 type ResourceFormData = {
     topic: string;
     type: string;
     name: string;
     totalMarks?: number;
+    deadline?: number;
 };
 
 function UpdateResourceModal({
@@ -150,8 +150,8 @@ function UpdateResourceModal({
                         </div>
                         {(resource.type === ResourceType.QUIZ ||
                             resource.type === ResourceType.WORKSHEET ||
-                            resource.type ===
-                                ResourceType.EXIT_TICKET_TEST) && (
+                            resource.type === ResourceType.EXIT_TICKET_TEST ||
+                            resource.type === ResourceType.ASSIGNMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -171,6 +171,39 @@ function UpdateResourceModal({
                                             value: true,
                                             message:
                                                 validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
+                        {(resource.type === ResourceType.QUIZ ||
+                            resource.type === ResourceType.WORKSHEET ||
+                            resource.type === ResourceType.EXIT_TICKET_TEST ||
+                            resource.type === ResourceType.ASSIGNMENT) && (
+                            <div className="flex flex-col space-y-1 mt-5">
+                                <Label
+                                    htmlFor="deadline"
+                                    className="font-semibold text-md"
+                                >
+                                    Deadline
+                                </Label>
+                                <Input
+                                    name="deadline"
+                                    placeholder="Add Number of Days as Deadline For Submission"
+                                    type="number"
+                                    inputValue={
+                                        resource.deadline?.toString() ?? '0'
+                                    }
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                        min: {
+                                            value: 0,
+                                            message:
+                                                'Deadline must have a minimum of 0 day',
                                         },
                                     }}
                                 />

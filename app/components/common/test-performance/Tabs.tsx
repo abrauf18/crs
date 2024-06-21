@@ -1,38 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-function Tabs() {
-    const [activeTab, setActiveTabLocal] = useState('test');
-
+function Tabs({
+    activeTab,
+    setActiveTabLocal,
+    tabOptions,
+}: {
+    activeTab: string;
+    setActiveTabLocal: (tab: string) => void;
+    tabOptions: string[];
+}) {
     const handleTabClick = (tab: string) => {
         setActiveTabLocal(tab);
     };
 
     return (
         <div className="flex space-x-3">
-            <button
-                type="button"
-                className={`py-2 px-4 border-2 rounded-xl ${
-                    activeTab === 'test'
-                        ? ' border-primary-color  bg-orange-50'
-                        : ''
-                }`}
-                onClick={() => handleTabClick('test')}
-            >
-                Test
-            </button>
-            <button
-                type="button"
-                className={`py-2 px-4 border-2 rounded-xl ${
-                    activeTab === 'quiz'
-                        ? ' border-primary-color  bg-orange-50'
-                        : ''
-                }`}
-                onClick={() => handleTabClick('quiz')}
-            >
-                Quizzes
-            </button>
+            {tabOptions.map((tab) => (
+                <button
+                    key={tab}
+                    type="button"
+                    className={`py-2 px-4 border-2 rounded-xl ${
+                        activeTab === tab
+                            ? 'border-primary-color bg-orange-50'
+                            : ''
+                    }`}
+                    onClick={() => handleTabClick(tab)}
+                >
+                    {tab}
+                </button>
+            ))}
         </div>
     );
 }
