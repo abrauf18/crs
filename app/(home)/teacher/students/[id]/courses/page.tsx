@@ -2,7 +2,7 @@ import React from 'react';
 import { Session, getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import { getStudentProfileSummarizedStandardsAPI } from '@/app/api/student';
+import { getSummarizedStudentStandardsForTeacherAPI } from '@/app/api/student';
 import MyAnswersTable from '@/app/modules/profile/MyAnswersTable';
 
 interface APIResponse {
@@ -11,8 +11,6 @@ interface APIResponse {
         summarizedStandardResults: SummarizedStandardResult[];
         averageTotalWeightage: number;
         averageObtainedWeightage: number;
-        classroomName: string;
-        bestPerformingStandard: BestPerformingStandard;
     };
     message?: string;
 }
@@ -24,21 +22,19 @@ interface SummarizedStandardResult {
     obtainedWeightage: number;
 }
 
-interface BestPerformingStandard {
-    standardId: string;
-    standardName: string;
-    obtainedWeightage: number;
-}
-
 async function Coursespage({ params }: { params: { id: string } }) {
     const data: Session | null = await getServerSession(options);
 
     if (data) {
         try {
-            const response = await getStudentProfileSummarizedStandardsAPI({
+            const response = await getSummarizedStudentStandardsForTeacherAPI({
                 accessToken: data?.user?.accessToken,
                 studentId: params.id,
             });
+
+            if (response.status === 404) {
+                throw new Error('Student not found');
+            }
 
             const APIResponse: APIResponse = await response.json();
 
