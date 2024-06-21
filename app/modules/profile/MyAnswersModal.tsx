@@ -202,6 +202,8 @@ function MyAnswersModal({
                                         ?.answerURL as string
                                 )}`}
                                 className="w-full h-full"
+                                width="400"
+                                height="315"
                             />
                         )}
                         {typeof test.resource?.AssessmentResourcesDetail
