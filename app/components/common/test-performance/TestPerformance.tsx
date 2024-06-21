@@ -145,12 +145,14 @@ function TestPerformance({
                 <PageLoader />
             ) : (
                 <div>
-                    <Searchbar
-                        headerText={data?.user?.name || ''}
-                        tagline={data?.user?.email || ''}
-                        isShowBackArrow
-                        onBackClick={back}
-                    />
+                    {isShownFromStudent && (
+                        <Searchbar
+                            headerText={data?.user?.name || ''}
+                            tagline={data?.user?.email || ''}
+                            isShowBackArrow
+                            onBackClick={back}
+                        />
+                    )}
                     <div className="border rounded-lg p-5 mt-10">
                         <div className="flex flex-col mb-4 lg:flex-row justify-between items-center">
                             <h1 className="text-2xl lg:text-3xl font-semibold mb-4 lg:mb-0">

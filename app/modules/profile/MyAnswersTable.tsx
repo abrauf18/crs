@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -38,9 +38,10 @@ const poppins = Poppins({
 });
 function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
     const { push } = useRouter();
+    const path = usePathname();
 
     const handleClick = (id: string) => {
-        push(`/student/profile/${id}`);
+        push(`${path}/${id}`);
     };
 
     return (

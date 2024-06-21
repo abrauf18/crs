@@ -164,7 +164,7 @@ function TestPerformanceTable({
                                                 setCurrentTest({
                                                     showModal: true,
                                                     testDetails,
-                                                }); // Assuming you want to use the same state for simplicity
+                                                });
                                             }
                                         }}
                                     >
@@ -193,14 +193,14 @@ function TestPerformanceTable({
             )}
 
             {currentTest.showModal && isShownFromTeacher && (
-                <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[30%]">
                     <TestReportModal
                         onClose={() =>
                             setCurrentTest({
                                 showModal: false,
                             })
                         }
-                        test={currentTest.testDetails}
+                        test={currentTest.testDetails!}
                     />
                 </div>
             )}
