@@ -84,7 +84,7 @@ function TestReportModal({
                                 {test.resource.name}
                             </h3>
                             <p className="text-sm text-dark-gray mb-2">
-                                My Answer&apos;s Report
+                                Student&apos;s Answer Report
                             </p>
                         </div>
                     </div>
@@ -148,6 +148,26 @@ function TestReportModal({
                                         {question.answers[0]?.answer ||
                                             'No answer provided'}
                                     </p>
+                                    <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                                        {question?.answers[0] ? (
+                                            question.answers[0]
+                                                .obtainedMarks === -1 ? (
+                                                'Not Marked'
+                                            ) : (
+                                                <>
+                                                    Total Marks:{' '}
+                                                    <span className="text-primary-color">
+                                                        {
+                                                            question.answers[0]
+                                                                .obtainedMarks
+                                                        }
+                                                    </span>
+                                                </>
+                                            )
+                                        ) : (
+                                            'Not Answered'
+                                        )}
+                                    </p>
                                     <Controller
                                         name={question.id}
                                         control={control}
@@ -155,13 +175,29 @@ function TestReportModal({
                                             question.answers[0]
                                                 ?.obtainedMarks || 0
                                         }
-                                        render={({ field }) => (
-                                            <input
-                                                type="number"
-                                                {...field}
-                                                className="mt-2 border p-2 rounded-lg w-full"
-                                                placeholder="Assign Marks"
-                                            />
+                                        rules={{
+                                            required: 'This field is required',
+                                            validate: (value) =>
+                                                value >= 0 ||
+                                                'Value must be greater than or equal to 0',
+                                        }}
+                                        render={({ field, fieldState }) => (
+                                            <div>
+                                                <input
+                                                    type="number"
+                                                    {...field}
+                                                    className="mt-2 border p-2 rounded-lg w-full"
+                                                    placeholder="Assign Marks"
+                                                />
+                                                {fieldState.error && (
+                                                    <p className="text-red-500 text-xs mt-2">
+                                                        {
+                                                            fieldState.error
+                                                                .message
+                                                        }
+                                                    </p>
+                                                )}
+                                            </div>
                                         )}
                                     />
                                 </div>
@@ -200,25 +236,6 @@ function TestReportModal({
                                         </p>
                                     )
                                 )}
-                            <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
-                                {question?.answers[0] ? (
-                                    question.answers[0].obtainedMarks === -1 ? (
-                                        'Not Marked'
-                                    ) : (
-                                        <>
-                                            Marked:{' '}
-                                            <span className="text-primary-color">
-                                                {
-                                                    question.answers[0]
-                                                        .obtainedMarks
-                                                }
-                                            </span>
-                                        </>
-                                    )
-                                ) : (
-                                    'Not Answered'
-                                )}
-                            </p>
 
                             <hr className="my-5" />
                         </div>
@@ -239,25 +256,6 @@ function TestReportModal({
                                 loading="lazy"
                             />
                         )}
-                        <div className="mt-4">
-                            <Controller
-                                name={`${test.resource?.AssessmentResourcesDetail.id}`}
-                                control={control}
-                                defaultValue={
-                                    test.resource?.AssessmentResourcesDetail
-                                        ?.assessmentAnswers[0]?.obtainedMarks ||
-                                    0
-                                }
-                                render={({ field }) => (
-                                    <input
-                                        type="number"
-                                        {...field}
-                                        className="border p-2 rounded-lg w-full"
-                                        placeholder="Assign Marks"
-                                    />
-                                )}
-                            />
-                        </div>
                         {typeof test.resource?.AssessmentResourcesDetail
                             ?.assessmentAnswers[0] !== 'undefined' ? (
                             test.resource?.AssessmentResourcesDetail
@@ -283,6 +281,38 @@ function TestReportModal({
                                 Not Answered
                             </p>
                         )}
+                        <div className="mt-4">
+                            <Controller
+                                name={`${test.resource?.AssessmentResourcesDetail.id}`}
+                                control={control}
+                                defaultValue={
+                                    test.resource?.AssessmentResourcesDetail
+                                        ?.assessmentAnswers[0]?.obtainedMarks ||
+                                    0
+                                }
+                                rules={{
+                                    required: 'This field is required',
+                                    validate: (value) =>
+                                        value >= 0 ||
+                                        'Value must be greater than or equal to 0',
+                                }}
+                                render={({ field, fieldState }) => (
+                                    <div>
+                                        <input
+                                            type="number"
+                                            {...field}
+                                            className="border p-2 rounded-lg w-full"
+                                            placeholder="Assign Marks"
+                                        />
+                                        {fieldState.error && (
+                                            <p className="text-red-500 text-xs mt-2">
+                                                {fieldState.error.message}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                            />
+                        </div>
                     </div>
                 ) : null}
                 <ModalFooter text="Save" />
