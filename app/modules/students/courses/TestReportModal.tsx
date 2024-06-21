@@ -149,24 +149,10 @@ function TestReportModal({
                                             'No answer provided'}
                                     </p>
                                     <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
-                                        {question?.answers[0] ? (
-                                            question.answers[0]
-                                                .obtainedMarks === -1 ? (
-                                                'Not Marked'
-                                            ) : (
-                                                <>
-                                                    Total Marks:{' '}
-                                                    <span className="text-primary-color">
-                                                        {
-                                                            question.answers[0]
-                                                                .obtainedMarks
-                                                        }
-                                                    </span>
-                                                </>
-                                            )
-                                        ) : (
-                                            'Not Answered'
-                                        )}
+                                        Total Marks:{' '}
+                                        <span className="text-primary-color">
+                                            {question?.totalMarks || 0}
+                                        </span>
                                     </p>
                                     <Controller
                                         name={question.id}
@@ -256,29 +242,13 @@ function TestReportModal({
                                 loading="lazy"
                             />
                         )}
-                        {typeof test.resource?.AssessmentResourcesDetail
-                            ?.assessmentAnswers[0] !== 'undefined' ? (
-                            test.resource?.AssessmentResourcesDetail
-                                ?.assessmentAnswers[0]?.obtainedMarks === -1 ? (
-                                <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
-                                    Not Marked
-                                </p>
-                            ) : (
-                                <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
-                                    Marked:{' '}
-                                    <span className="text-primary-color">
-                                        {
-                                            test.resource
-                                                ?.AssessmentResourcesDetail
-                                                ?.assessmentAnswers[0]
-                                                ?.obtainedMarks
-                                        }
-                                    </span>
-                                </p>
-                            )
-                        ) : (
+                        {test.resource?.AssessmentResourcesDetail && (
                             <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
-                                Not Answered
+                                Total Marks:{' '}
+                                <span className="text-primary-color">
+                                    {test.resource?.AssessmentResourcesDetail
+                                        ?.totalMarks || 0}
+                                </span>
                             </p>
                         )}
                         <div className="mt-4">
