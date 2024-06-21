@@ -10,6 +10,7 @@ function EditAssignmentPage() {
             name=""
             canWrite={false}
             deadline=""
+            standardId=""
         />
     );
 }

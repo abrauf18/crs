@@ -1,5 +1,6 @@
 import React from 'react';
 import Filters from '@/app/components/common/Filters';
+import { StudentProfileResourceType } from '@/lib/utils';
 import Tabs from '@/app/components/common/test-performance/Tabs';
 import PerformanceCard, { PerformanceCardInterface } from './PerformanceCard';
 
@@ -62,7 +63,14 @@ function CoursePerformance() {
                 text="Course Performance - Coronavirus"
                 secondButtonText="Student"
             />
-            <Tabs />
+            <Tabs
+                activeTab=""
+                setActiveTabLocal={() => {}}
+                tabOptions={[
+                    StudentProfileResourceType.VIDEO,
+                    StudentProfileResourceType.ASSESSMENT,
+                ]}
+            />
             <p className="text-dark-gray font-medium text-lg mt-5">
                 <span className="font-semibold text-black">27</span> Test
                 Results

@@ -135,7 +135,7 @@ function TestPerformance({
 }) {
     const { back } = useRouter();
     const { data, status } = useSession();
-    const [activeTab, setActiveTabLocal] = useState<StudentProfileResourceType>(
+    const [activeTab, setActiveTabLocal] = useState<string>(
         StudentProfileResourceType.VIDEO
     );
 
@@ -177,6 +177,10 @@ function TestPerformance({
                         <Tabs
                             activeTab={activeTab}
                             setActiveTabLocal={setActiveTabLocal}
+                            tabOptions={[
+                                StudentProfileResourceType.VIDEO,
+                                StudentProfileResourceType.ASSESSMENT,
+                            ]}
                         />
                         <TestPerformanceTable
                             test={APIdata.dailyUploads}

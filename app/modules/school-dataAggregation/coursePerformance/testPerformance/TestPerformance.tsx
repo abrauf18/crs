@@ -1,8 +1,8 @@
-import { LucideMoveUpRight } from 'lucide-react';
 import React from 'react';
-import StatsTable, { StatsInterface } from '@/app/components/common/StatsTable';
+import { LucideMoveUpRight } from 'lucide-react';
+import { StudentProfileResourceType } from '@/lib/utils';
 import Tabs from '@/app/components/common/test-performance/Tabs';
-
+import StatsTable, { StatsInterface } from '@/app/components/common/StatsTable';
 import TestDetailTable, { TestDetailInterface } from './TestDetailTable';
 
 function TestPerformance() {
@@ -148,7 +148,14 @@ function TestPerformance() {
                         <span className="ml-1">Overall Performance</span>
                     </div>
                 </div>
-                <Tabs />
+                <Tabs
+                    activeTab=""
+                    setActiveTabLocal={() => {}}
+                    tabOptions={[
+                        StudentProfileResourceType.VIDEO,
+                        StudentProfileResourceType.ASSESSMENT,
+                    ]}
+                />
                 <div className="rounded-xl border mt-5 py-3 md:px-6 mobile:px-3">
                     <StatsTable statsList={StatsList} />
                 </div>

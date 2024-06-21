@@ -1,45 +1,36 @@
 'use client';
 
 import React from 'react';
-import { StudentProfileResourceType } from '@/lib/utils';
 
 function Tabs({
     activeTab,
     setActiveTabLocal,
+    tabOptions,
 }: {
-    activeTab: StudentProfileResourceType;
-    setActiveTabLocal: (tab: StudentProfileResourceType) => void;
+    activeTab: string;
+    setActiveTabLocal: (tab: string) => void;
+    tabOptions: string[];
 }) {
-    const handleTabClick = (tab: StudentProfileResourceType) => {
+    const handleTabClick = (tab: string) => {
         setActiveTabLocal(tab);
     };
 
     return (
         <div className="flex space-x-3">
-            <button
-                type="button"
-                className={`py-2 px-4 border-2 rounded-xl ${
-                    activeTab === StudentProfileResourceType.VIDEO
-                        ? ' border-primary-color  bg-orange-50'
-                        : ''
-                }`}
-                onClick={() => handleTabClick(StudentProfileResourceType.VIDEO)}
-            >
-                {StudentProfileResourceType.VIDEO}
-            </button>
-            <button
-                type="button"
-                className={`py-2 px-4 border-2 rounded-xl ${
-                    activeTab === StudentProfileResourceType.ASSESSMENT
-                        ? ' border-primary-color  bg-orange-50'
-                        : ''
-                }`}
-                onClick={() =>
-                    handleTabClick(StudentProfileResourceType.ASSESSMENT)
-                }
-            >
-                {StudentProfileResourceType.ASSESSMENT}
-            </button>
+            {tabOptions.map((tab) => (
+                <button
+                    key={tab}
+                    type="button"
+                    className={`py-2 px-4 border-2 rounded-xl ${
+                        activeTab === tab
+                            ? 'border-primary-color bg-orange-50'
+                            : ''
+                    }`}
+                    onClick={() => handleTabClick(tab)}
+                >
+                    {tab}
+                </button>
+            ))}
         </div>
     );
 }

@@ -23,7 +23,7 @@ export interface TestRecordInterface {
 
 interface TestPerformanceProp {
     test: DailyUpload[];
-    activeTab: StudentProfileResourceType;
+    activeTab: string;
     fontSize?: string;
     isShownFromStudent?: boolean;
     isShownFromTeacher?: boolean;
