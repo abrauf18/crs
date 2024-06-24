@@ -1,10 +1,9 @@
 import React from 'react';
 import { Session, getServerSession } from 'next-auth';
-import TestPerformance from '@/app/components/common/test-performance/TestPerformance';
-import MyAnswersModal from '@/app/modules/profile/MyAnswersModal';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { getStudentProfileStandardResultsAPI } from '@/app/api/student';
+import TestPerformance from '@/app/components/common/test-performance/TestPerformance';
 
 interface APIResponse {
     status: string;
@@ -93,9 +92,6 @@ async function Page({ params }: { params: { id: string } }) {
                             isShownFromStudent
                             APIdata={APIResponse?.data!}
                         />
-                        {/* <div className="absolute right-0 top-0 z-50  text-sm  lg:w-[30%]">
-                            <MyAnswersModal />
-                        </div> */}
                     </section>
                 );
             }

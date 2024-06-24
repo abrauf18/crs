@@ -1,9 +1,9 @@
 import React from 'react';
 import { Session, getServerSession } from 'next-auth';
-import TestPerformance from '@/app/components/common/test-performance/TestPerformance';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { getStudentProfileStandardResultsAPI } from '@/app/api/student';
+import TestPerformance from '@/app/components/common/test-performance/TestPerformance';
 
 interface APIResponse {
     status: string;

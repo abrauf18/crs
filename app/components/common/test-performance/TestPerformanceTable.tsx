@@ -195,12 +195,12 @@ function TestPerformanceTable({
             {currentTest.showModal && isShownFromTeacher && (
                 <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[30%]">
                     <TestReportModal
+                        test={currentTest.testDetails!}
                         onClose={() =>
                             setCurrentTest({
                                 showModal: false,
                             })
                         }
-                        test={currentTest.testDetails!}
                     />
                 </div>
             )}

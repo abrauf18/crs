@@ -7,10 +7,8 @@ import { LucideMoveUpRight } from 'lucide-react';
 import { StudentProfileResourceType } from '@/lib/utils';
 import Searchbar from '@/app/components/common/Searchbar';
 import Tabs from './Tabs';
-import TestPerformanceTable, {
-    TestRecordInterface,
-} from './TestPerformanceTable';
 import PageLoader from '../PageLoader';
+import TestPerformanceTable from './TestPerformanceTable';
 
 interface CourseData {
     id: string;
@@ -72,57 +70,6 @@ interface AssessmentAnswer {
     obtainedMarks: number;
     answerURL: string;
 }
-
-// export const TestRecord: TestRecordInterface[] = [
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Wrong',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Wrong',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Wrong',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-// ];
 
 function TestPerformance({
     isShownFromStudent,
