@@ -1,7 +1,14 @@
-import React from 'react';
+'use client';
+
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import { Check, X } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
+import action from '@/app/action';
 import ModalFooter from '@/app/components/common/ModalFooter';
+import { assignMarksToStudentAnswerAPI } from '@/app/api/student';
 
 interface DailyUpload {
     id: string;
@@ -65,10 +72,44 @@ function TestReportModal({
     onClose: () => void;
     test: DailyUpload;
 }) {
-    const { control, handleSubmit } = useForm<FormData>();
+    const { data } = useSession();
+    const pathname = usePathname();
+    const studentId = pathname.split('/')[3];
 
-    const onSubmit = (data: FormData) => {
-        console.log(data);
+    const { control, handleSubmit } = useForm<FormData>();
+    const [buttonLoading, setButtonLoading] = useState<boolean>(false);
+
+    const onSubmit = async (formData: FormData) => {
+        if (!data) {
+            return;
+        }
+
+        try {
+            setButtonLoading(true);
+            const response = await assignMarksToStudentAnswerAPI({
+                studentId,
+                accessToken: data?.user?.accessToken || '',
+                targetType: test.resource?.video
+                    ? 'videoQuestion'
+                    : 'assessmentResource',
+                idsAndMarks: formData,
+            });
+            if (response.status !== 200) {
+                toast.error(
+                    response?.data?.message ||
+                        'An Error occured while assigning marks'
+                );
+            }
+            await action('getStudentProfileStandardResults');
+            toast.success(`Marks assigned successfully`);
+        } catch (error: any) {
+            toast.error(
+                error?.response?.data?.message ||
+                    'An Error occured while assigning marks'
+            );
+        } finally {
+            setButtonLoading(false);
+        }
     };
 
     return (
@@ -285,7 +326,7 @@ function TestReportModal({
                         </div>
                     </div>
                 ) : null}
-                <ModalFooter text="Save" />
+                <ModalFooter text="Save" loading={buttonLoading}/>
             </form>
         </section>
     );

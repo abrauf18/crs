@@ -332,3 +332,29 @@ export const getStudentNameEmailForTeacherAPI = async ({
 
     return result;
 };
+
+export const assignMarksToStudentAnswerAPI = async ({
+    accessToken,
+    studentId,
+    targetType,
+    idsAndMarks,
+}: {
+    accessToken: string;
+    studentId: string;
+    targetType: string;
+    idsAndMarks: {
+        [key: string]: number;
+    };
+}) => {
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/assignMarksToStudentAnswer`,
+        {
+            accessToken,
+            studentId,
+            targetType,
+            idsAndMarks,
+        }
+    );
+
+    return result;
+};
