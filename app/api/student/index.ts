@@ -358,3 +358,26 @@ export const assignMarksToStudentAnswerAPI = async ({
 
     return result;
 };
+
+export const getSummarizedStudentForTeacherAPI = async ({
+    accessToken,
+    studentId,
+}: {
+    accessToken: string;
+    studentId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getSummarizedStudentForTeacher`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+            },
+            next: {
+                tags: ['getSummarizedStudentForTeacher'],
+            },
+        }
+    );
+
+    return result;
+};

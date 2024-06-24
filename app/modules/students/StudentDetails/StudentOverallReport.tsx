@@ -7,6 +7,21 @@ import StudentsRecordTable, {
     StudentRecordInterface,
 } from '../StudentsRecordTable';
 
+interface SummarizedStandardResult {
+    standardId: string;
+    standardName: string;
+    totalWeightage: number;
+    obtainedWeightage: number;
+}
+
+interface DailyProgress {
+    id: string;
+    classroomStudentId: string;
+    obtainedWeightage: number;
+    totalWeightage: number;
+    date: string;
+}
+
 function StudentOverallReport({
     studentRecord,
 }: {

@@ -1,14 +1,22 @@
 import React from 'react';
 import Image from 'next/image';
-import Avatar from '@/app/assets/images/UserImage.svg';
 
-function StudentProfile() {
+interface Student {
+    name: string;
+    email: string;
+    image: string;
+    classroomName: string;
+    averageTotalWeightage: number;
+    averageObtainedWeightage: number;
+}
+
+function StudentProfile({ student }: { student: Student }) {
     return (
         <>
             {/* student profile */}
             <section className="flex mobile:flex-col mt-8 flex-row lg:items-center justify-between">
                 <h1 className="font-semibold text-xl mb-4 lg:mb-0 lg:mr-4">
-                    Kathryn Murphy Overview
+                    {student.name}
                 </h1>
 
                 <div className="mobile:w-full mobile:justify-end mobile:flex">
@@ -18,13 +26,12 @@ function StudentProfile() {
                 </div>
             </section>
             <div className="flex flex-col lg:flex-row items-center shadow-[0px_4px_20px_0px_rgb(0,0,0,0.05)] rounded-lg py-5 mt-8">
-                {/* Image */}
                 <div className="ml-0 lg:ml-8 mb-6 lg:mb-0">
                     <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
                         <div className="border border-orange-200 rounded-full w-fit flex items-center p-3">
                             <div className="border border-primary-color rounded-full w-fit flex items-center p-2">
                                 <Image
-                                    src={Avatar}
+                                    src={student.image}
                                     alt="Avatar"
                                     className="rounded-full"
                                     width={150}
@@ -42,7 +49,7 @@ function StudentProfile() {
                         <div>
                             <h1 className="text-dark-gray font-medium">Name</h1>
                             <h1 className="font-medium text-lg">
-                                Kathryn Murphy
+                                {student.name}
                             </h1>
                         </div>
                         <div className="mt-4">
@@ -50,7 +57,7 @@ function StudentProfile() {
                                 Email
                             </h1>
                             <h1 className="font-medium text-lg">
-                                nathan.roberts@example.com
+                                {student.email}
                             </h1>
                         </div>
                     </div>
@@ -60,14 +67,17 @@ function StudentProfile() {
                                 Grade
                             </h1>
                             <h1 className="font-semibold text-lg">
-                                10th Grade
+                                {student.classroomName}
                             </h1>
                         </div>
                         <div className="mt-4">
                             <h1 className="text-dark-gray font-medium">
                                 Overall Performance
                             </h1>
-                            <h1 className="font-semibold text-lg">75%</h1>
+                            <h1 className="font-semibold text-lg">
+                                {`${student.averageObtainedWeightage} of ${student.averageTotalWeightage} `}{' '}
+                                %
+                            </h1>
                         </div>
                     </div>
                 </div>
