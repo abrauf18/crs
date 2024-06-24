@@ -1,66 +1,56 @@
-'use client';
-
-import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import React from 'react';
+import { Session, getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
 import Searchbar from '@/app/components/common/Searchbar';
 import { getStudentNameEmailForTeacherAPI } from '@/app/api/student';
-import { toast } from 'react-toastify';
+import UnhandledError from '@/app/modules/error/UnhandledError';
 
-export default function StandardLayout({
+export default async function StandardLayout({
     children,
+    params,
 }: {
     children: React.ReactNode;
+    params: { id: string };
 }) {
-    const { data } = useSession();
-    const { back } = useRouter();
-    const pathname = usePathname();
-    const [studentInfo, setStudentInfo] = useState({ name: '', email: '' });
+    const data: Session | null = await getServerSession(options);
+    let studentName = '';
+    let studentEmail = '';
+    const studentId = params.id;
 
-    const extractStudentId = (path: string) => {
-        const parts = path.split('/');
-        const studentId = parts[3];
-        return studentId;
-    };
-    const studentId = extractStudentId(pathname);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (studentId && data && !studentInfo.name) {
-                try {
-                    const studentdata = await getStudentNameEmailForTeacherAPI({
-                        accessToken: data?.user?.accessToken || '',
-                        studentId,
-                    });
-                    if (!studentdata.ok) {
-                        const errorData = await studentdata.json();
-                        throw new Error(
-                            errorData?.message ??
-                                'An error occurred while fetching video data'
-                        );
-                    }
-                    const studentResponseData = await studentdata.json();
-                    const { name, email } = studentResponseData.data.student;
-                    setStudentInfo({ name, email });
-                } catch (error: any) {
-                    toast.error(
-                        error?.message ??
-                            'An error occurred while fetching name of student'
-                    );
-                }
+    if (data) {
+        try {
+            const studentdata = await getStudentNameEmailForTeacherAPI({
+                accessToken: data?.user?.accessToken || '',
+                studentId,
+            });
+            if (!studentdata.ok) {
+                const errorData = await studentdata.json();
+                throw new Error(
+                    errorData?.message ??
+                        'An error occurred while fetching name of student'
+                );
             }
-        };
-
-        fetchData();
-    }, [studentId, data]);
-
+            const studentResponseData = await studentdata.json();
+            const { name, email } = studentResponseData.data.student;
+            studentName = name;
+            studentEmail = email;
+        } catch (error: any) {
+            return (
+                <UnhandledError
+                    error={{
+                        message: error?.message,
+                        name: error?.name,
+                    }}
+                />
+            );
+        }
+    }
     return (
         <section>
             <Searchbar
-                headerText={studentInfo.name || ''}
-                tagline={studentInfo.email || ''}
-                isShowBackArrow
-                onBackClick={back}
+                headerText={studentName || ''}
+                tagline={studentEmail || ''}
+                isShowBackArrow={false}
             />
             {children}
         </section>
