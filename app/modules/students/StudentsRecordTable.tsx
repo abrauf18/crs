@@ -13,15 +13,15 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 
-export interface StudentRecordInterface {
-    id: number;
-    testName: string;
-    result: string;
-    score: string;
+interface SummarizedStandardResult {
+    standardId: string;
+    standardName: string;
+    totalWeightage: number;
+    obtainedWeightage: number;
 }
 
 interface StudentsRecordProp {
-    students: StudentRecordInterface[];
+    students: SummarizedStandardResult[];
     fontSize?: string;
 }
 
@@ -32,7 +32,7 @@ const poppins = Poppins({
 function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
     const { push } = useRouter();
 
-    const handleClick = (id: number) => {
+    const handleClick = (id: string) => {
         push(`/teacher/students/${id}/courses`);
     };
 
@@ -48,15 +48,14 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
                         SNO.
                     </TableHead>
                     <TableHead className=" text-dark-gray font-semibold text-sm text-center">
-                        Test Name
+                        Standard Name
                     </TableHead>
                     <TableHead className="text-dark-gray font-semibold text-sm text-center">
-                        Result
+                        Total Weightage
                     </TableHead>
                     <TableHead className="text-dark-gray font-semibold text-sm text-center">
-                        Score
+                        Obtained Weightage
                     </TableHead>
-
                     <TableHead className="text-dark-gray font-semibold text-sm text-center">
                         Action
                     </TableHead>
@@ -64,27 +63,26 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
             </TableHeader>
             <TableBody>
                 {students.map((resource, index) => (
-                    <TableRow className="border-none" key={resource.id}>
+                    <TableRow className="border-none" key={resource.standardId}>
                         <TableCell className="font-normal text-sm text-center">
                             <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
                                 {index + 1}
                             </span>
                         </TableCell>
                         <TableCell className="text-dark-gray font-normal text-sm text-center">
-                            <span>{resource.testName}</span>
+                            <span>{resource.standardName}</span>
                         </TableCell>
 
                         <TableCell className="text-dark-gray font-normal text-sm text-center">
-                            {resource.result}
+                            {resource.totalWeightage}%
                         </TableCell>
                         <TableCell className="text-dark-gray font-normal text-sm text-center">
-                            {resource.score}%
+                            {resource.obtainedWeightage}%
                         </TableCell>
-
                         <TableCell className="flex justify-center items-center text-center">
                             <div
                                 className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer ml-5"
-                                onClick={() => handleClick(index)}
+                                onClick={() => handleClick(resource.standardId)}
                             >
                                 <Eye color="#F59A3B" width={18} height={18} />
                             </div>

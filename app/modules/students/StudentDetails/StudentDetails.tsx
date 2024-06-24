@@ -1,5 +1,4 @@
 import React from 'react';
-import { StudentRecordInterface } from '../StudentsRecordTable';
 import StudentProfile from './StudentProfile';
 import StudentOverallReport from './StudentOverallReport';
 
@@ -33,49 +32,13 @@ interface DailyProgress {
     date: string;
 }
 
-export const studentRecord: StudentRecordInterface[] = [
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-];
 function StudentDetails({ APIdata }: { APIdata: Data }) {
     return (
         <section>
-            <StudentProfile student={APIdata.student}/>
-            <StudentOverallReport studentRecord={studentRecord} />
+            <StudentProfile student={APIdata.student} />
+            <StudentOverallReport
+                studentRecord={APIdata.summarizedStandardResults}
+            />
         </section>
     );
 }
