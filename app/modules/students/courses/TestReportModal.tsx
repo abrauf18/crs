@@ -4,11 +4,13 @@ import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { Check, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import action from '@/app/action';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { assignMarksToStudentAnswerAPI } from '@/app/api/student';
+import { Button } from '@/app/components/ui/button';
+import { Label } from '@radix-ui/react-label';
 
 interface DailyUpload {
     id: string;
@@ -75,8 +77,9 @@ function TestReportModal({
     const { data } = useSession();
     const pathname = usePathname();
     const studentId = pathname.split('/')[3];
-
     const { control, handleSubmit } = useForm<FormData>();
+    const router = useRouter();
+
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
     const onSubmit = async (formData: FormData) => {
@@ -112,11 +115,22 @@ function TestReportModal({
         }
     };
 
+    const handleViewAnswer = () => {
+        const assesmentResourceId =
+            test.resource?.AssessmentResourcesDetail?.id;
+        if (assesmentResourceId) {
+            return router.push(
+                `/teacher/students/${studentId}/view-answer?assesmentResourceId=${assesmentResourceId}&studentId=${studentId}`
+            );
+        }
+        return toast.error('No answer URL available.');
+    };
+
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg items-center">
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="h-[100%] overflow-y-auto w-full px-6"
+                className="h-[90%] overflow-y-auto w-full px-6"
             >
                 <div className="flex justify-between items-center">
                     <div className="flex my-7">
@@ -269,6 +283,13 @@ function TestReportModal({
                     ))}
                 {test.resource?.AssessmentResourcesDetail ? (
                     <div>
+                        <Button
+                            className="mb-2"
+                            type="button"
+                            onClick={handleViewAnswer}
+                        >
+                            View Answer
+                        </Button>
                         {test.resource?.AssessmentResourcesDetail
                             ?.assessmentAnswers[0]?.answerURL && (
                             <iframe
@@ -292,7 +313,7 @@ function TestReportModal({
                                 </span>
                             </p>
                         )}
-                        <div className="mt-4">
+                        <div className="mt-2">
                             <Controller
                                 name={`${test.resource?.AssessmentResourcesDetail.id}`}
                                 control={control}
@@ -309,6 +330,9 @@ function TestReportModal({
                                 }}
                                 render={({ field, fieldState }) => (
                                     <div>
+                                        <Label className="text-md mb-1">
+                                            Marks Obtained
+                                        </Label>
                                         <input
                                             type="number"
                                             {...field}
@@ -326,7 +350,7 @@ function TestReportModal({
                         </div>
                     </div>
                 ) : null}
-                <ModalFooter text="Save" loading={buttonLoading}/>
+                <ModalFooter text="Save" loading={buttonLoading} />
             </form>
         </section>
     );
