@@ -74,12 +74,11 @@ function TestReportModal({
     onClose: () => void;
     test: DailyUpload;
 }) {
+    const router = useRouter();
     const { data } = useSession();
     const pathname = usePathname();
     const studentId = pathname.split('/')[3];
     const { control, handleSubmit } = useForm<FormData>();
-    const router = useRouter();
-
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
     const onSubmit = async (formData: FormData) => {

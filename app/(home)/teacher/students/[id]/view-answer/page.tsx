@@ -24,7 +24,13 @@ async function CheckResourcePage({
             if (APIResponse.status !== 'error') {
                 return (
                     <section>
-                        <CheckResource data={APIResponse.data} />
+                        <CheckResource
+                            APIdata={APIResponse.data}
+                            studentId={searchParams.studentId}
+                            assesmentResourceId={
+                                searchParams.assesmentResourceId
+                            }
+                        />
                     </section>
                 );
             }
