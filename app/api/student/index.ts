@@ -358,3 +358,29 @@ export const assignMarksToStudentAnswerAPI = async ({
 
     return result;
 };
+
+export const getStudentAssessmentAnswerAPI = async ({
+    accessToken,
+    studentId,
+    assesmentResourceId,
+}: {
+    accessToken: string;
+    studentId: string;
+    assesmentResourceId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getStudentAssessmentAnswer`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                studentid: studentId,
+                assessmentdetailid: assesmentResourceId,
+            },
+            next: {
+                tags: ['getStudentAssessmentAnswer'],
+            },
+        }
+    );
+
+    return result;
+};
