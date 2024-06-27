@@ -41,8 +41,8 @@ interface UploadResourceModalProp {
 }
 
 const uploadOptions = [
-    { label: 'file', value: 'file' },
-    { label: 'youtube', value: 'youtube' },
+    { label: 'file', value: 'File' },
+    { label: 'youtube', value: 'Youtube' },
 ];
 
 function UploadResourceModal({
@@ -222,14 +222,14 @@ function UploadResourceModal({
     };
 
     return (
-        <section className="w-full bg-white h-screen py-4  shadow-lg">
+        <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-auto">
             <FormProvider {...methods}>
                 <form
                     onSubmit={methods.handleSubmit(
                         handleUpload as SubmitHandler<FieldValues>
                     )}
                 >
-                    <div className="lg:h-[41rem] md:h-[39rem] h-[33rem] overflow-y-auto w-full px-6">
+                    <div className="px-6 mb-24">
                         <ModalHeader
                             headerText={{
                                 heading: headerText,
@@ -300,7 +300,7 @@ function UploadResourceModal({
                         <div className="flex flex-col space-y-1 mt-4">
                             <Label
                                 htmlFor="selectedUploadOption"
-                                className="font-semibold mt-3"
+                                className="font-semibold mt-3 text-md"
                             >
                                 Upload Type
                             </Label>
@@ -367,7 +367,9 @@ function UploadResourceModal({
                             </div>
                         )}
                     </div>
-                    <ModalFooter text={buttonText} loading={loading} />
+                    <div className="absolute bottom-0 w-full">
+                        <ModalFooter text={buttonText} loading={loading} />
+                    </div>
                 </form>
             </FormProvider>
         </section>

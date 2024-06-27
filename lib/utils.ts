@@ -64,7 +64,7 @@ export const ResourceToPath = {
 };
 
 export const PathToResource = {
-    "Total-Videos": ResourceType.VIDEO,
+    'Total-Videos': ResourceType.VIDEO,
     Slideshows: ResourceType.SLIDESHOW,
     Worksheets: ResourceType.WORKSHEET,
     'Exit-Ticket-Test': ResourceType.EXIT_TICKET_TEST,
@@ -110,12 +110,12 @@ export interface Resource {
 }
 
 export interface VideoSummary {
-    id: string,
-    resourceId: string,
-    thumbnailURL: string,
-    name: string,
-    questionCountNumber: number,
-    topicsCount: number
+    id: string;
+    resourceId: string;
+    thumbnailURL: string;
+    name: string;
+    questionCountNumber: number;
+    topicsCount: number;
 }
 
 export const resourceDropDownOptions = [
@@ -153,49 +153,48 @@ export const resourceTypeToIcon = (resourceType: ResourceType) => {
             break;
     }
     return Icon;
-}
+};
 
 export const DEFAULT_VIDEO = {
-    id: "",
-    resourceId: "",
-    thumbnailURL: "",
-    createdAt: "",
-    updatedAt: "",
-    name: "",
-    videoUrl:"",
+    id: '',
+    resourceId: '',
+    thumbnailURL: '',
+    createdAt: '',
+    updatedAt: '',
+    name: '',
+    videoUrl: '',
     questions: [],
-    topics: {}
-}
+    topics: {},
+};
 
 export interface Video {
-    id: string,
-    resourceId: string,
-    thumbnailURL: string,
-    createdAt: string,
-    updatedAt: string,
-    name: string,
-    videoUrl: string,
+    id: string;
+    resourceId: string;
+    thumbnailURL: string;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    videoUrl: string;
     questions: {
         id: string;
-        statement: string,
-        options: { [key: string]: string },
-        correctOption: string,
-        correctOptionExplanation: string,
-        totalMarks: number,
-        popUpTime: string
-    }[],
-    topics: { [key: string]: string }
-    lastSeenTime?: string
+        statement: string;
+        options: { [key: string]: string };
+        correctOption: string;
+        correctOptionExplanation: string;
+        totalMarks: number;
+        popUpTime: string;
+    }[];
+    topics: { [key: string]: string };
+    lastSeenTime?: string;
 }
 
-
 export const timeStringToSeconds = (timeString: string) => {
-    if(!timeString){
+    if (!timeString) {
         return -1;
     }
     const [hours, minutes, seconds] = timeString?.split(':');
     return parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-}
+};
 
 export const secondsToString = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
@@ -208,7 +207,7 @@ export const secondsToString = (seconds: number) => {
 
     const timeString = `${hoursString}:${minutesString}:${secondsString}`;
     return timeString;
-}
+};
 
 export interface LearningInterface {
     id: string;

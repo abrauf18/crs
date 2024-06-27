@@ -21,8 +21,8 @@ import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 const questionsTypes = [
-    { label: 'open', value: 'open' },
-    { label: 'mcq', value: 'mcq' },
+    { label: 'open', value: 'Open' },
+    { label: 'mcq', value: 'Mcq' },
 ];
 
 const answerOptions = [

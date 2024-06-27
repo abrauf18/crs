@@ -11,7 +11,9 @@ function VideoQuestion({
     setPlaying,
     handlePlayAfterQuestion,
     markQuestionAsAnswered,
+    hideButton,
 }: {
+    hideButton?: boolean;
     question: {
         id: string;
         statement: string;
@@ -38,6 +40,7 @@ function VideoQuestion({
 
     return !question.attempt ? (
         <AttempVideoQuestion
+            hideButton={hideButton}
             question={question}
             continueVideo={continueVideo}
             markQuestionAsAnswered={markQuestionAsAnswered}

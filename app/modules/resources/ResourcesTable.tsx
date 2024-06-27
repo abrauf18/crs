@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -53,6 +53,18 @@ function ResourcesTable({
     const [selectedResource, setSelectedResource] =
         useState<Resource>(DEFAULT_RESOURCE);
 
+    useEffect(() => {
+        if (isShowDialogBox) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowDialogBox]);
+
     const handleClick = (
         event: React.MouseEvent<HTMLTableCellElement, MouseEvent>
     ) => {
@@ -102,7 +114,7 @@ function ResourcesTable({
                     poppins.className
                 }`}
             >
-                <TableHeader>
+                <TableHeader className="whitespace-nowrap">
                     <TableRow>
                         <TableHead className=" text-dark-gray font-bold">
                             SNO.
@@ -113,9 +125,11 @@ function ResourcesTable({
                         <TableHead className="text-dark-gray font-bold">
                             Resource Type
                         </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
-                            Assign Topic{' '}
-                        </TableHead>
+                        {!isDashboard && (
+                            <TableHead className="text-dark-gray font-bold">
+                                Assign Topic{' '}
+                            </TableHead>
+                        )}
                         <TableHead className="text-dark-gray font-bold">
                             Action
                         </TableHead>
@@ -139,19 +153,22 @@ function ResourcesTable({
                                 </TableCell>
                                 {/* <TableCell>{resource.name}</TableCell> */}
                                 <TableCell className="text-dark-gray">
-                                    {resource.type}
+                                    {resource.type.charAt(0).toUpperCase() +
+                                        resource.type.slice(1)}
                                 </TableCell>
-                                <TableCell
-                                    className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
-                                    onClick={(
-                                        e: React.MouseEvent<
-                                            HTMLTableCellElement,
-                                            MouseEvent
-                                        >
-                                    ) => handleClick(e)}
-                                >
-                                    {resource.topic}
-                                </TableCell>
+                                {!isDashboard && (
+                                    <TableCell
+                                        className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
+                                        onClick={(
+                                            e: React.MouseEvent<
+                                                HTMLTableCellElement,
+                                                MouseEvent
+                                            >
+                                        ) => handleClick(e)}
+                                    >
+                                        {resource.topic}
+                                    </TableCell>
+                                )}
                                 <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
                                     <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
                                         <Eye

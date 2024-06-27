@@ -49,9 +49,21 @@ function Video({
         setStep(0);
     };
 
+    useEffect(() => {
+        if (isShowUploadVideoModal || isShowEditVideoModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowUploadVideoModal, isShowEditVideoModal]);
+
     return (
         <>
-            <div className="mobile:mb-4">
+            <div className="mobile:mb-4 !overflow-hidden">
                 <Filters
                     text={`${APIdata.totalVideos} Videos In Total`}
                     secondButtonText="Upload Video"

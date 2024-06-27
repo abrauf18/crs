@@ -35,7 +35,7 @@ function Card({
     const path = usePathname();
 
     return (
-        <div className="col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[163px] w-full rounded-lg border group hover:bg-orange-100 hower:border-amber-700">
+        <div className="col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[172px] w-full rounded-lg border group hover:bg-orange-100 hower:border-amber-700">
             <div className={`${iconBackgroundColour} w-10 rounded-full`}>
                 <Icon
                     width={iconWidth}

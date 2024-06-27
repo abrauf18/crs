@@ -49,8 +49,8 @@ function ProfileModal({
 }) {
     const { data } = useSession();
     const [loading, setLoading] = useState(false);
-    const [heading, setHeading] = useState(name);
-    const [tagline, setTagline] = useState(email);
+    // const [heading, setHeading] = useState(name);
+    // const [tagline, setTagline] = useState(email);
     const roleOptions: OptionsInterface[] = [
         { label: 'student', value: 'Student' },
         { label: 'teacher', value: 'Teacher' },
@@ -108,9 +108,9 @@ function ProfileModal({
 
             const { name, email, role } = formData;
 
-            // Update heading and tagline
-            setHeading(name);
-            setTagline(email);
+            // // Update heading and tagline
+            // setHeading(name);
+            // setTagline(email);
 
             // Update user profile
             await updateAnotherUserProfileAPI(
@@ -161,16 +161,11 @@ function ProfileModal({
                         onFormSubmit as SubmitHandler<FieldValues>
                     )}
                 >
-                    <div className="h-[80%] lg:h-[95%] overflow-y-auto px-6">
-                        <ModalHeader
-                            headerText={{
-                                heading,
-                                tagline,
-                            }}
-                            onClose={onClose}
-                        />
+                    <div className="px-6 mb-24">
+                        <ModalHeader onClose={onClose} />
                         <div className="flex flex-col  mobile:items-center w-full">
                             <ProfileImage
+                                isViewOnly={isViewOnly}
                                 selectedFile={selectedFile}
                                 currentImage={currentImage}
                                 handleClick={handleClick}
@@ -181,6 +176,7 @@ function ProfileModal({
                             <div className="mb-2 w-full mt-4">
                                 <Label htmlFor="name">User Name</Label>
                                 <Input
+                                    disabled={isViewOnly}
                                     name="name"
                                     placeholder="Enter Name"
                                     type="text"
@@ -196,6 +192,7 @@ function ProfileModal({
                             <div className="mb-2 w-full">
                                 <Label htmlFor="email">Email Address</Label>
                                 <Input
+                                    disabled={isViewOnly}
                                     name="email"
                                     placeholder="Enter Email"
                                     type="email"
@@ -213,24 +210,37 @@ function ProfileModal({
                                     }}
                                 />
                             </div>
-                            <div className="mb-2 w-full">
-                                <Label htmlFor="role ">Role</Label>
-                                <Select
-                                    name="role"
-                                    options={roleOptions}
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message:
-                                                validationError.REQUIRED_FIELD,
-                                        },
-                                    }}
-                                />
-                            </div>
+                            {isViewOnly ? (
+                                <div className="mb-2 w-full">
+                                    <Label htmlFor="role">Role</Label>
+                                    <Input
+                                        disabled={isViewOnly}
+                                        name="role"
+                                        type="text"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="mb-2 w-full">
+                                    <Label htmlFor="role ">Role</Label>
+                                    <Select
+                                        disabled={isViewOnly}
+                                        name="role"
+                                        additionalClasses="mt-1"
+                                        options={roleOptions}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                     {!isViewOnly && (
-                        <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between w-full py-2 gap-1 bottom-0 left-0  p-3 border bg-white">
+                        <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between w-full py-2 gap-1 absolute bottom-0 left-0  p-3 border bg-white">
                             <button
                                 type="button"
                                 onClick={handleReset}

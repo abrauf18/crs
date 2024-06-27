@@ -3,7 +3,7 @@ import React from 'react';
 function PageLoader({ additionalClasses }: { additionalClasses?: string }) {
     return (
         <div
-            className={`flex justify-center items-center h-screen gap-4 ${additionalClasses}`}
+            className={`flex justify-center items-center h-[40rem] gap-4 ${additionalClasses}`}
         >
             <div
                 className="h-12 w-12 bg-primary-color rounded-full animate-bounce"

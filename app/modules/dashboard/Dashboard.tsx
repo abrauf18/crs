@@ -17,6 +17,7 @@ import { Studentinfo } from '../students/students';
 import LearningPlanTable from './LearningPlanTable';
 
 function Dashboard({
+    name,
     isTeacher,
     AdminSummaries,
     UserAPIData,
@@ -24,6 +25,7 @@ function Dashboard({
     TeacherSummaries,
     StandardOverview,
 }: {
+    name?: string;
     isTeacher?: boolean;
     AdminSummaries?: {
         usersCount: number;
@@ -54,15 +56,13 @@ function Dashboard({
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
             <Searchbar
-                headerText="Hello John Doe!"
+                headerText={`Hello, ${
+                    name ? name.charAt(0).toUpperCase() + name.slice(1) : 'User'
+                }!`}
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
-            <div
-                className={`grid grid-col-1 sm:grid-cols-2  gap-4 mt-4 mobile:place-items-center mb-4 ${
-                    isTeacher ? 'lg:grid-cols-3' : 'lg:grid-cols-4'
-                }`}
-            >
+            <div className="grid grid-col-1 sm:grid-cols-2  gap-4 mt-4 mobile:place-items-center mb-4 lg:grid-cols-3">
                 {!isTeacher ? (
                     <>
                         <Card
@@ -89,13 +89,13 @@ function Dashboard({
                             iconBackgroundColour="bg-amber-100"
                             iconViewBox="-7 1 37 22"
                         />
-                        <Card
+                        {/* <Card
                             Icon={DataIcon}
                             cardText="Data Insights"
                             count="70%"
                             currentPath="#"
                             iconBackgroundColour="bg-orange-100"
-                        />
+                        /> */}
                     </>
                 ) : (
                     <>
@@ -133,7 +133,7 @@ function Dashboard({
                     All Users Count
                 </h3>
                 <select
-                    className="p-2 rounded-lg border"
+                    className=" select-wrapper"
                     onChange={handleChange}
                     value={currentYear}
                 >

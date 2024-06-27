@@ -44,8 +44,8 @@ type ResourceFormData = {
 };
 
 const uploadOptions = [
-    { label: 'file', value: 'file' },
-    { label: 'youtube', value: 'youtube' },
+    { label: 'file', value: 'File' },
+    { label: 'youtube', value: 'Youtube' },
 ];
 
 function UploadResourceModal({ onClose }: any) {
@@ -261,14 +261,14 @@ function UploadResourceModal({ onClose }: any) {
     const Icon = resourceTypeToIcon(resourceType);
 
     return (
-        <section className="w-full bg-white h-screen py-4 shadow-lg">
+        <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-auto">
             <FormProvider {...methods}>
                 <form
                     onSubmit={methods.handleSubmit(
                         handleUpload as SubmitHandler<FieldValues>
                     )}
                 >
-                    <div className="lg:h-[41rem] md:h-[39rem] h-[33rem] overflow-y-auto w-full px-6">
+                    <div className="px-6 mb-24">
                         <ModalHeader
                             headerText={{
                                 heading: 'Upload Resource',
@@ -286,6 +286,7 @@ function UploadResourceModal({ onClose }: any) {
                             </Label>
                             <Select
                                 name="type"
+                                additionalClasses="font-semibold text-md"
                                 options={resourceTypeOptions}
                                 rules={{
                                     required: {
@@ -495,15 +496,17 @@ function UploadResourceModal({ onClose }: any) {
                                     )}
                                 </>
                             )}
-                            <div className="p-2 rounded-lg border w-32 text-center mt-3">
-                                <button
-                                    type="button"
-                                    className="text-dark-gray text-sm"
-                                    onClick={() => setSelectedFile(null)}
-                                >
-                                    Cancel Upload
-                                </button>
-                            </div>
+                            {selectedUploadOption !== 'youtube' && (
+                                <div className="p-2 rounded-lg border w-32 text-center mt-3 cursor-pointer hover:bg-dark-gray hover:text-light-gray">
+                                    <button
+                                        type="button"
+                                        className="text-dark-gray text-sm"
+                                        onClick={() => setSelectedFile(null)}
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <ModalFooter text="Upload" loading={loading} />

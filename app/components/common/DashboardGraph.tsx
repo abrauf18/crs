@@ -81,7 +81,8 @@ export default function DashboardGraph({
             filterData.map(
                 (item: { year: number; month: number; count: number }) => ({
                     ...item,
-                    month: monthNames[item.month - 1],
+                    Month: monthNames[item.month - 1],
+                    Users: item.count,
                 })
             ),
         [filterData]
@@ -120,12 +121,12 @@ export default function DashboardGraph({
                         </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
+                    <XAxis dataKey="Month" />
                     <YAxis />
                     <Tooltip />
                     <Area
                         type="monotone"
-                        dataKey="count"
+                        dataKey="Users"
                         stroke="#F59A3B"
                         fillOpacity={1}
                         fill="url(#colorUsers)"

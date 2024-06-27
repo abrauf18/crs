@@ -47,6 +47,7 @@ type Question = {
 };
 
 export default function VideoViewing({
+    hideButton,
     standardId,
     videoURL,
     thumbnailURL,
@@ -56,6 +57,7 @@ export default function VideoViewing({
     lastSeenTime,
     data,
 }: {
+    hideButton?: boolean;
     standardId?: string;
     videoURL: string;
     thumbnailURL: string;
@@ -374,18 +376,22 @@ export default function VideoViewing({
                             setPlaying={setPlaying}
                             handlePlayAfterQuestion={handlePlayAfterQuestion}
                             markQuestionAsAnswered={markQuestionAsAnswered}
+                            hideButton={hideButton}
                         />
                     </div>
                 ) : (
                     <div>
-                        <button
-                            type="button"
-                            className="bg-primary-color text-white px-5 py-2 xl:float-right xl:mb-0 mb-5 rounded-lg hover:bg-orange-400 flex items-center gap-2"
-                            onClick={handleSavingVideo}
-                        >
-                            <Bookmark />
-                            <span>Save Video</span>
-                        </button>
+                        {hideButton && (
+                            <button
+                                type="button"
+                                className="bg-primary-color text-white px-5 py-2 xl:float-right xl:mb-0 mb-5 rounded-lg hover:bg-orange-400 flex items-center gap-2"
+                                onClick={handleSavingVideo}
+                            >
+                                <Bookmark />
+                                <span>Save Video</span>
+                            </button>
+                        )}
+
                         <div className="text-lg flex justify-center">
                             <ReactPlayer
                                 ref={playerRef}
@@ -400,15 +406,14 @@ export default function VideoViewing({
                                 onReady={() => setVideoReady(true)}
                             />
                         </div>
-
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4">
-                            {topicsArray.length > 0 && (
+                            {topicsArray.length > 0 ? (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
                                     <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
                                         Checkpoints
                                     </h2>
-                                    <Table className="text-center">
-                                        <TableHeader className="font-semibold whitespace-nowrap	">
+                                    <Table>
+                                        <TableHeader className="font-semibold whitespace-nowrap">
                                             <TableRow>
                                                 <TableCell>S.No</TableCell>
                                                 <TableCell>Topic</TableCell>
@@ -416,7 +421,7 @@ export default function VideoViewing({
                                                 <TableCell>Action</TableCell>
                                             </TableRow>
                                         </TableHeader>
-                                        <TableBody className="whitespace-nowrap	">
+                                        <TableBody className="whitespace-nowrap">
                                             {sortedTopics.map(
                                                 (
                                                     { popupTime, topic },
@@ -451,14 +456,21 @@ export default function VideoViewing({
                                         </TableBody>
                                     </Table>
                                 </div>
+                            ) : (
+                                <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow text-center">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                        Checkpoints
+                                    </h2>
+                                    <p className="py-4">No Topic</p>
+                                </div>
                             )}
-                            {questionsArray.length > 0 && (
+                            {questionsArray.length > 0 ? (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
                                     <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
                                         Questions
                                     </h2>
-                                    <Table className="text-center">
-                                        <TableHeader className="font-semibold whitespace-nowrap	">
+                                    <Table>
+                                        <TableHeader className="font-semibold whitespace-nowrap">
                                             <TableRow>
                                                 <TableCell>Q.No</TableCell>
                                                 <TableCell>
@@ -468,7 +480,7 @@ export default function VideoViewing({
                                                 <TableCell>Action</TableCell>
                                             </TableRow>
                                         </TableHeader>
-                                        <TableBody className="whitespace-nowrap	">
+                                        <TableBody className="whitespace-nowrap">
                                             {questionsArray.map(
                                                 (
                                                     { popupTime, totalMarks },
@@ -506,6 +518,13 @@ export default function VideoViewing({
                                             )}
                                         </TableBody>
                                     </Table>
+                                </div>
+                            ) : (
+                                <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow text-center">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                        Questions
+                                    </h2>
+                                    <p className="py-4">No Question</p>
                                 </div>
                             )}
                         </div>

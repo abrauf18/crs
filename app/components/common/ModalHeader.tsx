@@ -2,11 +2,11 @@ import { LucideIcon, X } from 'lucide-react';
 import React from 'react';
 
 interface Header {
-    heading: string;
-    tagline: string;
+    heading?: string;
+    tagline?: string;
 }
 interface ModalHeaderProps {
-    headerText: Header;
+    headerText?: Header;
     Icon?:
         | React.ComponentType<React.SVGProps<SVGSVGElement>>
         | LucideIcon
@@ -24,11 +24,11 @@ export function ModalHeader({
             <div className="flex flex-col my-7">
                 <div className="flex">
                     <h3 className="text-xl font-semibold mb-2 mr-1">
-                        {headerText.heading}
+                        {headerText?.heading}
                     </h3>
                     {Icon && <Icon />}
                 </div>
-                <p className="text-sm text-dark-gray">{headerText.tagline}</p>
+                <p className="text-sm text-dark-gray">{headerText?.tagline}</p>
             </div>
             <div className="rounded-full bg-white border p-1 cursor-pointer">
                 <X size={15} onClick={onClose} />

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import Image from 'next/image';
@@ -64,6 +64,17 @@ function UsersTable({
     const [isShowDialogBox, setIsShowDialogBox] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User>(DEFAULT_USER);
 
+    useEffect(() => {
+        if (isShowDialogBox || isShowProfileModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowDialogBox, isShowProfileModal]);
     const handleOpenProfileModal = (user: User) => {
         setSelectedUser(user);
         setIsShowProfileModal(true);
@@ -115,9 +126,11 @@ function UsersTable({
                         <TableHead className=" text-dark-gray font-bold">
                             Name
                         </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
-                            Email
-                        </TableHead>
+                        {!isDashboard && (
+                            <TableHead className="text-dark-gray font-bold ">
+                                Email
+                            </TableHead>
+                        )}
                         <TableHead className="text-dark-gray font-bold">
                             Role
                         </TableHead>
@@ -139,7 +152,7 @@ function UsersTable({
                                             {currentPage * limit + index + 1}
                                         </span>
                                     </TableCell>
-                                    <TableCell className="">
+                                    <TableCell className="whitespace-nowrap">
                                         <span className="rounded-full flex gap-x-2 items-center">
                                             <Image
                                                 src={
@@ -155,16 +168,30 @@ function UsersTable({
                                                     borderRadius: '50%',
                                                 }}
                                             />
-                                            <span>{user?.name}</span>
+                                            <span>
+                                                {user?.name &&
+                                                    user.name
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                        user.name.slice(1)}
+                                            </span>
                                         </span>
                                     </TableCell>
+                                    {!isDashboard && (
+                                        <TableCell className="text-dark-gray whitespace-nowrap">
+                                            <span className="truncate">
+                                                {user?.email}
+                                            </span>
+                                        </TableCell>
+                                    )}
                                     <TableCell className="text-dark-gray">
-                                        <span className="truncate">
-                                            {user?.email}
+                                        <span>
+                                            {user?.role &&
+                                                user.role
+                                                    .charAt(0)
+                                                    .toUpperCase() +
+                                                    user.role.slice(1)}
                                         </span>
-                                    </TableCell>
-                                    <TableCell className="text-dark-gray">
-                                        {user?.role}
                                     </TableCell>
                                     <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
                                         {isDashboard ? (
