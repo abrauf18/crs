@@ -129,7 +129,9 @@ function Dashboard({
                 )}
             </div>
             <div className="flex justify-between items-center my-3">
-                <h3 className="text-xl font-semibold mobile:mb-2">All Users</h3>
+                <h3 className="text-xl font-semibold mobile:mb-2">
+                    All Users Count
+                </h3>
                 <select
                     className="p-2 rounded-lg border"
                     onChange={handleChange}
