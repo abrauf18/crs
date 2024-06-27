@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -14,24 +14,60 @@ import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import Input from '@/app/components/common/Input';
 import Loader from '@/app/components/common/ButtonLoader';
 import { validationError } from '@/lib/utils';
-import { CheckBox } from './Checkbox';
 
 function SigninForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
+
+    const defaultValues = {
+        email: '',
+        password: '',
+        remember: false,
+    };
+
+    if (typeof window !== 'undefined') {
+        defaultValues.email = localStorage.getItem('myapp-email') || '';
+        defaultValues.password = localStorage.getItem('myapp-password') || '';
+        defaultValues.remember = !!localStorage.getItem('myapp-email');
+    }
+
+    const methods = useForm({
+        mode: 'onChange',
+        reValidateMode: 'onChange',
+        defaultValues,
+    });
+
+    const { register, handleSubmit, watch, setValue } = methods;
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setValue('email', localStorage.getItem('myapp-email') || '');
+            setValue('password', localStorage.getItem('myapp-password') || '');
+            setValue('remember', !!localStorage.getItem('myapp-email'));
+        }
+    }, [setValue]);
+
+    const remember = () => {
+        if (watch('remember')) {
+            localStorage.setItem('myapp-email', watch('email'));
+            localStorage.setItem('myapp-password', watch('password'));
+        } else {
+            localStorage.removeItem('myapp-email');
+            localStorage.removeItem('myapp-password');
+        }
+    };
 
     // eslint-disable-next-line consistent-return
     const onFormSubmit = async (data: any) => {
         try {
             setLoading(true);
+            remember();
             const { email, password } = data;
             const result = await signIn('credentials', {
                 email,
                 password,
                 redirect: false,
             });
-
             const session = await getSession();
             if (session) {
                 const role = session?.user?.role;
@@ -50,7 +86,7 @@ function SigninForm() {
 
     return (
         <FormProvider {...methods}>
-            <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
+            <div className="p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col">
                 <div className="flex lg:items-start flex-col">
                     <Image
                         height={100}
@@ -63,7 +99,7 @@ function SigninForm() {
                         Enter Your Email & Password
                     </p>
                 </div>
-                <form onSubmit={methods.handleSubmit(onFormSubmit)}>
+                <form onSubmit={handleSubmit(onFormSubmit)}>
                     <div className="mt-2">
                         <Label htmlFor="email">Email Address</Label>
                         <Input
@@ -98,7 +134,20 @@ function SigninForm() {
                         />
                     </div>
                     <div className="flex mb-12 mt-5">
-                        <CheckBox label="Remember Me" />
+                        <div className="flex items-center">
+                            <input
+                                type="checkbox"
+                                id="remember"
+                                {...register('remember')}
+                                defaultChecked={defaultValues.remember}
+                            />
+                            <label
+                                htmlFor="remember"
+                                className="text-xs text-black ml-2"
+                            >
+                                Remember Me
+                            </label>
+                        </div>
                         <Link
                             href="/forgot-password"
                             className="text-xs text-black ml-auto lg:hover:text-sky-400"
@@ -114,7 +163,10 @@ function SigninForm() {
                             {loading ? <Loader /> : 'Sign In'}
                         </Button>
                         <span className="text-black text-xs">Or</span>
-                        <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
+                        <Button
+                            onClick={() => signIn('google')}
+                            className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300"
+                        >
                             <GoogleIcon
                                 width={20}
                                 height={20}

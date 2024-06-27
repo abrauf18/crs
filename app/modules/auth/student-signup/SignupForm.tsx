@@ -114,10 +114,6 @@ function SignupForm({ token }: { token: string }) {
                             }}
                         />
                     </div>
-
-                    <div className="flex mb-12 mt-5">
-                        <CheckBox label="Remember Me" />
-                    </div>
                     <div className="text-center">
                         <Button
                             type="submit"

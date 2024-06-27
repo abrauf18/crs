@@ -47,9 +47,6 @@ function SchoolSignup1() {
                     />
                 </div>
 
-                <div className="flex mb-12 mt-5">
-                    <CheckBox label="Remember Me" />
-                </div>
                 <div className="text-center">
                     <Button
                         type="button"

@@ -7,7 +7,6 @@ import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
 import schoolGraph from '@/app/assets/images/schoolGraph.svg';
-import { usersData } from '@/app/modules/users/Users';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
 import UsersTable from '../users/UsersTable';
 import Filters from '../../components/common/Filters';
@@ -108,7 +107,7 @@ function SchoolDashboard() {
                             </div>
                         </Link>
                     </div>
-                    <UsersTable users={usersData} fontSize="12" isDashboard />
+                    {/* <UsersTable users={usersData} fontSize="12" isDashboard /> */}
                 </div>
                 <div className="border rounded-lg p-5 px-2 lg:px-5 mt-2 lg:mt-0">
                     <div className="flex  justify-between px-1 mb-2   items-center">
