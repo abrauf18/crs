@@ -1,17 +1,15 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
-import graph from '@/app/assets/images/graph.svg';
 import { Resource, LearningInterface } from '@/lib/utils';
+import DashboardGraph from '@/app/components/common/DashboardGraph';
 import UsersTable, { User } from '../users/UsersTable';
 import ResourcesTable from '../resources/ResourcesTable';
-import Filters from '../../components/common/Filters';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
 import StudentsInfoTable from '../students/StudentsInfoTable';
@@ -31,6 +29,7 @@ function Dashboard({
         usersCount: number;
         videosCount: number;
         resourcesCount: number;
+        usersJoining: any[];
     };
     UserAPIData?: { users: User[]; totalUsers: number; totalPages: number };
     ResourceAPIData?: {
@@ -45,6 +44,13 @@ function Dashboard({
     };
     StandardOverview?: LearningInterface[];
 }) {
+    const [currentYear, setCurrentYear] = React.useState(
+        new Date().getFullYear()
+    );
+
+    async function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        setCurrentYear(+e.target.value);
+    }
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
             <Searchbar
@@ -122,9 +128,29 @@ function Dashboard({
                     </>
                 )}
             </div>
-            <Filters text="Overall Performance" textColor="text-black" />
-            <div className="w-auto ">
-                <Image src={graph as string} alt="icon" className="w-full" />
+            <div className="flex justify-between items-center my-3">
+                <h3 className="text-xl font-semibold mobile:mb-2">All Users</h3>
+                <select
+                    className="p-2 rounded-lg border"
+                    onChange={handleChange}
+                    value={currentYear}
+                >
+                    <option value={new Date().getFullYear()}>
+                        {new Date().getFullYear()}
+                    </option>
+                    <option value={new Date().getFullYear() - 1}>
+                        {new Date().getFullYear() - 1}
+                    </option>
+                    <option value={new Date().getFullYear() - 2}>
+                        {new Date().getFullYear() - 2}
+                    </option>
+                </select>
+            </div>
+            <div className="w-full ">
+                <DashboardGraph
+                    data={AdminSummaries?.usersJoining}
+                    year={currentYear}
+                />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mobile:gap-8 mt-5">
                 {!isTeacher ? (

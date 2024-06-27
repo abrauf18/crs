@@ -10,17 +10,20 @@ import AppDropDown, {
 } from '@/app/components/common/AppDropDown';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
-import { signupInvite } from '@/lib/react-redux/features/auth/authAction';
+import {
+    signupInvite,
+    signupInvitePayload,
+} from '@/lib/react-redux/features/auth/authAction';
 import { Button } from '@/app/components/ui/button';
 import Input from '@/app/components/common/Input';
 import { validationError } from '@/lib/utils';
 import Loader from '@/app/components/common/ButtonLoader';
 
-function ProfileModal({ onClose }: any) {
+function ProfileModal({ onClose, school, setSchool, schoolList }: any) {
     const [role, setRole] = useState('student');
     const dispatch = useAppDispatch();
     const state = useAppSelector((state: { user: any }) => state.user);
-    const { data, status } = useSession();
+    const { data } = useSession();
     const allRoles: OptionsInterface[] = [
         { label: 'student', value: 'Student' },
         { label: 'teacher', value: 'Teacher' },
@@ -32,17 +35,31 @@ function ProfileModal({ onClose }: any) {
     const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setRole(event.target.value);
     };
+    const handleSchoolChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        setSchool(event.target.value);
+    };
 
     const onFormSubmit = async (formData: any) => {
         const { username, email } = formData;
-        const response = await dispatch(
-            signupInvite({
-                email,
-                username,
-                role,
-                accessToken: data?.user.accessToken || '',
-            })
+        const getSchoolId = schoolList.filter(
+            (value: { name: string; id: string }) => value.name === school
         );
+        const accessToken = data?.user.accessToken || '';
+
+        const payload: signupInvitePayload = {
+            email,
+            username,
+            role,
+            accessToken,
+        };
+
+        if (role === 'teacher' || role === 'student') {
+            payload.schoolId = getSchoolId[0].id;
+        }
+
+        const response = await dispatch(signupInvite(payload));
         if (response.type === 'user/signupInvite/rejected') {
             return toast.error(response.payload);
         }
@@ -95,7 +112,7 @@ function ProfileModal({ onClose }: any) {
                             />
                         </div>
                         <div className="flex flex-col space-y-2 mt-3">
-                            <Label htmlFor="password ">Role</Label>
+                            <Label htmlFor="role ">Role</Label>
                             <AppDropDown
                                 name="role"
                                 options={allRoles}
@@ -103,6 +120,18 @@ function ProfileModal({ onClose }: any) {
                                 onChange={handleRoleChange}
                             />
                         </div>
+                        {(role === 'student' || role === 'teacher') && (
+                            <div className="flex flex-col space-y-2 mt-3">
+                                <Label htmlFor="school">School</Label>
+                                <AppDropDown
+                                    name="school"
+                                    options={schoolList}
+                                    value={school}
+                                    onChange={handleSchoolChange}
+                                />
+                            </div>
+                        )}
+
                         <div className="text-center mt-8">
                             <Button
                                 type="submit"

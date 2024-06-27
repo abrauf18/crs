@@ -41,3 +41,15 @@ export const updateSchoolAndUserProfile = async (
 
     return result;
 };
+
+export const getAllSchoolsAPI = async (accessToken: string) => {
+    const reuslt = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/getAllSchools`,
+        {
+            headers: {
+                accesstoken: accessToken,
+            },
+        }
+    );
+    return reuslt;
+};

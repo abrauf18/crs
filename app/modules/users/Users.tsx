@@ -1,53 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 'use client';
 
 import { Plus } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useState } from 'react';
-import userImage from '@/app/assets/images/UserImage.svg';
+import React, { useCallback, useEffect, useState } from 'react';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import AddUserModal from '@/app/modules/users/AddUserModal';
 import { commonFilterOptions, commonFilterQueries } from '@/lib/utils';
+import { getAllSchoolsAPI } from '@/app/api/school';
+import { useSession } from 'next-auth/react';
 import UsersTable, { User } from './UsersTable';
 
-// remove after all users are fetched from the API in every dummy Users component in the app
-export const usersData: User[] = [
-    {
-        id: '1',
-        image: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        role: 'Admin',
-    },
-    {
-        id: '2',
-        image: userImage as string,
-        name: 'Jane',
-        email: 'jane@example.com',
-        role: 'User',
-    },
-    {
-        id: '3',
-        image: userImage as string,
-        name: 'Bob',
-        email: 'bob@example.com',
-        role: 'Moderator',
-    },
-    {
-        id: '4',
-        image: userImage as string,
-        name: 'Alice',
-        email: 'alice@example.com',
-        role: 'User',
-    },
-    {
-        id: '5',
-        image: userImage as string,
-        name: 'Charlie',
-        email: 'charlie@example.com',
-        role: 'Admin',
-    },
-];
 function Users({
     APIdata,
 }: {
@@ -58,6 +23,9 @@ function Users({
     const urlSearchParams = useSearchParams();
     const page = urlSearchParams.get('page') || 1;
     const [showAddUserModal, setShowProfileModal] = useState(false);
+    const [school, setSchool] = useState('');
+    const [schoolList, setSchoolList] = useState<any>([]);
+    const { data } = useSession();
 
     const handleOpenAddUserModal = () => {
         setShowProfileModal(true);
@@ -95,6 +63,23 @@ function Users({
             router.push(`?page=${page}`);
         }
     };
+
+    useEffect(() => {
+        const accessToken = data?.user.accessToken || '';
+        getAllSchoolsAPI(accessToken).then((response) => {
+            if (response.data.status === 'success') {
+                const newSchoolList = response?.data?.data?.map(
+                    (school: { name: string; id: string }) => ({
+                        id: school.id,
+                        label: school.name,
+                        value: school.name,
+                    })
+                );
+                setSchoolList(newSchoolList);
+                setSchool(schoolList[0]?.value);
+            }
+        });
+    }, [data?.user?.accessToken]);
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
@@ -138,7 +123,12 @@ function Users({
             </div>
             {showAddUserModal && (
                 <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
-                    <AddUserModal onClose={handleCloseAddUserModal} />
+                    <AddUserModal
+                        onClose={handleCloseAddUserModal}
+                        school={school}
+                        setSchool={setSchool}
+                        schoolList={schoolList}
+                    />
                 </div>
             )}
         </>
