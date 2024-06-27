@@ -251,7 +251,7 @@ function CreateStandard({
         <section>
             <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="mt-5 pb-5 border-b">
+                    <div className="mt-3 pb-3 border-b">
                         <h3 className="text-xl font-semibold">Plan Details</h3>
                         <div className="sm:flex justify-between items-center gap-5 w-full mt-5">
                             <div className="basis-1/2">
@@ -313,16 +313,16 @@ function CreateStandard({
                         </div>
                     </div>
                     <div>
-                        <div className="flex justify-between items-center pb-6 mt-5 mb-2">
+                        <div className="flex justify-between items-center mt-5 mb-4">
                             <button
                                 type="submit"
-                                className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg w-32"
+                                className="bg-primary-color hover:bg-orange-400 text-white font-medium p-3 mt-3 rounded-lg w-32"
                             >
-                                {isLoading ? <ButtonLoader /> : `submit`}
+                                {isLoading ? <ButtonLoader /> : `Submit`}
                             </button>
                             <button
                                 type="button"
-                                className="bg-primary-color hover:bg-orange-400 text-white font-medium px-3 py-2 mt-3 rounded-lg"
+                                className="bg-primary-color hover:bg-orange-400 text-white font-medium p-3 mt-3 rounded-lg"
                                 onClick={() => {
                                     if (
                                         allSelectedResources[
@@ -367,9 +367,6 @@ function CreateStandard({
                             >
                                 Add TimeLine
                             </button>
-                        </div>
-                        <div className="flex justify-between items-center mb-5 w-full">
-                            <h3 className="text-xl font-semibold">Topic:</h3>
                         </div>
                         {dailyUploadFields.map((dailyUpload, index) => (
                             <div key={dailyUpload.id}>

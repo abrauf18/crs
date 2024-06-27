@@ -100,6 +100,18 @@ function CreateTopic({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
+    useEffect(() => {
+        if (isDisplayModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isDisplayModal]);
+
     const handleResourceSelect = (topicIndex: number, resourceId: string) => {
         setValue(
             `standard.dailyUploads.${index}.topics.${topicIndex}.resourceId`,
@@ -107,10 +119,11 @@ function CreateTopic({
         );
     };
     return (
-        <div className="relative">
-            <div className="cursor-pointer px-4 py-2 border text-sm text-dark-gray rounded-lg absolute mobile:right-0 right-6 -top-2 z-10 hover:bg-slate-100 ">
-                <button
-                    type="button"
+        <>
+            <div className="flex items-center justify-between my-4">
+                <h3 className="text-xl font-semibold">Topic:</h3>
+                <div
+                    className="cursor-pointer border p-3 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
                     onClick={() => {
                         if (
                             allSelectedResources &&
@@ -140,71 +153,74 @@ function CreateTopic({
                         ]);
                     }}
                 >
-                    Add More
-                </button>
+                    <button type="button">Add More</button>
+                </div>
             </div>
             {topicFields.map((topic, topicIndex) => (
                 <div key={topic.id}>
-                    <div className="sm:flex justify-between items-center gap-5 w-full mt-3">
+                    <div className="sm:flex justify-between items-center gap-5 w-full">
                         <div className="basis-full relative">
-                            <Label
-                                htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
-                                className="font-semibold mt-4"
-                            >
-                                Type
-                            </Label>
-                            <div className="flex items-center gap-5 sm:my-8 my-6 mobile:flex-col mobile:items-start mobile:w-full">
-                                <Select
-                                    additionalClasses="!w-2/4 mobile:!w-full"
-                                    name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
-                                    options={resourceDropDownOptions}
-                                    selectedOption={ResourceType.VIDEO}
-                                    disabled={
-                                        watch(
-                                            `standard.dailyUploads.${index}.topics.${topicIndex}.resourceId`
-                                        ) !== ''
-                                    }
-                                />
-                                <div className="flex gap-2 items-center justify-center">
-                                    <div
-                                        className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center p-3 hover:bg-slate-100"
-                                        onClick={() =>
-                                            handleOpenModal(topicIndex)
-                                        }
+                            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:mb-1 mb-2 mobile:flex-col mobile:items-start mobile:w-full">
+                                <div className="w-full sm:!w-[38.5%]">
+                                    <Label
+                                        htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                     >
-                                        <button
-                                            className="text-sm text-center"
-                                            type="button"
+                                        Type
+                                    </Label>
+                                    <Select
+                                        additionalClasses="mobile:!w-full mt-1"
+                                        name={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
+                                        options={resourceDropDownOptions}
+                                        selectedOption={ResourceType.VIDEO}
+                                        disabled={
+                                            watch(
+                                                `standard.dailyUploads.${index}.topics.${topicIndex}.resourceId`
+                                            ) !== ''
+                                        }
+                                    />
+                                </div>
+                                <div className="sm:w-28">
+                                    {allSelectedResources[topicIndex].name ? (
+                                        <div className="border text-sm text-dark-gray rounded-lg text-center px-3 pt-[0.68rem] pb-[0.68rem] flex gap-2 items-center">
+                                            {allSelectedResources.length >
+                                                topicIndex && (
+                                                <>
+                                                    <FileUpIcon />
+                                                    {allSelectedResources[
+                                                        topicIndex
+                                                    ].name.slice(0, 6)}
+                                                    {allSelectedResources[
+                                                        topicIndex
+                                                    ].name.length > 6 && '...'}
+                                                </>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="cursor-pointer border text-sm text-dark-gray rounded-lg text-center p-3 hover:bg-slate-100"
+                                            onClick={() =>
+                                                handleOpenModal(topicIndex)
+                                            }
                                         >
-                                            Select
-                                        </button>
-                                    </div>
-                                    {allSelectedResources[topicIndex].name && (
-                                        <div className="border text-sm text-dark-gray rounded-lg text-center p-3  flex gap-2 items-center">
-                                            {allSelectedResources &&
-                                                allSelectedResources.length >
-                                                    topicIndex && (
-                                                    <>
-                                                        <FileUpIcon />
-                                                        {
-                                                            allSelectedResources[
-                                                                topicIndex
-                                                            ].name
-                                                        }
-                                                    </>
-                                                )}
+                                            <button
+                                                className="text-sm text-center"
+                                                type="button"
+                                            >
+                                                Select
+                                            </button>
                                         </div>
                                     )}
                                 </div>
-                                <div className="basis-1/2">
+                                <div className="w-full sm:!w-[38.5%]">
                                     <Label
                                         htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
                                     >
-                                        weightage
+                                        Weightage
                                     </Label>
                                     <Input
+                                        additionalClasses="!my-0"
                                         type="text"
-                                        placeholder="Assign Weightage to this resource"
+                                        placeholder="Enter Weightage"
                                         name={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
                                         rules={{
                                             required: {
@@ -240,10 +256,32 @@ function CreateTopic({
                                         />
                                     </span>
                                 </div>
+                                <div
+                                    className="cursor-pointer p-3 border text-center text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600"
+                                    onClick={() => {
+                                        // Remove the topic from allSelectedResources
+                                        const updatedSelectedResources =
+                                            allSelectedResources
+                                                ? allSelectedResources.filter(
+                                                      (_, idx) =>
+                                                          idx !== topicIndex
+                                                  )
+                                                : [];
+                                        setAllSelectedResources(
+                                            updatedSelectedResources
+                                        );
+
+                                        // Remove the topic from the form
+                                        removeTopic(topicIndex);
+                                    }}
+                                >
+                                    <button type="button">Remove</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[33%]">
+
+                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                         {isDisplayModal && (
                             <VideoModal
                                 onClose={handleCloseModal}
@@ -267,31 +305,9 @@ function CreateTopic({
                             />
                         )}
                     </div>
-                    <div className=" cursor-pointer px-4 py-2 border text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600 ">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                // Remove the topic from allSelectedResources
-                                const updatedSelectedResources =
-                                    allSelectedResources
-                                        ? allSelectedResources.filter(
-                                              (_, index) => index !== topicIndex
-                                          )
-                                        : [];
-                                setAllSelectedResources(
-                                    updatedSelectedResources
-                                );
-
-                                // Remove the topic from the form
-                                removeTopic(topicIndex);
-                            }}
-                        >
-                            Remove
-                        </button>
-                    </div>
                 </div>
             ))}
-            <div className="mobile:w-full w-1/2 my-5">
+            <div className="mobile:w-full w-1/2 mb-5">
                 <div className="basis-1/2 mobile:w-full relative">
                     <Label htmlFor={`standard.dailyUploads.${index}.date`}>
                         Date
@@ -326,7 +342,7 @@ function CreateTopic({
                 </div>
             </div>
             <hr className="my-5" />
-        </div>
+        </>
     );
 }
 

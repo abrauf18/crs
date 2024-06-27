@@ -406,7 +406,7 @@ export default function VideoViewing({
                                 onReady={() => setVideoReady(true)}
                             />
                         </div>
-                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4">
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-center gap-4">
                             {topicsArray.length > 0 ? (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
                                     <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">

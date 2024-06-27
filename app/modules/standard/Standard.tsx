@@ -132,7 +132,7 @@ function Standard({
                     isShownFromTeacher ? 'Create New Plan' : 'Create New'
                 }
                 handleClick={() => handleClick()}
-                isHideFirstBtn={isShownFromTeacher}
+                isHideFirstBtn={!isShownFromTeacher}
                 isHideSecondBtn={isShownFromTeacher}
             />
             <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">

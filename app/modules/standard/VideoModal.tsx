@@ -168,7 +168,7 @@ function VideoModal({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resourceType]);
     return (
-        <section className="w-full bg-white h-screen p-4 shadow-md">
+        <section className="bg-white h-screen p-4 shadow-md overflow-y-auto">
             <ModalHeader
                 headerText={{
                     heading: `Select ${
@@ -190,7 +190,7 @@ function VideoModal({
             {isLoading ? (
                 <PageLoader additionalClasses="!h-2/3" />
             ) : (
-                <div className="md:h-96 h-72 overflow-y-auto px-6">
+                <div className="px-6 mb-24">
                     {resourceCards.map((card) => (
                         <div className="mt-5" key={card.id}>
                             <QuizCard

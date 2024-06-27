@@ -177,8 +177,9 @@ function StandardTable({
                                 )}
                                 {topic.name}
                             </TableCell>
-                            <TableCell className="text-dark-gray text-center">
-                                {topic.type}
+                            <TableCell className="text-dark-gray">
+                                {topic.type.charAt(0).toUpperCase() +
+                                    topic.type.slice(1)}
                             </TableCell>
                             <TableCell className="flex justify-center items-center">
                                 {!isShownFromStudent && (

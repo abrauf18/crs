@@ -37,7 +37,7 @@ function VideoCard({
             card?.imageUrl as string
         )}`;
     } else {
-        resourceRenderingLink = card?.imageUrl?.toString();
+        resourceRenderingLink = card?.imageUrl?.toString() as string;
     }
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
