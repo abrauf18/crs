@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import React from 'react';
-import Searchbar from '@/app/components/common/Searchbar';
 
 export const metadata: Metadata = {
     title: 'Learning',

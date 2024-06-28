@@ -188,3 +188,31 @@ export const updateClassroomStudentAPI = async ({
 
     return response;
 };
+
+export const createClassroomAPI = async ({
+    accessToken,
+    name,
+    teacherId,
+}: {
+    accessToken: string;
+    name: string;
+    teacherId: string;
+}) => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/createClassroom`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                accessToken,
+                name,
+                teacherId,
+            }),
+        }
+    );
+
+    const result = await response.json();
+    return result;
+};

@@ -41,12 +41,14 @@ export default async function Home() {
             return (
                 <Dashboard
                     isTeacher
+                    name={data.user.name}
                     TeacherSummaries={{
                         totalStudents:
                             classesStandardsData?.data?.totalStudents,
                         totalClassrooms:
                             classesStandardsData?.data?.totalClassrooms,
                         OverallPerformance: 100,
+                        usersJoining: classesStandardsData?.data?.usersJoining,
                     }}
                     StandardOverview={standardOverviewData?.data}
                 />

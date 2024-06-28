@@ -60,6 +60,7 @@ export default function StudentVideo({
                     studentLastPlayedTime={studentLastPlayedTime}
                     lastSeenTime={lastSeenTime}
                     data={data}
+                    hideButton
                 />
             ) : (
                 <PageLoader />

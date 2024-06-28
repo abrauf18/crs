@@ -28,12 +28,14 @@ type StandardData = {
     nonVideoResourcesCount: number;
 };
 
-type DashboardData = {
+export type DashboardData = {
     studentName: string;
     standardsCount: number;
     classroomName: string;
     standardsData: StandardData[];
     videosData: VideoData[];
+    averageObtainedWeightage: number;
+    averageTotalWeightage: number;
 };
 
 function Dashboard({ APIdata }: { APIdata: DashboardData }) {
@@ -57,7 +59,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 <Card
                     Icon={StatsIcon}
                     header="Overall Performance"
-                    description="75%"
+                    description={`${APIdata.averageObtainedWeightage} of ${APIdata.averageTotalWeightage} %`}
                     iconBg="bg-orange-100"
                     border="border-2 border-orange-400"
                     iconColor="#F59A3B"
@@ -65,7 +67,11 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 <Card
                     Icon={ClassroomIcon}
                     header="Classroom"
-                    description={APIdata.classroomName}
+                    description={
+                        APIdata.classroomName === ''
+                            ? 'N/A'
+                            : APIdata.classroomName
+                    }
                     iconBg="bg-green-100"
                     border="border-2 border-green-600"
                     iconColor="#7AA43E"
@@ -73,7 +79,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
             </div>
 
             <div className="flex mobile:flex-col  md:justify-between mt-8 w-full">
-                <p className="font-semibold text-2xl w-fit ">
+                <p className="font-semibold text-xl w-fit ">
                     Your Assigned Learnings
                 </p>
                 <div className="mobile:flex mobile:justify-end mobile:mt-2">
@@ -87,8 +93,8 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 <Learning standards={APIdata.standardsData} />
             </div>
 
-            <div className="flex mobile:flex-col  md:justify-between mt-8">
-                <p className="font-semibold text-2xl ">Saved Videos</p>
+            <div className="flex mobile:flex-col md:justify-between mt-8">
+                <p className="font-semibold text-xl ">Saved Videos</p>
                 <div className="mobile:flex mobile:justify-end">
                     <p className=" border cursor-pointer py-2  px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray  hover:bg-primary-color hover:text-white">
                         <Link href="/student/saved-videos">Show All</Link>
@@ -97,8 +103,8 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
             </div>
 
             <div className="mt-8">
-                {APIdata.videosData.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center w-full h-96  bg-white rounded-lg shadow-lg">
+                {APIdata?.videosData?.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center w-full h-72  bg-white rounded-lg shadow-lg">
                         <ShieldAlert size={48} />
                         <p className="text-lg font-semibold mt-4">
                             No Videos Found
@@ -106,7 +112,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                     </div>
                 ) : (
                     <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
-                        {APIdata.videosData.map((video) => (
+                        {APIdata?.videosData?.map((video) => (
                             <VideoCard
                                 card={{
                                     id: video.videoId,

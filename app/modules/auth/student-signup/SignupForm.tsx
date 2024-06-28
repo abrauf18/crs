@@ -13,24 +13,33 @@ import { useAppDispatch } from '@/lib/react-redux/hooks';
 import { signup } from '@/lib/react-redux/features/auth/authAction';
 import Input from '@/app/components/common/Input';
 import { validationError } from '@/lib/utils';
-import { CheckBox } from '../Checkbox';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 
 function SignupForm({ token }: { token: string }) {
+    const [isLoader, setIsLoader] = React.useState(false);
     const dispatch = useAppDispatch();
     const { push } = useRouter();
 
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
+    // eslint-disable-next-line consistent-return
     const onFormSubmit = async (data: any) => {
-        const { name, email, password } = data;
-        const response = await dispatch(
-            signup({ name, email, password, token })
-        );
-        if (response.type === 'user/signup/rejected') {
-            return toast.error(response.payload);
+        try {
+            setIsLoader(true);
+            const { name, email, password } = data;
+            const response = await dispatch(
+                signup({ name, email, password, token })
+            );
+            if (response.type === 'user/signup/rejected') {
+                return toast.error(response.payload);
+            }
+            toast.success('Signup Successful');
+            return push('/signin');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoader(false);
         }
-        toast.success('Signup Successful');
-        return push('/signin');
     };
 
     return (
@@ -114,12 +123,13 @@ function SignupForm({ token }: { token: string }) {
                             }}
                         />
                     </div>
-                    <div className="text-center">
+                    <div className="text-center mt-5">
                         <Button
                             type="submit"
+                            disabled={isLoader}
                             className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         >
-                            Sign Up
+                            {isLoader ? <ButtonLoader /> : 'Sign Up'}
                         </Button>
                         <span className="text-black text-xs">Or</span>
                         <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">

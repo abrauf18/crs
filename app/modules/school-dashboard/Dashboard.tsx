@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import DataIcon from '@/app/assets/icons/DataIcon';
@@ -14,6 +14,7 @@ import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
 import TicketsTable, { TicketsInterface } from './RecentTicketsTable';
 import SubmitTicketModal from './SubmitTicketModal';
+import AddClassroomModal from './AddClassroomModal';
 
 export const tickets: TicketsInterface[] = [
     {
@@ -49,6 +50,7 @@ export const tickets: TicketsInterface[] = [
 ];
 function SchoolDashboard() {
     const [isDisplayTicketModal, setIsDisplayTicketModal] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const handleDisplayTicketModal = () => {
         setIsDisplayTicketModal(true);
     };
@@ -56,6 +58,23 @@ function SchoolDashboard() {
     const handleCloseModal = () => {
         setIsDisplayTicketModal(false);
     };
+
+    const handleClassRoomModal = () => {
+        setIsOpen(!isOpen);
+    };
+
+    useEffect(() => {
+        if (isOpen || isDisplayTicketModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isOpen, isDisplayTicketModal]);
+
     return (
         <section className="flex flex-col w-full scroll-smooth  lg:px-4 ">
             <Searchbar
@@ -63,6 +82,12 @@ function SchoolDashboard() {
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
+            <div
+                className="cursor-pointer border w-38 absolute right-11 md:top-6 lg:top-8 z-50 rounded-lg p-3 text-white bg-primary-color font-medium mobile:mt-2 hover:bg-orange-500"
+                onClick={handleClassRoomModal}
+            >
+                Create Classroom
+            </div>
             <div className="grid mobile:grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 mobile:place-items-center mb-4">
                 <Card
                     Icon={UserIcon}
@@ -126,8 +151,14 @@ function SchoolDashboard() {
             </div>
 
             {isDisplayTicketModal && (
-                <div className="fixed top-0 right-0 z-50 w-full lg:w-[25%]">
+                <div className="fixed top-0 right-0 z-50 w-full lg:w-[30%]">
                     <SubmitTicketModal onClose={handleCloseModal} />
+                </div>
+            )}
+
+            {isOpen && (
+                <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
+                    <AddClassroomModal onClose={handleClassRoomModal} />
                 </div>
             )}
         </section>

@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { Eye, Trash } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import {
     Table,
@@ -52,52 +52,71 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
         >
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px] text-dark-gray font-bold">
+                    <TableHead className="text-dark-gray font-bold">
                         SNO.
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold">
                         Standard Name
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold">
                         Obtained Marks
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold">
                         Total Marks
                     </TableHead>
-                    <TableHead className="text-dark-gray font-bold text-center">
+                    <TableHead className="text-dark-gray font-bold">
                         Action
                     </TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>
-                {myRecord?.map((record, index) => (
-                    <TableRow className="border-none" key={record.standardId}>
-                        <TableCell className="font-medium">
-                            <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                {index + 1}
-                            </span>
-                        </TableCell>
-                        <TableCell className="font-medium">
-                            {record.standardName}
-                        </TableCell>
+            {myRecord?.length > 0 ? (
+                <TableBody>
+                    {myRecord?.map((record, index) => (
+                        <TableRow
+                            className="border-none"
+                            key={record.standardId}
+                        >
+                            <TableCell className="font-medium">
+                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                    {index + 1}
+                                </span>
+                            </TableCell>
+                            <TableCell className="font-medium">
+                                {record.standardName}
+                            </TableCell>
 
-                        <TableCell className="text-dark-gray text-center">
-                            {record.obtainedWeightage}
-                        </TableCell>
-                        <TableCell className="text-dark-gray text-center">
-                            {record.totalWeightage}
-                        </TableCell>
-                        <TableCell className="flex justify-center items-center p-0 mt-5 ml-3 md:mt-6 lg:mt-4 text-center">
-                            <div
-                                className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
-                                onClick={() => handleClick(record.standardId)}
-                            >
-                                <Eye color="#F59A3B" width={18} height={18} />
-                            </div>
+                            <TableCell className="text-dark-gray text-center">
+                                {record.obtainedWeightage}
+                            </TableCell>
+                            <TableCell className="text-dark-gray text-center">
+                                {record.totalWeightage}
+                            </TableCell>
+                            <TableCell className="flex justify-center items-center p-0 mt-5 ml-3 md:mt-6 lg:mt-4 text-center">
+                                <div
+                                    className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
+                                    onClick={() =>
+                                        handleClick(record.standardId)
+                                    }
+                                >
+                                    <Eye
+                                        color="#F59A3B"
+                                        width={18}
+                                        height={18}
+                                    />
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            ) : (
+                <TableBody className="w-full">
+                    <TableRow>
+                        <TableCell className="text-center py-12" colSpan={5}>
+                            No Standard found
                         </TableCell>
                     </TableRow>
-                ))}
-            </TableBody>
+                </TableBody>
+            )}
         </Table>
     );
 }

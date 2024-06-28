@@ -94,18 +94,20 @@ function Resources({ APIdata }: { APIdata: APIData }) {
                 tagline="Your All Resources Allocated to Topics"
             />
             <div className="border rounded-lg p-3 px-6">
-                <Filters text="All topic's" />
+                <Filters text="All topic's" isHideSecondBtn isHideFirstBtn />
                 <ResourcesTable standards={APIdata.standards} />
             </div>
-            <div className="flex justify-center items-center mt-5">
-                <Pagintaion
-                    currentPage={Number(page) > 0 ? Number(page) : 1}
-                    totalPages={
-                        APIdata?.totalPages > 0 ? APIdata.totalPages : 1
-                    }
-                    onPageChange={handlePageChange}
-                />
-            </div>
+            {APIdata?.standards.length > 10 && (
+                <div className="flex justify-center items-center mt-5">
+                    <Pagintaion
+                        currentPage={Number(page) > 0 ? Number(page) : 1}
+                        totalPages={
+                            APIdata?.totalPages > 0 ? APIdata.totalPages : 1
+                        }
+                        onPageChange={handlePageChange}
+                    />
+                </div>
+            )}
         </section>
     );
 }

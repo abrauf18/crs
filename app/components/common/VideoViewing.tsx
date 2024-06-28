@@ -25,6 +25,7 @@ import { secondsToString, timeStringToSeconds } from '@/lib/utils';
 import { Bookmark } from 'lucide-react';
 import VideoQuestion from './VideoQuestion';
 import DialogBox from './DialogBox';
+import ButtonLoader from './ButtonLoader';
 
 function getVideoIdFromPathname(path: string) {
     const parts = path.split('/');
@@ -77,7 +78,7 @@ export default function VideoViewing({
     const [playing, setPlaying] = useState(true);
     const videoId = getVideoIdFromPathname(pathname);
     const [videoReady, setVideoReady] = useState(false);
-    // const [isMounted, setIsMounted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [lastPlayedTime, setLastPlayedTime] = useState<number>(
         lastSeenTime ? timeStringToSeconds(lastSeenTime) : 0
     );
@@ -246,6 +247,7 @@ export default function VideoViewing({
             return;
         }
         try {
+            setIsLoading(true);
             const APIresponse = await SaveOrRemoveVideoAPI({
                 accessToken: data?.user?.accessToken,
                 standardId: standardId || '',
@@ -265,6 +267,8 @@ export default function VideoViewing({
                 error?.response?.data?.message ||
                     'Error updating video last seen time'
             );
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -358,13 +362,6 @@ export default function VideoViewing({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // useEffect(() => {
-    //     setIsMounted(true);
-    // }, []);
-
-    // if (!isMounted) {
-    //     return <PageLoader />;
-    // }
     return (
         <>
             <div>
@@ -384,11 +381,14 @@ export default function VideoViewing({
                         {hideButton && (
                             <button
                                 type="button"
-                                className="bg-primary-color text-white px-5 py-2 xl:float-right xl:mb-0 mb-5 rounded-lg hover:bg-orange-400 flex items-center gap-2"
+                                disabled={isLoading}
+                                className="bg-primary-color text-white w-38 p-3 xl:float-right xl:mb-0 mb-5 rounded-lg hover:bg-orange-400 flex items-center gap-2"
                                 onClick={handleSavingVideo}
                             >
                                 <Bookmark />
-                                <span>Save Video</span>
+                                <span>
+                                    {isLoading ? 'Loading...' : 'Save Video'}
+                                </span>
                             </button>
                         )}
 

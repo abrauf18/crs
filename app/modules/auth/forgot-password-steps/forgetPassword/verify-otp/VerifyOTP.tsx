@@ -13,6 +13,7 @@ import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
 import { verifyOTP } from '@/lib/react-redux/features/auth/authAction';
 import { toast } from 'react-toastify';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 import LeftSide from '../../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
@@ -25,6 +26,7 @@ function VerifyOTP({
 }) {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
     const [otpArray, setOtpArray] = useState(['', '', '', '']);
+    const [isLoader, setIsLoader] = useState(false);
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
@@ -77,16 +79,24 @@ function VerifyOTP({
         }
     };
 
+    // eslint-disable-next-line consistent-return
     const handleSubmit = async () => {
-        const OTP = otpArray.join('');
-        const { id } = state.data;
-        const response = await dispatch(verifyOTP({ id, OTP }));
-        if (response.type === 'user/verifyOTP/rejected') {
-            toast.error(response.payload);
-            return handlePreviousStep();
+        try {
+            setIsLoader(true);
+            const OTP = otpArray.join('');
+            const { id } = state.data;
+            const response = await dispatch(verifyOTP({ id, OTP }));
+            if (response.type === 'user/verifyOTP/rejected') {
+                toast.error(response.payload);
+                return handlePreviousStep();
+            }
+            toast.success('Successfully Verified');
+            return handleNextStep();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsLoader(false);
         }
-        toast.success('Successfully Verified');
-        return handleNextStep();
     };
 
     return (
@@ -145,10 +155,11 @@ function VerifyOTP({
                         <div className="text-center mt-10">
                             <Button
                                 type="button"
+                                disabled={isLoader}
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                                 onClick={handleSubmit}
                             >
-                                Verify Now
+                                {isLoader ? <ButtonLoader /> : 'Verify Now'}
                             </Button>
                         </div>
                     </form>

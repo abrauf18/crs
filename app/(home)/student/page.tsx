@@ -2,7 +2,9 @@ import React from 'react';
 import { Metadata } from 'next';
 import { Session, getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
-import Dashboard from '@/app/modules/student-dashboard/Dashboard';
+import Dashboard, {
+    DashboardData,
+} from '@/app/modules/student-dashboard/Dashboard';
 import { getStudentDashboardSummariesAPI } from '@/app/api/dashboard';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 
@@ -28,14 +30,6 @@ type StandardData = {
     standardName: string;
     videoResourcesCount: number;
     nonVideoResourcesCount: number;
-};
-
-type DashboardData = {
-    studentName: string;
-    standardsCount: number;
-    classroomName: string;
-    standardsData: StandardData[];
-    videosData: VideoData[];
 };
 
 type ApiResponse = {

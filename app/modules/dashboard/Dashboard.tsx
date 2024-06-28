@@ -43,6 +43,7 @@ function Dashboard({
         totalStudents: number;
         totalClassrooms: number;
         OverallPerformance: number;
+        usersJoining: any[];
     };
     StandardOverview?: LearningInterface[];
 }) {
@@ -150,7 +151,11 @@ function Dashboard({
             </div>
             <div className="w-full ">
                 <DashboardGraph
-                    data={AdminSummaries?.usersJoining}
+                    data={
+                        isTeacher
+                            ? TeacherSummaries?.usersJoining
+                            : AdminSummaries?.usersJoining
+                    }
                     year={currentYear}
                 />
             </div>

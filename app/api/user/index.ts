@@ -97,3 +97,19 @@ export const deleteUserProfileAPI = async (
 
     return result;
 };
+
+export const getAllTeacherAPI = async (accessToken: string) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/getAllTeachers`,
+        {
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getAllTeachers'],
+            },
+        }
+    );
+    const response = await result.json();
+    return response;
+};

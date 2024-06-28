@@ -157,6 +157,7 @@ function SigninForm() {
                     </div>
                     <div className="text-center">
                         <Button
+                            disabled={loading}
                             type="submit"
                             className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         >
