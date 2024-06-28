@@ -1,6 +1,3 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Poppins } from 'next/font/google';
 import {
@@ -13,18 +10,13 @@ import {
 } from '@/app/components/ui/table';
 
 export interface StatsInterface {
-    id: number;
+    id: string;
     name: string;
     first: number;
-    firstNum: number;
     second: number;
-    secondNum: number;
     third: number;
-    thirdNum: number;
     forth: number;
-    forthNum: number;
-    fifth: number;
-    fifthNum: number;
+    fifth?: number;
 }
 
 interface StatsTableProps {
@@ -37,15 +29,6 @@ const poppins = Poppins({
     weight: ['100', '400', '700'],
 });
 function StatsTable({ statsList, fontSize }: StatsTableProps) {
-    const { push } = useRouter();
-
-    const handleClick = (
-        event: React.MouseEvent<HTMLTableCellElement, MouseEvent>
-    ) => {
-        const topicName = event.currentTarget.textContent;
-        push(`/students/${topicName?.split(' ').join('').toLowerCase()}`);
-    };
-
     return (
         <Table
             className={`text-[${fontSize || '18'}px] mobile:text-sm   ${
@@ -54,80 +37,41 @@ function StatsTable({ statsList, fontSize }: StatsTableProps) {
         >
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px] text-dark-gray font-bold ">
-                        Avg
+                    <TableHead className=" text-dark-gray font-bold">
+                        Standard
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold ">
-                        80%+
+                        0-25
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold ">
-                        #
+                        25-50
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold ">
-                        0-67%
+                        50-75
                     </TableHead>
                     <TableHead className="text-dark-gray font-bold ">
-                        #
-                    </TableHead>
-                    <TableHead className="text-dark-gray font-bold ">
-                        68-79%
-                    </TableHead>
-                    <TableHead className="text-dark-gray font-bold ">
-                        #
-                    </TableHead>
-                    <TableHead className="text-dark-gray font-bold ">
-                        90-92%
-                    </TableHead>
-                    <TableHead className="text-dark-gray font-bold ">
-                        #
-                    </TableHead>
-                    <TableHead className="text-dark-gray font-bold ">
-                        93-100%
-                    </TableHead>
-                    <TableHead className="text-dark-gray font-bold ">
-                        #
+                        75-100
                     </TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {statsList.map((item, index) => (
-                    <TableRow className="border-none " key={item.id}>
-                        <TableCell className="text-dark-gray font-bold  ">
-                            {item.name}
-                        </TableCell>
-
-                        <TableCell className="text-dark-gray  ">
-                            {item.first}%
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.firstNum}
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.second}%
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.secondNum}
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.third}%
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.thirdNum}
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.forth}%
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.forthNum}
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.fifth}%
-                        </TableCell>
-                        <TableCell className="text-dark-gray ">
-                            {item.fifthNum}
+                {statsList?.length > 0 ? (
+                    statsList?.map((item) => (
+                        <TableRow key={item.id}>
+                            <TableCell>{item.name}</TableCell>
+                            <TableCell>{item.first}</TableCell>
+                            <TableCell>{item.second}</TableCell>
+                            <TableCell>{item.third}</TableCell>
+                            <TableCell>{item.forth}</TableCell>
+                        </TableRow>
+                    ))
+                ) : (
+                    <TableRow>
+                        <TableCell colSpan={5} className="text-center">
+                            No Data Found!
                         </TableCell>
                     </TableRow>
-                ))}
+                )}
             </TableBody>
         </Table>
     );

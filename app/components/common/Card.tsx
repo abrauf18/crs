@@ -35,7 +35,7 @@ function Card({
     const path = usePathname();
 
     return (
-        <div className="col-span-1 mobile:col-span-2 p-4 flex flex-col justify-evenly h-[172px] w-full rounded-lg border group hover:bg-orange-100 hower:border-amber-700">
+        <div className="col-span-1 relative mobile:col-span-2 p-3 flex flex-col gap-1 h-[172px] w-full rounded-lg border group hover:bg-orange-100 hower:border-amber-700">
             <div className={`${iconBackgroundColour} w-10 rounded-full`}>
                 <Icon
                     width={iconWidth}
@@ -47,10 +47,10 @@ function Card({
             <p className="text-base">{cardText}</p>
             <h1 className="font-semibold text-3xl">{count}</h1>
             {!isSchool && (
-                <div className="flex items-end justify-end">
+                <div className="absolute right-2 bottom-5">
                     <Link
                         href={currentPath ? `${currentPath}` : `${path}/${URL}`}
-                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 w-24 lg:hover:bg-primary-color lg:hover:text-white pointer-events-auto group-hover:bg-primary-color group-hover:text-white"
+                        className="border rounded-lg text-dark-gray px-3 py-2  text-sm font-medium text-center mr-2 w-24 lg:hover:bg-primary-color lg:hover:text-white pointer-events-auto group-hover:bg-primary-color group-hover:text-white"
                     >
                         Details
                     </Link>

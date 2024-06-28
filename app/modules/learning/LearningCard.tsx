@@ -113,7 +113,7 @@ function LearningCard({ standards }: { standards: StandardData[] }) {
                             <div className="flex items-end justify-end">
                                 <div
                                     onClick={() => handleClick(standard.id)}
-                                    className="border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 cursor-pointer lg:hover:bg-primary-color lg:hover:text-white"
+                                    className="border rounded-lg text-dark-gray px-4 py-2 text-sm font-medium text-center mr-2 mb-2 cursor-pointer lg:hover:bg-primary-color lg:hover:text-white"
                                 >
                                     View
                                 </div>

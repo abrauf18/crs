@@ -125,7 +125,7 @@ function StudentsInfoTable({
         setIsShowDialogBox(false);
     };
 
-    const handleClick = (id: number) => {
+    const handleClick = (id: string) => {
         push(`/teacher/students/${id}`);
     };
 
@@ -133,36 +133,36 @@ function StudentsInfoTable({
         <PageLoader />
     ) : (
         <section>
-            {students[0] ? (
-                <Table
-                    className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                        poppins.className
-                    }`}
-                >
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className=" text-dark-gray font-bold">
-                                SNO.
-                            </TableHead>
+            <Table
+                className={`text-[${fontSize || '18'}px] mobile:text-sm ${
+                    poppins.className
+                }`}
+            >
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className=" text-dark-gray font-bold">
+                            SNO.
+                        </TableHead>
+                        <TableHead className="text-dark-gray font-bold">
+                            Name
+                        </TableHead>
+                        <TableHead className="text-dark-gray font-bold">
+                            Email
+                        </TableHead>
+                        {!isTeacherDashboardTable && (
                             <TableHead className="text-dark-gray font-bold">
-                                Name
+                                Grade
                             </TableHead>
-                            <TableHead className="text-dark-gray font-bold">
-                                Email
-                            </TableHead>
-                            {!isTeacherDashboardTable && (
-                                <TableHead className="text-dark-gray font-bold">
-                                    Grade
-                                </TableHead>
-                            )}
-                            <TableHead className="text-dark-gray font-bold">
-                                Performance
-                            </TableHead>
-                            <TableHead className="text-dark-gray font-bold">
-                                Action
-                            </TableHead>
-                        </TableRow>
-                    </TableHeader>
+                        )}
+                        <TableHead className="text-dark-gray font-bold">
+                            Performance
+                        </TableHead>
+                        <TableHead className="text-dark-gray font-bold">
+                            Action
+                        </TableHead>
+                    </TableRow>
+                </TableHeader>
+                {students && students[0] ? (
                     <TableBody>
                         {students.map((student, index) => (
                             <TableRow className="border-none" key={student.id}>
@@ -206,7 +206,7 @@ function StudentsInfoTable({
                                             className=" bg-light-orange rounded-md p-1 cursor-pointer"
                                             onClick={() =>
                                                 !isClassroomTable
-                                                    ? handleClick(index)
+                                                    ? handleClick(student.id)
                                                     : handleOpenStudentModal(
                                                           student
                                                       )
@@ -254,14 +254,12 @@ function StudentsInfoTable({
                             </TableRow>
                         ))}
                     </TableBody>
-                </Table>
-            ) : (
-                <div className="flex justify-center items-center">
-                    {' '}
-                    No student found!
-                </div>
-            )}
-
+                ) : (
+                    <TableCell colSpan={6} className="text-center">
+                        No Student Found!
+                    </TableCell>
+                )}
+            </Table>
             {isShowStudentModal && (
                 <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[40%] md:w-[60%] lg:max-w-[400px] xl:max-w-[400px] 2xl:max-w-[400px]">
                     <ClassroomModal

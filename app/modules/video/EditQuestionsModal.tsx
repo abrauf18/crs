@@ -279,7 +279,7 @@ function EditQuestionsModal({
                                 <div key={question.id}>
                                     <Label
                                         htmlFor={`video.questions[${index}].statement`}
-                                        className="font-semibold"
+                                        className="font-semibold text-md"
                                     >
                                         {`Question ${index + 1}`}
                                     </Label>

@@ -55,7 +55,7 @@ function ProfileImage({
                                         : currentImage
                                 }
                                 alt="profile Image"
-                                className="rounded-full aspect-square object-cover h-32 w-32"
+                                className="rounded-full object-fit h-28 w-28"
                                 width={176}
                                 height={176}
                             />

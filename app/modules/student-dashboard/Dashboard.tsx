@@ -47,7 +47,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 Icon={WavingHandIcon}
             />
 
-            <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-5 my-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 my-5">
                 <Card
                     Icon={LibraryBig}
                     header="Standards"
@@ -78,7 +78,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 />
             </div>
 
-            <div className="flex mobile:flex-col  md:justify-between mt-8 w-full">
+            <div className="flex mobile:flex-col md:justify-between items-center mt-8 w-full">
                 <p className="font-semibold text-xl w-fit ">
                     Your Assigned Learnings
                 </p>
@@ -89,11 +89,11 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 </div>
             </div>
 
-            <div className="my-8">
+            <div className="my-3">
                 <Learning standards={APIdata.standardsData} />
             </div>
 
-            <div className="flex mobile:flex-col md:justify-between mt-8">
+            <div className="flex mobile:flex-col items-center md:justify-between mt-8">
                 <p className="font-semibold text-xl ">Saved Videos</p>
                 <div className="mobile:flex mobile:justify-end">
                     <p className=" border cursor-pointer py-2  px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray  hover:bg-primary-color hover:text-white">
@@ -102,7 +102,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 </div>
             </div>
 
-            <div className="mt-8">
+            <div className="mt-3">
                 {APIdata?.videosData?.length === 0 ? (
                     <div className="flex flex-col items-center justify-center w-full h-72  bg-white rounded-lg shadow-lg">
                         <ShieldAlert size={48} />

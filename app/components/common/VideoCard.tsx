@@ -69,7 +69,7 @@ function VideoCard({ card }: VideoCardProps) {
                 <Image
                     src={card.imageUrl}
                     alt="video"
-                    className="w-full h-full object-fill"
+                    className="w-full h-48 object-cover rounded-lg"
                     width={200}
                     height={200}
                 />
@@ -98,7 +98,7 @@ function VideoCard({ card }: VideoCardProps) {
                     {card.Text}
                 </h5>
                 <div>
-                    <div className="flex gap-2 mb-2">
+                    <div className="flex gap-2 mb-4">
                         <div className="flex gap-1 items-center text-dark-gray text-sm">
                             <QuestionIcon
                                 height={17}
@@ -118,7 +118,7 @@ function VideoCard({ card }: VideoCardProps) {
                     </div>
                 </div>
 
-                <div className="flex items-end justify-end">
+                <div className="flex items-end justify-end mb-2">
                     <Link
                         href={`/student/learning/${card.standardId}/video/${card.id}`}
                         className="relative"

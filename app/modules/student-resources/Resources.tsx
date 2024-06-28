@@ -94,7 +94,7 @@ function Resources({ APIdata }: { APIdata: APIData }) {
                 tagline="Your All Resources Allocated to Topics"
             />
             <div className="border rounded-lg p-3 px-6">
-                <Filters text="All topic's" isHideSecondBtn isHideFirstBtn />
+                <Filters text="All Standard's" isHideSecondBtn isHideFirstBtn />
                 <ResourcesTable standards={APIdata.standards} />
             </div>
             {APIdata?.standards.length > 10 && (

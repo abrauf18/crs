@@ -409,7 +409,7 @@ export default function VideoViewing({
                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-center gap-4">
                             {topicsArray.length > 0 ? (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
-                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
                                         Checkpoints
                                     </h2>
                                     <Table>
@@ -458,15 +458,15 @@ export default function VideoViewing({
                                 </div>
                             ) : (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow text-center">
-                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
                                         Checkpoints
                                     </h2>
-                                    <p className="py-4">No Topic</p>
+                                    <p className="py-4 text-center">No Topic</p>
                                 </div>
                             )}
                             {questionsArray.length > 0 ? (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
-                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
                                         Questions
                                     </h2>
                                     <Table>
@@ -521,10 +521,12 @@ export default function VideoViewing({
                                 </div>
                             ) : (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow text-center">
-                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
                                         Questions
                                     </h2>
-                                    <p className="py-4">No Question</p>
+                                    <p className="py-4 text-center">
+                                        No Question
+                                    </p>
                                 </div>
                             )}
                         </div>

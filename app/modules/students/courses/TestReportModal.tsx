@@ -178,9 +178,7 @@ function TestReportModal({
                         </h1>
                     </div>
                     <div className="p-4 border-2 border-red-600 bg-red-100 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">
-                            Marks of Unattempted Questions
-                        </h1>
+                        <h1 className="font-medium">Unattempted Marks</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold ">
                             <span className="font-bold text-lg text-black">
                                 {test.unAnsweredWeightage}

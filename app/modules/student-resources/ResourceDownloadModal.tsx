@@ -28,30 +28,7 @@ function ResourceDownloadModal({
     onClose: () => void;
     standard: Standard;
 }) {
-    const resources: FileInterface[] = [
-        {
-            id: '1',
-            imageUrl: Resource1,
-            resourceType: 'ppt',
-            name: 'Artificial Intelligence',
-            btnText: 'Download',
-        },
-        {
-            id: '2',
-            imageUrl: Resource2,
-            resourceType: 'ppt',
-            name: 'Artificial Intelligence',
-            btnText: 'Download',
-        },
-        {
-            id: '1',
-            imageUrl: Resource3,
-            resourceType: 'xls',
-            name: 'Artificial Intelligence',
-            btnText: 'Download',
-        },
-    ];
-
+    console.log(standard);
     const handleDownload = async ({
         url,
         name,
@@ -82,8 +59,8 @@ function ResourceDownloadModal({
             <div className="h-[100%] overflow-y-auto px-6">
                 <ModalHeader
                     headerText={{
-                        heading: 'Future of Work',
-                        tagline: 'Assigned Resources to Topic',
+                        heading: standard.name,
+                        tagline: 'Assigned Resources to Standard',
                     }}
                     onClose={onClose}
                 />
@@ -91,12 +68,12 @@ function ResourceDownloadModal({
                     className="flex justify-end px-4"
                     onClick={handleDownloadAll}
                 >
-                    <p className="px-5 py-3 bg-primary-color rounded-2xl text-white w-fit cursor-pointer">
+                    <p className="px-3 py-[0.7rem] bg-primary-color rounded-lg text-white w-fit cursor-pointer hover:bg-orange-500">
                         Download All
                     </p>
                 </div>
                 <div className="flex flex-col space-y-7 mt-7">
-                    {standard.resources.map((resource) => (
+                    {standard?.resources?.map((resource) => (
                         <FileCard
                             key={resource.id}
                             handleDownload={handleDownload}

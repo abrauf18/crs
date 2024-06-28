@@ -50,7 +50,7 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
                 poppins.className
             }`}
         >
-            <TableHeader>
+            <TableHeader className=" whitespace-nowrap">
                 <TableRow>
                     <TableHead className="text-dark-gray font-bold">
                         SNO.
@@ -70,7 +70,7 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
                 </TableRow>
             </TableHeader>
             {myRecord?.length > 0 ? (
-                <TableBody>
+                <TableBody className="whitespace-nowrap">
                     {myRecord?.map((record, index) => (
                         <TableRow
                             className="border-none"
@@ -85,15 +85,15 @@ function MyAnswersTable({ myRecord, fontSize }: MyAnswersProp) {
                                 {record.standardName}
                             </TableCell>
 
-                            <TableCell className="text-dark-gray text-center">
+                            <TableCell className="text-dark-gray ">
                                 {record.obtainedWeightage}
                             </TableCell>
-                            <TableCell className="text-dark-gray text-center">
+                            <TableCell className="text-dark-gray ">
                                 {record.totalWeightage}
                             </TableCell>
-                            <TableCell className="flex justify-center items-center p-0 mt-5 ml-3 md:mt-6 lg:mt-4 text-center">
+                            <TableCell>
                                 <div
-                                    className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer"
+                                    className="p-1 w-7 bg-light-orange rounded-lg cursor-pointer"
                                     onClick={() =>
                                         handleClick(record.standardId)
                                     }

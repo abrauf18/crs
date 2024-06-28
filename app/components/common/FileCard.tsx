@@ -54,7 +54,7 @@ function FileCard({ card, released, handleDownload }: FileCardProp) {
                 }}
             >
                 <p
-                    className={` px-5 py-3 w-fit rounded-2xl
+                    className={`p-3 w-fit rounded-lg hover:bg-orange-500
                         ${
                             !released
                                 ? 'bg-gray-300 text-white'

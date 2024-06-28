@@ -270,10 +270,7 @@ export default function SideBar() {
             </ul>
 
             {/* Mobile Navbar */}
-            <ul
-                onClick={() => SetMenu(!menu)}
-                className="md:hidden bg-light-gray w-screen p-4"
-            >
+            <ul className="md:hidden bg-light-gray w-screen p-4">
                 <div className="flex justify-between items-center">
                     <Image
                         src={crsLogo as string}
@@ -284,11 +281,13 @@ export default function SideBar() {
                             objectFit: 'contain',
                         }}
                     />
-                    {menu ? (
-                        <X width={35} height={35} />
-                    ) : (
-                        <Menu width={35} height={35} />
-                    )}
+                    <div onClick={() => SetMenu(!menu)}>
+                        {menu ? (
+                            <X width={35} height={35} />
+                        ) : (
+                            <Menu width={35} height={35} />
+                        )}
+                    </div>
                 </div>
                 {menu && (
                     <div className="flex flex-col justify-start items-center h-full">

@@ -407,3 +407,28 @@ export const getSummarizedStudentForTeacherAPI = async ({
 
     return result;
 };
+
+export const SummarizedStudentsAPI = async ({
+    teacherId,
+    accessToken,
+}: {
+    teacherId: string;
+    accessToken: string;
+}) => {
+    // console.log(teacherId, '\n\n', accessToken);
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/student/getAllSummarizedStudentAndStandardsForTeacher`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                teacherid: teacherId,
+            },
+            next: {
+                tags: ['SummarizedStudents'],
+            },
+        }
+    );
+    const response = await result.json();
+
+    return response;
+};
