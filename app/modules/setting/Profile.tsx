@@ -74,7 +74,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 await deleteProfilePicture();
             }
 
-            const { name, email, password } = formData;
+            const { name, email, password, schoolName } = formData;
 
             // Update user profile
             const response = await updateUserProfileAPI(
@@ -82,7 +82,8 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                 imageUrl,
                 name,
                 email,
-                password
+                password,
+                schoolName || ''
             );
 
             // Update next auth session data
@@ -118,11 +119,13 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     const APIdata = await getUserProfileAPI(
                         data?.user.accessToken
                     );
-                    const { name, email, image } = APIdata.data.data;
+                    const { name, email, image, schoolName } =
+                        APIdata.data.data;
                     methods.reset({
                         name,
                         email,
                         password: '',
+                        ...(schoolName && { schoolName }),
                     });
                     setOriginalImage(image);
                     setCurrentImage(image);
@@ -140,14 +143,10 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
     return (
         <section
-            className={`bg-white flex mobile:flex-col mobile:gap-5 h-full w-full mt-8 lg:mt-0 md:gap-10 ${
-                !isSchoolProfile && 'basis-1/2'
-            }`}
+            className={`bg-white flex mobile:flex-col mobile:gap-5 h-full w-full mt-8 lg:mt-0 md:gap-10 'basis-1/2'`}
         >
             <div
-                className={`flex flex-col mobile:items-center mobile:w-full mobile:px-2 ${
-                    !isSchoolProfile ? 'm-auto mobile:h-screen' : 'w-full'
-                } w-[400px]`}
+                className={`flex flex-col mobile:items-center mobile:w-full mobile:px-2 'm-auto mobile:h-screen' w-[400px]`}
             >
                 <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
                     My profile
@@ -223,32 +222,49 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                 }}
                             />
                         </div>
-                        {!isSchoolProfile && (
-                            <div className="md:flex md:justify-between w-full mt-5 gap-2">
-                                <button
-                                    type="button"
-                                    className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-2 border rounded-lg"
-                                    onClick={handleReset}
-                                >
-                                    Discard Changes
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={!methods.formState.isValid}
-                                    className={`text-white ${
-                                        !methods.formState.isValid
-                                            ? 'bg-gray-300'
-                                            : 'bg-primary-color'
-                                    } font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12`}
-                                >
-                                    {loading ? <Loader /> : 'Save Changes'}
-                                </button>
+                        {isSchoolProfile && (
+                            <div className="mt-2">
+                                <Label htmlFor="schoolName">School Name</Label>
+                                <Input
+                                    name="schoolName"
+                                    placeholder="Enter the Name of Your School"
+                                    type="text"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
                             </div>
                         )}
+                        {/* {!isSchoolProfile && ( */}
+                        <div className="md:flex md:justify-between w-full mt-5 gap-2">
+                            <button
+                                type="button"
+                                className="text-dark-gray font-semibold mobile:mb-2 w-full p-2 md:px-6 md:py-2 border rounded-lg"
+                                onClick={handleReset}
+                            >
+                                Discard Changes
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={!methods.formState.isValid}
+                                className={`text-white ${
+                                    !methods.formState.isValid
+                                        ? 'bg-gray-300'
+                                        : 'bg-primary-color'
+                                } font-semibold w-full p-2 md:px-6 md:py-2 border rounded-lg h-12`}
+                            >
+                                {loading ? <Loader /> : 'Save Changes'}
+                            </button>
+                        </div>
+                        {/* )} */}
                     </form>
                 </FormProvider>
             </div>
-            {isSchoolProfile && (
+            {/* {isSchoolProfile && (
                 <SchoolProfile
                     isProfileFormValid={methods.formState.isValid}
                     selectedImageFile={selectedFile}
@@ -260,7 +276,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                     handleProfileReset={handleReset}
                     handleUpdateOriginalImage={setOriginalImage}
                 />
-            )}
+            )} */}
         </section>
     );
 }
