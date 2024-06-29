@@ -43,8 +43,8 @@ function ProfileModal({ onClose, school, setSchool, schoolList }: any) {
 
     const onFormSubmit = async (formData: any) => {
         const { username, email } = formData;
-        const getSchoolId = schoolList.filter(
-            (value: { name: string; id: string }) => value.name === school
+        const getSchoolId = schoolList.find(
+            (value: { value: string; id: string }) => value?.value === school
         );
         const accessToken = data?.user.accessToken || '';
 
@@ -56,7 +56,7 @@ function ProfileModal({ onClose, school, setSchool, schoolList }: any) {
         };
 
         if (role === 'teacher' || role === 'student') {
-            payload.schoolId = getSchoolId[0].id;
+            payload.schoolId = getSchoolId?.id;
         }
 
         const response = await dispatch(signupInvite(payload));

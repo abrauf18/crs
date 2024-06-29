@@ -76,7 +76,7 @@ function Users({
                     })
                 );
                 setSchoolList(newSchoolList);
-                setSchool(schoolList[0]?.value);
+                setSchool(schoolList?.value);
             }
         });
     }, [data?.user?.accessToken]);

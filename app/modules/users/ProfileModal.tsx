@@ -223,7 +223,7 @@ function ProfileModal({
                                 <div className="mb-2 w-full">
                                     <Label htmlFor="role ">Role</Label>
                                     <Select
-                                        disabled={isViewOnly}
+                                        disabled
                                         name="role"
                                         additionalClasses="mt-1"
                                         options={roleOptions}

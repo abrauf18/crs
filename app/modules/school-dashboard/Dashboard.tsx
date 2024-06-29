@@ -1,55 +1,28 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
-import schoolGraph from '@/app/assets/images/schoolGraph.svg';
 import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
-import UsersTable from '../users/UsersTable';
-import Filters from '../../components/common/Filters';
+import DashboardGraph from '@/app/components/common/DashboardGraph';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
-import TicketsTable, { TicketsInterface } from './RecentTicketsTable';
+import TicketsTable from './RecentTicketsTable';
 import SubmitTicketModal from './SubmitTicketModal';
 import AddClassroomModal from './AddClassroomModal';
+import UsersTable from '../users/UsersTable';
 
-export const tickets: TicketsInterface[] = [
-    {
-        id: 1,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Active',
-    },
-    {
-        id: 2,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Inprogress',
-    },
-    {
-        id: 3,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Closed',
-    },
-    {
-        id: 4,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Active',
-    },
-    {
-        id: 5,
-        name: 'John',
-        date: 'December 10,2023',
-        status: 'Closed',
-    },
-];
-function SchoolDashboard() {
+function SchoolDashboard({ data, name }: { data: any; name: string }) {
     const [isDisplayTicketModal, setIsDisplayTicketModal] = useState(false);
+    const [currentYear, setCurrentYear] = React.useState(
+        new Date().getFullYear()
+    );
+
+    async function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        setCurrentYear(+e.target.value);
+    }
     const [isOpen, setIsOpen] = useState(false);
     const handleDisplayTicketModal = () => {
         setIsDisplayTicketModal(true);
@@ -75,15 +48,23 @@ function SchoolDashboard() {
         };
     }, [isOpen, isDisplayTicketModal]);
 
+    const tickets = data?.getSchoolTickets.map((ticket: any) => ({
+        ...ticket,
+        id: ticket.id,
+        name: ticket?.User?.name,
+        date: ticket.createdAt,
+        status: ticket.status,
+    }));
+
     return (
         <section className="flex flex-col w-full scroll-smooth  lg:px-4 ">
             <Searchbar
-                headerText="Hello John Doe!"
+                headerText={`Hello ${name}!`}
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
             <div
-                className="cursor-pointer border w-38 absolute right-11 md:top-6 lg:top-8 z-50 rounded-lg p-3 text-white bg-primary-color font-medium mobile:mt-2 hover:bg-orange-500"
+                className="cursor-pointer border w-38 absolute right-11 md:top-6 lg:top-8 z-50 rounded-lg px-3 py-2 text-white bg-primary-color font-medium mobile:mt-2 hover:bg-orange-500"
                 onClick={handleClassRoomModal}
             >
                 Create Classroom
@@ -92,33 +73,45 @@ function SchoolDashboard() {
                 <Card
                     Icon={UserIcon}
                     cardText="Total Students"
-                    count="20K"
+                    count={data?.totalStudent}
                     isSchool
                 />
                 <Card
                     Icon={SchoolClassroomIcon}
                     cardText="No of Classroom"
-                    count={200}
+                    count={data?.totalClassroom}
                     isSchool
                 />
 
                 <Card
                     Icon={DataIcon}
                     cardText="Overall Performance"
-                    count="70%"
+                    count={`${data?.obtainedWeightage} of ${data?.totalWeightage}%`}
                     isSchool
                 />
             </div>
-            <Filters
-                text="Overall Performance"
-                secondButtonText="Average Time Spent"
-            />
-            <div className="w-auto">
-                <Image
-                    src={schoolGraph as string}
-                    alt="icon"
-                    className="w-full lg:h-full lg:object-contain h-56 object-cover"
-                />
+            <div className="flex justify-between items-center my-3">
+                <h3 className="text-xl font-semibold mobile:mb-2">
+                    All Users Count
+                </h3>
+                <select
+                    className=" select-wrapper"
+                    onChange={handleChange}
+                    value={currentYear}
+                >
+                    <option value={new Date().getFullYear()}>
+                        {new Date().getFullYear()}
+                    </option>
+                    <option value={new Date().getFullYear() - 1}>
+                        {new Date().getFullYear() - 1}
+                    </option>
+                    <option value={new Date().getFullYear() - 2}>
+                        {new Date().getFullYear() - 2}
+                    </option>
+                </select>
+            </div>
+            <div className="w-full ">
+                <DashboardGraph data={data?.usersJoining} year={currentYear} />
             </div>
             <div className=" grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mt-5 ">
                 <div className="border rounded-lg p-5 px-2 lg:px-5">
@@ -127,12 +120,16 @@ function SchoolDashboard() {
                             Teacher&apos;s
                         </h1>
                         <Link href="/school/teachers">
-                            <div className="cursor-pointer border rounded-lg px-3 py-1 text-dark-gray font-medium mobile:mt-2">
+                            <div className="cursor-pointer border rounded-lg px-3 py-2 text-dark-gray font-medium mobile:mt-2 hover:bg-primary-color hover:text-white">
                                 Show All
                             </div>
                         </Link>
                     </div>
-                    {/* <UsersTable users={usersData} fontSize="12" isDashboard /> */}
+                    <UsersTable
+                        users={data?.getSchoolTeacher}
+                        fontSize="12"
+                        isDashboard
+                    />
                 </div>
                 <div className="border rounded-lg p-5 px-2 lg:px-5 mt-2 lg:mt-0">
                     <div className="flex  justify-between px-1 mb-2   items-center">
@@ -140,7 +137,7 @@ function SchoolDashboard() {
                             Recent Tickets
                         </h1>
                         <div
-                            className="cursor-pointer border rounded-lg px-3 py-1 mobile:mt-2 text-dark-gray font-medium"
+                            className="cursor-pointer border rounded-lg px-3 py-2 mobile:mt-2 text-dark-gray font-medium hover:bg-primary-color hover:text-white"
                             onClick={handleDisplayTicketModal}
                         >
                             New Ticket

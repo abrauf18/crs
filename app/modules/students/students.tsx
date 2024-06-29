@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
@@ -13,37 +13,44 @@ function Students({ data }: { data: any }) {
     const gradeOptions = data?.map((grade: any) => grade?.className);
     const [isAddStudentModalOpen, setAddStudentModalOpen] = useState(false);
     const [selectedTab, setSelectedTab] = useState(gradeOptions[0]);
-    const onSelectFilter = (tab: string) => {
-        setSelectedTab(tab);
-    };
+    const [studentsData, setStudentsData] = useState<any[]>([]);
+    const [statsList, setStatsList] = useState<any[]>([]);
 
-    const filterClass = data?.filter(
-        (grade: any) => grade?.className.includes(selectedTab)
-    );
+    useEffect(() => {
+        if (data && selectedTab) {
+            const filterClass = data.find(
+                (grade: any) => grade?.className === selectedTab
+            );
+            if (filterClass) {
+                const filteredStudents = filterClass?.studentsData?.map(
+                    (student: any, index: number) => ({
+                        id: student?.userId,
+                        index: index + 1,
+                        name: student?.userName,
+                        email: student?.userEmail,
+                        grade: student?.className,
+                        performance: student?.totalObtainedScore || 0,
+                        image: student?.image,
+                        gradeId: student?.classId,
+                    })
+                );
+                setStudentsData(filteredStudents);
 
-    const filteredStudents = filterClass[0]?.studentsData;
+                const statsList = filterClass?.standardList?.map(
+                    (standard: any) => ({
+                        id: standard.standardId,
+                        name: standard?.standardName,
+                        first: standard?.studentWeightageDistribution['0-25'],
+                        second: standard?.studentWeightageDistribution['25-50'],
+                        third: standard?.studentWeightageDistribution['50-75'],
+                        forth: standard?.studentWeightageDistribution['75-100'],
+                    })
+                );
+                setStatsList(statsList);
+            }
+        }
+    }, [selectedTab, data]);
 
-    const studentsData = filteredStudents?.map(
-        (student: any, index: number) => ({
-            id: student?.userId,
-            index: index + 1,
-            name: student?.userName,
-            email: student?.userEmail,
-            grade: student?.className,
-            performance: student?.totalObtainedScore || 0,
-            image: student?.image,
-            gradeId: student?.classId,
-        })
-    );
-
-    const StatsList = filterClass[0]?.standardList?.map((standard: any) => ({
-        id: standard.standardId,
-        name: standard?.standardName,
-        first: standard?.studentWeightageDistribution['0-25'],
-        second: standard?.studentWeightageDistribution['25-50'],
-        third: standard?.studentWeightageDistribution['50-75'],
-        forth: standard?.studentWeightageDistribution['75-100'],
-    }));
     const handleOpenAddStudentModal = () => {
         setAddStudentModalOpen(true);
     };
@@ -51,6 +58,11 @@ function Students({ data }: { data: any }) {
     const handleCloseAddStudentModal = () => {
         setAddStudentModalOpen(false);
     };
+
+    const onSelectFilter = (tab: string) => {
+        setSelectedTab(tab);
+    };
+
     return (
         <section>
             <Searchbar
@@ -58,43 +70,33 @@ function Students({ data }: { data: any }) {
                 Icon={User}
                 tagline="Here’s all Students"
             />
-            {data.length > 0 ? (
-                <>
-                    <TabBar
-                        options={gradeOptions}
-                        onSelectFilter={onSelectFilter}
-                        initialSelectedTab={selectedTab}
-                    />
+            <TabBar
+                options={gradeOptions}
+                onSelectFilter={onSelectFilter}
+                initialSelectedTab={selectedTab}
+            />
 
-                    <div className="flex justify-between mt-5">
-                        <h1 className="font-bold text-dlg">All Students</h1>
+            <div className="flex justify-between mt-5">
+                <h1 className="font-bold text-dlg">All Students</h1>
 
-                        <Button
-                            className="bg-primary-color mobile:px-3 lg:hover:bg-orange-400"
-                            variant="default"
-                            size="default"
-                            onClick={handleOpenAddStudentModal}
-                        >
-                            Add Student
-                        </Button>
-                    </div>
-                    <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3 ">
-                        <StatsTable statsList={StatsList} />
-                    </div>
-                    <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
-                        <StudentsInfoTable students={studentsData} isTeacher />
-                    </div>
-                    {isAddStudentModalOpen && (
-                        <div className="fixed right-0 top-0 z-50 lg:w-[30%] w-full md:w-[60%]">
-                            <AddStudentModal
-                                onClose={handleCloseAddStudentModal}
-                            />
-                        </div>
-                    )}
-                </>
-            ) : (
-                <div className="flex justify-center items-center h-96">
-                    <h1 className="text-2xl font-semibold">No Data Found!</h1>
+                <Button
+                    className="bg-primary-color mobile:px-3 lg:hover:bg-orange-400"
+                    variant="default"
+                    size="default"
+                    onClick={handleOpenAddStudentModal}
+                >
+                    Add Student
+                </Button>
+            </div>
+            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
+                <StatsTable statsList={statsList} />
+            </div>
+            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
+                <StudentsInfoTable students={studentsData} isTeacher />
+            </div>
+            {isAddStudentModalOpen && (
+                <div className="fixed right-0 top-0 z-50 lg:w-[30%] w-full md:w-[60%]">
+                    <AddStudentModal onClose={handleCloseAddStudentModal} />
                 </div>
             )}
         </section>

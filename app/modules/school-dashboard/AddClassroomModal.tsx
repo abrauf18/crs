@@ -11,7 +11,7 @@ import { createClassroomAPI } from '@/app/api/classroom';
 import { getAllTeacherAPI } from '@/app/api/user';
 import Loader from '@/app/components/common/PageLoader';
 import { toast } from 'react-toastify';
-import { Session } from 'next-auth';
+import action from '@/app/action';
 
 function AddClassroomModal({ onClose }: any) {
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
@@ -46,8 +46,9 @@ function AddClassroomModal({ onClose }: any) {
             setButtonLoader(true);
             const { className } = formData;
             const selectedTeacher = teacherList.find(
-                (teacher) => teacher.label === currentTeacher
+                (teacher) => teacher.value.toLowerCase() === currentTeacher
             );
+
             const accessToken = data?.user.accessToken || '';
 
             const payload = {
@@ -61,6 +62,7 @@ function AddClassroomModal({ onClose }: any) {
             if (response?.status !== 'success') {
                 return toast.error(response.message);
             }
+            action('getSchoolDashboard');
             return toast.success('Classroom created successfully');
         } catch (error: any) {
             return toast.error('Something went wrong');
@@ -126,8 +128,10 @@ function AddClassroomModal({ onClose }: any) {
                                 </Label>
                                 <AppDropDown
                                     name="teacher"
-                                    options={teacherList}
-                                    value={currentTeacher}
+                                    options={teacherList || []}
+                                    value={
+                                        currentTeacher || 'No Teacher To sele'
+                                    }
                                     onChange={(e: any) =>
                                         setCurrentTeacher(e.target.value)
                                     }

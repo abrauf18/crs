@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import StudentIcon from '@/app/assets/icons/StudentIcon';
+import { ShieldAlert } from 'lucide-react';
 import ClassroomCard from './ClassroomCard';
 
 const colors = [
@@ -42,27 +43,41 @@ function Classroom({
     };
 
     return (
-        <div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 ">
-                {summarizedClassrooms?.map((classroom, index) => {
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        <>
+            {summarizedClassrooms?.length > 0 ? (
+                summarizedClassrooms?.map((classroom, index) => {
                     const colorIndex = index % colors.length;
                     const { iconColor, iconBg, activeColor } =
                         colors[colorIndex];
                     return (
-                        <ClassroomCard
+                        <div
+                            className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 "
                             key={classroom.id}
-                            Icon={StudentIcon}
-                            periods={`${classroom.name}`}
-                            students={`${classroom.studentCount} Students`}
-                            iconColor={iconColor}
-                            iconBg={iconBg}
-                            activeColor={activeColor}
-                            onClick={() => push(`${pathname}/${classroom.id}`)}
-                        />
+                        >
+                            <ClassroomCard
+                                Icon={StudentIcon}
+                                periods={`${classroom.name}`}
+                                students={`${classroom.studentCount} Students`}
+                                iconColor={iconColor}
+                                iconBg={iconBg}
+                                activeColor={activeColor}
+                                onClick={() =>
+                                    push(`${pathname}/${classroom.id}`)
+                                }
+                            />
+                        </div>
                     );
-                })}
-            </div>
-        </div>
+                })
+            ) : (
+                <div className="flex flex-col items-center justify-center !w-full h-72  bg-white rounded-lg shadow-lg">
+                    <ShieldAlert size={48} />
+                    <p className="text-lg font-semibold mt-4">
+                        No Classroom Found
+                    </p>
+                </div>
+            )}
+        </>
     );
 }
 

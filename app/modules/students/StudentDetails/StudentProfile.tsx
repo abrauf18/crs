@@ -21,18 +21,20 @@ interface Student {
 
 function StudentProfile({ student }: { student: Student }) {
     const [isShowDialog, setIsShowDialog] = React.useState(false);
+    const [isLoading, setIsloading] = React.useState(false);
     const { data } = useSession();
     const { push } = useRouter();
 
     // eslint-disable-next-line consistent-return
     const handleDeleteStudent = async () => {
         try {
+            setIsloading(true);
             const result = await removeStudentFromClassroomAPI({
                 accessToken: data?.user?.accessToken || '',
                 classroomStudentId: student?.classroomStudentId,
             });
             toast.success('Student dropped out successfully!');
-            action('SummarizedStudents');
+            await action('SummarizedStudents');
             return push('/teacher/students');
         } catch (error: any) {
             console.log(error);
@@ -41,6 +43,7 @@ function StudentProfile({ student }: { student: Student }) {
             );
         } finally {
             setIsShowDialog(false);
+            setIsloading(false);
         }
     };
 
@@ -129,6 +132,7 @@ function StudentProfile({ student }: { student: Student }) {
                     } from ${student?.classroomName}?`}
                     onYes={handleDeleteStudent}
                     onNo={handleModal}
+                    loader={isLoading}
                 />
             )}
         </>

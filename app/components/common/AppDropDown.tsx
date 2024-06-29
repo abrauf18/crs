@@ -1,4 +1,5 @@
 import React from 'react';
+import Input from './Input';
 
 export interface OptionsInterface {
     label: string;
@@ -26,18 +27,28 @@ function AppDropDown({
 
     return (
         <div className="relative w-full">
-            <select
-                name={name}
-                value={value}
-                onChange={onChange}
-                className={`${selectClassName} appearance-none w-full`}
-            >
-                {options.map((option) => (
-                    <option key={option?.label} value={option?.label}>
-                        {option?.value}
-                    </option>
-                ))}
-            </select>
+            {options.length > 0 ? (
+                <select
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    className={`${selectClassName} appearance-none w-full`}
+                >
+                    {options.map((option) => (
+                        <option key={option?.label} value={option?.label}>
+                            {option?.value}
+                        </option>
+                    ))}
+                </select>
+            ) : (
+                <Input
+                    name="data"
+                    type="text"
+                    inputValue="No Data Available"
+                    disabled
+                />
+            )}
+
             <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                 <svg
                     className="h-4 w-4 text-slate-400"

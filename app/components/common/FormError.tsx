@@ -8,7 +8,9 @@ function FormError({ name }: { name: string }) {
 
     return errors[name]?.type ? (
         <div className="flex items-center gap-1 mt-1">
-            <X size={20} color="#E6500D" />
+            <div style={{ minWidth: '20px' }}>
+                <X size={20} color="#E6500D" />
+            </div>
             <p className={`text-red-500 text-xs `}>
                 {errors[name]?.message?.toString() ?? ''}
             </p>

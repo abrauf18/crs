@@ -86,6 +86,52 @@ export const createSchoolAPI = async (
     }
 };
 
+export const getSchoolDashboardAPI = async (
+    accessToken: string,
+    schoolId: string,
+    userId: string
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/get-school-dashboard?schoolId=${schoolId}&userId=${userId}`,
+        {
+            method: 'GET',
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getSchoolDashboard'],
+            },
+        }
+    );
+    const response = await result.json();
+    return response;
+};
+
+export const createTicketAPI = async (
+    accessToken: string,
+    userId: string,
+    complaintType: string,
+    message: string
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/create-ticket`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                accesstoken: accessToken,
+            },
+            body: JSON.stringify({
+                userId,
+                complaintType,
+                message,
+            }),
+        }
+    );
+    const response = await result.json();
+    return response;
+};
+
 export const getListTeacherOfSchool = async ({
     accessToken,
     schoolId,
@@ -105,7 +151,7 @@ export const getListTeacherOfSchool = async ({
         limit: limit.toString(),
         ...(search ? { search } : {}),
     }).toString();
-    console.log(queryParams);
+
     const result = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/school/list-teacher?${queryParams}`,
         {

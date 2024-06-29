@@ -48,9 +48,9 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
     return (
         <section>
             <Table
-                className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                    poppins.className
-                }`}
+                className={`text-[${
+                    fontSize || '18'
+                }px] mobile:text-sm whitespace-nowrap ${poppins.className}`}
             >
                 <TableHeader>
                     <TableRow>
@@ -73,51 +73,59 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {teachers.map((teacher, index) => (
-                        <TableRow className="border-none" key={teacher.id}>
-                            <TableCell className="font-medium">
-                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {index + 1}
-                                </span>
-                            </TableCell>
-                            <TableCell className="">
-                                <span className="rounded flex gap-x-2 items-center mr-6">
-                                    <Image
-                                        src={Avatar}
-                                        alt="crs logo"
-                                        style={{
-                                            width: '25px',
-                                            height: '25px',
-                                            objectFit: 'fill',
-                                        }}
-                                    />
-                                    <span>{teacher.name}</span>
-                                </span>
-                            </TableCell>
-                            <TableCell className="text-dark-gray ">
-                                {teacher.email}
-                            </TableCell>
-                            <TableCell className="text-dark-gray ">
-                                {teacher.assignedClasses}
-                            </TableCell>
-                            <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 ">
-                                <div className="mr-2 rounded-md cursor-pointer">
-                                    <EditIcon
-                                        width={28}
-                                        height={28}
-                                        onClick={handleEditTeacherClick}
-                                    />
-                                </div>
-                                <div className="bg-red-100 rounded-md p-1">
-                                    <Trash
-                                        color="#D34645"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
+                    {teachers.length > 0 ? (
+                        teachers?.map((teacher, index) => (
+                            <TableRow className="border-none" key={teacher.id}>
+                                <TableCell className="font-medium">
+                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                        {index + 1}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="">
+                                    <span className="rounded flex gap-x-2 items-center mr-6">
+                                        <Image
+                                            src={Avatar}
+                                            alt="crs logo"
+                                            style={{
+                                                width: '25px',
+                                                height: '25px',
+                                                objectFit: 'fill',
+                                            }}
+                                        />
+                                        <span>{teacher.name}</span>
+                                    </span>
+                                </TableCell>
+                                <TableCell className="text-dark-gray ">
+                                    {teacher.email}
+                                </TableCell>
+                                <TableCell className="text-dark-gray ">
+                                    {teacher.assignedClasses}
+                                </TableCell>
+                                <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 ">
+                                    <div className="mr-2 rounded-md cursor-pointer">
+                                        <EditIcon
+                                            width={28}
+                                            height={28}
+                                            onClick={handleEditTeacherClick}
+                                        />
+                                    </div>
+                                    <div className="bg-red-100 rounded-md p-1">
+                                        <Trash
+                                            color="#D34645"
+                                            width={18}
+                                            height={18}
+                                        />
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={5} className="text-center">
+                                No data available
                             </TableCell>
                         </TableRow>
-                    ))}
+                    )}
                 </TableBody>
             </Table>
             {isEditTeacherModalVisible && (

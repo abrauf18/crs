@@ -17,7 +17,7 @@ function ModalFooter({
             <button
                 className="cursor-pointer p-3 w-full rounded-lg bg-primary-color text-white text-center"
                 type={buttonType === 'button' ? 'button' : 'submit'}
-                disabled={disabled}
+                disabled={loading || disabled}
             >
                 {loading ? <ButtonLoader /> : text}
             </button>

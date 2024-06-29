@@ -1,15 +1,18 @@
 import { AlertTriangle } from 'lucide-react';
+import ButtonLoader from './ButtonLoader';
 
 export default function DialogBox({
     isOpen,
     message,
     onYes,
     onNo,
+    loader,
 }: {
     isOpen: boolean;
     message: string;
     onYes: () => void;
     onNo: () => void;
+    loader?: boolean;
 }) {
     return (
         isOpen && (
@@ -30,8 +33,9 @@ export default function DialogBox({
                             type="button"
                             className="flex-1 rounded-lg border px-4 py-2 text-black hover:bg-amber-500 hover:text-white"
                             onClick={onYes}
+                            disabled={loader}
                         >
-                            Yes
+                            {loader ? <ButtonLoader /> : 'Yes'}
                         </button>
                         <button
                             type="button"

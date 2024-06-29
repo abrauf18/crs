@@ -146,7 +146,7 @@ function Teachers({
                 <div className="flex mobile:flex-col justify-between px-1 mb-6 mobile:items-start items-center">
                     <h1 className="text-xl font-semibold">All Teachers</h1>
                     <div
-                        className="cursor-pointer border rounded-lg px-3 py-1 text-white bg-primary-color font-medium mobile:mt-2"
+                        className="cursor-pointer border rounded-lg px-3 py-2 text-white bg-primary-color font-medium mobile:mt-2"
                         onClick={handleAddTeacherClick}
                     >
                         Add Teacher
@@ -159,20 +159,25 @@ function Teachers({
                     />
                 </div>
             </div>
-            <div className="flex items-center w-full justify-center mt-5">
-                <Pagintaion
-                    currentPage={Number(page) > 0 ? Number(page) : 1}
-                    totalPages={
-                        pagination?.totalPages > 0 ? pagination.totalPages : 1
-                    }
-                    onPageChange={handlePageChange}
-                />
-            </div>
+            {transformedTeachers?.length > 10 && (
+                <div className="flex items-center w-full justify-center mt-5">
+                    <Pagintaion
+                        currentPage={Number(page) > 0 ? Number(page) : 1}
+                        totalPages={
+                            pagination?.totalPages > 0
+                                ? pagination.totalPages
+                                : 1
+                        }
+                        onPageChange={handlePageChange}
+                    />
+                </div>
+            )}
+
             {/* <div className="fixed right-0 top-0 z-50 w-full lg:w-[25%]">
                 <AssignClassModal />
             </div> */}
             {isAddTeacherModalVisible && (
-                <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <AddTeacherModal onClose={handleCloseModal} />
                 </div>
             )}

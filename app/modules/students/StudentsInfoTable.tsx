@@ -126,9 +126,9 @@ function StudentsInfoTable({
     ) : (
         <section>
             <Table
-                className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                    poppins.className
-                }`}
+                className={`text-[${
+                    fontSize || '18'
+                }px] mobile:text-sm whitespace-nowrap ${poppins.className}`}
             >
                 <TableHeader>
                     <TableRow>

@@ -58,7 +58,7 @@ async function TeachersPage({
                 accessToken: data?.user?.accessToken,
                 schoolId: data?.user?.schoolId || '',
                 page,
-                limit: 1,
+                limit: 10,
                 search,
             });
 
@@ -66,7 +66,6 @@ async function TeachersPage({
 
             if (APIResponse.status !== 'error') {
                 const APIdata = APIResponse?.data;
-                console.log('APIdata: ', APIdata);
                 return (
                     <Teachers
                         teachers={APIdata.teachers}

@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import PageLoader from '@/app/components/common/PageLoader';
 import action from '@/app/action';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 
 interface AddStudentModalProps {
     onClose: () => void;
@@ -69,8 +70,8 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
                 }
 
                 const teacherResponseData = await teacherAPIdata.json();
-                setGradeOptions(teacherResponseData.data);
-                setSelectedOption(teacherResponseData.data[0].label);
+                setGradeOptions(teacherResponseData?.data);
+                setSelectedOption(teacherResponseData?.data[0]?.label);
             } catch (error: any) {
                 toast.error(
                     error.message ??
@@ -86,7 +87,6 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
 
     // eslint-disable-next-line consistent-return
     const onSubmit = async (formData: FormValues) => {
-        console.log('Form Data:', formData);
         try {
             setButtonLoading(true);
             // API call to add student to classroom
@@ -98,7 +98,7 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
             if (result.status !== 'success') {
                 return toast.error(result.message);
             }
-            action('SummarizedStudents');
+            await action('SummarizedStudents');
             return toast.success('Student added successfully');
         } catch (error: any) {
             toast.error(
@@ -180,8 +180,9 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ onClose }) => {
                             <div className="text-center mt-8">
                                 <ModalFooter
                                     disabled={buttonLoading}
-                                    text={buttonLoading ? 'Adding...' : 'Add'}
+                                    text="Add"
                                     buttonType="submit"
+                                    loading={buttonLoading}
                                 />
                             </div>
                         </form>
