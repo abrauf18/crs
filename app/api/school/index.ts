@@ -53,3 +53,35 @@ export const getAllSchoolsAPI = async (accessToken: string) => {
     );
     return reuslt;
 };
+
+export const createSchoolAPI = async (
+    token: string,
+    name: string,
+    email: string,
+    schoolName: string,
+    password: string
+) => {
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/school/create-school/${token}`,
+            {
+                method: 'POST', // Specify the HTTP method
+                headers: {
+                    'Content-Type': 'application/json', // Ensure the data is sent as JSON
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    schoolName,
+                    password,
+                }),
+            }
+        );
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Error creating school:', error);
+        throw new Error('Failed to create school');
+    }
+};
