@@ -237,7 +237,7 @@ function AssignCourseModal({
                                                             />
                                                         </div>
                                                         <button
-                                                            className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white"
+                                                            className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
                                                             type="button"
                                                             onClick={() => {
                                                                 const currentClasses =
@@ -262,7 +262,7 @@ function AssignCourseModal({
                                                                 );
                                                             }}
                                                         >
-                                                            remove
+                                                            Remove
                                                         </button>
                                                     </div>
                                                     <div className="mt-2">
@@ -293,9 +293,9 @@ function AssignCourseModal({
                                         )}
                                     </div>
                                     {filteredGradeOptions.length > 0 && (
-                                        <div className="flex justify-end">
-                                            <p
-                                                className="text-dark-gray text-base cursor-pointer"
+                                        <div className="flex flex-col items-end">
+                                            <div
+                                                className="flex border p-2 w-28 justify-center text-dark-gray rounded-lg items-center mt-4 cursor-pointer hover:bg-primary-color hover:text-white"
                                                 onClick={() => {
                                                     const currentClasses =
                                                         watch(
@@ -313,7 +313,7 @@ function AssignCourseModal({
                                                 }}
                                             >
                                                 Add More
-                                            </p>
+                                            </div>
                                         </div>
                                     )}
                                 </div>

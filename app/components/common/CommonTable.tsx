@@ -148,24 +148,26 @@ function CommonTable({
                                     {resource.topic}
                                 </TableCell>
                                 <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 gap-2">
-                                    <div className="bg-light-orange p-1 rounded-md cursor-pointer">
+                                    <div
+                                        className="bg-light-orange p-1 rounded-md cursor-pointer"
+                                        onClick={() => {
+                                            if (
+                                                resource.type ===
+                                                ResourceType.VIDEO
+                                            ) {
+                                                return push(
+                                                    `/admin/video/${resource.videoId}`
+                                                );
+                                            }
+                                            return push(
+                                                `${pathname}/${resource.id}`
+                                            );
+                                        }}
+                                    >
                                         <Eye
                                             color="#F59A3B"
                                             width={18}
                                             height={18}
-                                            onClick={() => {
-                                                if (
-                                                    resource.type ===
-                                                    ResourceType.VIDEO
-                                                ) {
-                                                    return push(
-                                                        `/admin/video/${resource.videoId}`
-                                                    );
-                                                }
-                                                return push(
-                                                    `${pathname}/${resource.id}`
-                                                );
-                                            }}
                                         />
                                     </div>
                                     <EditIcon

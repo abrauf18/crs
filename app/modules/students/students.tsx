@@ -1,170 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { User } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
 import TabBar from '@/app/components/common/TabBar';
-import StatsTable, { StatsInterface } from '@/app/components/common/StatsTable';
-import { DEFAULT_IMAGE } from '@/lib/utils';
-import StudentsInfoTable, { StudentInfoInterface } from './StudentsInfoTable';
+import StatsTable from '@/app/components/common/StatsTable';
+import StudentsInfoTable from './StudentsInfoTable';
 import AddStudentModal from './AddStudentModal';
 
-// export const StatsList: StatsInterface[] = [
-//     {
-//         id: 1,
-//         name: 'School',
-//         first: 20.4,
-//         firstNum: 20,
-//         second: 10.2,
-//         secondNum: 10,
-//         third: 30.26,
-//         thirdNum: 40,
-//         forth: 20.19,
-//         forthNum: 30,
-//         fifth: 10.92,
-//         fifthNum: 30,
-//     },
-//     {
-//         id: 1,
-//         name: 'School',
-//         first: 20.4,
-//         firstNum: 20,
-//         second: 10.2,
-//         secondNum: 10,
-//         third: 30.26,
-//         thirdNum: 40,
-//         forth: 20.19,
-//         forthNum: 30,
-//         fifth: 10.92,
-//         fifthNum: 30,
-//     },
-//     {
-//         id: 1,
-//         name: 'School',
-//         first: 20.4,
-//         firstNum: 20,
-//         second: 10.2,
-//         secondNum: 10,
-//         third: 30.26,
-//         thirdNum: 40,
-//         forth: 20.19,
-//         forthNum: 30,
-//         fifth: 10.92,
-//         fifthNum: 30,
-//     },
-//     {
-//         id: 1,
-//         name: 'School',
-//         first: 20.4,
-//         firstNum: 20,
-//         second: 10.2,
-//         secondNum: 10,
-//         third: 30.26,
-//         thirdNum: 40,
-//         forth: 20.19,
-//         forthNum: 30,
-//         fifth: 10.92,
-//         fifthNum: 30,
-//     },
-//     {
-//         id: 1,
-//         name: 'School',
-//         first: 20.4,
-//         firstNum: 20,
-//         second: 10.2,
-//         secondNum: 10,
-//         third: 30.26,
-//         thirdNum: 40,
-//         forth: 20.19,
-//         forthNum: 30,
-//         fifth: 10.92,
-//         fifthNum: 30,
-//     },
-// ];
-
-// export const Studentinfo: StudentInfoInterface[] = [
-//     {
-//         id: '1',
-//         index: 1,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-//     {
-//         id: '2',
-//         index: 2,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-//     {
-//         id: '3',
-//         index: 3,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-//     {
-//         id: '4',
-//         index: 4,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-//     {
-//         id: '5',
-//         index: 5,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-//     {
-//         id: '6',
-//         index: 6,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-//     {
-//         id: '7',
-//         index: 7,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-//     {
-//         id: '8',
-//         index: 8,
-//         name: 'Ali',
-//         email: 'abcdef@gmail.com',
-//         grade: '7th',
-//         performance: 100,
-//         image: DEFAULT_IMAGE,
-//         gradeId: '',
-//     },
-// ];
 function Students({ data }: { data: any }) {
     const gradeOptions = data?.map((grade: any) => grade?.className);
     const [isAddStudentModalOpen, setAddStudentModalOpen] = useState(false);
@@ -186,11 +30,12 @@ function Students({ data }: { data: any }) {
             name: student?.userName,
             email: student?.userEmail,
             grade: student?.className,
-            performance: student?.totalObtainedScore,
+            performance: student?.totalObtainedScore || 0,
             image: student?.image,
             gradeId: student?.classId,
         })
     );
+
     const StatsList = filterClass[0]?.standardList?.map((standard: any) => ({
         id: standard.standardId,
         name: standard?.standardName,
@@ -237,10 +82,10 @@ function Students({ data }: { data: any }) {
                         <StatsTable statsList={StatsList} />
                     </div>
                     <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
-                        <StudentsInfoTable students={studentsData} />
+                        <StudentsInfoTable students={studentsData} isTeacher />
                     </div>
                     {isAddStudentModalOpen && (
-                        <div className="fixed right-0 top-0 z-50 lg:w-[25%] w-full md:w-[60%]">
+                        <div className="fixed right-0 top-0 z-50 lg:w-[30%] w-full md:w-[60%]">
                             <AddStudentModal
                                 onClose={handleCloseAddStudentModal}
                             />

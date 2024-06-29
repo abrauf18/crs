@@ -47,10 +47,11 @@ export default async function Home() {
                             classesStandardsData?.data?.totalStudents,
                         totalClassrooms:
                             classesStandardsData?.data?.totalClassrooms,
-                        OverallPerformance: 100,
+                        OverallPerformance: `${classesStandardsData?.data?.avgObtainedWeightage} of ${classesStandardsData?.data?.avgTotalWeightage}`,
                         usersJoining: classesStandardsData?.data?.usersJoining,
                     }}
                     StandardOverview={standardOverviewData?.data}
+                    students={classesStandardsData?.data.students}
                 />
             );
         } catch (error: any) {

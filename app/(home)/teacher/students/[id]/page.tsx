@@ -3,7 +3,9 @@ import { Session, getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import { getSummarizedStudentForTeacherAPI } from '@/app/api/student';
-import StudentDetails from '@/app/modules/students/StudentDetails/StudentDetails';
+import StudentDetails, {
+    Student,
+} from '@/app/modules/students/StudentDetails/StudentDetails';
 
 interface APIResponse {
     status: string;
@@ -15,15 +17,6 @@ interface Data {
     student: Student;
     summarizedStandardResults: SummarizedStandardResult[];
     DailyProgress: DailyProgress[];
-}
-
-interface Student {
-    name: string;
-    email: string;
-    image: string;
-    classroomName: string;
-    averageTotalWeightage: number;
-    averageObtainedWeightage: number;
 }
 
 interface SummarizedStandardResult {

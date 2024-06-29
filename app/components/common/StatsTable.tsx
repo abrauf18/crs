@@ -68,7 +68,7 @@ function StatsTable({ statsList, fontSize }: StatsTableProps) {
                 ) : (
                     <TableRow>
                         <TableCell colSpan={5} className="text-center">
-                            No Data Found!
+                            No Standard Found!
                         </TableCell>
                     </TableRow>
                 )}

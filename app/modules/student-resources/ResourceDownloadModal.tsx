@@ -28,7 +28,6 @@ function ResourceDownloadModal({
     onClose: () => void;
     standard: Standard;
 }) {
-    console.log(standard);
     const handleDownload = async ({
         url,
         name,

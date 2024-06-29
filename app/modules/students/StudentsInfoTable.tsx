@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { useSession } from 'next-auth/react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
     Table,
     TableBody,
@@ -21,18 +21,9 @@ import EditIcon from '@/app/assets/icons/EditIcon';
 import DialogBox from '@/app/components/common/DialogBox';
 import PageLoader from '@/app/components/common/PageLoader';
 import { removeStudentFromClassroomAPI } from '@/app/api/classroom';
-import ClassroomModal from '../classroom/ClassroomModal';
-
-export interface StudentInfoInterface {
-    image: string;
-    id: string;
-    index: number;
-    name: string;
-    email: string;
-    grade: string;
-    performance: number;
-    gradeId: string;
-}
+import ClassroomModal, {
+    StudentInfoInterface,
+} from '../classroom/ClassroomModal';
 
 const DEFAULT_CLASSROOM_STUDENT = {
     id: '0',
@@ -52,6 +43,7 @@ export interface StudentsInfoProp {
     isTeacherDashboardTable?: boolean;
     currentPage?: number;
     handlePageChange?: (page: number) => void;
+    isTeacher?: boolean;
 }
 
 const poppins = Poppins({
@@ -66,9 +58,9 @@ function StudentsInfoTable({
     isTeacherDashboardTable,
     currentPage = 0,
     handlePageChange,
+    isTeacher,
 }: StudentsInfoProp) {
     const { push } = useRouter();
-    const pathname = usePathname();
     const { data, status } = useSession();
     const [disableButton, setDisableButton] = useState(false);
     const [isShowDialogBox, setIsShowDialogBox] = useState(false);
@@ -146,7 +138,7 @@ function StudentsInfoTable({
                         <TableHead className="text-dark-gray font-bold">
                             Name
                         </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
+                        <TableHead className="text-dark-gray font-bold pl-12">
                             Email
                         </TableHead>
                         {!isTeacherDashboardTable && (
@@ -168,7 +160,7 @@ function StudentsInfoTable({
                             <TableRow className="border-none" key={student.id}>
                                 <TableCell className="font-medium">
                                     <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                        {student.index}
+                                        {index + 1}
                                     </span>
                                 </TableCell>
                                 <TableCell>
@@ -189,7 +181,7 @@ function StudentsInfoTable({
                                     </span>
                                 </TableCell>
 
-                                <TableCell className="text-dark-gray">
+                                <TableCell className="text-dark-gray pl-12">
                                     {student.email}
                                 </TableCell>
                                 {!isTeacherDashboardTable && (
@@ -229,27 +221,32 @@ function StudentsInfoTable({
                                             <EditIcon width={22} height={22} />
                                         </div>
                                     )}
-                                    {!isTeacherDashboardTable && (
-                                        <div
-                                            className={`bg-red-100 rounded-md p-1 cursor-pointer ${
-                                                disableButton
-                                                    ? 'opacity-50'
-                                                    : ''
-                                            }`}
-                                            onClick={() => {
-                                                if (!disableButton) {
-                                                    setSelectedStudent(student);
-                                                    setIsShowDialogBox(true);
-                                                }
-                                            }}
-                                        >
-                                            <Trash
-                                                color="#D34645"
-                                                width={18}
-                                                height={18}
-                                            />
-                                        </div>
-                                    )}
+                                    {!isTeacherDashboardTable ||
+                                        (isTeacher && (
+                                            <div
+                                                className={`bg-red-100 rounded-md p-1 cursor-pointer ${
+                                                    disableButton
+                                                        ? 'opacity-50'
+                                                        : ''
+                                                }`}
+                                                onClick={() => {
+                                                    if (!disableButton) {
+                                                        setSelectedStudent(
+                                                            student
+                                                        );
+                                                        setIsShowDialogBox(
+                                                            true
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                <Trash
+                                                    color="#D34645"
+                                                    width={18}
+                                                    height={18}
+                                                />
+                                            </div>
+                                        ))}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -261,7 +258,7 @@ function StudentsInfoTable({
                 )}
             </Table>
             {isShowStudentModal && (
-                <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[40%] md:w-[60%] lg:max-w-[400px] xl:max-w-[400px] 2xl:max-w-[400px]">
+                <div className="fixed right-0 top-0 z-50 w-[100%] md:w-[60%] lg:w-[30%]">
                     <ClassroomModal
                         data={data}
                         student={selectedStudent}

@@ -106,7 +106,6 @@ export const signupInvite = createAsyncThunk(
         { rejectWithValue }
     ) => {
         try {
-            console.log(schoolId);
             const response = await signupInviteAPI(
                 username,
                 email,

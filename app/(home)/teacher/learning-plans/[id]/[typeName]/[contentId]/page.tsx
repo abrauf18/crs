@@ -41,7 +41,6 @@ async function ResourceDetailsPage({
                     APIdata.video;
                 return (
                     <VideoViewing
-                        hideButton
                         videoURL={videoUrl}
                         thumbnailURL={thumbnailURL}
                         topics={topics}

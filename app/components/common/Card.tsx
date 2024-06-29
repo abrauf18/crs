@@ -47,7 +47,7 @@ function Card({
             <p className="text-base">{cardText}</p>
             <h1 className="font-semibold text-3xl">{count}</h1>
             {!isSchool && (
-                <div className="absolute right-2 bottom-5">
+                <div className="absolute right-2 bottom-6">
                     <Link
                         href={currentPath ? `${currentPath}` : `${path}/${URL}`}
                         className="border rounded-lg text-dark-gray px-3 py-2  text-sm font-medium text-center mr-2 w-24 lg:hover:bg-primary-color lg:hover:text-white pointer-events-auto group-hover:bg-primary-color group-hover:text-white"

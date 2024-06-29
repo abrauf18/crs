@@ -8,13 +8,14 @@ interface Data {
     DailyProgress: DailyProgress[];
 }
 
-interface Student {
+export interface Student {
     name: string;
     email: string;
     image: string;
     classroomName: string;
     averageTotalWeightage: number;
     averageObtainedWeightage: number;
+    classroomStudentId: string;
 }
 
 interface SummarizedStandardResult {

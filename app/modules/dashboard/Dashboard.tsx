@@ -12,9 +12,8 @@ import UsersTable, { User } from '../users/UsersTable';
 import ResourcesTable from '../resources/ResourcesTable';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
-import StudentsInfoTable from '../students/StudentsInfoTable';
-import { Studentinfo } from '../students/students';
 import LearningPlanTable from './LearningPlanTable';
+import StudentsInfoTable from '../students/StudentsInfoTable';
 
 function Dashboard({
     name,
@@ -24,6 +23,7 @@ function Dashboard({
     ResourceAPIData,
     TeacherSummaries,
     StandardOverview,
+    students,
 }: {
     name?: string;
     isTeacher?: boolean;
@@ -42,10 +42,11 @@ function Dashboard({
     TeacherSummaries?: {
         totalStudents: number;
         totalClassrooms: number;
-        OverallPerformance: number;
+        OverallPerformance: string;
         usersJoining: any[];
     };
     StandardOverview?: LearningInterface[];
+    students?: any[];
 }) {
     const [currentYear, setCurrentYear] = React.useState(
         new Date().getFullYear()
@@ -54,6 +55,17 @@ function Dashboard({
     async function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setCurrentYear(+e.target.value);
     }
+
+    const filteredStudents = students?.map((student) => ({
+        ...student,
+        id: student?.userId,
+        name: student?.userName,
+        email: student?.userEmail,
+        image: student?.image,
+        gradeId: student?.classId,
+        grade: student?.className,
+        performance: student?.obtainedWeightage,
+    }));
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
             <Searchbar
@@ -90,13 +102,6 @@ function Dashboard({
                             iconBackgroundColour="bg-amber-100"
                             iconViewBox="-7 1 37 22"
                         />
-                        {/* <Card
-                            Icon={DataIcon}
-                            cardText="Data Insights"
-                            count="70%"
-                            currentPath="#"
-                            iconBackgroundColour="bg-orange-100"
-                        /> */}
                     </>
                 ) : (
                     <>
@@ -123,7 +128,7 @@ function Dashboard({
                             count={`${
                                 TeacherSummaries?.OverallPerformance ?? 0
                             }%`}
-                            currentPath="#"
+                            currentPath="/teacher/learning-plans"
                             iconBackgroundColour="bg-orange-100"
                         />
                     </>
@@ -175,7 +180,7 @@ function Dashboard({
                             All Student’s
                         </h1>
                         <StudentsInfoTable
-                            students={Studentinfo}
+                            students={filteredStudents ?? []}
                             isTeacherDashboardTable
                             fontSize="12"
                         />

@@ -5,14 +5,13 @@ import { useSession } from 'next-auth/react';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import ClassroomIcon from '@/app/assets/icons/ClassroomIcon';
 import { Label } from '@/app/components/ui/label';
-import AppDropDown, {
-    OptionsInterface,
-} from '@/app/components/common/AppDropDown';
+import AppDropDown from '@/app/components/common/AppDropDown';
 import Input from '@/app/components/common/Input';
 import { createClassroomAPI } from '@/app/api/classroom';
 import { getAllTeacherAPI } from '@/app/api/user';
 import Loader from '@/app/components/common/PageLoader';
 import { toast } from 'react-toastify';
+import { Session } from 'next-auth';
 
 function AddClassroomModal({ onClose }: any) {
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
@@ -46,7 +45,6 @@ function AddClassroomModal({ onClose }: any) {
         try {
             setButtonLoader(true);
             const { className } = formData;
-            console.log(teacherList, currentTeacher);
             const selectedTeacher = teacherList.find(
                 (teacher) => teacher.label === currentTeacher
             );
@@ -56,6 +54,7 @@ function AddClassroomModal({ onClose }: any) {
                 name: className,
                 teacherId: selectedTeacher?.id,
                 accessToken,
+                schoolId: data?.user?.schoolId || '',
             };
 
             const response = await createClassroomAPI(payload);

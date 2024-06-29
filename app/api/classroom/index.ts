@@ -165,14 +165,14 @@ export const updateClassroomStudentAPI = async ({
     email,
     image,
     classroomId,
-    classroomStudentId,
+    studentId,
 }: {
     accessToken: string;
     name: string;
     email: string;
     image: string;
     classroomId: string;
-    classroomStudentId: string;
+    studentId: string;
 }) => {
     const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/updateClassroomStudent`,
@@ -182,7 +182,7 @@ export const updateClassroomStudentAPI = async ({
             email,
             image,
             classroomId,
-            classroomStudentId,
+            studentId,
         }
     );
 
@@ -193,10 +193,12 @@ export const createClassroomAPI = async ({
     accessToken,
     name,
     teacherId,
+    schoolId,
 }: {
     accessToken: string;
     name: string;
     teacherId: string;
+    schoolId: string;
 }) => {
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/createClassroom`,
@@ -209,6 +211,35 @@ export const createClassroomAPI = async ({
                 accessToken,
                 name,
                 teacherId,
+                schoolId,
+            }),
+        }
+    );
+
+    const result = await response.json();
+    return result;
+};
+
+export const addStudentToClassroomAPI = async ({
+    accessToken,
+    email,
+    classroomId,
+}: {
+    accessToken: string;
+    email: string;
+    classroomId: string;
+}) => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/addStudentToClassroom`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                accessToken,
+                email,
+                classroomId,
             }),
         }
     );
