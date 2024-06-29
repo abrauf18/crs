@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Searchbar from '@/app/components/common/Searchbar';
-
 import Pagintaion from '@/app/components/common/Pagintaion';
 import userImage from '@/app/assets/images/UserImage.svg';
 import TeachersTable, { TeacherInterface } from './TeachersTable';
@@ -67,9 +67,68 @@ export const teachersData: TeacherInterface[] = [
     },
 ];
 
-function Teachers() {
+interface APIUserInterface {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+}
+
+interface APITeacherInterface {
+    classroomCount: string;
+    User: APIUserInterface;
+}
+
+interface APIPaginationInterface {
+    totalRecords: number;
+    currentPage: number;
+    limit: number;
+    totalCount: number;
+    totalPages: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+}
+
+function Teachers({
+    teachers,
+    pagination,
+}: {
+    teachers: APITeacherInterface[];
+    pagination: APIPaginationInterface;
+}) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const urlSearchParams = useSearchParams();
+    const page = urlSearchParams.get('page') || 1;
     const [isAddTeacherModalVisible, setAddTeacherModalVisible] =
         useState(false);
+
+    const mapApiTeacherToTeacher = (
+        apiTeachers: APITeacherInterface[]
+    ): TeacherInterface[] =>
+        apiTeachers.map((apiTeacher) => ({
+            id: Number(apiTeacher.User.id),
+            name: apiTeacher.User.name,
+            email: apiTeacher.User.email,
+            assignedClasses: apiTeacher.classroomCount,
+            imageUrl: apiTeacher.User.image,
+        }));
+    const transformedTeachers: TeacherInterface[] =
+        mapApiTeacherToTeacher(teachers);
+
+    const createQueryString = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(urlSearchParams.toString());
+            params.set(name, value);
+            return params.toString();
+        },
+        [urlSearchParams]
+    );
+
+    const handlePageChange = (page: number) => {
+        router.push(`${pathname}?${createQueryString('page', `${page}`)}`);
+    };
+
     const handleAddTeacherClick = () => {
         setAddTeacherModalVisible(true);
     };
@@ -94,11 +153,20 @@ function Teachers() {
                     </div>
                 </div>
                 <div className="mt-4">
-                    <TeachersTable teachers={teachersData} fontSize="12" />
+                    <TeachersTable
+                        teachers={transformedTeachers}
+                        fontSize="12"
+                    />
                 </div>
             </div>
             <div className="flex items-center w-full justify-center mt-5">
-                <Pagintaion />
+                <Pagintaion
+                    currentPage={Number(page) > 0 ? Number(page) : 1}
+                    totalPages={
+                        pagination?.totalPages > 0 ? pagination.totalPages : 1
+                    }
+                    onPageChange={handlePageChange}
+                />
             </div>
             {/* <div className="fixed right-0 top-0 z-50 w-full lg:w-[25%]">
                 <AssignClassModal />

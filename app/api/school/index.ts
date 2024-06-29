@@ -85,3 +85,38 @@ export const createSchoolAPI = async (
         throw new Error('Failed to create school');
     }
 };
+
+export const getListTeacherOfSchool = async ({
+    accessToken,
+    schoolId,
+    page,
+    limit,
+    search,
+}: {
+    accessToken: string;
+    schoolId: string;
+    page: string;
+    limit: number;
+    search?: string;
+}) => {
+    const queryParams = new URLSearchParams({
+        schoolId,
+        page,
+        limit: limit.toString(),
+        ...(search ? { search } : {}),
+    }).toString();
+    console.log(queryParams);
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/list-teacher?${queryParams}`,
+        {
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getListTeacherOfSchool'],
+            },
+        }
+    );
+
+    return result;
+};
