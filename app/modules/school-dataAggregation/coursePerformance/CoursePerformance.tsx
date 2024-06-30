@@ -144,7 +144,7 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
                     <div key={upload.id}>
                         <PerformanceCard
                             name={upload.resource.name}
-                            id={upload.id}
+                            id={upload.resource.id}
                             // percentage={'100'}
                         />
                     </div>
