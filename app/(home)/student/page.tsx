@@ -13,25 +13,6 @@ export const metadata: Metadata = {
     description: 'Here’s a Quick Overview',
 };
 
-type VideoData = {
-    standardId: string;
-    videoId: string;
-    videoName: string;
-    questionsCount: number;
-    topicsCount: number;
-    lastSeenTime: string;
-    duration: string;
-    thumbnailURL: string;
-    completed: boolean;
-};
-
-type StandardData = {
-    standardId: string;
-    standardName: string;
-    videoResourcesCount: number;
-    nonVideoResourcesCount: number;
-};
-
 type ApiResponse = {
     status: string;
     data?: DashboardData;

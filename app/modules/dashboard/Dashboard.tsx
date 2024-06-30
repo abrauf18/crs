@@ -114,7 +114,7 @@ function Dashboard({
                         />
                         <Card
                             Icon={SlideShowIcon}
-                            cardText="Your Assigned Classroom"
+                            cardText="Assigned Classroom"
                             count={TeacherSummaries?.totalClassrooms ?? 0}
                             currentPath="/teacher/classroom"
                             iconBackgroundColour="bg-cyan-200"

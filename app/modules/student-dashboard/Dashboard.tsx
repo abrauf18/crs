@@ -78,7 +78,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 />
             </div>
 
-            <div className="flex mobile:flex-col md:justify-between items-center mt-8 w-full">
+            <div className="flex mobile:flex-col md:justify-between md:items-center items-start mt-8 w-full">
                 <p className="font-semibold text-xl w-fit ">
                     Your Assigned Learnings
                 </p>
@@ -93,7 +93,7 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                 <Learning standards={APIdata.standardsData} />
             </div>
 
-            <div className="flex mobile:flex-col items-center md:justify-between mt-8">
+            <div className="flex mobile:flex-col md:items-center items-start md:justify-between mt-8">
                 <p className="font-semibold text-xl ">Saved Videos</p>
                 <div className="mobile:flex mobile:justify-end">
                     <p className=" border cursor-pointer py-2  px-4 text-center rounded-lg h-fit w-fit font-semibold text-dark-gray  hover:bg-primary-color hover:text-white">

@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-import { Trash2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 import {
@@ -75,7 +73,6 @@ function ProfileModal({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
-
     // Function to undo all changes made before clicking save
     const handleReset = () => {
         undoImageChange();
@@ -180,7 +177,7 @@ function ProfileModal({
                                 removeImage={removeImage}
                             />
                             <div className="mb-2 w-full mt-4">
-                                <Label htmlFor="name">User Name</Label>
+                                <Label htmlFor="name">Name</Label>
                                 <Input
                                     disabled={isViewOnly}
                                     name="name"
@@ -221,8 +218,12 @@ function ProfileModal({
                                     <Label htmlFor="role">Role</Label>
                                     <Input
                                         disabled={isViewOnly}
-                                        name="role"
+                                        name="text"
                                         type="text"
+                                        inputValue={
+                                            role.charAt(0).toUpperCase() +
+                                            role.slice(1)
+                                        }
                                     />
                                 </div>
                             ) : (
@@ -252,7 +253,7 @@ function ProfileModal({
                                 onClick={handleReset}
                                 className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
                             >
-                                Discard Changes
+                                Discard
                             </button>
                             <button
                                 type="submit"
@@ -263,7 +264,7 @@ function ProfileModal({
                                         : 'bg-primary-color'
                                 } font-semibold w-full px-5 py-2  border rounded-xl`}
                             >
-                                {loading ? <Loader /> : 'Save Changes'}
+                                {loading ? <Loader /> : 'Save'}
                             </button>
                         </div>
                     )}

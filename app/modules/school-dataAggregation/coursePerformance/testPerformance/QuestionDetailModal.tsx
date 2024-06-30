@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, ChevronDown } from 'lucide-react'; // Assuming you have an icon library
 import Avatar from '@/app/assets/images/UserImage.svg';
+import Link from 'next/link';
 import { StudentCardInterface } from './StudentCard';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
         answers: any[]; // Adjust type as per actual API response
         totalMarks: number;
         AssessmentResourcesDetail: any;
+        url: string;
     };
     averageObtainedMarks: number;
     onClose: () => void;
@@ -28,7 +30,7 @@ function QuestionDetailModal({
         image: answer.user.image || Avatar,
         name: answer.user.name || 'Anonymous',
         answerText: answer.answer, // Ensure this matches API structure
-        obtainedMarks: Math.max(answer.obtainedMarks, 0), // Ensure marks are not less than 0
+        obtainedMarks: answer.obtainedMarks, // Ensure marks are not less than 0
         userDetails: answer.user, // Store detailed user info here if needed
     }));
 
@@ -67,7 +69,11 @@ function QuestionDetailModal({
                             <span className="font-bold text-lg text-black">
                                 {averageObtainedMarks}
                             </span>{' '}
-                            out of {resourceData.totalMarks}
+                            out of{' '}
+                            {!resourceData.answers
+                                ? resourceData.AssessmentResourcesDetail
+                                      ?.totalMarks
+                                : resourceData.totalMarks}
                         </h1>
                     </div>
                 </div>
@@ -142,17 +148,41 @@ function QuestionDetailModal({
                                                     <h3 className="text-lg font-semibold">
                                                         Answer:
                                                     </h3>
-                                                    <p className="text-gray-700">
-                                                        {
-                                                            selectedStudent?.answerText
-                                                        }
-                                                    </p>
-                                                    <p className="mt-2 text-gray-600">
-                                                        Marks Obtained:{' '}
-                                                        {
-                                                            selectedStudent?.obtainedMarks
-                                                        }
-                                                    </p>
+                                                    {!resourceData.answers ? (
+                                                        <Link
+                                                            href={
+                                                                resourceData?.url
+                                                            }
+                                                            className="text-primary-color cursor-pointer hover:text-orange-600"
+                                                        >
+                                                            Download
+                                                        </Link>
+                                                    ) : (
+                                                        <p className="text-gray-700">
+                                                            {
+                                                                selectedStudent?.answerText
+                                                            }
+                                                        </p>
+                                                    )}
+
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <p className="text-gray-700">
+                                                            Marks Obtained:{' '}
+                                                        </p>
+                                                        <p
+                                                            className={` ${
+                                                                selectedStudent?.obtainedMarks ===
+                                                                -1
+                                                                    ? 'text-red-500'
+                                                                    : 'text-gray-700'
+                                                            }`}
+                                                        >
+                                                            {selectedStudent?.obtainedMarks ===
+                                                            -1
+                                                                ? 'Not Marked'
+                                                                : selectedStudent?.obtainedMarks}
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         )}

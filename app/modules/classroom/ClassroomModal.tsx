@@ -299,17 +299,13 @@ function ClassroomModal({
                                 className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg border-2 text-dark-gray text-center mt-1 font-bold"
                                 onClick={handleReset}
                             >
-                                <button type="button">Discard Changes</button>
+                                <button type="button">Discard</button>
                             </div>
                             <button
                                 type="submit"
                                 className="cursor-pointer w-full mx-1 p-3 py-2 rounded-lg bg-primary-color border-2 border-primary-color text-white text-center mt-1 font-bold"
                             >
-                                {buttonLoading ? (
-                                    <ButtonLoader />
-                                ) : (
-                                    'Save Changes'
-                                )}
+                                {buttonLoading ? <ButtonLoader /> : 'Save'}
                             </button>
                         </div>
                     </form>

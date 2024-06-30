@@ -140,7 +140,7 @@ function UsersTable({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {users &&
+                    {users?.length > 0 ? (
                         users
                             ?.map((user: User, index: number) => (
                                 <TableRow
@@ -242,7 +242,17 @@ function UsersTable({
                                     </TableCell>
                                 </TableRow>
                             ))
-                            .slice(0, isDashboard ? 4 : users.length)}
+                            .slice(0, isDashboard ? 4 : users.length)
+                    ) : (
+                        <TableRow>
+                            <TableCell
+                                colSpan={isDashboard ? 4 : 5}
+                                className="text-center"
+                            >
+                                No User Found!
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
             {isShowProfileModal && (

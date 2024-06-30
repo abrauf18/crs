@@ -299,6 +299,7 @@ export default function SideBar() {
                                 ItemIcon={item.ItemIcon}
                                 itemText={item.itemText}
                                 onClick={item.onClick}
+                                closeMenu={() => SetMenu(false)}
                             />
                         ))}
                     </div>

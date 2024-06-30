@@ -128,7 +128,8 @@ function TicketsTable({
                                         ticket.status
                                     )}`}
                                 >
-                                    {ticket.status}
+                                    {ticket.status.charAt(0).toUpperCase() +
+                                        ticket.status.slice(1)}
                                 </TableCell>
 
                                 <TableCell className="flex lg:justify-end items-center p-0 mt-4 lg:pr-10 ">

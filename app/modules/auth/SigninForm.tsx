@@ -163,7 +163,7 @@ function SigninForm() {
                         >
                             {loading ? <Loader /> : 'Sign In'}
                         </Button>
-                        <span className="text-black text-xs">Or</span>
+                        {/* <span className="text-black text-xs">Or</span>
                         <Button
                             onClick={() => signIn('google')}
                             className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300"
@@ -174,7 +174,7 @@ function SigninForm() {
                                 className="mr-2"
                             />
                             Sign In With Google
-                        </Button>
+                        </Button> */}
                     </div>
                 </form>
             </div>

@@ -143,10 +143,10 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
 
     return (
         <section className="bg-white flex mobile:flex-col mobile:gap-5 h-full w-full mt-8 lg:mt-0 md:gap-10 justify-center">
-            <div className="flex flex-col mobile:items-center  mobile:w-full mobile:px-2 'm-auto mobile:h-screen w-[400px]">
-                <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
+            <div className="flex flex-col mobile:items-center  mobile:w-full mobile:px-2 'm-auto mobile:h-screen w-[418px]">
+                {/* <h1 className="text-2xl  font-semibold mb-2 mobile:mb-4">
                     My profile
-                </h1>
+                </h1> */}
                 <FormProvider {...methods}>
                     <form
                         className="mobile:w-full"
@@ -162,7 +162,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                             inSettings
                         />
                         <div className="mt-2">
-                            <Label htmlFor="name">User Name</Label>
+                            <Label htmlFor="name">Name</Label>
                             <Input
                                 name="name"
                                 placeholder="Enter Name"
@@ -242,7 +242,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                 className="text-dark-gray w-44 font-semibold p-2 md:p-2 border rounded-lg bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                                 onClick={handleReset}
                             >
-                                Discard Changes
+                                Discard
                             </button>
 
                             <button
@@ -254,7 +254,7 @@ function Profile({ isSchoolProfile }: MyProfileProps) {
                                         : 'bg-primary-color hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400'
                                 }`}
                             >
-                                {loading ? <Loader /> : 'Save Changes'}
+                                {loading ? <Loader /> : 'Save'}
                             </button>
                         </div>
 

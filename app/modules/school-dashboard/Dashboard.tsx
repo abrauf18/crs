@@ -64,12 +64,12 @@ function SchoolDashboard({ data, name }: { data: any; name: string }) {
                 Icon={WavingHandIcon}
             />
             <div
-                className="cursor-pointer border w-38 absolute right-11 md:top-6 lg:top-8 z-50 rounded-lg px-3 py-2 text-white bg-primary-color font-medium mobile:mt-2 hover:bg-orange-500"
+                className="cursor-pointer border w-38 absolute mobile:left-6 mobile:top-44 md:right-11 md:top-6 lg:top-8 z-50 rounded-lg px-3 py-2 text-white bg-primary-color font-medium mobile:mt-2 hover:bg-orange-500"
                 onClick={handleClassRoomModal}
             >
                 Create Classroom
             </div>
-            <div className="grid mobile:grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 mobile:place-items-center mb-4">
+            <div className="grid mobile:grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mobile:mt-10 mt-4 mobile:place-items-center mb-4">
                 <Card
                     Icon={UserIcon}
                     cardText="Total Students"
