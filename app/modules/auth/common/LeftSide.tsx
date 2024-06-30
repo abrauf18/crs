@@ -1,8 +1,8 @@
 'use client';
 
-import { ArrowLeftCircleIcon, ArrowRightCircle, Dot } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import WavingHandIcon from '@/app/assets/icons/WavingHand';
+import SlideDots from '@/app/assets/icons/SlideDots';
 
 interface MetaText {
     title: string;
@@ -13,37 +13,43 @@ interface LeftSideProp {
     images: any[];
     metaText: MetaText;
 }
+
 function LeftSide({ images, metaText }: LeftSideProp) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isFading, setIsFading] = useState(false);
 
     const goToSlide = (slideIndex: any) => {
-        setCurrentIndex(slideIndex);
+        setIsFading(true);
+        setTimeout(() => {
+            setCurrentIndex(slideIndex);
+            setIsFading(false);
+        }, 500);
     };
 
-    // Automatically move to the next slide every 3 seconds
     useEffect(() => {
         const nextSlide = () => {
             const isLastSlide = currentIndex === images.length - 1;
             const newIndex = isLastSlide ? 0 : currentIndex + 1;
-            setCurrentIndex(newIndex);
+            goToSlide(newIndex);
         };
 
         const intervalId = setInterval(() => {
             nextSlide();
         }, 5000);
 
-        // Clear the interval when the component is unmounted
         return () => clearInterval(intervalId);
     }, [currentIndex, images.length]);
 
     return (
-        <div className="bg-gray-100  lg:p-10 flex flex-col justify-center items-center h-full">
-            <div className="max-w-[1400px] h-[480px] lg:h-[480px] w-full  relative group">
+        <div className="bg-light-gray lg:p-10 flex flex-col justify-center items-center h-full">
+            <div className="max-w-[1400px] h-[480px] lg:h-[480px] w-full relative group">
                 <div
                     style={{
                         backgroundImage: `url(${images[currentIndex].src})`,
                     }}
-                    className="w-full h-full rounded-2xl bg-center bg-contain lg:bg-auto bg-no-repeat duration-500"
+                    className={`w-full h-full rounded-2xl bg-center bg-contain lg:bg-auto bg-no-repeat duration-500 ${
+                        isFading ? 'opacity-0' : 'opacity-100'
+                    } transition-opacity`}
                 />
             </div>
             <div className="flex justify-center items-center flex-col ">
@@ -60,14 +66,18 @@ function LeftSide({ images, metaText }: LeftSideProp) {
             <div className="flex top-4 justify-center py-2 mt-5 ">
                 {images.map((image, slideIndex) => (
                     <div
-                        // eslint-disable-next-line react/no-array-index-key
-                        key={slideIndex}
+                        key={image}
                         onClick={() => goToSlide(slideIndex)}
-                        className={` cursor-pointer  ${
-                            currentIndex === slideIndex ? 'text-orange-500' : ''
-                        }`}
+                        className="cursor-pointer ml-2"
                     >
-                        <Dot size={30} />
+                        <SlideDots
+                            size={30}
+                            fill={
+                                currentIndex === slideIndex
+                                    ? '#F59A3B'
+                                    : '#E7EAE9'
+                            }
+                        />
                     </div>
                 ))}
             </div>

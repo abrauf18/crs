@@ -54,7 +54,7 @@ function SignupForm({ token }: { token: string }) {
                     />
                     <h1 className="text-2xl font-semibold mt-6">
                         Join School{' '}
-                        <span className="text-primary-color">XYZ</span>
+                        {/* <span className="text-primary-color">XYZ</span> */}
                     </h1>
                     <p className="text-sm font-medium text-dark-gray mb-6">
                         Enter Details to Create your Account
