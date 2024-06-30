@@ -203,7 +203,6 @@ export const deleteTeacherAPI = async (
     );
 
     const response = await result.json();
-    console.log(response);
     return response;
 };
 
@@ -251,4 +250,25 @@ export const getSchoolStandardResourcesAPI = async ({
     );
 
     return result;
+};
+
+export const getSchoolResourceResultsAPI = async (
+    accessToken: string,
+    schoolId: string,
+    resourceId: string
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/get-resource-result?schoolId=${schoolId}&resourceId=${resourceId}`,
+        {
+            method: 'GET',
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getSchoolResourceResults'],
+            },
+        }
+    );
+    const response = await result.json();
+    return response;
 };
