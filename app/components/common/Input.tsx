@@ -6,6 +6,7 @@ interface InputPropsInterface {
     name: string;
     placeholder?: string;
     type: string;
+    accept?: string;
     rules?: Record<string, any>;
     inputValue?: string;
     additionalClasses?: string;
@@ -17,6 +18,7 @@ function Input({
     placeholder,
     type,
     rules,
+    accept,
     inputValue,
     additionalClasses,
     disabled,
@@ -33,6 +35,7 @@ function Input({
                              focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-medium`}
                 type={type}
                 placeholder={placeholder}
+                accept={accept}
                 {...register(name, rules)}
                 defaultValue={inputValue ?? ''}
             />

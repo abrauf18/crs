@@ -346,6 +346,7 @@ function UploadResourceModal({ onClose }: any) {
                                     name="thumbnail"
                                     placeholder="Select Thumbnail"
                                     type="file"
+                                    accept=".jpeg, .png"
                                     rules={{
                                         required: {
                                             value: true,
