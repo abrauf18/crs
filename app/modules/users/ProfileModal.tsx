@@ -49,8 +49,8 @@ function ProfileModal({
 }) {
     const { data } = useSession();
     const [loading, setLoading] = useState(false);
-    // const [heading, setHeading] = useState(name);
-    // const [tagline, setTagline] = useState(email);
+    const [heading, setHeading] = useState(name);
+    const [tagline, setTagline] = useState(email);
     const roleOptions: OptionsInterface[] = [
         { label: 'student', value: 'Student' },
         { label: 'teacher', value: 'Teacher' },
@@ -109,8 +109,8 @@ function ProfileModal({
             const { name, email, role } = formData;
 
             // // Update heading and tagline
-            // setHeading(name);
-            // setTagline(email);
+            setHeading(name);
+            setTagline(email);
 
             // Update user profile
             await updateAnotherUserProfileAPI(
@@ -162,7 +162,13 @@ function ProfileModal({
                     )}
                 >
                     <div className="px-6 mb-24">
-                        <ModalHeader onClose={onClose} />
+                        <ModalHeader
+                            headerText={{
+                                heading,
+                                tagline,
+                            }}
+                            onClose={onClose}
+                        />
                         <div className="flex flex-col  mobile:items-center w-full">
                             <ProfileImage
                                 isViewOnly={isViewOnly}

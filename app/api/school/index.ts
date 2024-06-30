@@ -167,6 +167,46 @@ export const getListTeacherOfSchool = async ({
     return result;
 };
 
+export const getTeacherDetailsAPI = async (
+    accessToken: string,
+    teacherId: string
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/get-teacher?teacherId=${teacherId}`,
+        {
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getTeacherDetailsAPI'],
+            },
+        }
+    );
+
+    const response = await result.json();
+    return response;
+};
+
+export const deleteTeacherAPI = async (
+    accessToken: string,
+    teacherId: string
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/delete-teacher?teacherId=${teacherId}`,
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                accesstoken: accessToken,
+            },
+        }
+    );
+
+    const response = await result.json();
+    console.log(response);
+    return response;
+};
+
 export const getSchoolCoursesAPI = async ({
     accessToken,
     schoolId,

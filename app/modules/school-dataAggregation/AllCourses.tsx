@@ -55,14 +55,20 @@ const courses: CourseCardInterface[] = [
 function AllCourses({ standards }: { standards: Standard[] }) {
     return (
         <section className="pb-5">
-            <h1 className="font-semibold text-lg">All Courses</h1>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-                {standards?.map((standard) => (
-                    <div key={standard.id}>
-                        <CourseCard name={standard.name} id={standard.id} />
-                    </div>
-                ))}
-            </div>
+            <h1 className="font-semibold text-xl">All Courses</h1>
+            {standards?.length > 0 ? (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+                    {standards?.map((standard) => (
+                        <div key={standard.id}>
+                            <CourseCard name={standard.name} id={standard.id} />
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center w-full text-lg h-72 flex items-center justify-center">
+                    No Standard Assigned to any Classroom by Teacher!
+                </div>
+            )}
         </section>
     );
 }

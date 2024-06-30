@@ -247,3 +247,27 @@ export const addStudentToClassroomAPI = async ({
     const result = await response.json();
     return result;
 };
+
+export const updateTeacherClassroomsAPI = async ({
+    accessToken,
+    schoolId,
+    teacherId,
+    classroomIds,
+}: {
+    accessToken: string;
+    schoolId: string;
+    teacherId: string;
+    classroomIds: string[];
+}) => {
+    const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/updateTeacherClassrooms`,
+        {
+            accessToken,
+            schoolId,
+            teacherId,
+            classroomIds,
+        }
+    );
+
+    return response;
+};

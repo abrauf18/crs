@@ -8,64 +8,64 @@ import userImage from '@/app/assets/images/UserImage.svg';
 import TeachersTable, { TeacherInterface } from './TeachersTable';
 import AddTeacherModal from './AddTeacherModal';
 
-export const teachersData: TeacherInterface[] = [
-    {
-        id: 1,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-    {
-        id: 2,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-    {
-        id: 3,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-    {
-        id: 4,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-    {
-        id: 5,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-    {
-        id: 6,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-    {
-        id: 7,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-    {
-        id: 8,
-        imageUrl: userImage as string,
-        name: 'John',
-        email: 'john.doe@example.com',
-        assignedClasses: '3',
-    },
-];
+// export const teachersData: TeacherInterface[] = [
+//     {
+//         id: 1,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+//     {
+//         id: 2,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+//     {
+//         id: 3,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+//     {
+//         id: 4,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+//     {
+//         id: 5,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+//     {
+//         id: 6,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+//     {
+//         id: 7,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+//     {
+//         id: 8,
+//         imageUrl: userImage as string,
+//         name: 'John',
+//         email: 'john.doe@example.com',
+//         assignedClasses: '3',
+//     },
+// ];
 
 interface APIUserInterface {
     id: string;
@@ -107,7 +107,7 @@ function Teachers({
         apiTeachers: APITeacherInterface[]
     ): TeacherInterface[] =>
         apiTeachers.map((apiTeacher) => ({
-            id: Number(apiTeacher.User.id),
+            id: apiTeacher.User.id,
             name: apiTeacher.User.name,
             email: apiTeacher.User.email,
             assignedClasses: apiTeacher.classroomCount,

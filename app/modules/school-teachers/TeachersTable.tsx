@@ -15,10 +15,15 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 import Avatar from '@/app/assets/images/UserImage.svg';
+import DialogBox from '@/app/components/common/DialogBox';
+import { deleteTeacherAPI } from '@/app/api/school';
+import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
+import action from '@/app/action';
 import AssignClassModal from './AssignClassModal';
 
 export interface TeacherInterface {
-    id: number;
+    id: string;
     imageUrl?: string | StaticImport;
     name: string;
     email: string;
@@ -38,12 +43,47 @@ const poppins = Poppins({
 function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
     const [isEditTeacherModalVisible, setIsEditTeacherModalVisible] =
         useState(false);
-    const handleEditTeacherClick = () => {
+    const [teacher, setTeacher] = useState<TeacherInterface | null>(null);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+    const [buttonLoader, setButtonLoader] = useState(false);
+    const { data } = useSession();
+    const handleEditTeacherClick = (teacher: TeacherInterface) => {
+        setTeacher(teacher);
         setIsEditTeacherModalVisible(true);
+    };
+
+    const handleDeleteModal = (teacher: TeacherInterface) => {
+        setTeacher(teacher);
+        setIsDeleteModalVisible(true);
     };
 
     const handleCloseModal = () => {
         setIsEditTeacherModalVisible(false);
+    };
+
+    // eslint-disable-next-line consistent-return
+    const onYes = async () => {
+        try {
+            setButtonLoader(true);
+            const result = await deleteTeacherAPI(
+                data?.user.accessToken || '',
+                teacher?.id || ''
+            );
+            console.log(result);
+            if (result.statusCode === 200) {
+                setIsDeleteModalVisible(false);
+                setTeacher(null);
+                action('getListTeacherOfSchool');
+                return toast.success('Teacher deleted successfully');
+            }
+            setIsDeleteModalVisible(false);
+            setTeacher(null);
+            return toast.error(result.message);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setButtonLoader(false);
+        }
     };
     return (
         <section>
@@ -84,12 +124,15 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                                 <TableCell className="">
                                     <span className="rounded flex gap-x-2 items-center mr-6">
                                         <Image
-                                            src={Avatar}
+                                            src={teacher?.imageUrl || Avatar}
                                             alt="crs logo"
+                                            width={26}
+                                            height={26}
+                                            objectFit="fill"
                                             style={{
-                                                width: '25px',
-                                                height: '25px',
-                                                objectFit: 'fill',
+                                                width: '26px',
+                                                height: '26px',
+                                                borderRadius: '50%',
                                             }}
                                         />
                                         <span>{teacher.name}</span>
@@ -102,14 +145,20 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                                     {teacher.assignedClasses}
                                 </TableCell>
                                 <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 ">
-                                    <div className="mr-2 rounded-md cursor-pointer">
-                                        <EditIcon
-                                            width={28}
-                                            height={28}
-                                            onClick={handleEditTeacherClick}
-                                        />
+                                    <div
+                                        className="mr-2 rounded-md cursor-pointer"
+                                        onClick={() =>
+                                            handleEditTeacherClick(teacher)
+                                        }
+                                    >
+                                        <EditIcon width={28} height={28} />
                                     </div>
-                                    <div className="bg-red-100 rounded-md p-1">
+                                    <div
+                                        className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                        onClick={() =>
+                                            handleDeleteModal(teacher)
+                                        }
+                                    >
                                         <Trash
                                             color="#D34645"
                                             width={18}
@@ -130,8 +179,25 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
             </Table>
             {isEditTeacherModalVisible && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                    <AssignClassModal onClose={handleCloseModal} />
+                    <AssignClassModal
+                        teacher={teacher}
+                        onClose={handleCloseModal}
+                    />
                 </div>
+            )}
+            {isDeleteModalVisible && (
+                <DialogBox
+                    loader={buttonLoader}
+                    isOpen={isDeleteModalVisible}
+                    message={`Are you sure you want to delete ${
+                        teacher?.name || 'this'
+                    } teacher?`}
+                    onYes={onYes}
+                    onNo={() => {
+                        setIsDeleteModalVisible(false);
+                        setTeacher(null);
+                    }}
+                />
             )}
         </section>
     );
