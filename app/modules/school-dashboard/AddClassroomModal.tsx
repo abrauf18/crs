@@ -46,7 +46,8 @@ function AddClassroomModal({ onClose }: any) {
             setButtonLoader(true);
             const { className } = formData;
             const selectedTeacher = teacherList.find(
-                (teacher) => teacher.value.toLowerCase() === currentTeacher
+                (teacher) =>
+                    teacher.value.toLowerCase() === currentTeacher.toLowerCase()
             );
 
             const accessToken = data?.user.accessToken || '';

@@ -1,53 +1,58 @@
-import React from 'react';
-import { Check, FileLineChart, Trash2, X } from 'lucide-react';
-import Image from 'next/image';
+import React, { useState } from 'react';
+import { X, ChevronDown } from 'lucide-react'; // Assuming you have an icon library
 import Avatar from '@/app/assets/images/UserImage.svg';
-import StudentCard, { StudentCardInterface } from './StudentCard';
+import { StudentCardInterface } from './StudentCard';
 
-function QuestionDetailModal({ onClose }: any) {
-    const StudentsList: StudentCardInterface[] = [
-        {
-            id: '1',
-            image: Avatar,
-            name: 'John Doe',
-        },
-        {
-            id: '2',
-            image: Avatar,
-            name: 'John Doe',
-        },
-        {
-            id: '3',
-            image: Avatar,
-            name: 'John Doe',
-        },
-        {
-            id: '4',
-            image: Avatar,
-            name: 'John Doe',
-        },
-        {
-            id: '5',
-            image: Avatar,
-            name: 'John Doe',
-        },
-        {
-            id: '6',
-            image: Avatar,
-            name: 'John Doe',
-        },
-    ];
+interface Props {
+    resourceData: {
+        statement: string;
+        answers: any[]; // Adjust type as per actual API response
+        totalMarks: number;
+        AssessmentResourcesDetail: any;
+    };
+    averageObtainedMarks: number;
+    onClose: () => void;
+}
+
+function QuestionDetailModal({
+    resourceData,
+    averageObtainedMarks,
+    onClose,
+}: Props) {
+    const answers = !resourceData.answers
+        ? resourceData.AssessmentResourcesDetail.assessmentAnswers
+        : resourceData.answers;
+
+    const StudentsList: StudentCardInterface[] = answers.map((answer: any) => ({
+        id: answer.user.id,
+        image: answer.user.image || Avatar,
+        name: answer.user.name || 'Anonymous',
+        answerText: answer.answer, // Ensure this matches API structure
+        obtainedMarks: Math.max(answer.obtainedMarks, 0), // Ensure marks are not less than 0
+        userDetails: answer.user, // Store detailed user info here if needed
+    }));
+
+    const [selectedStudent, setSelectedStudent] =
+        useState<StudentCardInterface | null>(null);
+
+    const toggleStudentDetails = (student: StudentCardInterface) => {
+        if (selectedStudent && selectedStudent.id === student.id) {
+            setSelectedStudent(null); // Close details if already selected
+        } else {
+            setSelectedStudent(student); // Show details for selected student
+        }
+    };
+
     return (
-        <section className="w-full bg-white h-screen  py-4  shadow-lg items-center">
+        <section className="w-full bg-white h-screen py-4 shadow-lg items-center">
             <div className="h-[100%] overflow-y-auto w-full px-6">
-                <div className="flex justify-between ">
-                    <div className="flex  my-7 mr-3">
-                        <p className=" text-dark-gray mb-2 font-semibold text-base">
-                            <span className=" font-semibold text-lg text-black">
+                <div className="flex justify-between">
+                    <div className="flex my-7 mr-3">
+                        <p className="text-dark-gray mb-2 font-semibold text-base">
+                            <span className="font-semibold text-lg text-black">
                                 Q:
                             </span>{' '}
-                            What did say as a kid when asked: What do you want
-                            to be when you grow up?
+                            {resourceData.statement}
                         </p>
                     </div>
                     <div className="rounded-full bg-white border p-1 cursor-pointer h-fit my-7">
@@ -55,36 +60,110 @@ function QuestionDetailModal({ onClose }: any) {
                     </div>
                 </div>
 
-                <div className="flex   w-full">
+                <div className="flex w-full">
                     <div className="p-4 border-2 border-green-600 bg-green-100 rounded-lg w-full">
-                        <h1 className="font-medium">Right Answer&apos;s</h1>
+                        <h1 className="font-medium">Average Obtained Marks</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
-                                15
+                                {averageObtainedMarks}
                             </span>{' '}
-                            Answer&apos;s
-                        </h1>
-                    </div>
-                    <div className="p-4 border-2 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">Wrong Answer&apos;s</h1>
-                        <h1 className="mt-2 text-gray-600 font-semibold ">
-                            <span className="font-bold text-lg text-black">
-                                15
-                            </span>{' '}
-                            Answer&apos;s
+                            out of {resourceData.totalMarks}
                         </h1>
                     </div>
                 </div>
+
                 <div className="mt-5">
-                    {StudentsList.map(
-                        (student: StudentCardInterface, index) => (
-                            <>
-                                <div className="py-4" key={student.id}>
-                                    <StudentCard student={student} />
+                    {StudentsList?.length > 0 ? (
+                        StudentsList?.map(
+                            (student: StudentCardInterface, index) => (
+                                <div key={student.id}>
+                                    <div className="flex items-center justify-between py-4">
+                                        <div
+                                            className="flex items-center cursor-pointer"
+                                            onClick={() =>
+                                                toggleStudentDetails(student)
+                                            }
+                                        >
+                                            <img
+                                                src={student?.image || Avatar}
+                                                alt={student.name}
+                                                className="w-12 h-12 rounded-full mr-4"
+                                            />
+                                            <p className="text-lg">
+                                                {student.name}
+                                            </p>
+                                        </div>
+                                        <ChevronDown
+                                            size={20}
+                                            className={`cursor-pointer transform rounded-full border  ${
+                                                selectedStudent &&
+                                                selectedStudent.id ===
+                                                    student.id
+                                                    ? 'rotate-180'
+                                                    : ''
+                                            }`}
+                                            onClick={() =>
+                                                toggleStudentDetails(student)
+                                            }
+                                        />
+                                    </div>
+                                    {selectedStudent &&
+                                        selectedStudent.id === student.id && (
+                                            <div className="p-4 bg-gray-100 rounded-lg">
+                                                <div className="flex items-center mb-4">
+                                                    <img
+                                                        src={
+                                                            selectedStudent?.image ||
+                                                            Avatar
+                                                        }
+                                                        alt={
+                                                            selectedStudent.name
+                                                        }
+                                                        className="w-16 h-16 rounded-full mr-4"
+                                                    />
+                                                    <div>
+                                                        <p className="text-lg">
+                                                            {
+                                                                selectedStudent.name
+                                                            }
+                                                        </p>
+                                                        {selectedStudent?.userDetails && (
+                                                            <p className="text-gray-600">
+                                                                {
+                                                                    selectedStudent
+                                                                        .userDetails
+                                                                        .email
+                                                                }
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-lg font-semibold">
+                                                        Answer:
+                                                    </h3>
+                                                    <p className="text-gray-700">
+                                                        {
+                                                            selectedStudent?.answerText
+                                                        }
+                                                    </p>
+                                                    <p className="mt-2 text-gray-600">
+                                                        Marks Obtained:{' '}
+                                                        {
+                                                            selectedStudent?.obtainedMarks
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+                                    {StudentsList.length !== index + 1 && (
+                                        <hr />
+                                    )}
                                 </div>
-                                {StudentsList.length !== index + 1 && <hr />}
-                            </>
+                            )
                         )
+                    ) : (
+                        <p className="text-center">No Data Found!</p>
                     )}
                 </div>
             </div>

@@ -69,7 +69,6 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                 data?.user.accessToken || '',
                 teacher?.id || ''
             );
-            console.log(result);
             if (result.statusCode === 200) {
                 setIsDeleteModalVisible(false);
                 setTeacher(null);
@@ -171,7 +170,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                     ) : (
                         <TableRow>
                             <TableCell colSpan={5} className="text-center">
-                                No data available
+                                No Teacher available
                             </TableCell>
                         </TableRow>
                     )}

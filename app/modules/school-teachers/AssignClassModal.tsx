@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import {
     useForm,
@@ -90,8 +91,6 @@ function AssignClassModal({ teacher, onClose }: AssignClassModalProps) {
                 return option?.id;
             });
 
-        console.log(classOptions, filteredIds);
-
         try {
             setButtonLoading(true);
             const response = await updateTeacherClassroomsAPI({
@@ -107,6 +106,7 @@ function AssignClassModal({ teacher, onClose }: AssignClassModalProps) {
             return toast.error(error?.response.data.message);
         } finally {
             setButtonLoading(false);
+            onClose();
         }
     };
 

@@ -106,12 +106,12 @@ function Teachers({
     const mapApiTeacherToTeacher = (
         apiTeachers: APITeacherInterface[]
     ): TeacherInterface[] =>
-        apiTeachers.map((apiTeacher) => ({
-            id: apiTeacher.User.id,
-            name: apiTeacher.User.name,
-            email: apiTeacher.User.email,
-            assignedClasses: apiTeacher.classroomCount,
-            imageUrl: apiTeacher.User.image,
+        apiTeachers?.map((apiTeacher) => ({
+            id: apiTeacher?.User.id,
+            name: apiTeacher?.User.name,
+            email: apiTeacher?.User.email,
+            assignedClasses: apiTeacher?.classroomCount,
+            imageUrl: apiTeacher?.User.image,
         }));
     const transformedTeachers: TeacherInterface[] =
         mapApiTeacherToTeacher(teachers);

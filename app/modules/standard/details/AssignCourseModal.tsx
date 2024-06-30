@@ -141,10 +141,7 @@ function AssignCourseModal({
                     selectedClasses: [teacherResponseData?.data[0].label],
                 });
             } catch (error: any) {
-                toast.error(
-                    error?.message ??
-                        'An error occurred while fetching teachers classes'
-                );
+                console.log(error);
             } finally {
                 setModalLoading(false);
             }

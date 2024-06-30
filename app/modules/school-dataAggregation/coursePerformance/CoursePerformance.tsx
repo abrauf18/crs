@@ -43,59 +43,6 @@ interface DailyUpload {
 }
 
 function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
-    const performance: PerformanceCardInterface[] = [
-        {
-            id: '1',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '2',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '3',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '4',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '5',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '6',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '7',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '8',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '9',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-        {
-            id: '10',
-            name: 'Corona Virus',
-            // percentage: '100',
-        },
-    ];
-
     const [activeTab, setActiveTabLocal] = useState<string>(
         StudentProfileResourceType.VIDEO
     );
@@ -118,7 +65,7 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
     return (
         <section className="mt-5">
             <Filters
-                text="Course Performance - Coronavirus"
+                text="Course Performance"
                 secondButtonText="Student"
                 isHideFirstBtn
                 isHideSecondBtn
