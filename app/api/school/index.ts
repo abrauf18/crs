@@ -166,3 +166,49 @@ export const getListTeacherOfSchool = async ({
 
     return result;
 };
+
+export const getSchoolCoursesAPI = async ({
+    accessToken,
+    schoolId,
+}: {
+    accessToken: string;
+    schoolId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/get-courses?schoolId=${schoolId}`,
+        {
+            method: 'GET',
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getSchoolCourses'],
+            },
+        }
+    );
+
+    return result;
+};
+
+export const getSchoolStandardResourcesAPI = async ({
+    accessToken,
+    standardId,
+}: {
+    accessToken: string;
+    standardId: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/get-courses-content?standardId=${standardId}`,
+        {
+            method: 'GET',
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getSchoolStandardResources'],
+            },
+        }
+    );
+
+    return result;
+};

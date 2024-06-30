@@ -7,9 +7,9 @@ import React from 'react';
 export interface PerformanceCardInterface {
     name: string;
     id: string;
-    percentage: string;
+    // percentage: string;
 }
-function PerformanceCard({ name, id, percentage }: PerformanceCardInterface) {
+function PerformanceCard({ name, id }: PerformanceCardInterface) {
     const { push } = useRouter();
     const pathName = usePathname();
     return (
@@ -23,9 +23,9 @@ function PerformanceCard({ name, id, percentage }: PerformanceCardInterface) {
                     <div className=" px-[3px] border-2 w-5 h-5 border-green-200 rounded-md flex items-center self-center">
                         <LucideMoveUpRight color="green" size={10} />
                     </div>
-                    <p className="text-green-600 font-semibold text-center">
+                    {/* <p className="text-green-600 font-semibold text-center">
                         {percentage}%
-                    </p>
+                    </p> */}
                 </div>
             </div>
         </div>

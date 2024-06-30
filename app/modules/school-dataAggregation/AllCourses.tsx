@@ -1,6 +1,15 @@
 import React from 'react';
 import CourseCard, { CourseCardInterface } from './CourseCard';
 
+interface Standard {
+    id: string;
+    name: string;
+    description: string;
+    courseLength: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 const courses: CourseCardInterface[] = [
     {
         id: '1',
@@ -43,14 +52,14 @@ const courses: CourseCardInterface[] = [
         name: 'Corona Virus',
     },
 ];
-function AllCourses() {
+function AllCourses({ standards }: { standards: Standard[] }) {
     return (
         <section className="pb-5">
             <h1 className="font-semibold text-lg">All Courses</h1>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-                {courses.map((course) => (
-                    <div key={course.id}>
-                        <CourseCard name={course.name} id={course.id} />
+                {standards?.map((standard) => (
+                    <div key={standard.id}>
+                        <CourseCard name={standard.name} id={standard.id} />
                     </div>
                 ))}
             </div>

@@ -6,78 +6,78 @@ import StatsTable, { StatsInterface } from '@/app/components/common/StatsTable';
 import TestDetailTable, { TestDetailInterface } from './TestDetailTable';
 
 function TestPerformance() {
-    const StatsList: StatsInterface[] = [
-        {
-            id: 1,
-            name: 'School',
-            first: 20.4,
-            firstNum: 20,
-            second: 10.2,
-            secondNum: 10,
-            third: 30.26,
-            thirdNum: 40,
-            forth: 20.19,
-            forthNum: 30,
-            fifth: 10.92,
-            fifthNum: 30,
-        },
-        {
-            id: 1,
-            name: 'School',
-            first: 20.4,
-            firstNum: 20,
-            second: 10.2,
-            secondNum: 10,
-            third: 30.26,
-            thirdNum: 40,
-            forth: 20.19,
-            forthNum: 30,
-            fifth: 10.92,
-            fifthNum: 30,
-        },
-        {
-            id: 1,
-            name: 'School',
-            first: 20.4,
-            firstNum: 20,
-            second: 10.2,
-            secondNum: 10,
-            third: 30.26,
-            thirdNum: 40,
-            forth: 20.19,
-            forthNum: 30,
-            fifth: 10.92,
-            fifthNum: 30,
-        },
-        {
-            id: 1,
-            name: 'School',
-            first: 20.4,
-            firstNum: 20,
-            second: 10.2,
-            secondNum: 10,
-            third: 30.26,
-            thirdNum: 40,
-            forth: 20.19,
-            forthNum: 30,
-            fifth: 10.92,
-            fifthNum: 30,
-        },
-        {
-            id: 1,
-            name: 'School',
-            first: 20.4,
-            firstNum: 20,
-            second: 10.2,
-            secondNum: 10,
-            third: 30.26,
-            thirdNum: 40,
-            forth: 20.19,
-            forthNum: 30,
-            fifth: 10.92,
-            fifthNum: 30,
-        },
-    ];
+    // const StatsList: StatsInterface[] = [
+    //     {
+    //         id: '1',
+    //         name: 'School',
+    //         first: 20.4,
+    //         firstNum: 20,
+    //         second: 10.2,
+    //         secondNum: 10,
+    //         third: 30.26,
+    //         thirdNum: 40,
+    //         forth: 20.19,
+    //         forthNum: 30,
+    //         fifth: 10.92,
+    //         fifthNum: 30,
+    //     },
+    //     {
+    //         id: '1',
+    //         name: 'School',
+    //         first: 20.4,
+    //         firstNum: 20,
+    //         second: 10.2,
+    //         secondNum: 10,
+    //         third: 30.26,
+    //         thirdNum: 40,
+    //         forth: 20.19,
+    //         forthNum: 30,
+    //         fifth: 10.92,
+    //         fifthNum: 30,
+    //     },
+    //     {
+    //         id: '1',
+    //         name: 'School',
+    //         first: 20.4,
+    //         firstNum: 20,
+    //         second: 10.2,
+    //         secondNum: 10,
+    //         third: 30.26,
+    //         thirdNum: 40,
+    //         forth: 20.19,
+    //         forthNum: 30,
+    //         fifth: 10.92,
+    //         fifthNum: 30,
+    //     },
+    //     {
+    //         id: '1',
+    //         name: 'School',
+    //         first: 20.4,
+    //         firstNum: 20,
+    //         second: 10.2,
+    //         secondNum: 10,
+    //         third: 30.26,
+    //         thirdNum: 40,
+    //         forth: 20.19,
+    //         forthNum: 30,
+    //         fifth: 10.92,
+    //         fifthNum: 30,
+    //     },
+    //     {
+    //         id: '1',
+    //         name: 'School',
+    //         first: 20.4,
+    //         firstNum: 20,
+    //         second: 10.2,
+    //         secondNum: 10,
+    //         third: 30.26,
+    //         thirdNum: 40,
+    //         forth: 20.19,
+    //         forthNum: 30,
+    //         fifth: 10.92,
+    //         fifthNum: 30,
+    //     },
+    // ];
 
     const TestRecord: TestDetailInterface[] = [
         {
@@ -148,17 +148,17 @@ function TestPerformance() {
                         <span className="ml-1">Overall Performance</span>
                     </div>
                 </div>
-                <Tabs
+                {/* <Tabs
                     activeTab=""
                     setActiveTabLocal={() => {}}
                     tabOptions={[
                         StudentProfileResourceType.VIDEO,
                         StudentProfileResourceType.ASSESSMENT,
                     ]}
-                />
-                <div className="rounded-xl border mt-5 py-3 md:px-6 mobile:px-3">
+                /> */}
+                {/* <div className="rounded-xl border mt-5 py-3 md:px-6 mobile:px-3">
                     <StatsTable statsList={StatsList} />
-                </div>
+                </div> */}
 
                 <div className="rounded-lg  mt-5 py-3 md:px-6 mobile:px-3">
                     <TestDetailTable test={TestRecord} />
