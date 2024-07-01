@@ -9,6 +9,13 @@ const nextConfig = {
                 // hostname: 'crsbuck.s3.us-east-2.amazonaws.com',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname:
+                    'crsbuck.s3.us-east-2.amazonaws.com',
+                // hostname: 'crsbuck.s3.us-east-2.amazonaws.com',
+                pathname: '/**',
+            },
         ],
     },
     webpack: (config) => {
