@@ -5,8 +5,8 @@ function TestPerformance({ data }: { data: any }) {
     return (
         <section>
             <div className="border px-2 py-5 lg:py-5 lg:px-5 rounded-lg mt-10">
-                <div className="flex flex-col mb-4 lg:flex-row lg:justify-between lg:items-center ">
-                    <h1 className="text-lg font-semibold mb-4 lg:mb-0 ml-2">
+                <div className="flex flex-col md:mb-4 lg:flex-row lg:justify-between lg:items-center ">
+                    <h1 className="text-lg font-semibold md:mb-4 lg:mb-0 md:ml-2 ml-4">
                         {data[0].name}
                     </h1>
 
@@ -21,7 +21,7 @@ function TestPerformance({ data }: { data: any }) {
                     </div> */}
                 </div>
 
-                <div className="rounded-lg  mt-5 py-3 md:px-6 mobile:px-3">
+                <div className="rounded-lg  md:mt-5 py-3 md:px-6 mobile:px-3">
                     <TestDetailTable data={data} />
                 </div>
             </div>

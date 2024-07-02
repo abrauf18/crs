@@ -7,20 +7,16 @@ import { StudentCardInterface } from './StudentCard';
 interface Props {
     resourceData: {
         statement: string;
+        name: string;
         answers: any[]; // Adjust type as per actual API response
         totalMarks: number;
         AssessmentResourcesDetail: any;
         url: string;
     };
-    averageObtainedMarks: number;
     onClose: () => void;
 }
 
-function QuestionDetailModal({
-    resourceData,
-    averageObtainedMarks,
-    onClose,
-}: Props) {
+function QuestionDetailModal({ resourceData, onClose }: Props) {
     const answers = !resourceData.answers
         ? resourceData.AssessmentResourcesDetail.assessmentAnswers
         : resourceData.answers;
@@ -54,27 +50,11 @@ function QuestionDetailModal({
                             <span className="font-semibold text-lg text-black">
                                 Q:
                             </span>{' '}
-                            {resourceData.statement}
+                            {resourceData.statement || resourceData.name}
                         </p>
                     </div>
                     <div className="rounded-full bg-white border p-1 cursor-pointer h-fit my-7">
                         <X size={15} onClick={onClose} />
-                    </div>
-                </div>
-
-                <div className="flex w-full">
-                    <div className="p-4 border-2 border-green-600 bg-green-100 rounded-lg w-full">
-                        <h1 className="font-medium">Average Obtained Marks</h1>
-                        <h1 className="mt-2 text-gray-600 font-semibold">
-                            <span className="font-bold text-lg text-black">
-                                {averageObtainedMarks}
-                            </span>{' '}
-                            out of{' '}
-                            {!resourceData.answers
-                                ? resourceData.AssessmentResourcesDetail
-                                      ?.totalMarks
-                                : resourceData.totalMarks}
-                        </h1>
                     </div>
                 </div>
 

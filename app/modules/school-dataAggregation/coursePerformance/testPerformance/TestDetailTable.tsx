@@ -36,29 +36,39 @@ interface DataItem {
         questions: QuestionDetailInterface[];
     };
     averageObtainedMarks: number;
+    AssessmentResourcesDetail: any;
+    totalMarks: number;
 }
 
 function TestDetailTable({ data, fontSize }: TestDetailProp) {
     const [isShowDetailModal, setIsShowDetailModal] = useState(false);
     const [selectData, setSelectData] = useState<any>(null);
-    const [averageObtainedMarks, setAverageObtainedMarks] = useState<
-        number | null
-    >(null);
 
-    const handleDisplayModal = (marks: number, questionData: any) => {
-        setAverageObtainedMarks(marks);
+    const handleDisplayModal = (questionData: any) => {
         setSelectData(questionData);
         setIsShowDetailModal(true);
     };
 
     const handleCloseModal = () => {
         setIsShowDetailModal(false);
-        setAverageObtainedMarks(null);
         setSelectData(null);
     };
 
     return (
         <section>
+            <div className="flex mobile:flex-col md:items-center space-x-2 bg-green-50 py-2 px-4 rounded-lg border border-green-600 text-gray-500 font-medium w-72 md:w-96 md:absolute md:right-24 top-[9.3rem] mb-6">
+                <span className="font-bold text-black">
+                    Average Obtain Marks:
+                </span>
+                <h1 className="text-gray-600 font-semibold text-center">
+                    <span className="font-bold text-lg text-gray-700">
+                        {data[0]?.averageObtainedMarks}
+                    </span>{' '}
+                    out of{' '}
+                    {data[0]?.AssessmentResourcesDetail?.totalMarks ||
+                        data[0]?.totalMarks}
+                </h1>
+            </div>
             <Table
                 className={`text-[${
                     fontSize || '18'
@@ -76,9 +86,6 @@ function TestDetailTable({ data, fontSize }: TestDetailProp) {
                             Total Marks
                         </TableHead>
                         <TableHead className="text-dark-gray font-semibold">
-                            Average Obtained Marks
-                        </TableHead>
-                        <TableHead className="text-dark-gray font-semibold">
                             Action
                         </TableHead>
                     </TableRow>
@@ -87,8 +94,7 @@ function TestDetailTable({ data, fontSize }: TestDetailProp) {
                     {data?.map((testItem: any, index) => (
                         <React.Fragment key={testItem.id}>
                             {testItem.video === null ? (
-                                testItem?.AssessmentResourcesDetail
-                                    ?.assessmentAnswers.length === 0 ? (
+                                testItem.AssessmentResourcesDetail ? (
                                     <TableRow className="border-b">
                                         <TableCell className="font-normal">
                                             <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
@@ -107,69 +113,36 @@ function TestDetailTable({ data, fontSize }: TestDetailProp) {
                                                 }
                                             </span>
                                         </TableCell>
-                                        <TableCell className="text-dark-gray font-normal">
-                                            <span>0 </span>
-                                        </TableCell>
                                         <TableCell>
-                                            <div className="mr-2 w-fit bg-light-orange rounded-md p-1">
-                                                <EyeOff
-                                                    color="#F59A3B"
-                                                    width={18}
-                                                    height={18}
-                                                />
-                                            </div>
+                                            {testItem.AssessmentResourcesDetail
+                                                .assessmentAnswers.length >
+                                            0 ? (
+                                                <div
+                                                    className="mr-2 w-fit bg-light-orange rounded-md p-1 cursor-pointer"
+                                                    onClick={() =>
+                                                        handleDisplayModal(
+                                                            testItem
+                                                        )
+                                                    }
+                                                >
+                                                    <Eye
+                                                        color="#F59A3B"
+                                                        width={18}
+                                                        height={18}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="mr-2 w-fit bg-light-orange rounded-md p-1">
+                                                    <EyeOff
+                                                        color="#F59A3B"
+                                                        width={18}
+                                                        height={18}
+                                                    />
+                                                </div>
+                                            )}
                                         </TableCell>
                                     </TableRow>
-                                ) : (
-                                    testItem.AssessmentResourcesDetail.assessmentAnswers.map(
-                                        (answer: any, aIndex: any) => (
-                                            <TableRow
-                                                className="border-b"
-                                                key={answer.id}
-                                            >
-                                                <TableCell className="font-normal">
-                                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                                        {aIndex + 1}
-                                                    </span>
-                                                </TableCell>
-                                                <TableCell className="w-[500px] text-dark-gray font-normal">
-                                                    <span>{testItem.name}</span>
-                                                </TableCell>
-                                                <TableCell className="text-dark-gray font-normal">
-                                                    <span>
-                                                        {
-                                                            testItem
-                                                                .AssessmentResourcesDetail
-                                                                .totalMarks
-                                                        }
-                                                    </span>
-                                                </TableCell>
-                                                <TableCell className="text-dark-gray font-normal">
-                                                    <span>
-                                                        {answer.obtainedMarks}
-                                                    </span>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <div
-                                                        className="mr-2 w-fit bg-light-orange rounded-md p-1 cursor-pointer"
-                                                        onClick={() =>
-                                                            handleDisplayModal(
-                                                                answer.obtainedMarks,
-                                                                testItem
-                                                            )
-                                                        }
-                                                    >
-                                                        <Eye
-                                                            color="#F59A3B"
-                                                            width={18}
-                                                            height={18}
-                                                        />
-                                                    </div>
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    )
-                                )
+                                ) : null
                             ) : (
                                 testItem.video.questions.map(
                                     (question: any, qIndex: any) => (
@@ -192,20 +165,12 @@ function TestDetailTable({ data, fontSize }: TestDetailProp) {
                                                     {question.totalMarks}
                                                 </span>
                                             </TableCell>
-                                            <TableCell className="text-dark-gray font-normal">
-                                                <span>
-                                                    {
-                                                        testItem.averageObtainedMarks
-                                                    }
-                                                </span>
-                                            </TableCell>
-                                            {question?.answers.length > 0 ? (
+                                            {question.answers.length > 0 ? (
                                                 <TableCell>
                                                     <div
                                                         className="mr-2 w-fit bg-light-orange rounded-md p-1 cursor-pointer"
                                                         onClick={() =>
                                                             handleDisplayModal(
-                                                                testItem.averageObtainedMarks,
                                                                 question
                                                             )
                                                         }
@@ -240,7 +205,6 @@ function TestDetailTable({ data, fontSize }: TestDetailProp) {
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <QuestionDetailModal
                         resourceData={selectData}
-                        averageObtainedMarks={averageObtainedMarks || 0}
                         onClose={handleCloseModal}
                     />
                 </div>

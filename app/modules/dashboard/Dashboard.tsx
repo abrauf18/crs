@@ -64,7 +64,7 @@ function Dashboard({
         image: student?.image,
         gradeId: student?.classId,
         grade: student?.className,
-        performance: student?.obtainedWeightage,
+        performance: student?.totalObtainedScore,
     }));
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
