@@ -42,6 +42,8 @@ interface Topic {
     watched?: boolean;
     completed?: boolean;
     canWrite?: boolean;
+    deadline?: number;
+    totalMarks?: number;
 }
 
 function StandardTable({
@@ -82,10 +84,12 @@ function StandardTable({
         id: string,
         name: string,
         type: ResourceType,
-        topic: string
+        topic: string,
+        deadline?: number,
+        totalMarks?: number
     ) => {
         setShowUpdateResourceModal(true);
-        setSelectedResource({ id, name, type, topic });
+        setSelectedResource({ id, name, type, topic, deadline, totalMarks });
     };
 
     const handleCloseEditResourceModal = () => {
@@ -300,7 +304,9 @@ function StandardTable({
                                                         topic.resourceId,
                                                         topic.name,
                                                         topic.type,
-                                                        topic.topic
+                                                        topic.topic,
+                                                        topic.deadline,
+                                                        topic.totalMarks
                                                     );
                                                 }
                                             }}

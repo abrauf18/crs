@@ -127,6 +127,7 @@ export const updateResourceAPI = async ({
     topic,
     accessToken,
     totalMarks,
+    deadline,
 }: {
     resourceId: string;
     name: string;
@@ -134,6 +135,7 @@ export const updateResourceAPI = async ({
     topic: string;
     accessToken: string;
     totalMarks?: number;
+    deadline?: number;
 }) => {
     const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/resource/updateResource`,
@@ -144,6 +146,7 @@ export const updateResourceAPI = async ({
             topic,
             accessToken,
             totalMarks,
+            deadline,
         }
     );
 

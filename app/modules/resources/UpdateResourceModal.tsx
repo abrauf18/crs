@@ -53,6 +53,7 @@ function UpdateResourceModal({
                     topic: formData.topic,
                     totalMarks: formData.totalMarks,
                     accessToken: data?.user?.accessToken,
+                    deadline: formData.deadline,
                 });
                 if (updateResponse?.status !== 200) {
                     toast.error(
@@ -66,7 +67,9 @@ function UpdateResourceModal({
                 toast.error('Token Expire, Please Signin Again');
             }
         } catch (error: any) {
-            toast.error(error?.message || 'Resource Update Failed');
+            toast.error(
+                error?.response?.data?.message || 'Resource Update Failed'
+            );
         } finally {
             setLoading(false);
         }
