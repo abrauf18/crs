@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Sign up',
-    description: 'Sign up securely to your CHKR account.',
+    description: 'Sign up securely to your CRS account.',
 };
 function SignupPage({ searchParams }: { searchParams: { token: string } }) {
     if (!searchParams.token) {

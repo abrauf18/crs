@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Sign In',
-    description: 'Log in securely to your CHKR account.',
+    description: 'Log in securely to your CRS account.',
 };
 
 function SigninPage() {
