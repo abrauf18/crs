@@ -125,9 +125,7 @@ function Dashboard({
                         <Card
                             Icon={DataIcon}
                             cardText="Overall Performance"
-                            count={`${
-                                TeacherSummaries?.OverallPerformance ?? 0
-                            }%`}
+                            count={`${TeacherSummaries?.OverallPerformance}%`}
                             currentPath="/teacher/learning-plans"
                             iconBackgroundColour="bg-orange-100"
                         />

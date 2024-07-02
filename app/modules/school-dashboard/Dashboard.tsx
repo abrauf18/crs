@@ -86,7 +86,12 @@ function SchoolDashboard({ data, name }: { data: any; name: string }) {
                 <Card
                     Icon={DataIcon}
                     cardText="Overall Performance"
-                    count={`${data?.obtainedWeightage} of ${data?.totalWeightage}%`}
+                    count={`${
+                        data?.obtainedWeightage !== undefined &&
+                        data?.totalWeightage !== 'NaN'
+                            ? `${data.obtainedWeightage} of ${data.totalWeightage}%`
+                            : '0 of 0%'
+                    }`}
                     isSchool
                 />
             </div>
