@@ -69,10 +69,10 @@ function CardContent({
                     Selected
                 </Link>
             ) : (
-                <div className="flex items-end justify-end mt-7 lg:mt-5 mr-2">
+                <div className="flex items-end justify-end mt-7 lg:mt-5">
                     <Link
                         href={route && id ? `${route}/${id}` : '#'}
-                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center mr-2 lg:hover:bg-primary-color lg:hover:text-white"
+                        className="border rounded-lg text-dark-gray px-3 py-2 text-sm font-medium text-center lg:hover:bg-primary-color lg:hover:text-white"
                     >
                         {isShownFromStudent ? 'Start Course' : 'Details'}
                     </Link>

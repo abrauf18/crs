@@ -113,25 +113,23 @@ function SchoolDashboard({ data, name }: { data: any; name: string }) {
             <div className="w-full ">
                 <DashboardGraph data={data?.usersJoining} year={currentYear} />
             </div>
-            <div className=" grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mt-5 ">
-                <div className="border rounded-lg p-5 px-2 lg:px-5">
-                    <div className="flex  justify-between px-1 mb-2   items-center">
-                        <h1 className="text-xl font-semibold">
-                            Teacher&apos;s
-                        </h1>
-                        <Link href="/school/teachers">
-                            <div className="cursor-pointer border rounded-lg px-3 py-2 text-dark-gray font-medium mobile:mt-2 hover:bg-primary-color hover:text-white">
-                                Show All
-                            </div>
-                        </Link>
-                    </div>
-                    <UsersTable
-                        users={data?.getSchoolTeacher}
-                        fontSize="12"
-                        isDashboard
-                    />
+            {/* <div className=" grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mt-5 "> */}
+            <div className="border rounded-lg p-5 px-2 lg:px-5 mt-5 ">
+                <div className="flex  justify-between px-1 mb-2   items-center">
+                    <h1 className="text-xl font-semibold">Teacher&apos;s</h1>
+                    <Link href="/school/teachers">
+                        <div className="cursor-pointer border rounded-lg px-3 py-2 text-dark-gray font-medium mobile:mt-2 hover:bg-primary-color hover:text-white">
+                            Show All
+                        </div>
+                    </Link>
                 </div>
-                <div className="border rounded-lg p-5 px-2 lg:px-5 mt-2 lg:mt-0">
+                <UsersTable
+                    users={data?.getSchoolTeacher}
+                    fontSize="12"
+                    isDashboard
+                />
+            </div>
+            {/* <div className="border rounded-lg p-5 px-2 lg:px-5 mt-2 lg:mt-0">
                     <div className="flex  justify-between px-1 mb-2   items-center">
                         <h1 className="text-xl font-semibold">
                             Recent Tickets
@@ -144,8 +142,8 @@ function SchoolDashboard({ data, name }: { data: any; name: string }) {
                         </div>
                     </div>
                     <TicketsTable tickets={tickets} fontSize="12" />
-                </div>
-            </div>
+                </div> */}
+            {/* </div> */}
 
             {isDisplayTicketModal && (
                 <div className="fixed top-0 right-0 z-50 w-full lg:w-[30%]">

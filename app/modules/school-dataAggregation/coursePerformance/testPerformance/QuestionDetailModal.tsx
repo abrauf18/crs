@@ -63,13 +63,13 @@ function QuestionDetailModal({ resourceData, onClose }: Props) {
                         StudentsList?.map(
                             (student: StudentCardInterface, index) => (
                                 <div key={student.id}>
-                                    <div className="flex items-center justify-between py-4">
-                                        <div
-                                            className="flex items-center cursor-pointer"
-                                            onClick={() =>
-                                                toggleStudentDetails(student)
-                                            }
-                                        >
+                                    <div
+                                        className="flex items-center justify-between py-4 cursor-pointer"
+                                        onClick={() =>
+                                            toggleStudentDetails(student)
+                                        }
+                                    >
+                                        <div className="flex items-center cursor-pointer">
                                             <img
                                                 src={student?.image || Avatar}
                                                 alt={student.name}
@@ -88,9 +88,6 @@ function QuestionDetailModal({ resourceData, onClose }: Props) {
                                                     ? 'rotate-180'
                                                     : ''
                                             }`}
-                                            onClick={() =>
-                                                toggleStudentDetails(student)
-                                            }
                                         />
                                     </div>
                                     {selectedStudent &&

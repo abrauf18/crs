@@ -190,7 +190,7 @@ function TeachersTable({ teachers, fontSize }: TeacherTableProp): JSX.Element {
                     isOpen={isDeleteModalVisible}
                     message={`Are you sure you want to delete ${
                         teacher?.name || 'this'
-                    } teacher?`}
+                    }?`}
                     onYes={onYes}
                     onNo={() => {
                         setIsDeleteModalVisible(false);

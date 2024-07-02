@@ -14,7 +14,7 @@ function PerformanceCard({ name, id }: PerformanceCardInterface) {
     const pathName = usePathname();
     return (
         <div
-            className="rounded-xl p-5 border cursor-pointer"
+            className="rounded-xl p-5 border cursor-pointer hover:bg-green-100"
             onClick={() => push(`${pathName}/${id}`)}
         >
             <h1 className="font-semibold text-lg">{name}</h1>

@@ -56,11 +56,11 @@ function TestDetailTable({ data, fontSize }: TestDetailProp) {
 
     return (
         <section>
-            <div className="flex mobile:flex-col md:items-center space-x-2 bg-green-50 py-2 px-4 rounded-lg border border-green-600 text-gray-500 font-medium w-72 md:w-96 md:absolute md:right-24 top-[9.3rem] mb-6">
+            <div className="flex mobile:flex-col md:items-center space-x-2 bg-green-50 py-2 px-4 rounded-lg border border-green-600 text-gray-500 font-medium w-[15.5rem] md:w-[21rem] md:absolute md:right-24 top-[9.3rem] mb-6">
                 <span className="font-bold text-black">
                     Average Obtain Marks:
                 </span>
-                <h1 className="text-gray-600 font-semibold text-center">
+                <h1 className="text-gray-600 font-semibold">
                     <span className="font-bold text-lg text-gray-700">
                         {data[0]?.averageObtainedMarks}
                     </span>{' '}

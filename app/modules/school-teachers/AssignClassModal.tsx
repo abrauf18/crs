@@ -161,7 +161,7 @@ function AssignClassModal({ teacher, onClose }: AssignClassModalProps) {
                         </div>
 
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="flex justify-between items-center mt-3 relative">
+                            <div className="flex justify-between items-center mt-4 relative">
                                 <label className="font-medium" htmlFor="invite">
                                     Assign Classes
                                 </label>
@@ -180,7 +180,7 @@ function AssignClassModal({ teacher, onClose }: AssignClassModalProps) {
                                 )}
                             </div>
 
-                            <div className="flex flex-col space-y-4 mt-4">
+                            <div className="flex flex-col space-y-4 mt-3">
                                 {fields.map((field: any, index: any) => (
                                     <div
                                         key={field.id}

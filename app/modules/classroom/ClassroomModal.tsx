@@ -206,17 +206,17 @@ function ClassroomModal({
                                     </div>
                                 </div>
 
-                                <button
+                                {/* <button
                                     type="button"
                                     className="text-dark-gray cursor-pointer justify-center font-semibold mobile:w-full p-2 md:px-6 md:py-3 border rounded-lg mt-3 ml-0 lg:ml-8 mb-6 lg:mb-0 flex items-center space-x-2"
                                     onClick={removeImage}
                                 >
                                     <Trash2 color="#E6500D" />
                                     <span>Remove Photo</span>
-                                </button>
+                                </button> */}
                             </div>
 
-                            <div className="flex items-center mt-3 py-3 px-2 lg:px-5 rounded-lg  border-2 border-primary-color justify-between">
+                            <div className="flex items-center mt-4 py-3 px-2 lg:px-5 rounded-lg  border-2 border-primary-color justify-between">
                                 <div>
                                     <FileLineChart color="#F59A3B" />
                                     <p className="font-medium mt-2">
