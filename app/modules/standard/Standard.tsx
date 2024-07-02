@@ -49,13 +49,13 @@ function Standard({
                 isHideFirstBtn
                 isHideSecondBtn={isShownFromTeacher}
             />
-            <section className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4">
-                {standardsCount > 0 ? (
-                    allStandards?.map((standard, index) => (
-                        <div
-                            key={standard.id || index}
-                            className="rounded-lg border p-4"
-                        >
+            {standardsCount > 0 ? (
+                allStandards?.map((standard, index) => (
+                    <section
+                        className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4"
+                        key={standard.id || index}
+                    >
+                        <div className="rounded-lg border p-4">
                             <CardContent
                                 id={standard.id}
                                 route={
@@ -72,15 +72,15 @@ function Standard({
                                 isFromStandard
                             />
                         </div>
-                    ))
-                ) : (
-                    <div className="flex items-center justify-center h-72">
-                        <p className="text-lg text-gray-500">
-                            No Learning Standards Found!
-                        </p>
-                    </div>
-                )}
-            </section>
+                    </section>
+                ))
+            ) : (
+                <div className="flex items-center justify-center h-72">
+                    <p className="text-lg text-gray-500 text-center">
+                        No Learning Standards Found!
+                    </p>
+                </div>
+            )}
         </>
     );
 }

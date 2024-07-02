@@ -71,9 +71,12 @@ function Video({
                     handleClick={handleOpenUploadModal}
                 />
             </div>
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
-                {APIdata.totalVideos > 0 ? (
-                    APIdata?.videos?.map((card) => (
+            {APIdata.totalVideos > 0 ? (
+                APIdata?.videos?.map((card) => (
+                    <div
+                        className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 "
+                        key={card.id}
+                    >
                         <VideoCard
                             card={{
                                 id: card.id,
@@ -82,18 +85,15 @@ function Video({
                                 Questions: card.questionCountNumber,
                                 Checkpoints: card.topicsCount,
                             }}
-                            key={card.id}
                             onClickEditBtn={handleOpenEditModal}
                         />
-                    ))
-                ) : (
-                    <div className="flex justify-center items-center h-72 w-full">
-                        <p className="text-lg text-gray-500">
-                            No Videos Found!
-                        </p>
                     </div>
-                )}
-            </div>
+                ))
+            ) : (
+                <div className="flex justify-center items-center h-72 w-full">
+                    <p className="text-lg text-gray-500">No Videos Found!</p>
+                </div>
+            )}
 
             {isShowUploadVideoModal && step === 0 && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
