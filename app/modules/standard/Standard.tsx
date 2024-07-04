@@ -49,38 +49,40 @@ function Standard({
                 isHideFirstBtn
                 isHideSecondBtn={isShownFromTeacher}
             />
-            {standardsCount > 0 ? (
-                allStandards?.map((standard, index) => (
-                    <section
-                        className="grid lg:grid-cols-3 sm:grid-cols-2  gap-4"
-                        key={standard.id || index}
-                    >
-                        <div className="rounded-lg border p-4">
-                            <CardContent
-                                id={standard.id}
-                                route={
-                                    isShownFromTeacher
-                                        ? '/teacher/learning-plans'
-                                        : '/admin/standard'
-                                }
-                                heading={standard.name}
-                                first={`Videos (${standard.totalVideoUploads})`}
-                                second={`Other Resources (${standard.totalNonVideoUploads})`}
-                                third={`Course Length (${standard.courseLength})`}
-                                Icons={Icons}
-                                isHideEditIcon={isShownFromTeacher}
-                                isFromStandard
-                            />
-                        </div>
-                    </section>
-                ))
-            ) : (
-                <div className="flex items-center justify-center h-72">
-                    <p className="text-lg text-gray-500 text-center">
-                        No Learning Standards Found!
-                    </p>
-                </div>
-            )}
+            <section>
+                {standardsCount > 0 ? (
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
+                        {allStandards?.map((standard, index) => (
+                            <div
+                                className="rounded-lg border p-4"
+                                key={standard.id || index}
+                            >
+                                <CardContent
+                                    id={standard.id}
+                                    route={
+                                        isShownFromTeacher
+                                            ? '/teacher/learning-plans'
+                                            : '/admin/standard'
+                                    }
+                                    heading={standard.name}
+                                    first={`Videos (${standard.totalVideoUploads})`}
+                                    second={`Other Resources (${standard.totalNonVideoUploads})`}
+                                    third={`Course Length (${standard.courseLength})`}
+                                    Icons={Icons}
+                                    isHideEditIcon={isShownFromTeacher}
+                                    isFromStandard
+                                />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="flex items-center justify-center h-72">
+                        <p className="text-lg text-gray-500 text-center">
+                            No Learning Standards Found!
+                        </p>
+                    </div>
+                )}
+            </section>
         </>
     );
 }
