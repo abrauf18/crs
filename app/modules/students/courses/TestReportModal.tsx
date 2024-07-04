@@ -210,8 +210,11 @@ function TestReportModal({
                                         name={question.id}
                                         control={control}
                                         defaultValue={
-                                            question.answers[0]
-                                                ?.obtainedMarks || 0
+                                            question.answers[0]?.obtainedMarks <
+                                            0
+                                                ? 0
+                                                : question.answers[0]
+                                                      ?.obtainedMarks
                                         }
                                         rules={{
                                             required: 'This field is required',
