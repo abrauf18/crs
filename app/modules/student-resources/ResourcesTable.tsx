@@ -99,7 +99,7 @@ function ResourcesTable({ standards }: { standards: Standard[] }) {
                                 className="text-center py-12"
                                 colSpan={4}
                             >
-                                No Resource found
+                                No Assignment found!
                             </TableCell>
                         </TableRow>
                     </TableBody>

@@ -90,8 +90,8 @@ function Resources({ APIdata }: { APIdata: APIData }) {
     return (
         <section>
             <Searchbar
-                headerText="All Resources"
-                tagline="Your All Resources Allocated to Topics"
+                headerText="All Assignments"
+                tagline="Your All Assignments Allocated to Topics"
             />
             <div className="border rounded-lg p-3 px-6">
                 <Filters text="All Standard's" isHideSecondBtn isHideFirstBtn />

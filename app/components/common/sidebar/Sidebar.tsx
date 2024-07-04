@@ -122,20 +122,20 @@ export default function SideBar() {
                 ItemIcon: Lightbulb,
                 itemText: 'Learning',
             },
-            {
-                to: '/student/saved-videos',
-                ItemIcon: Bookmark,
-                itemText: 'Saved Videos',
-            },
+            // {
+            //     to: '/student/saved-videos',
+            //     ItemIcon: Bookmark,
+            //     itemText: 'Saved Videos',
+            // },
             {
                 to: '/student/profile',
                 ItemIcon: UserIcon,
                 itemText: 'Profile',
             },
             {
-                to: '/student/resources',
+                to: '/student/assignments',
                 ItemIcon: ResourceIcon,
-                itemText: 'Resources',
+                itemText: 'All Assignments',
             },
             {
                 to: '/student/setting',

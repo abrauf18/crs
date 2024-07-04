@@ -378,7 +378,7 @@ export default function VideoViewing({
                     </div>
                 ) : (
                     <div>
-                        {hideButton && (
+                        {/* {hideButton && (
                             <button
                                 type="button"
                                 disabled={isLoading}
@@ -390,7 +390,7 @@ export default function VideoViewing({
                                     {isLoading ? 'Loading...' : 'Save Video'}
                                 </span>
                             </button>
-                        )}
+                        )} */}
 
                         <div className="text-lg flex justify-center">
                             <ReactPlayer
