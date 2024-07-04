@@ -43,13 +43,25 @@ export default function FileViewing({
         type === ResourceType.WORKSHEET ||
         type === ResourceType.EXIT_TICKET_TEST
     ) {
-        resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
-            resourceURL
-        )}`;
+        const isGoogleDocs = resourceURL.includes('docs.google.com/document');
+        resourceRenderingLink = isGoogleDocs
+            ? `https://docs.google.com/document/d/${
+                  resourceURL.split('/d/')[1].split('/')[0]
+              }/preview`
+            : `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+                  resourceURL
+              )}`;
     } else if (type === ResourceType.SLIDESHOW) {
-        resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
-            resourceURL
-        )}`;
+        const isGoogleSlides = resourceURL.includes(
+            'docs.google.com/presentation'
+        );
+        resourceRenderingLink = isGoogleSlides
+            ? `https://docs.google.com/presentation/d/${
+                  resourceURL.split('/d/')[1].split('/')[0]
+              }/embed?start=false&loop=false&delayms=3000`
+            : `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+                  resourceURL
+              )}`;
     } else {
         resourceRenderingLink = resourceURL;
     }

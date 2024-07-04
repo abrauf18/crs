@@ -38,14 +38,19 @@ type ResourceFormData = {
     name: string;
     thumbnail?: File;
     totalMarks?: number;
-    youtubeURL?: string;
+    URL?: string;
     selectedUploadOption: string;
     deadline?: number;
 };
 
-const uploadOptions = [
+const videoUploadOptions = [
     { label: 'file', value: 'File' },
     { label: 'youtube', value: 'Youtube' },
+];
+
+const nonVideoUploadOptions = [
+    { label: 'file', value: 'File' },
+    { label: 'url', value: 'External URL' },
 ];
 
 function UploadResourceModal({ onClose }: any) {
@@ -204,12 +209,12 @@ function UploadResourceModal({ onClose }: any) {
         let videoDuration = 0;
 
         if (selectedUploadOption === 'youtube') {
-            if (!formData.youtubeURL) {
+            if (!formData.URL) {
                 toast.error('Please Enter Youtube URL');
                 return { status: 400 };
             }
-            resourceURL = formData.youtubeURL;
-            videoDuration = await getVideoDuration(formData.youtubeURL);
+            resourceURL = formData.URL;
+            videoDuration = await getVideoDuration(formData.URL);
         } else {
             if (!selectedFile) {
                 toast.error('Please Select File');
@@ -217,11 +222,10 @@ function UploadResourceModal({ onClose }: any) {
             }
             videoDuration = await getVideoDuration(selectedFile);
             resourceURL = await uploadFile(selectedFile);
-        }
-
-        if (!resourceURL) {
-            toast.error('Failed to upload resource');
-            return { status: 400 };
+            if (!resourceURL) {
+                toast.error('Failed to upload resource');
+                return { status: 400 };
+            }
         }
 
         await createResource(
@@ -235,15 +239,24 @@ function UploadResourceModal({ onClose }: any) {
     };
 
     const handleFileUpload = async (formData: ResourceFormData) => {
-        if (!selectedFile) {
-            toast.error('Please Select File');
-            return { status: 400 };
-        }
+        let resourceURL = '';
 
-        const resourceURL = await uploadFile(selectedFile);
-        if (!resourceURL) {
-            toast.error('Failed to upload file');
-            return { status: 400 };
+        if (selectedUploadOption === 'url') {
+            if (!formData.URL) {
+                toast.error('Please Enter External URL');
+                return { status: 400 };
+            }
+            resourceURL = formData.URL;
+        } else {
+            if (!selectedFile) {
+                toast.error('Please Select File');
+                return { status: 400 };
+            }
+            resourceURL = await uploadFile(selectedFile);
+            if (!resourceURL) {
+                toast.error('Failed to upload file');
+                return { status: 400 };
+            }
         }
 
         await createResource(resourceURL, formData);
@@ -417,66 +430,74 @@ function UploadResourceModal({ onClose }: any) {
                                 />
                             </div>
                         )}
-                        {resourceType === ResourceType.VIDEO && (
-                            <div className="flex flex-col space-y-1 mt-4">
-                                <Label
-                                    htmlFor="selectedUploadOption"
-                                    className="font-semibold mt-3"
-                                >
-                                    Upload Type
-                                </Label>
-                                <Select
-                                    name="selectedUploadOption"
-                                    options={uploadOptions}
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message:
-                                                validationError.REQUIRED_FIELD,
-                                        },
-                                    }}
-                                />
-                            </div>
-                        )}
+                        <div className="flex flex-col space-y-1 mt-4">
+                            <Label
+                                htmlFor="selectedUploadOption"
+                                className="font-semibold mt-3"
+                            >
+                                Upload Type
+                            </Label>
+                            <Select
+                                name="selectedUploadOption"
+                                options={
+                                    resourceType === ResourceType.VIDEO
+                                        ? videoUploadOptions
+                                        : nonVideoUploadOptions
+                                }
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                }}
+                            />
+                        </div>
                         <div className="mt-4">
-                            {resourceType === ResourceType.VIDEO &&
-                                selectedUploadOption === 'youtube' &&
-                                progress === 0 && (
-                                    <>
-                                        <div className="flex flex-col space-y-1 mt-5">
-                                            <Label
-                                                htmlFor="youtubeURL"
-                                                className="font-semibold text-md"
-                                            >
-                                                Youtube URL
-                                            </Label>
-                                            <Input
-                                                name="youtubeURL"
-                                                placeholder="Provide youtube URL"
-                                                type="input"
-                                                rules={{
-                                                    required: {
-                                                        value: true,
-                                                        message:
-                                                            validationError.REQUIRED_FIELD,
-                                                    },
-                                                }}
-                                            />
-                                        </div>
-                                        {progress !== 0 && (
-                                            <div className="mt-4">
-                                                <FileUploading
-                                                    fileName={resourceName}
-                                                    progress={progress}
-                                                    Icon={Icon}
-                                                />
-                                            </div>
-                                        )}
-                                    </>
-                                )}
+                            {((resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption === 'youtube') ||
+                                (resourceType !== ResourceType.VIDEO &&
+                                    selectedUploadOption === 'url')) &&
+                                (progress === 0 ? (
+                                    <div className="flex flex-col space-y-1 mt-5">
+                                        <Label
+                                            htmlFor="URL"
+                                            className="font-semibold text-md"
+                                        >
+                                            {resourceType === ResourceType.VIDEO
+                                                ? 'Youtube URL'
+                                                : 'External URL'}
+                                        </Label>
+                                        <Input
+                                            name="URL"
+                                            placeholder={`Provide ${
+                                                resourceType ===
+                                                ResourceType.VIDEO
+                                                    ? 'youtube URL'
+                                                    : 'External URL'
+                                            }`}
+                                            type="input"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                            }}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="mt-4">
+                                        <FileUploading
+                                            fileName={resourceName}
+                                            progress={progress}
+                                            Icon={Icon}
+                                        />
+                                    </div>
+                                ))}
                             {((resourceType === ResourceType.VIDEO &&
                                 selectedUploadOption !== 'youtube') ||
-                                resourceType !== ResourceType.VIDEO) && (
+                                (resourceType !== ResourceType.VIDEO &&
+                                    selectedUploadOption !== 'url')) && (
                                 <>
                                     {!selectedFile && (
                                         <UploadItem
@@ -497,7 +518,10 @@ function UploadResourceModal({ onClose }: any) {
                                     )}
                                 </>
                             )}
-                            {selectedUploadOption !== 'youtube' && (
+                            {((resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption !== 'youtube') ||
+                                (resourceType !== ResourceType.VIDEO &&
+                                    selectedUploadOption !== 'url')) && (
                                 <div className="p-2 rounded-lg border w-32 text-center mt-3 cursor-pointer hover:bg-dark-gray hover:text-light-gray">
                                     <button
                                         type="button"
