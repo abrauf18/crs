@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Filters from '@/app/components/common/Filters';
-import { StudentProfileResourceType } from '@/lib/utils';
+import { ResourceType } from '@/lib/utils';
 import Tabs from '@/app/components/common/test-performance/Tabs';
 import PerformanceCard, { PerformanceCardInterface } from './PerformanceCard';
 
@@ -43,24 +43,48 @@ interface DailyUpload {
 }
 
 function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
-    const [activeTab, setActiveTabLocal] = useState<string>(
-        StudentProfileResourceType.VIDEO
-    );
+    const [activeTab, setActiveTabLocal] = useState<string>(ResourceType.VIDEO);
 
     const filteredVideoUploads = dailyUploads?.filter(
         (upload) => upload.resource.video !== null
     );
+
     const filteredAssessmentUploads = dailyUploads?.filter(
         (upload) => upload.resource.AssessmentResourcesDetail !== null
     );
+    const quizUploads = filteredAssessmentUploads?.filter(
+        (upload) => upload.resource.type === ResourceType.QUIZ
+    );
+    const assignmentUploads = filteredAssessmentUploads?.filter(
+        (upload) => upload.resource.type === ResourceType.ASSIGNMENT
+    );
+    const worksheetUploads = filteredAssessmentUploads?.filter(
+        (upload) => upload.resource.type === ResourceType.WORKSHEET
+    );
+    const testUploads = filteredAssessmentUploads?.filter(
+        (upload) => upload.resource.type === ResourceType.EXIT_TICKET_TEST
+    );
 
-    const videoUploadsLength = filteredVideoUploads?.length ?? 0;
-    const assessmentUploadsLength = filteredAssessmentUploads?.length ?? 0;
-
-    const filteredUploads =
-        activeTab === StudentProfileResourceType.VIDEO
-            ? filteredVideoUploads
-            : filteredAssessmentUploads;
+    let filteredUploads: DailyUpload[] = [];
+    switch (activeTab) {
+        case ResourceType.VIDEO:
+            filteredUploads = filteredVideoUploads;
+            break;
+        case ResourceType.ASSIGNMENT:
+            filteredUploads = assignmentUploads;
+            break;
+        case ResourceType.WORKSHEET:
+            filteredUploads = worksheetUploads;
+            break;
+        case 'Test':
+            filteredUploads = testUploads;
+            break;
+        case ResourceType.QUIZ:
+            filteredUploads = quizUploads;
+            break;
+        default:
+            filteredUploads = [];
+    }
 
     return (
         <section className="mt-5">
@@ -74,15 +98,16 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
                 activeTab={activeTab}
                 setActiveTabLocal={setActiveTabLocal}
                 tabOptions={[
-                    StudentProfileResourceType.VIDEO,
-                    StudentProfileResourceType.ASSESSMENT,
+                    ResourceType.VIDEO,
+                    ResourceType.ASSIGNMENT,
+                    ResourceType.WORKSHEET,
+                    'Test',
+                    ResourceType.QUIZ,
                 ]}
             />
             <p className="text-dark-gray font-medium text-lg mt-5">
                 <span className="font-semibold text-black">
-                    {activeTab === StudentProfileResourceType.VIDEO
-                        ? videoUploadsLength
-                        : assessmentUploadsLength}
+                    {filteredUploads.length}
                 </span>{' '}
                 Results
             </p>
