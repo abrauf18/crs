@@ -251,7 +251,7 @@ function ProfileModal({
                             <button
                                 type="button"
                                 onClick={handleReset}
-                                className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
+                                className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl hover:bg-gray-200"
                             >
                                 Discard
                             </button>
@@ -262,7 +262,7 @@ function ProfileModal({
                                     !methods.formState.isValid
                                         ? 'bg-gray-300'
                                         : 'bg-primary-color'
-                                } font-semibold w-full px-5 py-2  border rounded-xl`}
+                                } font-semibold w-full px-5 py-2  border rounded-xl hover:bg-orange-500`}
                             >
                                 {loading ? <Loader /> : 'Save'}
                             </button>

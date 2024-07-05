@@ -52,8 +52,7 @@ function UploadItem({
                     Upload {itemName}
                 </h3>
                 <p>
-                    <span className="text-primary-color">Upload </span>/ Drag &
-                    Drop Here
+                    <span className="text-primary-color">Upload Here</span>
                 </p>
             </div>
         </section>

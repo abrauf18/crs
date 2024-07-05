@@ -275,6 +275,7 @@ export default function SideBar() {
                     <Image
                         src={crsLogo as string}
                         alt="crs logo"
+                        priority
                         style={{
                             width: '50px',
                             height: '50px',

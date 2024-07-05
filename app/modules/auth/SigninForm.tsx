@@ -14,10 +14,12 @@ import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import Input from '@/app/components/common/Input';
 import Loader from '@/app/components/common/ButtonLoader';
 import { validationError } from '@/lib/utils';
+import { Eye, EyeOff } from 'lucide-react';
 
 function SigninForm() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const defaultValues = {
         email: '',
@@ -84,6 +86,10 @@ function SigninForm() {
         }
     };
 
+    const toggleShowPassword = () => {
+        setShowPassword((prev) => !prev);
+    };
+
     return (
         <FormProvider {...methods}>
             <div className="p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col">
@@ -118,13 +124,12 @@ function SigninForm() {
                             }}
                         />
                     </div>
-
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                         <Label htmlFor="password">Password</Label>
                         <Input
                             name="password"
                             placeholder="Enter Password"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             rules={{
                                 required: {
                                     value: true,
@@ -132,6 +137,17 @@ function SigninForm() {
                                 },
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleShowPassword}
+                            className="absolute right-3 top-10 mt-1"
+                        >
+                            {showPassword ? (
+                                <Eye className="w-5 h-5" />
+                            ) : (
+                                <EyeOff className="w-5 h-5" />
+                            )}
+                        </button>
                     </div>
                     <div className="flex mb-12 mt-5">
                         <div className="flex items-center">

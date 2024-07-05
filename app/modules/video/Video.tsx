@@ -7,6 +7,7 @@ import { VideoSummary } from '@/lib/utils';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import Filters from '@/app/components/common/Filters';
 import UploadResourceModal from '@/app/components/common/UploadResourceModal';
+import Searchbar from '@/app/components/common/Searchbar';
 import AddQuestions from './AddQuestions';
 import VideoCard, { Card } from './VideoCard';
 import CheckPointsModal from './CheckPointsModal';
@@ -63,6 +64,11 @@ function Video({
 
     return (
         <>
+            <Searchbar
+                headerText="All Videos"
+                Icon={VideoIcon}
+                tagline="Your All Videos Are Listed Here"
+            />
             <div className="mobile:mb-4 !overflow-hidden">
                 <Filters
                     text={`${APIdata.totalVideos} Videos In Total`}

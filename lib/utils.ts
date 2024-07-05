@@ -43,7 +43,6 @@ export const validationError = {
 };
 
 export const DEFAULT_IMAGE =
-    // 'https://crsbuck.s3.us-east-2.amazonaws.com/ProfilePictures/defaultImage.jpeg';
     'https://crs-data-storage-bucket.s3.ap-southeast-2.amazonaws.com/ProfilePictures/defaultImage.JPG';
 
 export enum ResourceType {

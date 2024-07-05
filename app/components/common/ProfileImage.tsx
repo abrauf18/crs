@@ -75,7 +75,7 @@ function ProfileImage({
                         <button
                             type="button"
                             onClick={handleClick}
-                            className="text-white flex items-center bg-primary-color font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2"
+                            className="text-white flex items-center bg-primary-color font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2 hover:bg-orange-500"
                         >
                             <PictureIcon
                                 className="shrink-0"
@@ -95,7 +95,7 @@ function ProfileImage({
                         <button
                             type="button"
                             onClick={removeImage}
-                            className="text-dark-gray items-center flex font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2"
+                            className="text-dark-gray items-center flex font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2 hover:bg-gray-200"
                         >
                             <Trash2
                                 className="shrink-0"

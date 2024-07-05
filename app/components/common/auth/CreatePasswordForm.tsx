@@ -9,6 +9,7 @@ import { Label } from '@/app/components/ui/label';
 import { resetPassword } from '@/lib/react-redux/features/auth/authAction';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
 import { validationError } from '@/lib/utils';
+import { Eye, EyeOff } from 'lucide-react';
 import Input from '../Input';
 import ButtonLoader from '../ButtonLoader';
 
@@ -17,6 +18,8 @@ function CreatePasswordForm({ description }: { description: string }) {
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
     const [isLoader, setIsLoader] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
@@ -39,6 +42,13 @@ function CreatePasswordForm({ description }: { description: string }) {
             setIsLoader(false);
         }
     };
+    const toggleShowPassword = () => {
+        setShowPassword((prev) => !prev);
+    };
+
+    const toggleShowConfirmPassword = () => {
+        setShowConfirmPassword((prev) => !prev);
+    };
 
     return (
         <div className=" p-8 md:p-10 w-[100%] lg:w-[75%] flex flex-col ">
@@ -56,7 +66,7 @@ function CreatePasswordForm({ description }: { description: string }) {
             </div>
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onFormSubmit)}>
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                         <Label htmlFor="password">New Password</Label>
                         <Input
                             name="newPassword"
@@ -82,9 +92,20 @@ function CreatePasswordForm({ description }: { description: string }) {
                                 },
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleShowPassword}
+                            className="absolute right-3 top-10 mt-1"
+                        >
+                            {showPassword ? (
+                                <Eye className="w-5 h-5" />
+                            ) : (
+                                <EyeOff className="w-5 h-5" />
+                            )}
+                        </button>
                     </div>
 
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                         <Label htmlFor="password">Confirm Password</Label>
                         <Input
                             name="confirmPassword"
@@ -101,6 +122,17 @@ function CreatePasswordForm({ description }: { description: string }) {
                                     'Passwords must match',
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleShowConfirmPassword}
+                            className="absolute right-3 top-10 mt-1"
+                        >
+                            {showConfirmPassword ? (
+                                <Eye className="w-5 h-5" />
+                            ) : (
+                                <EyeOff className="w-5 h-5" />
+                            )}
+                        </button>
                     </div>
 
                     <div className="text-center mt-8">

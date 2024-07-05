@@ -4,7 +4,7 @@
 
 import { Plus } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useTransition } from 'react';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import AddUserModal from '@/app/modules/users/AddUserModal';
@@ -26,6 +26,7 @@ function Users({
     const [school, setSchool] = useState('');
     const [schoolList, setSchoolList] = useState<any>([]);
     const { data } = useSession();
+    const [isPending, startTransition] = useTransition();
 
     const handleOpenAddUserModal = () => {
         setShowProfileModal(true);
@@ -45,7 +46,9 @@ function Users({
     );
 
     const handlePageChange = (page: number) => {
-        router.push(`${pathname}?${createQueryString('page', `${page}`)}`);
+        startTransition(() => {
+            router.push(`${pathname}?${createQueryString('page', `${page}`)}`);
+        });
     };
 
     const handleFilterUpdate = (
@@ -93,7 +96,7 @@ function Users({
                         />
                     </div>
                     <div
-                        className="cursor-pointer text-white bg-primary-color font-semibold p-3 border rounded-lg flex justify-between items-center mobile:mt-9"
+                        className="cursor-pointer text-white bg-primary-color font-semibold p-3 border rounded-lg flex justify-between items-center mobile:mt-9 hover:bg-orange-400"
                         onClick={handleOpenAddUserModal}
                     >
                         <Plus size={20} />
@@ -110,6 +113,7 @@ function Users({
                     currentPage={Number(page) - 1}
                     limit={10}
                     handlePageChange={handlePageChange}
+                    isPending={isPending}
                 />
             </div>
             <div className="flex items-center w-full justify-center mt-5">

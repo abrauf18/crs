@@ -1,3 +1,5 @@
+/* eslint-disable react/style-prop-object */
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -9,6 +11,7 @@ import {
     Table,
     TableBody,
     TableCell,
+    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
@@ -19,6 +22,7 @@ import { deleteUserProfileAPI } from '@/app/api/user';
 import { toast } from 'react-toastify';
 import action from '@/app/action';
 import DialogBox from '@/app/components/common/DialogBox';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 import ProfileModal from './ProfileModal';
 
 export interface User {
@@ -35,6 +39,7 @@ interface UsersProp {
     isDashboard?: boolean;
     currentPage?: number;
     limit?: number;
+    isPending?: boolean;
     handlePageChange?: (page: number) => void;
 }
 
@@ -58,6 +63,7 @@ function UsersTable({
     currentPage = 0,
     limit = 0,
     handlePageChange,
+    isPending,
 }: UsersProp): JSX.Element {
     const { data } = useSession();
     const [isShowProfileModal, setIsShowProfileModal] = useState(false);
@@ -254,6 +260,16 @@ function UsersTable({
                         </TableRow>
                     )}
                 </TableBody>
+                {isPending && (
+                    <TableRow>
+                        <TableCell
+                            colSpan={5}
+                            className="h-12 rounded-lg text-center"
+                        >
+                            <ButtonLoader style="black" />
+                        </TableCell>
+                    </TableRow>
+                )}
             </Table>
             {isShowProfileModal && (
                 <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">

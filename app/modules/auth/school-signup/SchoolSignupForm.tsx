@@ -12,9 +12,12 @@ import Input from '@/app/components/common/Input';
 import { validationError } from '@/lib/utils';
 import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { createSchoolAPI } from '@/app/api/school';
+import { Eye, EyeOff } from 'lucide-react';
 
 function SchoolSignupForm({ token }: { token: string }) {
     const [isLoader, setIsLoader] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(false);
+
     const { push } = useRouter();
 
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
@@ -41,6 +44,9 @@ function SchoolSignupForm({ token }: { token: string }) {
         } finally {
             setIsLoader(false);
         }
+    };
+    const toggleShowPassword = () => {
+        setShowPassword((prev) => !prev);
     };
 
     return (
@@ -108,7 +114,7 @@ function SchoolSignupForm({ token }: { token: string }) {
                         />
                     </div>
 
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                         <Label htmlFor="password">Password</Label>
                         <Input
                             name="password"
@@ -136,6 +142,17 @@ function SchoolSignupForm({ token }: { token: string }) {
                                 },
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleShowPassword}
+                            className="absolute right-3 top-10 mt-1"
+                        >
+                            {showPassword ? (
+                                <Eye className="w-5 h-5" />
+                            ) : (
+                                <EyeOff className="w-5 h-5" />
+                            )}
+                        </button>
                     </div>
                     <div className="text-center mt-5">
                         <Button

@@ -45,8 +45,10 @@ function VideoCard({
                 <iframe
                     src={resourceRenderingLink}
                     title="Thumbnail Viewer"
-                    style={{ width: '100%', height: '20vh' }}
+                    className="w-full"
+                    style={{ width: '100%', height: '100%' }}
                 />
+
                 <div className="absolute left-3 top-3 transform -translate-x-1/2 -translate-y-1/2">
                     <HelpCircle fill="#54C3F4" color="white" size={35} />
                 </div>
