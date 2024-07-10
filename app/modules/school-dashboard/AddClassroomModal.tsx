@@ -131,7 +131,7 @@ function AddClassroomModal({ onClose }: any) {
                                     name="teacher"
                                     options={teacherList || []}
                                     value={
-                                        currentTeacher || 'No Teacher To sele'
+                                        currentTeacher || 'No Teacher To select'
                                     }
                                     onChange={(e: any) =>
                                         setCurrentTeacher(e.target.value)

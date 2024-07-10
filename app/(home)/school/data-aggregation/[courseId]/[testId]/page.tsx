@@ -31,20 +31,25 @@ interface PerformanceDetail {
 
 interface TestPerformancePageProps {
     params: { testId: string };
+    searchParams: { [key: string]: string | undefined };
 }
 
-async function TestPerformancePage({ params }: TestPerformancePageProps) {
+async function TestPerformancePage({
+    params,
+    searchParams,
+}: TestPerformancePageProps) {
+    const { teacherId = '' } = searchParams;
     const session: Session | null = await getServerSession(options);
-
     if (session) {
         try {
             const response: ApiResponse = await getSchoolResourceResultsAPI(
                 session.user.accessToken,
                 session?.user?.schoolId || '',
-                params.testId
+                params.testId,
+                teacherId
             );
             if (response.status !== 'error') {
-                return <TestPerformance data={response?.data} />;
+                return <TestPerformance APIdata={response?.data} />;
             }
             throw new Error(response.message);
         } catch (error: any) {
