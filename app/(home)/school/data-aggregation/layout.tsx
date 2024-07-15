@@ -12,7 +12,7 @@ function layout({ children }: { children: React.ReactNode }) {
         <section className="px-2 lg:px-4">
             <Searchbar
                 headerText="Data Aggregation"
-                tagline="Class Performance on the Basis of Standards"
+                tagline="Class Performance of each Teacher"
             />
             <div className="md:basis-full ">{children}</div>
         </section>
