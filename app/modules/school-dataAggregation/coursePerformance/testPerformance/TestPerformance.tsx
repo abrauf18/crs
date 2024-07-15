@@ -14,8 +14,9 @@ function TestPerformance({ APIdata }: { APIdata: any }) {
     const { data } = useSession();
     const pathname = usePathname();
     const [loading, setLoading] = useState(true);
-    const [buttonLoader, setButtonLoader] = useState(false);
-    const [currentTeacher, setCurrentTeacher] = useState('');
+    const [currentTeacher, setCurrentTeacher] = useState(
+        APIdata[0].teacher.name || ''
+    );
     const [teacherList, setTeacherList] = useState<any[]>([]);
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
@@ -29,27 +30,40 @@ function TestPerformance({ APIdata }: { APIdata: any }) {
         if (selectedTeacherId) {
             return router.push(`?teacherId=${selectedTeacherId}`);
         }
+        router.push(pathname);
     };
 
     useEffect(() => {
         const accessToken = data?.user.accessToken || '';
-        getAllTeacherAPI(accessToken).then((response) => {
-            if (response?.status === 'success') {
-                const newTeacherList = response?.data?.map(
-                    (teacher: { name: string; id: string }) => ({
-                        id: teacher.id,
-                        label: teacher.name,
-                        value:
-                            teacher.name.charAt(0).toUpperCase() +
-                            teacher.name.slice(1),
-                    })
-                );
-                setTeacherList(newTeacherList);
-                setCurrentTeacher(newTeacherList[0]?.value || '');
-            }
-            setLoading(false);
-        });
-    }, [data?.user?.accessToken]);
+        if (accessToken) {
+            getAllTeacherAPI(accessToken).then((response) => {
+                if (response?.status === 'success') {
+                    const newTeacherList = response?.data?.map(
+                        (teacher: { name: string; id: string }) => ({
+                            id: teacher.id,
+                            label: teacher.name,
+                            value:
+                                teacher.name.charAt(0).toUpperCase() +
+                                teacher.name.slice(1),
+                        })
+                    );
+                    if (newTeacherList.length > 1) {
+                        newTeacherList.unshift({
+                            id: '',
+                            label: 'All Teachers',
+                            value: 'All Teachers',
+                        });
+                    }
+                    setTeacherList(newTeacherList);
+                    if (!currentTeacher) {
+                        setCurrentTeacher(newTeacherList[0]?.value || '');
+                    }
+                }
+                setLoading(false);
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data?.user.accessToken]);
 
     return (
         <section>
