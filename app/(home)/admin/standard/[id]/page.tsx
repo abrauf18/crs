@@ -1,44 +1,28 @@
 import React from 'react';
 import { Session, getServerSession } from 'next-auth';
 import { ResourceType } from '@/lib/utils';
-import { getStandardAPI } from '@/app/api/standard';
+import { getStandardTopicsAPI } from '@/app/api/standard';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import StandardDetails from '@/app/modules/standard/details/StandardDetails';
+import Topics from '@/app/modules/standard/Topic';
 
-interface Topic {
-    name: string;
-    resourceId: string;
-    type: ResourceType;
-    topic: string;
-    videoId?: string;
+interface TopicResourceCount {
+    topicName: string;
+    videoCount: number;
+    nonVideoCount: number;
 }
-interface DailyUpload {
-    date: string;
-    topics: Topic[];
-}
+
 interface APIData {
     name: string;
-    description: string;
-    dailyUploads: DailyUpload[];
+    totalTopics: number;
+    topicResourceCounts: TopicResourceCount[];
 }
 
 const DEFAULT_STANDARD = {
     name: '',
-    description: '',
-    dailyUploads: [
-        {
-            date: '',
-            topics: [
-                {
-                    name: '',
-                    resourceId: '',
-                    type: ResourceType.VIDEO,
-                    topic: '',
-                },
-            ],
-        },
-    ],
+    totalTopics: 0,
+    topicResourceCounts: [],
 };
 async function DetailsPage({ params }: { params: { id: string } }) {
     const data: Session | null = await getServerSession(options);
@@ -47,7 +31,7 @@ async function DetailsPage({ params }: { params: { id: string } }) {
 
     if (data) {
         try {
-            const response = await getStandardAPI({
+            const response = await getStandardTopicsAPI({
                 accessToken: data?.user?.accessToken,
                 standardId: params.id,
             });
@@ -56,14 +40,14 @@ async function DetailsPage({ params }: { params: { id: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { name, description, dailyUploads } = APIdata;
+                const { name, totalTopics, topicResourceCounts } = APIdata;
                 return (
-                    <StandardDetails
-                        params={params}
-                        name={name}
-                        description={description}
-                        dailyUploads={dailyUploads}
-                        isShownFromAdmin
+                    <Topics
+                        isShownFromTeacher={false}
+                        topicsCount={totalTopics}
+                        allTopics={topicResourceCounts}
+                        standardName={name}
+                        standardId={params.id}
                     />
                 );
             }

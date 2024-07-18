@@ -6,7 +6,12 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import action from '@/app/action';
-import { validationError, ResourceType } from '@/lib/utils';
+import {
+    validationError,
+    ResourceType,
+    convertSpacesToDashes,
+    convertDashesToSpacesSimple,
+} from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
 import { ErrorMessage } from '@hookform/error-message';
@@ -77,7 +82,7 @@ function CreateStandard({
             description: description ?? '',
             dailyUploads:
                 dailyUploads?.map((upload) => ({
-                    topicName: upload.topicName,
+                    topicName: convertDashesToSpacesSimple(upload.topicName),
                     date: upload.date,
                     topics: upload.topics.map((resource) => ({
                         resourceId: resource.resourceId,
@@ -170,7 +175,7 @@ function CreateStandard({
                 dailyUpload.topics.map((topic, topicIndex) => ({
                     resourceId:
                         allSelectedResources[index][topicIndex]?.resourceId,
-                    topicName: dailyUpload.topicName,
+                    topicName: convertSpacesToDashes(dailyUpload.topicName),
                     accessDate: dailyUpload.date,
                     weightage: topic?.weightage || 0,
                 }))

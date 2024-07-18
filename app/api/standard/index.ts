@@ -125,7 +125,7 @@ export const getSummarizedStandardAPI = async ({
     return result;
 };
 
-export const getStandardTopics = async ({
+export const getStandardTopicsAPI = async ({
     accessToken,
     standardId,
 }: {
