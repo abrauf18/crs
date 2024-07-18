@@ -147,3 +147,29 @@ export const getStandardTopicsAPI = async ({
 
     return result;
 };
+
+export const getTopicResourcesAPI = async ({
+    accessToken,
+    standardId,
+    topicName,
+}: {
+    accessToken: string;
+    standardId: string;
+    topicName: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/getTopicResources`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                standardid: standardId,
+                topicname: topicName,
+            },
+            next: {
+                tags: ['getTopicResources'],
+            },
+        }
+    );
+
+    return result;
+};
