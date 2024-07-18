@@ -21,6 +21,7 @@ interface Topic {
     weightage: number;
 }
 interface DailyUpload {
+    topicName: string;
     date: string;
     topics: Topic[];
 }
@@ -37,6 +38,7 @@ const DEFAULT_STANDARD = {
     description: '',
     dailyUploads: [
         {
+            name: '',
             date: '',
             topics: [
                 {
@@ -75,6 +77,7 @@ function CreateStandard({
             description: description ?? '',
             dailyUploads:
                 dailyUploads?.map((upload) => ({
+                    topicName: upload.topicName,
                     date: upload.date,
                     topics: upload.topics.map((resource) => ({
                         resourceId: resource.resourceId,
@@ -167,6 +170,7 @@ function CreateStandard({
                 dailyUpload.topics.map((topic, topicIndex) => ({
                     resourceId:
                         allSelectedResources[index][topicIndex]?.resourceId,
+                    topicName: dailyUpload.topicName,
                     accessDate: dailyUpload.date,
                     weightage: topic?.weightage || 0,
                 }))
@@ -219,6 +223,7 @@ function CreateStandard({
         }
         if (dailyUploadFields.length === 0 && !dailyUploadAddedRef.current) {
             appendDailyUpload({
+                topicName: '',
                 date: '',
                 topics: [
                     {
@@ -252,13 +257,17 @@ function CreateStandard({
             <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mt-3 pb-3 border-b">
-                        <h3 className="text-xl font-semibold">Plan Details</h3>
+                        <h3 className="text-xl font-semibold">
+                            Standrad Details
+                        </h3>
                         <div className="sm:flex justify-between items-center gap-5 w-full mt-5">
                             <div className="basis-1/2">
-                                <Label htmlFor="standard.name">Plan Name</Label>
+                                <Label htmlFor="standard.name">
+                                    Standrad Name
+                                </Label>
                                 <Input
                                     type="text"
-                                    placeholder="Write Plan Name"
+                                    placeholder="Write Standard Name"
                                     name="standard.name"
                                     rules={{
                                         required: {
@@ -341,6 +350,7 @@ function CreateStandard({
                                         return;
                                     }
                                     appendDailyUpload({
+                                        topicName: '',
                                         date: '',
                                         topics: [
                                             {

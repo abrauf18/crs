@@ -24,6 +24,7 @@ interface Topic {
 }
 interface DailyUpload {
     id: string;
+    topicName: string;
     date: string;
     topics: Topic[];
 }
@@ -154,6 +155,37 @@ function CreateTopic({
                     }}
                 >
                     <button type="button">Add More</button>
+                </div>
+            </div>
+            <div className="mobile:w-full w-1/2 mb-5">
+                <div className="basis-1/2 mobile:w-full relative">
+                    <Label htmlFor={`standard.dailyUploads.${index}.topicName`}>
+                        Name
+                    </Label>
+                    <Input
+                        type="text"
+                        placeholder="Write Topic Name"
+                        name={`standard.dailyUploads.${index}.topicName`}
+                        additionalClasses="mobile:!w-full mt-1"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: validationError.REQUIRED_FIELD,
+                            },
+                        }}
+                    />
+                    <span className="text-red-500 text-xs">
+                        <ErrorMessage
+                            errors={errors}
+                            name={`standard.dailyUploads.${index}.topicName`}
+                            render={({ message }) => (
+                                <p className="flex items-center">
+                                    <X size={20} color="#E6500D" />
+                                    {message}
+                                </p>
+                            )}
+                        />
+                    </span>
                 </div>
             </div>
             {topicFields.map((topic, topicIndex) => (
