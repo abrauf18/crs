@@ -12,6 +12,7 @@ type StandardData = {
     courseLength: string;
     totalVideoUploads: string;
     totalNonVideoUploads: string;
+    topicCount: string;
 };
 
 function Standard({
@@ -65,8 +66,7 @@ function Standard({
                                             : '/admin/standard'
                                     }
                                     heading={standard.name}
-                                    first={`Videos (${standard.totalVideoUploads})`}
-                                    second={`Other Resources (${standard.totalNonVideoUploads})`}
+                                    second={`Topics (${standard.topicCount})`}
                                     third={`Course Length (${standard.courseLength})`}
                                     Icons={Icons}
                                     isHideEditIcon={isShownFromTeacher}

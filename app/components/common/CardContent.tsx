@@ -12,8 +12,8 @@ interface CardContentProps {
     id: string | undefined;
     route?: string;
     heading: string;
-    first: string;
-    second: string;
+    first?: string;
+    second?: string;
     third?: string;
     Icons: IconProps;
     isModal?: boolean;
@@ -45,14 +45,22 @@ function CardContent({
             </h5>
             <div>
                 <div className="flex gap-2 mb-2">
-                    <div className="flex gap-1 items-center text-dark-gray text-sm">
-                        <FirstIcon height={17} width={17} color="#F59A3B" />
-                        <p>{first}</p>
-                    </div>
-                    <div className="flex gap-1 items-center text-dark-gray text-sm">
-                        <SecondIcon width={17} height={17} color="#7AA43E" />
-                        <p>{second}</p>
-                    </div>
+                    {first && (
+                        <div className="flex gap-1 items-center text-dark-gray text-sm">
+                            <FirstIcon height={17} width={17} color="#F59A3B" />
+                            <p>{first}</p>
+                        </div>
+                    )}
+                    {second && (
+                        <div className="flex gap-1 items-center text-dark-gray text-sm">
+                            <SecondIcon
+                                width={17}
+                                height={17}
+                                color="#7AA43E"
+                            />
+                            <p>{second}</p>
+                        </div>
+                    )}
                 </div>
                 {third && (
                     <div className="flex gap-1 items-center mb-5 text-dark-gray text-sm">
