@@ -198,7 +198,9 @@ function VideoModal({
             ) : (
                 <div className="px-6 mb-24">
                     {resourceCards.length === 0 ? (
-                        <div>No resource found</div>
+                        <div className="grid justify-items-center text-lg">
+                            No resource found
+                        </div>
                     ) : (
                         resourceCards.map((card) => (
                             <div className="mt-5" key={card.id}>
