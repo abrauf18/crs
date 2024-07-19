@@ -56,7 +56,7 @@ async function DetailsPage({
             const response = await getTopicResourcesAPI({
                 accessToken: data?.user?.accessToken,
                 standardId: id,
-                topicName: topicName === 'All-Topics' ? '' : topicName,
+                topicName,
             });
 
             const APIResponse = await response.json();
