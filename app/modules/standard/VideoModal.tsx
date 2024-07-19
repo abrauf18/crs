@@ -134,6 +134,11 @@ function VideoModal({
             return;
         }
 
+        setSelectedResource({
+            ...selectedResource,
+            resourceType,
+        });
+
         const getResourcesByType = async () => {
             try {
                 setIsLoading(true);
@@ -167,6 +172,7 @@ function VideoModal({
         getResourcesByType();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resourceType]);
+
     return (
         <section className="bg-white h-screen p-4 shadow-md overflow-y-auto">
             <ModalHeader
@@ -198,8 +204,8 @@ function VideoModal({
                                 selectedResource={selectedResource}
                                 setSelectResource={(id: string) => {
                                     setSelectedResource({
+                                        ...selectedResource,
                                         resourceId: id,
-                                        resourceType,
                                         name: card.Text,
                                     });
                                     updateSelectedResource(id);
