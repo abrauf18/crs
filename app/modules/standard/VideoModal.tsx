@@ -197,22 +197,26 @@ function VideoModal({
                 <PageLoader additionalClasses="!h-2/3" />
             ) : (
                 <div className="px-6 mb-24">
-                    {resourceCards.map((card) => (
-                        <div className="mt-5" key={card.id}>
-                            <QuizCard
-                                card={card}
-                                selectedResource={selectedResource}
-                                setSelectResource={(id: string) => {
-                                    setSelectedResource({
-                                        ...selectedResource,
-                                        resourceId: id,
-                                        name: card.Text,
-                                    });
-                                    updateSelectedResource(id);
-                                }}
-                            />
-                        </div>
-                    ))}
+                    {resourceCards.length === 0 ? (
+                        <div>No resource found</div>
+                    ) : (
+                        resourceCards.map((card) => (
+                            <div className="mt-5" key={card.id}>
+                                <QuizCard
+                                    card={card}
+                                    selectedResource={selectedResource}
+                                    setSelectResource={(id: string) => {
+                                        setSelectedResource({
+                                            ...selectedResource,
+                                            resourceId: id,
+                                            name: card.Text,
+                                        });
+                                        updateSelectedResource(id);
+                                    }}
+                                />
+                            </div>
+                        ))
+                    )}
                 </div>
             )}
 
