@@ -1,53 +1,76 @@
 import React from 'react';
 import { Session, getServerSession } from 'next-auth';
 import { ResourceType } from '@/lib/utils';
-import { getStandardTopicsAPI } from '@/app/api/standard';
+import { getTopicResourcesAPI } from '@/app/api/standard';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import StandardDetails from '@/app/modules/standard/details/StandardDetails';
-import Topics from '@/app/modules/standard/Topic';
 
-interface TopicResourceCount {
-    topicName: string;
-    videoCount: number;
-    nonVideoCount: number;
+interface Topic {
+    name: string;
+    resourceId: string;
+    type: ResourceType;
+    topic: string;
+    videoId?: string;
 }
-
+interface DailyUpload {
+    date: string;
+    topics: Topic[];
+}
 interface APIData {
     name: string;
-    totalTopics: number;
-    topicResourceCounts: TopicResourceCount[];
+    description: string;
+    dailyUploads: DailyUpload[];
 }
 
 const DEFAULT_STANDARD = {
     name: '',
-    totalTopics: 0,
-    topicResourceCounts: [],
+    description: '',
+    dailyUploads: [
+        {
+            date: '',
+            topics: [
+                {
+                    name: '',
+                    resourceId: '',
+                    type: ResourceType.VIDEO,
+                    topic: '',
+                },
+            ],
+        },
+    ],
 };
-async function DetailsPage({ params }: { params: { id: string } }) {
+async function DetailsPage({
+    params,
+}: {
+    params: { id: string; topicName: string };
+}) {
     const data: Session | null = await getServerSession(options);
 
     let APIdata: APIData = DEFAULT_STANDARD;
 
+    const { id, topicName } = params;
+
     if (data) {
         try {
-            const response = await getStandardTopicsAPI({
+            const response = await getTopicResourcesAPI({
                 accessToken: data?.user?.accessToken,
-                standardId: params.id,
+                standardId: id,
+                topicName,
             });
 
             const APIResponse = await response.json();
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { name, totalTopics, topicResourceCounts } = APIdata;
+                const { name, description, dailyUploads } = APIdata;
                 return (
-                    <Topics
-                        isShownFromTeacher={false}
-                        topicsCount={totalTopics}
-                        allTopics={topicResourceCounts}
-                        standardName={name}
-                        standardId={params.id}
+                    <StandardDetails
+                        params={params}
+                        name={name}
+                        description={description}
+                        dailyUploads={dailyUploads}
+                        isShownFromAdmin
                     />
                 );
             }

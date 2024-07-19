@@ -24,6 +24,7 @@ interface Topic {
 }
 interface DailyUpload {
     id: string;
+    topicName: string;
     date: string;
     topics: Topic[];
 }
@@ -118,6 +119,7 @@ function CreateTopic({
             resourceId
         );
     };
+
     return (
         <>
             <div className="flex items-center justify-between my-4">
@@ -156,6 +158,69 @@ function CreateTopic({
                     <button type="button">Add More</button>
                 </div>
             </div>
+            <div className="sm:flex justify-between items-center gap-5 w-full">
+                <div className="basis-1/2">
+                    <Label htmlFor={`standard.dailyUploads.${index}.topicName`}>
+                        Name
+                    </Label>
+                    <Input
+                        type="text"
+                        placeholder="Write Topic Name"
+                        name={`standard.dailyUploads.${index}.topicName`}
+                        additionalClasses="mobile:!w-full mt-1"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: validationError.REQUIRED_FIELD,
+                            },
+                        }}
+                    />
+                    <span className="text-red-500 text-xs">
+                        <ErrorMessage
+                            errors={errors}
+                            name={`standard.dailyUploads.${index}.topicName`}
+                            render={({ message }) => (
+                                <p className="flex items-center">
+                                    <X size={20} color="#E6500D" />
+                                    {message}
+                                </p>
+                            )}
+                        />
+                    </span>
+                </div>
+                <div className="basis-1/2 relative">
+                    <Label htmlFor={`standard.dailyUploads.${index}.date`}>
+                        Date
+                    </Label>
+                    <Input
+                        type="date"
+                        placeholder="Write Date"
+                        name={`standard.dailyUploads.${index}.date`}
+                        additionalClasses="mobile:!w-full mt-1"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: validationError.REQUIRED_FIELD,
+                            },
+                        }}
+                    />
+                    <span className="text-red-500 text-xs">
+                        <ErrorMessage
+                            errors={errors}
+                            name={`standard.dailyUploads.${index}.date`}
+                            render={({ message }) => (
+                                <p className="flex items-center">
+                                    <X size={20} color="#E6500D" />
+                                    {message}
+                                </p>
+                            )}
+                        />
+                    </span>
+                    <div className="absolute top-11 right-2">
+                        <CalendarDays size={16} color="#85878D" />
+                    </div>
+                </div>
+            </div>
             {topicFields.map((topic, topicIndex) => (
                 <div key={topic.id}>
                     <div className="sm:flex justify-between items-center gap-5 w-full">
@@ -188,10 +253,10 @@ function CreateTopic({
                                                     <FileUpIcon />
                                                     {allSelectedResources[
                                                         topicIndex
-                                                    ].name.slice(0, 6)}
+                                                    ].name.slice(0, 5)}
                                                     {allSelectedResources[
                                                         topicIndex
-                                                    ].name.length > 6 && '...'}
+                                                    ].name.length > 5 && '...'}
                                                 </>
                                             )}
                                         </div>
@@ -307,40 +372,7 @@ function CreateTopic({
                     </div>
                 </div>
             ))}
-            <div className="mobile:w-full w-1/2 mb-5">
-                <div className="basis-1/2 mobile:w-full relative">
-                    <Label htmlFor={`standard.dailyUploads.${index}.date`}>
-                        Date
-                    </Label>
-                    <Input
-                        type="date"
-                        placeholder="Write Date"
-                        name={`standard.dailyUploads.${index}.date`}
-                        additionalClasses="date-input"
-                        rules={{
-                            required: {
-                                value: true,
-                                message: validationError.REQUIRED_FIELD,
-                            },
-                        }}
-                    />
-                    <span className="text-red-500 text-xs">
-                        <ErrorMessage
-                            errors={errors}
-                            name={`standard.dailyUploads.${index}.date`}
-                            render={({ message }) => (
-                                <p className="flex items-center">
-                                    <X size={20} color="#E6500D" />
-                                    {message}
-                                </p>
-                            )}
-                        />
-                    </span>
-                    <div className="absolute top-11 right-2">
-                        <CalendarDays size={20} color="#85878D" />
-                    </div>
-                </div>
-            </div>
+
             <hr className="my-5" />
         </>
     );
