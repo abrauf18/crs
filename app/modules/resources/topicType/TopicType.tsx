@@ -106,7 +106,7 @@ function TopicPage({
                 />
                 <Card
                     Icon={AssignmentIcon}
-                    cardText="Summarized Assessments"
+                    cardText="Summarize Assessments"
                     count={APIdata.summarizedAssessmentCount}
                 />
                 <Card

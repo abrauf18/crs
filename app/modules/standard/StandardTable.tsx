@@ -137,7 +137,8 @@ function StandardTable({
                                 </span>
                             </TableCell>
                             <TableCell className="flex gap-2 items-center p-8">
-                                {topic.type?.toLowerCase() === 'slideshow' && (
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.SLIDESHOW && (
                                     <PptIcon
                                         fill="#1ebeff"
                                         className="shrink-0"
@@ -145,10 +146,12 @@ function StandardTable({
                                         width={20}
                                     />
                                 )}
-                                {topic.type?.toLowerCase() === 'video' && (
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.VIDEO && (
                                     <RecorderIcon className="shrink-0" />
                                 )}
-                                {topic.type?.toLowerCase() === 'worksheet' && (
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.WORKSHEET && (
                                     <XlsIcon
                                         color="#54C3F4"
                                         className="shrink-0"
@@ -157,22 +160,71 @@ function StandardTable({
                                     />
                                 )}
                                 {topic.type?.toLowerCase() ===
-                                    'exit-ticket-test' && (
-                                    <TicketIcon
-                                        color="#54C3F4"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() === 'quiz' && (
+                                    ResourceType.QUIZ && (
                                     <QuestionMarkIcon
                                         className="shrink-0"
                                         height={20}
                                         width={20}
                                     />
                                 )}
-                                {topic.type?.toLowerCase() === 'assignment' && (
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.ASSIGNMENT && (
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.LAB && (
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.STATION && (
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.ACTIVITY && (
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.GUIDED_NOTE && (
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.FORMATIVE_ASSESSMENT && (
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.SUMMARIZED_ASSESSMENT && (
+                                    <AssignmentIcon
+                                        className="shrink-0"
+                                        height={20}
+                                        width={20}
+                                    />
+                                )}
+                                {topic.type?.toLowerCase() ===
+                                    ResourceType.DATA_TRACKER && (
                                     <AssignmentIcon
                                         className="shrink-0"
                                         height={20}

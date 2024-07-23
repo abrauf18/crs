@@ -124,23 +124,37 @@ function CommonTable({
                                 </TableCell>
                                 <TableCell className="flex space-x-2 items-center">
                                     {resourcesType?.toLowerCase() ===
-                                        'slideshow' && (
+                                        'slideshows' && (
                                         <PptIcon fill="#1ebeff" />
                                     )}
                                     {resourcesType?.toLowerCase() ===
-                                        "total-video's" && <RecorderIcon />}
+                                        'total-videos' && <RecorderIcon />}
                                     {resourcesType?.toLowerCase() ===
                                         'worksheets' && (
                                         <XlsIcon color="#54C3F4" />
                                     )}
                                     {resourcesType?.toLowerCase() ===
-                                        'exit-ticket-test' && (
-                                        <TicketIcon color="#54C3F4" />
-                                    )}
-                                    {resourcesType?.toLowerCase() ===
                                         'quizzes' && <QuestionMarkIcon />}
                                     {resourcesType?.toLowerCase() ===
                                         'assignments' && <AssignmentIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'labs' && <AssignmentIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'stations' && <AssignmentIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'activities' && <AssignmentIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'guided-notes' && <AssignmentIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'formative-assessments' && (
+                                        <AssignmentIcon />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'summarize-assessments' && (
+                                        <AssignmentIcon />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'data-trackers' && <AssignmentIcon />}
 
                                     <span>{resource.name}</span>
                                 </TableCell>

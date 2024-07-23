@@ -11,6 +11,7 @@ import {
     convertDashesToSpaces,
     commonFilterQueries,
     commonFilterOptions,
+    convertDashesToSpacesSimple,
 } from '@/lib/utils';
 import UploadResourceModal from '../../UploadResourceModal';
 
@@ -87,16 +88,14 @@ function ResourceDetails({
                 text={`${APIdata.totalResources}  ${
                     params.typeName.startsWith('Total-Video')
                         ? ' Videos'
-                        : params.typeName.startsWith('Exit-Ticket-Test')
-                          ? 'Exit Ticket'
-                          : `${params.typeName}`
+                        : `${convertDashesToSpacesSimple(params.typeName)}`
                 }   in total`}
                 secondButtonText={
                     params.typeName.startsWith('Total-Video')
                         ? 'Upload Videos'
-                        : params.typeName.startsWith('Exit-Ticket-Test')
-                          ? 'Upload Exit Ticket'
-                          : `Upload ${params.typeName}`
+                        : `Upload ${convertDashesToSpacesSimple(
+                              params.typeName
+                          )}`
                 }
                 isHideFirstBtn
                 handleClick={handleOpenUploadModal}
