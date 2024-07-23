@@ -17,9 +17,15 @@ function TopicPage({
         slideshowCount: number;
         videoCount: number;
         worksheetCount: number;
-        exitTicketTestCount: number;
         quizCount: number;
         assignmentCount: number;
+        labCount: number;
+        stationCount: number;
+        activityCount: number;
+        guidedNoteCount: number;
+        formativeAssessmentCount: number;
+        summarizedAssessmentCount: number;
+        dataTrackerCount: number;
         totalCount: number;
     };
 }) {
@@ -60,11 +66,6 @@ function TopicPage({
             </div>
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card
-                    Icon={TicketIcon}
-                    cardText="Exit Ticket Test"
-                    count={APIdata.exitTicketTestCount}
-                />
-                <Card
                     Icon={HelpCircle}
                     cardText="Quizzes"
                     count={APIdata.quizCount}
@@ -73,6 +74,45 @@ function TopicPage({
                     Icon={AssignmentIcon}
                     cardText="Assignments"
                     count={APIdata.assignmentCount}
+                />
+                <Card
+                    Icon={AssignmentIcon}
+                    cardText="Labs"
+                    count={APIdata.labCount}
+                />
+            </div>
+            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
+                <Card
+                    Icon={HelpCircle}
+                    cardText="Stations"
+                    count={APIdata.stationCount}
+                />
+                <Card
+                    Icon={AssignmentIcon}
+                    cardText="Activities"
+                    count={APIdata.activityCount}
+                />
+                <Card
+                    Icon={AssignmentIcon}
+                    cardText="Guided Notes"
+                    count={APIdata.guidedNoteCount}
+                />
+            </div>
+            <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
+                <Card
+                    Icon={HelpCircle}
+                    cardText="Formative Assessments"
+                    count={APIdata.formativeAssessmentCount}
+                />
+                <Card
+                    Icon={AssignmentIcon}
+                    cardText="Summarized Assessments"
+                    count={APIdata.summarizedAssessmentCount}
+                />
+                <Card
+                    Icon={AssignmentIcon}
+                    cardText="Data Trackers"
+                    count={APIdata.dataTrackerCount}
                 />
             </div>
             {isShowUploadModal && (

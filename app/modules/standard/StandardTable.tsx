@@ -238,7 +238,9 @@ function StandardTable({
                                                 topic.type ===
                                                     ResourceType.ASSIGNMENT ||
                                                 topic.type ===
-                                                    ResourceType.EXIT_TICKET_TEST ||
+                                                    ResourceType.FORMATIVE_ASSESSMENT ||
+                                                topic.type ===
+                                                    ResourceType.SUMMARIZED_ASSESSMENT ||
                                                 topic.type === ResourceType.QUIZ
                                             ) {
                                                 return takeAssessment(
@@ -274,7 +276,9 @@ function StandardTable({
                                           topic.type ===
                                               ResourceType.ASSIGNMENT ||
                                           topic.type ===
-                                              ResourceType.EXIT_TICKET_TEST ||
+                                              ResourceType.FORMATIVE_ASSESSMENT ||
+                                          topic.type ===
+                                              ResourceType.SUMMARIZED_ASSESSMENT ||
                                           topic.type ===
                                               ResourceType.WORKSHEET ? (
                                             <p className="py-0.5 px-2.5">

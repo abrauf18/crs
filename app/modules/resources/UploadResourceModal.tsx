@@ -359,8 +359,11 @@ function UploadResourceModal({ onClose }: any) {
                         )}
                         {(resourceType === ResourceType.QUIZ ||
                             resourceType === ResourceType.WORKSHEET ||
-                            resourceType === ResourceType.EXIT_TICKET_TEST ||
-                            resourceType === ResourceType.ASSIGNMENT) && (
+                            resourceType === ResourceType.ASSIGNMENT ||
+                            resourceType ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resourceType ===
+                                ResourceType.SUMMARIZED_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -389,8 +392,11 @@ function UploadResourceModal({ onClose }: any) {
                         )}
                         {(resourceType === ResourceType.QUIZ ||
                             resourceType === ResourceType.WORKSHEET ||
-                            resourceType === ResourceType.EXIT_TICKET_TEST ||
-                            resourceType === ResourceType.ASSIGNMENT) && (
+                            resourceType === ResourceType.ASSIGNMENT ||
+                            resourceType ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resourceType ===
+                                ResourceType.SUMMARIZED_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="deadline"

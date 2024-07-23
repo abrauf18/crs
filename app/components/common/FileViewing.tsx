@@ -41,7 +41,8 @@ export default function FileViewing({
         type === ResourceType.ASSIGNMENT ||
         type === ResourceType.QUIZ ||
         type === ResourceType.WORKSHEET ||
-        type === ResourceType.EXIT_TICKET_TEST
+        type === ResourceType.FORMATIVE_ASSESSMENT ||
+        type === ResourceType.SUMMARIZED_ASSESSMENT
     ) {
         const isGoogleDocs = resourceURL.includes('docs.google.com/document');
         resourceRenderingLink = isGoogleDocs
