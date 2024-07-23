@@ -157,7 +157,7 @@ function UpdateResourceModal({
                             resource.type ===
                                 ResourceType.FORMATIVE_ASSESSMENT ||
                             resource.type ===
-                                ResourceType.SUMMARIZED_ASSESSMENT) && (
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -188,7 +188,7 @@ function UpdateResourceModal({
                             resource.type ===
                                 ResourceType.FORMATIVE_ASSESSMENT ||
                             resource.type ===
-                                ResourceType.SUMMARIZED_ASSESSMENT) && (
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="deadline"

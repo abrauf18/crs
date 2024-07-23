@@ -27,7 +27,7 @@ function UploadItem({
         [ResourceType.QUIZ]: '.doc, .docx',
         [ResourceType.ASSIGNMENT]: '.doc, .docx',
         [ResourceType.FORMATIVE_ASSESSMENT]: '.doc, .docx',
-        [ResourceType.SUMMARIZED_ASSESSMENT]: '.doc, .docx',
+        [ResourceType.SUMMARIZE_ASSESSMENT]: '.doc, .docx',
         [ResourceType.LAB]: '.pdf',
         [ResourceType.STATION]: '.pdf',
         [ResourceType.ACTIVITY]: '.pdf',

@@ -60,8 +60,8 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
     const worksheetUploads = filteredAssessmentUploads?.filter(
         (upload) => upload.resource.type === ResourceType.WORKSHEET
     );
-    const summarizedAssessmentUploads = filteredAssessmentUploads?.filter(
-        (upload) => upload.resource.type === ResourceType.SUMMARIZED_ASSESSMENT
+    const summarizeAssessmentUploads = filteredAssessmentUploads?.filter(
+        (upload) => upload.resource.type === ResourceType.SUMMARIZE_ASSESSMENT
     );
     const formativeAssessmentUploads = filteredAssessmentUploads?.filter(
         (upload) => upload.resource.type === ResourceType.FORMATIVE_ASSESSMENT
@@ -82,7 +82,7 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
             filteredUploads = quizUploads;
             break;
         case 'Summarize Assessments':
-            filteredUploads = summarizedAssessmentUploads;
+            filteredUploads = summarizeAssessmentUploads;
             break;
         case 'Formative Assessments':
             filteredUploads = formativeAssessmentUploads;

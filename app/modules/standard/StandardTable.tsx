@@ -216,7 +216,7 @@ function StandardTable({
                                     />
                                 )}
                                 {topic.type?.toLowerCase() ===
-                                    ResourceType.SUMMARIZED_ASSESSMENT && (
+                                    ResourceType.SUMMARIZE_ASSESSMENT && (
                                     <AssignmentIcon
                                         className="shrink-0"
                                         height={20}
@@ -292,7 +292,7 @@ function StandardTable({
                                                 topic.type ===
                                                     ResourceType.FORMATIVE_ASSESSMENT ||
                                                 topic.type ===
-                                                    ResourceType.SUMMARIZED_ASSESSMENT ||
+                                                    ResourceType.SUMMARIZE_ASSESSMENT ||
                                                 topic.type === ResourceType.QUIZ
                                             ) {
                                                 return takeAssessment(
@@ -330,7 +330,7 @@ function StandardTable({
                                           topic.type ===
                                               ResourceType.FORMATIVE_ASSESSMENT ||
                                           topic.type ===
-                                              ResourceType.SUMMARIZED_ASSESSMENT ||
+                                              ResourceType.SUMMARIZE_ASSESSMENT ||
                                           topic.type ===
                                               ResourceType.WORKSHEET ? (
                                             <p className="py-0.5 px-2.5">

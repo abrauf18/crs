@@ -56,7 +56,7 @@ export enum ResourceType {
     ACTIVITY = 'activity',
     GUIDED_NOTE = 'guided-note',
     FORMATIVE_ASSESSMENT = 'formative-assessment',
-    SUMMARIZED_ASSESSMENT = 'summarize-assessment',
+    SUMMARIZE_ASSESSMENT = 'summarize-assessment',
     DATA_TRACKER = 'data-tracker'
 }
 
@@ -71,7 +71,7 @@ export const ResourceToPath = {
     [ResourceType.ACTIVITY]: 'Activities',
     [ResourceType.GUIDED_NOTE]: 'Guided-Notes',
     [ResourceType.FORMATIVE_ASSESSMENT]: 'Formative-Assessments',
-    [ResourceType.SUMMARIZED_ASSESSMENT]: 'Summarize-Assessments',
+    [ResourceType.SUMMARIZE_ASSESSMENT]: 'Summarize-Assessments',
     [ResourceType.DATA_TRACKER]: 'Data-Trackers'
 };
 
@@ -86,7 +86,7 @@ export const PathToResource = {
     Activities: ResourceType.ACTIVITY,
     'Guided-Notes': ResourceType.GUIDED_NOTE,
     'Formative-Assessments': ResourceType.FORMATIVE_ASSESSMENT,
-    'Summarize-Assessments': ResourceType.SUMMARIZED_ASSESSMENT,
+    'Summarize-Assessments': ResourceType.SUMMARIZE_ASSESSMENT,
     'Data-Trackers': ResourceType.DATA_TRACKER
 };
 
@@ -147,7 +147,7 @@ export const resourceDropDownOptions = [
     { label: ResourceType.ACTIVITY, value: 'Activity' },
     { label: ResourceType.GUIDED_NOTE, value: 'Guided Note' },
     { label: ResourceType.FORMATIVE_ASSESSMENT, value: 'Formative Assessment' },
-    { label: ResourceType.SUMMARIZED_ASSESSMENT, value: 'Summarize Assessment' },
+    { label: ResourceType.SUMMARIZE_ASSESSMENT, value: 'Summarize Assessment' },
     { label: ResourceType.DATA_TRACKER, value: 'Data Tracker' }
 ];
 

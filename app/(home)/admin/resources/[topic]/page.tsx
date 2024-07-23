@@ -20,7 +20,7 @@ async function TopicPage({ params }: { params: { topic: string } }) {
         activityCount: number;
         guidedNoteCount: number;
         formativeAssessmentCount: number;
-        summarizedAssessmentCount: number;
+        summarizeAssessmentCount: number;
         dataTrackerCount: number;
         totalCount: number;
     } = {
@@ -34,7 +34,7 @@ async function TopicPage({ params }: { params: { topic: string } }) {
         activityCount: 0,
         guidedNoteCount: 0,
         formativeAssessmentCount: 0,
-        summarizedAssessmentCount: 0,
+        summarizeAssessmentCount: 0,
         dataTrackerCount: 0,
         totalCount: 0,
     };

@@ -363,7 +363,7 @@ function UploadResourceModal({ onClose }: any) {
                             resourceType ===
                                 ResourceType.FORMATIVE_ASSESSMENT ||
                             resourceType ===
-                                ResourceType.SUMMARIZED_ASSESSMENT) && (
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -396,7 +396,7 @@ function UploadResourceModal({ onClose }: any) {
                             resourceType ===
                                 ResourceType.FORMATIVE_ASSESSMENT ||
                             resourceType ===
-                                ResourceType.SUMMARIZED_ASSESSMENT) && (
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="deadline"

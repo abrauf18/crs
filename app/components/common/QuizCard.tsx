@@ -31,7 +31,7 @@ function VideoCard({
         selectedResource?.resourceType === ResourceType.ASSIGNMENT ||
         selectedResource?.resourceType === ResourceType.QUIZ ||
         selectedResource?.resourceType === ResourceType.WORKSHEET ||
-        selectedResource?.resourceType === ResourceType.SUMMARIZED_ASSESSMENT ||
+        selectedResource?.resourceType === ResourceType.SUMMARIZE_ASSESSMENT ||
         selectedResource?.resourceType === ResourceType.FORMATIVE_ASSESSMENT
     ) {
         resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(

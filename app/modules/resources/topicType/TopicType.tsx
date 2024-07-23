@@ -24,7 +24,7 @@ function TopicPage({
         activityCount: number;
         guidedNoteCount: number;
         formativeAssessmentCount: number;
-        summarizedAssessmentCount: number;
+        summarizeAssessmentCount: number;
         dataTrackerCount: number;
         totalCount: number;
     };
@@ -107,7 +107,7 @@ function TopicPage({
                 <Card
                     Icon={AssignmentIcon}
                     cardText="Summarize Assessments"
-                    count={APIdata.summarizedAssessmentCount}
+                    count={APIdata.summarizeAssessmentCount}
                 />
                 <Card
                     Icon={AssignmentIcon}
