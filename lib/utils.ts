@@ -27,6 +27,13 @@ export function convertSpacesToDashes(str: string) {
     return str.replace(/ /g, '-');
 }
 
+export function capitalizeWords(input: string) {
+    return input
+        .split('-') // Split the string into an array of words
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+        .join(' '); // Join the words back into a single string with spaces
+}
+
 export const validationError = {
     PASSWORD_VALIDATION_INFO_TEXT:
         'Password must be 8 characters and must contain at least 1 small alphabet, 1 capital alphabet, 1 numeric value and 1 special character',
