@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { HelpCircle, TicketIcon } from 'lucide-react';
+import {
+    HelpCircle,
+    ScrollText,
+    LayoutList,
+    Activity,
+    BookAIcon,
+    FileType2,
+    FileTerminal,
+    Database,
+} from 'lucide-react';
 import Filters from '@/app/components/common/Filters';
 import Card from '@/app/components/common/Card';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
@@ -76,43 +85,49 @@ function TopicPage({
                     count={APIdata.assignmentCount}
                 />
                 <Card
-                    Icon={AssignmentIcon}
+                    Icon={ScrollText}
                     cardText="Labs"
                     count={APIdata.labCount}
+                    iconColor="#F02070"
                 />
             </div>
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card
-                    Icon={HelpCircle}
+                    Icon={LayoutList}
                     cardText="Stations"
                     count={APIdata.stationCount}
+                    iconColor="#F59A3B"
                 />
                 <Card
-                    Icon={AssignmentIcon}
+                    Icon={Activity}
                     cardText="Activities"
                     count={APIdata.activityCount}
+                    iconColor="#7D0DC3"
                 />
                 <Card
-                    Icon={AssignmentIcon}
+                    Icon={BookAIcon}
                     cardText="Guided Notes"
                     count={APIdata.guidedNoteCount}
+                    iconColor="#F0A020"
                 />
             </div>
             <div className="grid mobile:grid-col-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4 mobile:place-items-center">
                 <Card
-                    Icon={HelpCircle}
+                    Icon={FileType2}
                     cardText="Formative Assessments"
                     count={APIdata.formativeAssessmentCount}
+                    iconColor="#7D0DC3"
                 />
                 <Card
-                    Icon={AssignmentIcon}
+                    Icon={FileTerminal}
                     cardText="Summarize Assessments"
                     count={APIdata.summarizeAssessmentCount}
                 />
                 <Card
-                    Icon={AssignmentIcon}
+                    Icon={Database}
                     cardText="Data Trackers"
                     count={APIdata.dataTrackerCount}
+                    iconColor="#F02070"
                 />
             </div>
             {isShowUploadModal && (

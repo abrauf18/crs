@@ -1,6 +1,16 @@
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
-import { Eye, Trash } from 'lucide-react';
+import {
+    Activity,
+    BookAIcon,
+    Database,
+    Eye,
+    FileTerminal,
+    FileType2,
+    LayoutList,
+    ScrollText,
+    Trash,
+} from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -138,23 +148,33 @@ function CommonTable({
                                     {resourcesType?.toLowerCase() ===
                                         'assignments' && <AssignmentIcon />}
                                     {resourcesType?.toLowerCase() ===
-                                        'labs' && <AssignmentIcon />}
+                                        'labs' && (
+                                        <ScrollText color="#F02070" />
+                                    )}
                                     {resourcesType?.toLowerCase() ===
-                                        'stations' && <AssignmentIcon />}
+                                        'stations' && (
+                                        <LayoutList color="#F59A3B" />
+                                    )}
                                     {resourcesType?.toLowerCase() ===
-                                        'activities' && <AssignmentIcon />}
+                                        'activities' && (
+                                        <Activity color="#7D0DC3" />
+                                    )}
                                     {resourcesType?.toLowerCase() ===
-                                        'guided-notes' && <AssignmentIcon />}
+                                        'guided-notes' && (
+                                        <BookAIcon color="#F0A020" />
+                                    )}
                                     {resourcesType?.toLowerCase() ===
                                         'formative-assessments' && (
-                                        <AssignmentIcon />
+                                        <FileType2 color="#7D0DC3" />
                                     )}
                                     {resourcesType?.toLowerCase() ===
                                         'summarize-assessments' && (
-                                        <AssignmentIcon />
+                                        <FileTerminal />
                                     )}
                                     {resourcesType?.toLowerCase() ===
-                                        'data-trackers' && <AssignmentIcon />}
+                                        'data-trackers' && (
+                                        <Database color="#F02070" />
+                                    )}
 
                                     <span>{resource.name}</span>
                                 </TableCell>
