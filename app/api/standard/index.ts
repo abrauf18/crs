@@ -157,13 +157,14 @@ export const getTopicResourcesAPI = async ({
     standardId: string;
     topicName: string;
 }) => {
+    const encodedTopicName = encodeURIComponent(topicName);
+
     const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/getTopicResources`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/getTopicResources?topicName=${encodedTopicName}`,
         {
             headers: {
                 accesstoken: accessToken,
                 standardid: standardId,
-                topicname: topicName,
             },
             next: {
                 tags: ['getTopicResources'],
