@@ -165,6 +165,7 @@ export default function VideoViewing({
                         userId: data?.user?.id,
                         questionId: question.id,
                         answer: '',
+                        standardId: standardId || '',
                     });
                     if (APIresponse.status !== 200) {
                         throw new Error(
@@ -172,6 +173,10 @@ export default function VideoViewing({
                                 'An error occured while submitting your answer'
                         );
                     }
+                    setAnsweredQuestions((prevState) => {
+                        const newState = prevState.map(() => true); // Mark all as true (answered)
+                        return newState;
+                    });
                     // toast.success('Answer submitted successfully');
                 } catch (error: any) {
                     // toast.error(
@@ -374,6 +379,7 @@ export default function VideoViewing({
                             handlePlayAfterQuestion={handlePlayAfterQuestion}
                             markQuestionAsAnswered={markQuestionAsAnswered}
                             hideButton={hideButton}
+                            standardId={standardId || ''}
                         />
                     </div>
                 ) : (

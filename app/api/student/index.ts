@@ -140,11 +140,13 @@ export const createVideoQuestionAnswerAPI = async ({
     userId,
     questionId,
     answer,
+    standardId,
 }: {
     accessToken: string;
     userId: string;
     questionId: string;
     answer: string;
+    standardId: string;
 }) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/videoQuestionAnswer/createVideoQuestionAnswer`,
@@ -153,6 +155,7 @@ export const createVideoQuestionAnswerAPI = async ({
             userId,
             questionId,
             answer,
+            standardId,
         }
     );
 
