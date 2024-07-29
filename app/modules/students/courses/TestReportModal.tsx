@@ -78,6 +78,7 @@ function TestReportModal({
     const { data } = useSession();
     const pathname = usePathname();
     const studentId = pathname.split('/')[3];
+    const standardId = pathname.split('/')[5];
     const { control, handleSubmit } = useForm<FormData>();
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
@@ -95,6 +96,7 @@ function TestReportModal({
                     ? 'videoQuestion'
                     : 'assessmentResource',
                 idsAndMarks: formData,
+                standardId,
             });
             if (response.status !== 200) {
                 toast.error(
@@ -118,9 +120,7 @@ function TestReportModal({
         const assesmentResourceId =
             test.resource?.AssessmentResourcesDetail?.id;
         if (assesmentResourceId) {
-            return router.push(
-                `/teacher/students/${studentId}/view-answer?assesmentResourceId=${assesmentResourceId}&studentId=${studentId}`
-            );
+            return router.push(`${pathname}/${assesmentResourceId}`);
         }
         return toast.error('No answer URL available.');
     };

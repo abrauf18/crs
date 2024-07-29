@@ -23,7 +23,7 @@ import {
     convertSpacesToDashes,
     ResourceToPath,
     ResourceType,
-    capitalizeWords
+    capitalizeWords,
 } from '@/lib/utils';
 
 interface ResourcesProp {

@@ -16,14 +16,8 @@ import {
     TableCell,
     Table,
 } from '@/app/components/ui/table';
-import XlsIcon from '@/app/assets/icons/XlsIcon';
-import PptIcon from '@/app/assets/icons/PptIcon';
 import EditIcon from '@/app/assets/icons/EditIcon';
-import TicketIcon from '@/app/assets/icons/TicketIcon';
-import RecorderIcon from '@/app/assets/icons/RecorderIcon';
-import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
+import { usePathname, useRouter } from 'next/navigation';
 import EditQuestionsModal from '../video/EditQuestionsModal';
 import EditTopicsModal from '../video/EditTopicsModal';
 import UpdateResourceModal from '../resources/UpdateResourceModal';
@@ -137,100 +131,6 @@ function StandardTable({
                                 </span>
                             </TableCell>
                             <TableCell className="flex gap-2 items-center p-8">
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.SLIDESHOW && (
-                                    <PptIcon
-                                        fill="#1ebeff"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.VIDEO && (
-                                    <RecorderIcon className="shrink-0" />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.WORKSHEET && (
-                                    <XlsIcon
-                                        color="#54C3F4"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.QUIZ && (
-                                    <QuestionMarkIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.ASSIGNMENT && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.LAB && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.STATION && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.ACTIVITY && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.GUIDED_NOTE && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.FORMATIVE_ASSESSMENT && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.SUMMARIZE_ASSESSMENT && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    ResourceType.DATA_TRACKER && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
                                 {topic.name}
                             </TableCell>
                             <TableCell className="text-dark-gray">
