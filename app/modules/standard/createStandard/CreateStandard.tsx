@@ -27,7 +27,7 @@ interface Topic {
 }
 interface DailyUpload {
     topicName: string;
-    date: string;
+    accessibleDay: number;
     topics: Topic[];
 }
 interface Standard {
@@ -44,7 +44,7 @@ const DEFAULT_STANDARD = {
     dailyUploads: [
         {
             name: '',
-            date: '',
+            accessibleDay: 0,
             topics: [
                 {
                     resourceId: '',
@@ -83,7 +83,7 @@ function CreateStandard({
             dailyUploads:
                 dailyUploads?.map((upload) => ({
                     topicName: convertDashesToSpacesSimple(upload.topicName),
-                    date: upload.date,
+                    accessibleDay: upload.accessibleDay,
                     topics: upload.topics.map((resource) => ({
                         resourceId: resource.resourceId,
                         name: resource.name,
@@ -176,7 +176,7 @@ function CreateStandard({
                     resourceId:
                         allSelectedResources[index][topicIndex]?.resourceId,
                     topicName: convertSpacesToDashes(dailyUpload.topicName),
-                    accessDate: dailyUpload.date,
+                    accessibleDay: dailyUpload.accessibleDay,
                     weightage: topic?.weightage || 0,
                 }))
             )
@@ -229,7 +229,7 @@ function CreateStandard({
         if (dailyUploadFields.length === 0 && !dailyUploadAddedRef.current) {
             appendDailyUpload({
                 topicName: '',
-                date: '',
+                accessibleDay: 0,
                 topics: [
                     {
                         resourceId: '',
@@ -356,7 +356,7 @@ function CreateStandard({
                                     }
                                     appendDailyUpload({
                                         topicName: '',
-                                        date: '',
+                                        accessibleDay: 0,
                                         topics: [
                                             {
                                                 resourceId: '',

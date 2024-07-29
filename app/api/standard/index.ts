@@ -10,7 +10,7 @@ export const createStandardAPI = async ({
     description: string;
     dailyUploads: {
         resourceId: string;
-        accessDate: string;
+        accessibleDay: number;
         weightage: number;
     }[];
     accessToken: string;
@@ -63,7 +63,7 @@ export const updateStandardAPI = async ({
     description: string;
     dailyUploads: {
         resourceId: string;
-        accessDate: string;
+        accessibleDay: number;
         weightage: number;
     }[];
     accessToken: string;
