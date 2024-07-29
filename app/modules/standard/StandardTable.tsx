@@ -9,6 +9,7 @@ import {
     ResourceToPath,
     ResourceType,
     convertSpacesToDashes,
+    capitalizeWords,
 } from '@/lib/utils';
 import {
     TableRow,
@@ -134,8 +135,7 @@ function StandardTable({
                                 {topic.name}
                             </TableCell>
                             <TableCell className="text-dark-gray">
-                                {topic.type.charAt(0).toUpperCase() +
-                                    topic.type.slice(1)}
+                                {capitalizeWords(topic.type)}
                             </TableCell>
                             <TableCell className="flex justify-center items-center">
                                 {!isShownFromStudent && (
