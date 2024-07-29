@@ -19,7 +19,8 @@ interface Topic {
     canWrite?: boolean;
 }
 interface DailyUpload {
-    date: string;
+    day: number;
+    date?: string;
     released?: boolean;
     topics: Topic[];
 }
@@ -80,7 +81,7 @@ function StandardDetails({
             </div>
             {dailyUploads?.map((dailyUpload, index) => (
                 <StandardCard
-                    key={dailyUpload.date}
+                    key={dailyUpload.day}
                     dailyUpload={dailyUpload}
                     isShownFromAdmin={isShownFromAdmin}
                     isShownFromTeacher={isShownFromTeacher}
