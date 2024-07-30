@@ -21,7 +21,10 @@ import { getSummarizedStandardAPI } from '@/app/api/standard';
 import CourseCard from './CourseCard';
 
 interface FormValues {
-    selectedClasses: { label: string }[];
+    selectedClasses: {
+        classroomId: string;
+        startDate: string;
+    }[];
 }
 
 function AssignCourseModal({
@@ -73,7 +76,7 @@ function AssignCourseModal({
     const filteredGradeOptions = gradeOptions?.filter(
         (classItem: OptionsInterface) =>
             !watch('selectedClasses')?.some(
-                (selected) => selected.label === classItem.label
+                (selected) => selected.classroomId === classItem.label
             )
     );
 
@@ -85,7 +88,10 @@ function AssignCourseModal({
                 accessToken: data?.user?.accessToken || '',
                 standardId,
                 classroomIds: formData.selectedClasses.map(
-                    (selected) => selected.label
+                    (selected) => selected.classroomId
+                ),
+                startDates: formData.selectedClasses.map(
+                    (selected) => selected.startDate
                 ),
             });
 
@@ -151,7 +157,10 @@ function AssignCourseModal({
                 setGradeOptions(teacherResponseData?.data);
                 reset({
                     selectedClasses: [
-                        { label: teacherResponseData?.data[0].label },
+                        {
+                            classroomId: teacherResponseData?.data[0].label,
+                            startDate: '',
+                        },
                     ],
                 });
             } catch (error: any) {
@@ -200,7 +209,7 @@ function AssignCourseModal({
                                 />
                                 <div className="h-96 overflow-y-scroll">
                                     <div className="my-3 w-full">
-                                        <Label htmlFor="password">
+                                        <Label htmlFor="selectedClasses">
                                             Select Class To Assign
                                         </Label>
                                         {fields.map((field, index) => (
@@ -209,34 +218,34 @@ function AssignCourseModal({
                                                     <div className="mt-4 grow">
                                                         <Select
                                                             additionalClasses="!w-full"
-                                                            name={`selectedClasses.${index}.label`}
+                                                            name={`selectedClasses.${index}.classroomId`}
                                                             options={
                                                                 gradeOptions
                                                             }
                                                             selectedOption={
-                                                                field.label
+                                                                field.classroomId
                                                             }
                                                             rules={{
                                                                 validate: (
-                                                                    currentLabel: string
+                                                                    currentClassroomId: string
                                                                 ) => {
-                                                                    const allSelectedGradeIds =
+                                                                    const allSelectedClassroomIds =
                                                                         watch(
                                                                             'selectedClasses'
                                                                         ).map(
                                                                             (
                                                                                 selected
                                                                             ) =>
-                                                                                selected.label
+                                                                                selected.classroomId
                                                                         );
-                                                                    const previousSelectedGradeIds =
-                                                                        allSelectedGradeIds.slice(
+                                                                    const previousSelectedClassroomIds =
+                                                                        allSelectedClassroomIds.slice(
                                                                             0,
                                                                             index
                                                                         );
                                                                     return (
-                                                                        !previousSelectedGradeIds.includes(
-                                                                            currentLabel
+                                                                        !previousSelectedClassroomIds.includes(
+                                                                            currentClassroomId
                                                                         ) ||
                                                                         'This value has been selected before'
                                                                     );
@@ -244,6 +253,17 @@ function AssignCourseModal({
                                                             }}
                                                         />
                                                     </div>
+                                                    <input
+                                                        className="mt-4 grow p-2 border rounded"
+                                                        type="date"
+                                                        {...methods.register(
+                                                            `selectedClasses.${index}.startDate`,
+                                                            {
+                                                                required:
+                                                                    'Start date is required',
+                                                            }
+                                                        )}
+                                                    />
                                                     <button
                                                         className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
                                                         type="button"
@@ -258,7 +278,24 @@ function AssignCourseModal({
                                                     <span className="text-red-500 text-xs mt-2">
                                                         <ErrorMessage
                                                             errors={errors}
-                                                            name={`selectedClasses.${index}.label`}
+                                                            name={`selectedClasses.${index}.classroomId`}
+                                                            render={({
+                                                                message,
+                                                            }) => (
+                                                                <p className="flex items-center">
+                                                                    <X
+                                                                        size={
+                                                                            20
+                                                                        }
+                                                                        color="#E6500D"
+                                                                    />
+                                                                    {message}
+                                                                </p>
+                                                            )}
+                                                        />
+                                                        <ErrorMessage
+                                                            errors={errors}
+                                                            name={`selectedClasses.${index}.startDate`}
                                                             render={({
                                                                 message,
                                                             }) => (
@@ -284,8 +321,10 @@ function AssignCourseModal({
                                                 className="flex border p-2 w-28 justify-center text-dark-gray rounded-lg items-center mt-4 cursor-pointer hover:bg-primary-color hover:text-white"
                                                 onClick={() =>
                                                     append({
-                                                        label: filteredGradeOptions[0]
-                                                            .label,
+                                                        classroomId:
+                                                            filteredGradeOptions[0]
+                                                                .label,
+                                                        startDate: '',
                                                     })
                                                 }
                                             >
