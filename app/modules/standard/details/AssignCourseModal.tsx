@@ -184,7 +184,7 @@ function AssignCourseModal({
     }
 
     return (
-        <section className="w-full bg-white h-screen py-4 shadow-lg">
+        <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-scroll">
             {modalLoading ? (
                 <div>
                     <PageLoader />
@@ -222,7 +222,7 @@ function AssignCourseModal({
                                                 <div className="flex gap-1">
                                                     <div className="mt-4 grow">
                                                         <Select
-                                                            additionalClasses="!w-full"
+                                                            additionalClasses="!w-full z-50"
                                                             name={`selectedClasses.${index}.classroomId`}
                                                             options={
                                                                 gradeOptions
@@ -259,7 +259,7 @@ function AssignCourseModal({
                                                         />
                                                     </div>
                                                     <button
-                                                        className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
+                                                        className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 z-50"
                                                         type="button"
                                                         onClick={() =>
                                                             remove(index)
@@ -328,7 +328,7 @@ function AssignCourseModal({
                                     {filteredGradeOptions.length > 0 && (
                                         <div className="flex flex-col items-end">
                                             <div
-                                                className="flex border p-2 w-28 justify-center text-dark-gray rounded-lg items-center mt-4 cursor-pointer hover:bg-primary-color hover:text-white"
+                                                className="flex border p-2 w-28 justify-center text-dark-gray rounded-lg items-center mt-4 cursor-pointer hover:bg-primary-color hover:text-white z-50"
                                                 onClick={() =>
                                                     append({
                                                         classroomId:
