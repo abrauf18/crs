@@ -4,7 +4,7 @@ import { Session } from 'next-auth';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
-import { FileVideoIcon, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import action from '@/app/action';
 import { OptionsInterface } from '@/app/components/common/AppDropDown';
 import { ErrorMessage } from '@hookform/error-message';
@@ -65,7 +65,6 @@ function AssignCourseModal({
         watch,
         control,
         reset,
-        setValue,
     } = methods;
 
     const { fields, append, remove } = useFieldArray({
@@ -84,15 +83,19 @@ function AssignCourseModal({
         try {
             trigger('selectedClasses');
             setButtonLoading(true);
+
+            // Prepare data for API
+            const classCourses = formData.selectedClasses.map(
+                ({ classroomId, startDate }) => ({
+                    classroomId,
+                    startDate,
+                })
+            );
+
             const response = await assignStandardToClassroomsAPI({
                 accessToken: data?.user?.accessToken || '',
                 standardId,
-                classroomIds: formData.selectedClasses.map(
-                    (selected) => selected.classroomId
-                ),
-                startDates: formData.selectedClasses.map(
-                    (selected) => selected.startDate
-                ),
+                classCourses,
             });
 
             if (response.status !== 200) {
