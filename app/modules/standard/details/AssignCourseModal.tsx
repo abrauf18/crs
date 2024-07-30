@@ -258,18 +258,6 @@ function AssignCourseModal({
                                                             }}
                                                         />
                                                     </div>
-                                                    <Input
-                                                        name={`selectedClasses.${index}.startDate`}
-                                                        additionalClasses="mt-4 grow p-2 border rounded"
-                                                        type="date"
-                                                        rules={{
-                                                            required: {
-                                                                value: true,
-                                                                message:
-                                                                    validationError.REQUIRED_FIELD,
-                                                            },
-                                                        }}
-                                                    />
                                                     <button
                                                         className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
                                                         type="button"
@@ -279,6 +267,22 @@ function AssignCourseModal({
                                                     >
                                                         Remove
                                                     </button>
+                                                </div>
+                                                <div className="flex gap-1">
+                                                    <div className="mt-4 grow">
+                                                        <Input
+                                                            name={`selectedClasses.${index}.startDate`}
+                                                            additionalClasses="!w-full"
+                                                            type="date"
+                                                            rules={{
+                                                                required: {
+                                                                    value: true,
+                                                                    message:
+                                                                        validationError.REQUIRED_FIELD,
+                                                                },
+                                                            }}
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <div className="mt-2">
                                                     <span className="text-red-500 text-xs mt-2">
