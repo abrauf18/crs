@@ -6,13 +6,15 @@ import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
 import { X } from 'lucide-react';
 import action from '@/app/action';
-import { OptionsInterface } from '@/app/components/common/AppDropDown';
+import { validationError } from '@/lib/utils';
+import Input from '@/app/components/common/Input';
 import { ErrorMessage } from '@hookform/error-message';
 import { Label } from '@/app/components/ui/label';
 import Select from '@/app/components/common/DropDown';
 import PageLoader from '@/app/components/common/PageLoader';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
+import { OptionsInterface } from '@/app/components/common/AppDropDown';
 import {
     assignStandardToClassroomsAPI,
     getAllClassroomsOfTeacherAPI,
@@ -256,16 +258,17 @@ function AssignCourseModal({
                                                             }}
                                                         />
                                                     </div>
-                                                    <input
-                                                        className="mt-4 grow p-2 border rounded"
+                                                    <Input
+                                                        name={`selectedClasses.${index}.startDate`}
+                                                        additionalClasses="mt-4 grow p-2 border rounded"
                                                         type="date"
-                                                        {...methods.register(
-                                                            `selectedClasses.${index}.startDate`,
-                                                            {
-                                                                required:
-                                                                    'Start date is required',
-                                                            }
-                                                        )}
+                                                        rules={{
+                                                            required: {
+                                                                value: true,
+                                                                message:
+                                                                    validationError.REQUIRED_FIELD,
+                                                            },
+                                                        }}
                                                     />
                                                     <button
                                                         className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
