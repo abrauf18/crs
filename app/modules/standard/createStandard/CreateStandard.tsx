@@ -263,12 +263,12 @@ function CreateStandard({
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mt-3 pb-3 border-b">
                         <h3 className="text-xl font-semibold">
-                            Standrad Details
+                            Standard Details
                         </h3>
                         <div className="sm:flex justify-between items-center gap-5 w-full mt-5">
                             <div className="basis-1/2">
                                 <Label htmlFor="standard.name">
-                                    Standrad Name
+                                    Standard Name
                                 </Label>
                                 <Input
                                     type="text"
