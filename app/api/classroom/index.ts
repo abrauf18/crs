@@ -26,18 +26,21 @@ export const getAllClassroomsOfTeacherAPI = async ({
 export const assignStandardToClassroomsAPI = async ({
     accessToken,
     standardId,
-    classroomIds,
+    classCourses,
 }: {
     accessToken: string;
     standardId: string;
-    classroomIds: string[];
+    classCourses: {
+        classroomId: string;
+        startDate: string;
+    }[];
 }) => {
     const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/assignStandardToClassrooms`,
         {
             accessToken,
             standardId,
-            classroomIds,
+            classCourses,
         }
     );
 
