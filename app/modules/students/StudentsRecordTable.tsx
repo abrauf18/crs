@@ -34,7 +34,8 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
     const path = usePathname();
 
     const handleClick = (id: string) => {
-        push(`${path}/courses/${id}`);
+        // push(`${path}/courses/${id}`);
+        push(`${path}/courses`);
     };
 
     return (
