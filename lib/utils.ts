@@ -27,10 +27,15 @@ export function convertSpacesToDashes(str: string) {
     return str.replace(/ /g, '-');
 }
 
-export function capitalizeWords(input: string) {
+export function capitalizeWords(input: string): string {
+    // Check if the input is a valid string
+    if (typeof input !== 'string' || input.trim() === '') {
+        return '';
+    }
+
     return input
         .split('-') // Split the string into an array of words
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter of each word
         .join(' '); // Join the words back into a single string with spaces
 }
 
