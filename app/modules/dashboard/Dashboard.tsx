@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ShieldAlert } from 'lucide-react';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
@@ -132,36 +133,53 @@ function Dashboard({
                     </>
                 )}
             </div>
-            <div className="flex justify-between items-center my-3">
-                <h3 className="text-xl font-semibold mobile:mb-2">
-                    All Users Count
-                </h3>
-                <select
-                    className=" select-wrapper"
-                    onChange={handleChange}
-                    value={currentYear}
-                >
-                    <option value={new Date().getFullYear()}>
-                        {new Date().getFullYear()}
-                    </option>
-                    <option value={new Date().getFullYear() - 1}>
-                        {new Date().getFullYear() - 1}
-                    </option>
-                    <option value={new Date().getFullYear() - 2}>
-                        {new Date().getFullYear() - 2}
-                    </option>
-                </select>
-            </div>
-            <div className="w-full ">
-                <DashboardGraph
-                    data={
-                        isTeacher
-                            ? TeacherSummaries?.usersJoining
-                            : AdminSummaries?.usersJoining
-                    }
-                    year={currentYear}
-                />
-            </div>
+            {(isTeacher &&
+                (!TeacherSummaries?.usersJoining ||
+                    TeacherSummaries?.usersJoining?.length > 0)) ||
+            (!isTeacher &&
+                (!AdminSummaries?.usersJoining ||
+                    AdminSummaries?.usersJoining?.length > 0)) ? (
+                <>
+                    <div className="flex justify-between items-center my-3">
+                        <h3 className="text-xl font-semibold mobile:mb-2">
+                            All Users Count
+                        </h3>
+                        <select
+                            className="select-wrapper"
+                            onChange={handleChange}
+                            value={currentYear}
+                        >
+                            <option value={new Date().getFullYear()}>
+                                {new Date().getFullYear()}
+                            </option>
+                            <option value={new Date().getFullYear() - 1}>
+                                {new Date().getFullYear() - 1}
+                            </option>
+                            <option value={new Date().getFullYear() - 2}>
+                                {new Date().getFullYear() - 2}
+                            </option>
+                        </select>
+                    </div>
+                    <div className="w-full">
+                        <DashboardGraph
+                            data={
+                                isTeacher
+                                    ? TeacherSummaries?.usersJoining
+                                    : AdminSummaries?.usersJoining
+                            }
+                            year={currentYear}
+                        />
+                    </div>
+                </>
+            ) : (
+                <div className="flex flex-col items-center justify-center w-full h-72 bg-white rounded-lg shadow-lg">
+                    <ShieldAlert size={48} />
+                    <p className="text-lg font-semibold mt-4">
+                        No Users to Show
+                    </p>
+                </div>
+            )}
+
             <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mobile:gap-8 mt-5">
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
