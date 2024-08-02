@@ -210,11 +210,11 @@ function TestReportModal({
                                         name={question.id}
                                         control={control}
                                         defaultValue={
-                                            question.answers[0]?.obtainedMarks <
-                                            0
-                                                ? 0
-                                                : question.answers[0]
+                                            question.answers[0]
+                                                ?.obtainedMarks >= 0
+                                                ? question.answers[0]
                                                       ?.obtainedMarks
+                                                : undefined
                                         }
                                         rules={{
                                             required: 'This field is required',
@@ -319,8 +319,13 @@ function TestReportModal({
                                 control={control}
                                 defaultValue={
                                     test.resource?.AssessmentResourcesDetail
-                                        ?.assessmentAnswers[0]?.obtainedMarks ||
+                                        ?.assessmentAnswers[0]?.obtainedMarks >=
                                     0
+                                        ? test.resource
+                                              ?.AssessmentResourcesDetail
+                                              ?.assessmentAnswers[0]
+                                              ?.obtainedMarks
+                                        : undefined
                                 }
                                 rules={{
                                     required: 'This field is required',
