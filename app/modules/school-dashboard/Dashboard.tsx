@@ -9,7 +9,7 @@ import SchoolClassroomIcon from '@/app/assets/icons/SchoolClassroomIcon';
 import DashboardGraph from '@/app/components/common/DashboardGraph';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
-import TicketsTable from './RecentTicketsTable';
+// import TicketsTable from './RecentTicketsTable';
 import SubmitTicketModal from './SubmitTicketModal';
 import AddClassroomModal from './AddClassroomModal';
 import UsersTable from '../users/UsersTable';
@@ -48,13 +48,13 @@ function SchoolDashboard({ data, name }: { data: any; name: string }) {
         };
     }, [isOpen, isDisplayTicketModal]);
 
-    const tickets = data?.getSchoolTickets.map((ticket: any) => ({
-        ...ticket,
-        id: ticket.id,
-        name: ticket?.User?.name,
-        date: ticket.createdAt,
-        status: ticket.status,
-    }));
+    // const tickets = data?.getSchoolTickets?.map((ticket: any) => ({
+    //     ...ticket,
+    //     id: ticket.id,
+    //     name: ticket?.User?.name,
+    //     date: ticket.createdAt,
+    //     status: ticket.status,
+    // }));
 
     return (
         <section className="flex flex-col w-full scroll-smooth  lg:px-4 ">
