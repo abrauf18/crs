@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibraryBig, ShieldAlert } from 'lucide-react';
+import { BookOpen, LibraryBig, BookOpenText } from 'lucide-react';
 import Link from 'next/link';
 import ClassroomIcon from '@/app/assets/icons/ClassroomIcon';
 import StatsIcon from '@/app/assets/icons/StatsIcon';
@@ -36,6 +36,8 @@ export type DashboardData = {
     videosData: VideoData[];
     averageObtainedWeightage: number;
     averageTotalWeightage: number;
+    assignmentsLeft?: number;
+    assignmentsSolved?: number;
 };
 
 function Dashboard({ APIdata }: { APIdata: DashboardData }) {
@@ -75,6 +77,22 @@ function Dashboard({ APIdata }: { APIdata: DashboardData }) {
                     iconBg="bg-green-100"
                     border="border-2 border-green-600"
                     iconColor="#7AA43E"
+                />
+                <Card
+                    Icon={BookOpenText}
+                    header="Attempted Assesments"
+                    description={APIdata.assignmentsSolved || 0}
+                    iconBg="bg-purple-100"
+                    border="border-2 border-purple-300"
+                    iconColor="#7D0DC3"
+                />
+                <Card
+                    Icon={BookOpen}
+                    header="Assigned Assesments"
+                    description={APIdata.assignmentsLeft || 0}
+                    iconBg="bg-red-100"
+                    border="border-2 border-red-300"
+                    iconColor="#F02070"
                 />
             </div>
 
