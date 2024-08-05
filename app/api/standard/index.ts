@@ -174,3 +174,21 @@ export const getTopicResourcesAPI = async ({
 
     return result;
 };
+
+export const deleteStandard = async (
+    accessToken: string,
+    standardid: string
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/deleteStandard`,
+        {
+            method: 'DELETE',
+            headers: {
+                accesstoken: accessToken,
+                standardid,
+            },
+        }
+    );
+
+    return result;
+};
