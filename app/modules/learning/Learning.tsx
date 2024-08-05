@@ -152,7 +152,7 @@ function Learning({ standards }: { standards: StandardData[] }) {
                 tagline="Here’s Your All Learning Assigned to You"
             />
             <div className="flex justify-between items-center mt-8">
-                <p className="font-light text-xl ">Your Assigned Learnings</p>
+                <p className="font-medium text-xl ">Your Assigned Learnings</p>
             </div>
             {standards?.length > 0 ? (
                 <div className="my-8">

@@ -14,7 +14,7 @@ interface Topic {
     videoId?: string;
 }
 interface DailyUpload {
-    date: string;
+    day: number;
     topics: Topic[];
 }
 interface APIData {
@@ -28,7 +28,7 @@ const DEFAULT_STANDARD = {
     description: '',
     dailyUploads: [
         {
-            date: '',
+            day: 0,
             topics: [
                 {
                     name: '',

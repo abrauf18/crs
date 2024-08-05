@@ -1,22 +1,23 @@
+import React from 'react';
+import { Session, getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
-import { getStudentAssessmentAnswerAPI } from '@/app/api/student';
 import UnhandledError from '@/app/modules/error/UnhandledError';
 import CheckResource from '@/app/modules/students/CheckResource';
-import { Session, getServerSession } from 'next-auth';
-import React from 'react';
+import { getStudentAssessmentAnswerAPI } from '@/app/api/student';
 
 async function CheckResourcePage({
-    searchParams,
+    params,
 }: {
-    searchParams: { studentId: string; assesmentResourceId: string };
+    params: { id: string; courseId: string; assesmentResourceId: string };
 }) {
     const data: Session | null = await getServerSession(options);
     if (data) {
         try {
             const response = await getStudentAssessmentAnswerAPI({
                 accessToken: data?.user?.accessToken,
-                studentId: searchParams.studentId,
-                assesmentResourceId: searchParams.assesmentResourceId,
+                studentId: params.id,
+                assesmentResourceId: params.assesmentResourceId,
+                standardId: params.courseId,
             });
 
             const APIResponse: any = await response.json();
@@ -26,10 +27,9 @@ async function CheckResourcePage({
                     <section>
                         <CheckResource
                             APIdata={APIResponse.data}
-                            studentId={searchParams.studentId}
-                            assesmentResourceId={
-                                searchParams.assesmentResourceId
-                            }
+                            studentId={params.id}
+                            assesmentResourceId={params.assesmentResourceId}
+                            standardId={params.courseId}
                         />
                     </section>
                 );

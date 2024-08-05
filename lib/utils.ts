@@ -27,6 +27,18 @@ export function convertSpacesToDashes(str: string) {
     return str.replace(/ /g, '-');
 }
 
+export function capitalizeWords(input: string): string {
+    // Check if the input is a valid string
+    if (typeof input !== 'string' || input.trim() === '') {
+        return '';
+    }
+
+    return input
+        .split('-') // Split the string into an array of words
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter of each word
+        .join(' '); // Join the words back into a single string with spaces
+}
+
 export const validationError = {
     PASSWORD_VALIDATION_INFO_TEXT:
         'Password must be 8 characters and must contain at least 1 small alphabet, 1 capital alphabet, 1 numeric value and 1 special character',
@@ -49,27 +61,45 @@ export enum ResourceType {
     VIDEO = 'video',
     SLIDESHOW = 'slideshow',
     WORKSHEET = 'worksheet',
-    EXIT_TICKET_TEST = 'exit-ticket-test',
     QUIZ = 'quiz',
     ASSIGNMENT = 'assignment',
+    LAB = 'lab',
+    STATION = 'station',
+    ACTIVITY = 'activity',
+    GUIDED_NOTE = 'guided-note',
+    FORMATIVE_ASSESSMENT = 'formative-assessment',
+    SUMMARIZE_ASSESSMENT = 'summarize-assessment',
+    DATA_TRACKER = 'data-tracker'
 }
 
 export const ResourceToPath = {
     [ResourceType.VIDEO]: 'Total-Videos',
     [ResourceType.SLIDESHOW]: 'Slideshows',
     [ResourceType.WORKSHEET]: 'Worksheets',
-    [ResourceType.EXIT_TICKET_TEST]: 'Exit-Ticket-Test',
     [ResourceType.QUIZ]: 'Quizzes',
     [ResourceType.ASSIGNMENT]: 'Assignments',
+    [ResourceType.LAB]: 'Labs',
+    [ResourceType.STATION]: 'Stations',
+    [ResourceType.ACTIVITY]: 'Activities',
+    [ResourceType.GUIDED_NOTE]: 'Guided-Notes',
+    [ResourceType.FORMATIVE_ASSESSMENT]: 'Formative-Assessments',
+    [ResourceType.SUMMARIZE_ASSESSMENT]: 'Summarize-Assessments',
+    [ResourceType.DATA_TRACKER]: 'Data-Trackers'
 };
 
 export const PathToResource = {
     'Total-Videos': ResourceType.VIDEO,
     Slideshows: ResourceType.SLIDESHOW,
     Worksheets: ResourceType.WORKSHEET,
-    'Exit-Ticket-Test': ResourceType.EXIT_TICKET_TEST,
     Quizzes: ResourceType.QUIZ,
     Assignments: ResourceType.ASSIGNMENT,
+    Labs: ResourceType.LAB,
+    Stations: ResourceType.STATION,
+    Activities: ResourceType.ACTIVITY,
+    'Guided-Notes': ResourceType.GUIDED_NOTE,
+    'Formative-Assessments': ResourceType.FORMATIVE_ASSESSMENT,
+    'Summarize-Assessments': ResourceType.SUMMARIZE_ASSESSMENT,
+    'Data-Trackers': ResourceType.DATA_TRACKER
 };
 
 export const commonFilterOptions = [
@@ -123,8 +153,14 @@ export const resourceDropDownOptions = [
     { label: ResourceType.QUIZ, value: 'Quiz' },
     { label: ResourceType.VIDEO, value: 'Video' },
     { label: ResourceType.WORKSHEET, value: 'Worksheet' },
-    { label: ResourceType.EXIT_TICKET_TEST, value: 'Exit-Ticket-Test' },
     { label: ResourceType.ASSIGNMENT, value: 'Assignment' },
+    { label: ResourceType.LAB, value: 'Lab' },
+    { label: ResourceType.STATION, value: 'Station' },
+    { label: ResourceType.ACTIVITY, value: 'Activity' },
+    { label: ResourceType.GUIDED_NOTE, value: 'Guided Note' },
+    { label: ResourceType.FORMATIVE_ASSESSMENT, value: 'Formative Assessment' },
+    { label: ResourceType.SUMMARIZE_ASSESSMENT, value: 'Summarize Assessment' },
+    { label: ResourceType.DATA_TRACKER, value: 'Data Tracker' }
 ];
 
 export const resourceTypeToIcon = (resourceType: ResourceType) => {
@@ -139,13 +175,16 @@ export const resourceTypeToIcon = (resourceType: ResourceType) => {
         case 'worksheet':
             Icon = WorksheetIcon;
             break;
-        case 'exit-ticket-test':
-            Icon = TicketIcon;
-            break;
         case 'quiz':
             Icon = QuestionMarkIcon;
             break;
         case 'assignment':
+            Icon = AssignmentIcon;
+            break;
+        case 'formative-assessment':
+            Icon = TicketIcon;
+            break;
+        case 'summarize-assessment':
             Icon = AssignmentIcon;
             break;
         default:

@@ -128,7 +128,8 @@ function QuestionDetailModal({ resourceData, onClose }: Props) {
                                                     {!resourceData.answers ? (
                                                         <Link
                                                             href={
-                                                                resourceData?.url
+                                                                answers[index]
+                                                                    .answerURL
                                                             }
                                                             className="text-primary-color cursor-pointer hover:text-orange-600"
                                                         >

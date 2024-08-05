@@ -14,10 +14,12 @@ function CheckResource({
     APIdata,
     studentId,
     assesmentResourceId,
+    standardId,
 }: {
     APIdata: any;
     studentId: string;
     assesmentResourceId: string;
+    standardId: string;
 }) {
     const { data } = useSession();
     const [marks, setMarks] = useState(
@@ -38,6 +40,7 @@ function CheckResource({
                 accessToken: data?.user?.accessToken || '',
                 targetType: 'assessmentResource',
                 idsAndMarks: { [assesmentResourceId]: marks },
+                standardId,
             });
             if (response.status !== 200) {
                 toast.error(

@@ -23,6 +23,7 @@ import {
     convertSpacesToDashes,
     ResourceToPath,
     ResourceType,
+    capitalizeWords,
 } from '@/lib/utils';
 
 interface ResourcesProp {
@@ -157,8 +158,7 @@ function ResourcesTable({
                                     </TableCell>
                                     {/* <TableCell>{resource.name}</TableCell> */}
                                     <TableCell className="text-dark-gray">
-                                        {resource.type.charAt(0).toUpperCase() +
-                                            resource.type.slice(1)}
+                                        {capitalizeWords(resource.type)}
                                     </TableCell>
                                     {!isDashboard && (
                                         <TableCell

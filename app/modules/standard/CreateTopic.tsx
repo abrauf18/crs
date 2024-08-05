@@ -25,7 +25,7 @@ interface Topic {
 interface DailyUpload {
     id: string;
     topicName: string;
-    date: string;
+    accessibleDay: string;
     topics: Topic[];
 }
 interface Standard {
@@ -189,25 +189,32 @@ function CreateTopic({
                     </span>
                 </div>
                 <div className="basis-1/2 relative">
-                    <Label htmlFor={`standard.dailyUploads.${index}.date`}>
-                        Date
+                    <Label
+                        htmlFor={`standard.dailyUploads.${index}.accessibleDay`}
+                    >
+                        Access Day
                     </Label>
                     <Input
-                        type="date"
-                        placeholder="Write Date"
-                        name={`standard.dailyUploads.${index}.date`}
+                        type="number"
+                        placeholder="Enter Day Number"
+                        name={`standard.dailyUploads.${index}.accessibleDay`}
                         additionalClasses="mobile:!w-full mt-1"
                         rules={{
                             required: {
                                 value: true,
                                 message: validationError.REQUIRED_FIELD,
                             },
+                            min: {
+                                value: 0,
+                                message:
+                                    'Day number must be greater than or equal to 0',
+                            },
                         }}
                     />
                     <span className="text-red-500 text-xs">
                         <ErrorMessage
                             errors={errors}
-                            name={`standard.dailyUploads.${index}.date`}
+                            name={`standard.dailyUploads.${index}.accessibleDay`}
                             render={({ message }) => (
                                 <p className="flex items-center">
                                     <X size={20} color="#E6500D" />

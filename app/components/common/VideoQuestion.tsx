@@ -12,6 +12,7 @@ function VideoQuestion({
     handlePlayAfterQuestion,
     markQuestionAsAnswered,
     hideButton,
+    standardId,
 }: {
     hideButton?: boolean;
     question: {
@@ -31,6 +32,7 @@ function VideoQuestion({
     setPlaying: (isPlaying: boolean) => void;
     handlePlayAfterQuestion: () => void;
     markQuestionAsAnswered: () => void;
+    standardId: string;
 }) {
     const continueVideo = () => {
         setCurrentQuestion(null);
@@ -44,6 +46,7 @@ function VideoQuestion({
             question={question}
             continueVideo={continueVideo}
             markQuestionAsAnswered={markQuestionAsAnswered}
+            standardId={standardId}
         />
     ) : Object.keys(question.options).length === 0 ? (
         <AnsweredOpenVideoQuestion

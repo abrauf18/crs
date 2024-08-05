@@ -140,11 +140,13 @@ export const createVideoQuestionAnswerAPI = async ({
     userId,
     questionId,
     answer,
+    standardId,
 }: {
     accessToken: string;
     userId: string;
     questionId: string;
     answer: string;
+    standardId: string;
 }) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/videoQuestionAnswer/createVideoQuestionAnswer`,
@@ -153,6 +155,7 @@ export const createVideoQuestionAnswerAPI = async ({
             userId,
             questionId,
             answer,
+            standardId,
         }
     );
 
@@ -338,6 +341,7 @@ export const assignMarksToStudentAnswerAPI = async ({
     studentId,
     targetType,
     idsAndMarks,
+    standardId,
 }: {
     accessToken: string;
     studentId: string;
@@ -345,6 +349,7 @@ export const assignMarksToStudentAnswerAPI = async ({
     idsAndMarks: {
         [key: string]: number;
     };
+    standardId: string;
 }) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/student/assignMarksToStudentAnswer`,
@@ -353,6 +358,7 @@ export const assignMarksToStudentAnswerAPI = async ({
             studentId,
             targetType,
             idsAndMarks,
+            standardId,
         }
     );
 
@@ -363,10 +369,12 @@ export const getStudentAssessmentAnswerAPI = async ({
     accessToken,
     studentId,
     assesmentResourceId,
+    standardId,
 }: {
     accessToken: string;
     studentId: string;
     assesmentResourceId: string;
+    standardId: string;
 }) => {
     const result = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/student/getStudentAssessmentAnswer`,
@@ -375,6 +383,7 @@ export const getStudentAssessmentAnswerAPI = async ({
                 accesstoken: accessToken,
                 studentid: studentId,
                 assessmentdetailid: assesmentResourceId,
+                standardid: standardId,
             },
             next: {
                 tags: ['getStudentAssessmentAnswer'],

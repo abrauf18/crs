@@ -25,8 +25,14 @@ function UploadItem({
         [ResourceType.WORKSHEET]: '.doc, .docx',
         [ResourceType.SLIDESHOW]: '.ppt, .pptx',
         [ResourceType.QUIZ]: '.doc, .docx',
-        [ResourceType.EXIT_TICKET_TEST]: '.doc, .docx',
         [ResourceType.ASSIGNMENT]: '.doc, .docx',
+        [ResourceType.FORMATIVE_ASSESSMENT]: '.doc, .docx',
+        [ResourceType.SUMMARIZE_ASSESSMENT]: '.doc, .docx',
+        [ResourceType.LAB]: '.pdf',
+        [ResourceType.STATION]: '.pdf',
+        [ResourceType.ACTIVITY]: '.pdf',
+        [ResourceType.GUIDED_NOTE]: '.pdf',
+        [ResourceType.DATA_TRACKER]: '.pdf',
     };
 
     return (

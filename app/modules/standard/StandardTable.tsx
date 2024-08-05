@@ -9,6 +9,7 @@ import {
     ResourceToPath,
     ResourceType,
     convertSpacesToDashes,
+    capitalizeWords,
 } from '@/lib/utils';
 import {
     TableRow,
@@ -16,14 +17,8 @@ import {
     TableCell,
     Table,
 } from '@/app/components/ui/table';
-import XlsIcon from '@/app/assets/icons/XlsIcon';
-import PptIcon from '@/app/assets/icons/PptIcon';
 import EditIcon from '@/app/assets/icons/EditIcon';
-import TicketIcon from '@/app/assets/icons/TicketIcon';
-import RecorderIcon from '@/app/assets/icons/RecorderIcon';
-import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
+import { usePathname, useRouter } from 'next/navigation';
 import EditQuestionsModal from '../video/EditQuestionsModal';
 import EditTopicsModal from '../video/EditTopicsModal';
 import UpdateResourceModal from '../resources/UpdateResourceModal';
@@ -137,53 +132,10 @@ function StandardTable({
                                 </span>
                             </TableCell>
                             <TableCell className="flex gap-2 items-center p-8">
-                                {topic.type?.toLowerCase() === 'slideshow' && (
-                                    <PptIcon
-                                        fill="#1ebeff"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() === 'video' && (
-                                    <RecorderIcon className="shrink-0" />
-                                )}
-                                {topic.type?.toLowerCase() === 'worksheet' && (
-                                    <XlsIcon
-                                        color="#54C3F4"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    'exit-ticket-test' && (
-                                    <TicketIcon
-                                        color="#54C3F4"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() === 'quiz' && (
-                                    <QuestionMarkIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() === 'assignment' && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
                                 {topic.name}
                             </TableCell>
                             <TableCell className="text-dark-gray">
-                                {topic.type.charAt(0).toUpperCase() +
-                                    topic.type.slice(1)}
+                                {capitalizeWords(topic.type)}
                             </TableCell>
                             <TableCell className="flex justify-center items-center">
                                 {!isShownFromStudent && (
@@ -238,7 +190,9 @@ function StandardTable({
                                                 topic.type ===
                                                     ResourceType.ASSIGNMENT ||
                                                 topic.type ===
-                                                    ResourceType.EXIT_TICKET_TEST ||
+                                                    ResourceType.FORMATIVE_ASSESSMENT ||
+                                                topic.type ===
+                                                    ResourceType.SUMMARIZE_ASSESSMENT ||
                                                 topic.type === ResourceType.QUIZ
                                             ) {
                                                 return takeAssessment(
@@ -274,7 +228,9 @@ function StandardTable({
                                           topic.type ===
                                               ResourceType.ASSIGNMENT ||
                                           topic.type ===
-                                              ResourceType.EXIT_TICKET_TEST ||
+                                              ResourceType.FORMATIVE_ASSESSMENT ||
+                                          topic.type ===
+                                              ResourceType.SUMMARIZE_ASSESSMENT ||
                                           topic.type ===
                                               ResourceType.WORKSHEET ? (
                                             <p className="py-0.5 px-2.5">

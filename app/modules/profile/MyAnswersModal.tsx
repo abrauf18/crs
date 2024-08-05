@@ -80,7 +80,7 @@ function MyAnswersModal({
 
                 <div className="flex   w-full">
                     <div className="p-4 border-2 border-green-600 bg-green-100 rounded-lg w-full">
-                        <h1 className="font-medium">Obtained Marks</h1>
+                        <h1 className="font-medium">Obtained Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
                                 {test.performance}
@@ -88,7 +88,7 @@ function MyAnswersModal({
                         </h1>
                     </div>
                     <div className="p-4 border-2 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">Total Marks</h1>
+                        <h1 className="font-medium">Total Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold ">
                             <span className="font-bold text-lg text-black">
                                 {test.weightage}
@@ -100,7 +100,7 @@ function MyAnswersModal({
                 <div className="flex mt-2  w-full">
                     <div className="p-4 border-2 rounded-lg w-full">
                         <h1 className="font-medium">
-                            Marks Awaiting Evaluation
+                            Weightage Awaiting Evaluation
                         </h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
@@ -109,7 +109,7 @@ function MyAnswersModal({
                         </h1>
                     </div>
                     <div className="p-4 border-2 border-red-600 bg-red-100 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">Unattempted Marks</h1>
+                        <h1 className="font-medium">Unattempted Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold ">
                             <span className="font-bold text-lg text-black">
                                 {test.unAnsweredWeightage}

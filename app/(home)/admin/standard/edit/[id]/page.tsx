@@ -14,7 +14,7 @@ interface Topic {
 }
 interface DailyUpload {
     topicName: string;
-    date: string;
+    accessibleDay: number;
     topics: Topic[];
 }
 interface APIData {
@@ -28,7 +28,7 @@ const DEFAULT_STANDARD = {
     description: '',
     dailyUploads: [
         {
-            date: '',
+            accessibleDay: 0,
             topicName: '',
             topics: [
                 {

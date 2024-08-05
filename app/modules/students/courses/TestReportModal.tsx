@@ -78,6 +78,7 @@ function TestReportModal({
     const { data } = useSession();
     const pathname = usePathname();
     const studentId = pathname.split('/')[3];
+    const standardId = pathname.split('/')[5];
     const { control, handleSubmit } = useForm<FormData>();
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
@@ -95,6 +96,7 @@ function TestReportModal({
                     ? 'videoQuestion'
                     : 'assessmentResource',
                 idsAndMarks: formData,
+                standardId,
             });
             if (response.status !== 200) {
                 toast.error(
@@ -118,9 +120,7 @@ function TestReportModal({
         const assesmentResourceId =
             test.resource?.AssessmentResourcesDetail?.id;
         if (assesmentResourceId) {
-            return router.push(
-                `/teacher/students/${studentId}/view-answer?assesmentResourceId=${assesmentResourceId}&studentId=${studentId}`
-            );
+            return router.push(`${pathname}/${assesmentResourceId}`);
         }
         return toast.error('No answer URL available.');
     };
@@ -149,7 +149,7 @@ function TestReportModal({
 
                 <div className="flex w-full">
                     <div className="p-4 border-2 border-green-600 bg-green-100 rounded-lg w-full">
-                        <h1 className="font-medium">Obtained Marks</h1>
+                        <h1 className="font-medium">Obtained Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
                                 {test.performance}
@@ -157,7 +157,7 @@ function TestReportModal({
                         </h1>
                     </div>
                     <div className="p-4 border-2 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">Total Marks</h1>
+                        <h1 className="font-medium">Total Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
                                 {test.weightage}
@@ -169,7 +169,7 @@ function TestReportModal({
                 <div className="flex mt-2 w-full">
                     <div className="p-4 border-2 rounded-lg w-full">
                         <h1 className="font-medium">
-                            Marks Awaiting Evaluation
+                            Weightage Awaiting Evaluation
                         </h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
@@ -178,7 +178,7 @@ function TestReportModal({
                         </h1>
                     </div>
                     <div className="p-4 border-2 border-red-600 bg-red-100 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">Unattempted Marks</h1>
+                        <h1 className="font-medium">Unattempted Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold ">
                             <span className="font-bold text-lg text-black">
                                 {test.unAnsweredWeightage}
@@ -206,41 +206,44 @@ function TestReportModal({
                                             {question?.totalMarks || 0}
                                         </span>
                                     </p>
-                                    <Controller
-                                        name={question.id}
-                                        control={control}
-                                        defaultValue={
-                                            question.answers[0]?.obtainedMarks <
-                                            0
-                                                ? 0
-                                                : question.answers[0]
-                                                      ?.obtainedMarks
-                                        }
-                                        rules={{
-                                            required: 'This field is required',
-                                            validate: (value) =>
-                                                value >= 0 ||
-                                                'Value must be greater than or equal to 0',
-                                        }}
-                                        render={({ field, fieldState }) => (
-                                            <div>
-                                                <input
-                                                    type="number"
-                                                    {...field}
-                                                    className="mt-2 border p-2 rounded-lg w-full"
-                                                    placeholder="Assign Marks"
-                                                />
-                                                {fieldState.error && (
-                                                    <p className="text-red-500 text-xs mt-2">
-                                                        {
-                                                            fieldState.error
-                                                                .message
-                                                        }
-                                                    </p>
-                                                )}
-                                            </div>
-                                        )}
-                                    />
+                                    {question.answers[0] && (
+                                        <Controller
+                                            name={question.id}
+                                            control={control}
+                                            defaultValue={
+                                                question.answers[0]
+                                                    ?.obtainedMarks >= 0
+                                                    ? question.answers[0]
+                                                          ?.obtainedMarks
+                                                    : undefined
+                                            }
+                                            rules={{
+                                                required:
+                                                    'This field is required',
+                                                validate: (value) =>
+                                                    value >= 0 ||
+                                                    'Value must be greater than or equal to 0',
+                                            }}
+                                            render={({ field, fieldState }) => (
+                                                <div>
+                                                    <input
+                                                        type="number"
+                                                        {...field}
+                                                        className="mt-2 border p-2 rounded-lg w-full"
+                                                        placeholder="Assign Marks"
+                                                    />
+                                                    {fieldState.error && (
+                                                        <p className="text-red-500 text-xs mt-2">
+                                                            {
+                                                                fieldState.error
+                                                                    .message
+                                                            }
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )}
+                                        />
+                                    )}
                                 </div>
                             )}
                             {question.options &&
@@ -283,26 +286,36 @@ function TestReportModal({
                     ))}
                 {test.resource?.AssessmentResourcesDetail ? (
                     <div>
-                        <Button
-                            className="mb-2"
-                            type="button"
-                            onClick={handleViewAnswer}
-                        >
-                            View Answer
-                        </Button>
                         {test.resource?.AssessmentResourcesDetail
-                            ?.assessmentAnswers[0]?.answerURL && (
-                            <iframe
-                                title={test.resource?.name}
-                                src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
-                                    test.resource?.AssessmentResourcesDetail
-                                        ?.assessmentAnswers[0]
-                                        ?.answerURL as string
-                                )}`}
-                                width="100%"
-                                height="280"
-                                loading="lazy"
-                            />
+                            ?.assessmentAnswers[0] ? (
+                            <>
+                                <Button
+                                    className="mb-2"
+                                    type="button"
+                                    onClick={handleViewAnswer}
+                                >
+                                    View Answer
+                                </Button>
+                                {test.resource?.AssessmentResourcesDetail
+                                    ?.assessmentAnswers[0]?.answerURL && (
+                                    <iframe
+                                        title={test.resource?.name}
+                                        src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+                                            test.resource
+                                                ?.AssessmentResourcesDetail
+                                                ?.assessmentAnswers[0]
+                                                ?.answerURL as string
+                                        )}`}
+                                        width="100%"
+                                        height="280"
+                                        loading="lazy"
+                                    />
+                                )}
+                            </>
+                        ) : (
+                            <p className="p-4 mt-2 border rounded-lg bg-gray-50">
+                                No answer provided
+                            </p>
                         )}
                         {test.resource?.AssessmentResourcesDetail && (
                             <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
@@ -313,41 +326,49 @@ function TestReportModal({
                                 </span>
                             </p>
                         )}
-                        <div className="mt-2">
-                            <Controller
-                                name={`${test.resource?.AssessmentResourcesDetail.id}`}
-                                control={control}
-                                defaultValue={
-                                    test.resource?.AssessmentResourcesDetail
-                                        ?.assessmentAnswers[0]?.obtainedMarks ||
-                                    0
-                                }
-                                rules={{
-                                    required: 'This field is required',
-                                    validate: (value) =>
-                                        value >= 0 ||
-                                        'Value must be greater than or equal to 0',
-                                }}
-                                render={({ field, fieldState }) => (
-                                    <div>
-                                        <Label className="text-md mb-1">
-                                            Marks Obtained
-                                        </Label>
-                                        <input
-                                            type="number"
-                                            {...field}
-                                            className="border p-2 rounded-lg w-full"
-                                            placeholder="Assign Marks"
-                                        />
-                                        {fieldState.error && (
-                                            <p className="text-red-500 text-xs mt-2">
-                                                {fieldState.error.message}
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
-                            />
-                        </div>
+                        {test.resource?.AssessmentResourcesDetail
+                            ?.assessmentAnswers[0] && (
+                            <div className="mt-2">
+                                <Controller
+                                    name={`${test.resource?.AssessmentResourcesDetail.id}`}
+                                    control={control}
+                                    defaultValue={
+                                        test.resource?.AssessmentResourcesDetail
+                                            ?.assessmentAnswers[0]
+                                            ?.obtainedMarks >= 0
+                                            ? test.resource
+                                                  ?.AssessmentResourcesDetail
+                                                  ?.assessmentAnswers[0]
+                                                  ?.obtainedMarks
+                                            : undefined
+                                    }
+                                    rules={{
+                                        required: 'This field is required',
+                                        validate: (value) =>
+                                            value >= 0 ||
+                                            'Value must be greater than or equal to 0',
+                                    }}
+                                    render={({ field, fieldState }) => (
+                                        <div>
+                                            <Label className="text-md mb-1">
+                                                Marks Obtained
+                                            </Label>
+                                            <input
+                                                type="number"
+                                                {...field}
+                                                className="border p-2 rounded-lg w-full"
+                                                placeholder="Assign Marks"
+                                            />
+                                            {fieldState.error && (
+                                                <p className="text-red-500 text-xs mt-2">
+                                                    {fieldState.error.message}
+                                                </p>
+                                            )}
+                                        </div>
+                                    )}
+                                />
+                            </div>
+                        )}
                     </div>
                 ) : null}
                 <ModalFooter text="Save" loading={buttonLoading} />

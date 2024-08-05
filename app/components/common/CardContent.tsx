@@ -1,6 +1,12 @@
-import { EditIcon, LucideIcon } from 'lucide-react';
+'use client';
+
+import { EditIcon, LucideIcon, Trash } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { deleteStandard } from '@/app/api/standard';
+import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
+import DialogBox from './DialogBox';
 
 export interface IconProps {
     FirstIcon: React.ComponentType<React.SVGProps<SVGSVGElement>> | LucideIcon;
@@ -38,6 +44,42 @@ function CardContent({
     handleOpenEditModal,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
+    const { data } = useSession();
+    const [isShowDialogBox, setIsShowDialogBox] = useState(false);
+
+    useEffect(() => {
+        if (!data) {
+            return;
+        }
+        if (isShowDialogBox) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        // eslint-disable-next-line consistent-return
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowDialogBox, data]);
+
+    const handleConfirmDelete = async () => {
+        const result = await deleteStandard(
+            data?.user?.accessToken || '',
+            id || ''
+        );
+        if (result?.status === 200) {
+            toast.success('Standard Deleted Successfully');
+            await new Promise((resolve) => {
+                setTimeout(resolve, 1000);
+            });
+            location.reload();
+        }
+    };
+
+    const handleCancelDelete = () => {
+        setIsShowDialogBox(false);
+    };
     return (
         <div className="mt-2">
             <h5 className="mb-2 text-lg font-semibold tracking-tight text-gray-900">
@@ -85,27 +127,45 @@ function CardContent({
                         {isShownFromStudent ? 'Start Course' : 'Details'}
                     </Link>
                     {!isHideEditIcon && (
-                        <div className="bg-orange-100 p-2 rounded-md cursor-pointer">
-                            <Link
-                                href={
-                                    isFromStandard && route && id
-                                        ? `${route}/edit/${id}`
-                                        : '#'
-                                }
-                            >
-                                <EditIcon
-                                    height={20}
-                                    width={20}
-                                    color="#F59A3B"
-                                    onClick={() =>
-                                        handleOpenEditModal &&
-                                        handleOpenEditModal(id ?? '')
+                        <>
+                            <div className="bg-orange-100 p-2 rounded-md cursor-pointer">
+                                <Link
+                                    href={
+                                        isFromStandard && route && id
+                                            ? `${route}/edit/${id}`
+                                            : '#'
                                     }
-                                />
-                            </Link>
-                        </div>
+                                >
+                                    <EditIcon
+                                        height={20}
+                                        width={20}
+                                        color="#F59A3B"
+                                        onClick={() =>
+                                            handleOpenEditModal &&
+                                            handleOpenEditModal(id ?? '')
+                                        }
+                                    />
+                                </Link>
+                            </div>
+                            <div
+                                className="bg-red-100 p-2 rounded-md cursor-pointer"
+                                onClick={() => setIsShowDialogBox(true)}
+                            >
+                                <Trash color="#D34645" width={18} height={18} />
+                            </div>
+                        </>
                     )}
                 </div>
+            )}
+            {isShowDialogBox && (
+                <DialogBox
+                    isOpen={isShowDialogBox}
+                    message={`Are you sure you want to delete ${
+                        heading || 'this standard'
+                    }?`}
+                    onYes={handleConfirmDelete}
+                    onNo={handleCancelDelete}
+                />
             )}
         </div>
     );

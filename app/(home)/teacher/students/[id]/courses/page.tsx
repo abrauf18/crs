@@ -51,7 +51,7 @@ async function Coursespage({ params }: { params: { id: string } }) {
                                     }`}
                             % - Overall Performance
                         </span>
-                        <div className="border rounded-lg p-4 px-6 flex flex-col items-end">
+                        <div className="border rounded-lg p-4 px-6 flex flex-col items-end mt-3">
                             <MyAnswersTable
                                 myRecord={
                                     APIResponse?.data

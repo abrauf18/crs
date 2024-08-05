@@ -10,7 +10,7 @@ export const createStandardAPI = async ({
     description: string;
     dailyUploads: {
         resourceId: string;
-        accessDate: string;
+        accessibleDay: number;
         weightage: number;
     }[];
     accessToken: string;
@@ -63,7 +63,7 @@ export const updateStandardAPI = async ({
     description: string;
     dailyUploads: {
         resourceId: string;
-        accessDate: string;
+        accessibleDay: number;
         weightage: number;
     }[];
     accessToken: string;
@@ -157,16 +157,35 @@ export const getTopicResourcesAPI = async ({
     standardId: string;
     topicName: string;
 }) => {
+    const encodedTopicName = encodeURIComponent(topicName);
+
     const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/getTopicResources`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/getTopicResources?topicName=${encodedTopicName}`,
         {
             headers: {
                 accesstoken: accessToken,
                 standardid: standardId,
-                topicname: topicName,
             },
             next: {
                 tags: ['getTopicResources'],
+            },
+        }
+    );
+
+    return result;
+};
+
+export const deleteStandard = async (
+    accessToken: string,
+    standardid: string
+) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/standard/deleteStandard`,
+        {
+            method: 'DELETE',
+            headers: {
+                accesstoken: accessToken,
+                standardid,
             },
         }
     );

@@ -21,6 +21,7 @@ export default function AttempVideoQuestion({
     question,
     continueVideo,
     markQuestionAsAnswered,
+    standardId,
 }: {
     hideButton?: boolean;
     question: {
@@ -38,6 +39,7 @@ export default function AttempVideoQuestion({
     };
     continueVideo: () => void;
     markQuestionAsAnswered: () => void;
+    standardId: string;
 }) {
     const { data } = useSession();
     const methods = useForm({
@@ -71,6 +73,7 @@ export default function AttempVideoQuestion({
                     questionType === 'mcq'
                         ? formData.selectedOption
                         : formData.statement,
+                standardId: standardId || '',
             });
             if (APIresponse.status !== 200) {
                 throw new Error(

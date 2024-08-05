@@ -29,7 +29,7 @@ function StudentProfile({ student }: { student: Student }) {
     const handleDeleteStudent = async () => {
         try {
             setIsloading(true);
-            const result = await removeStudentFromClassroomAPI({
+            await removeStudentFromClassroomAPI({
                 accessToken: data?.user?.accessToken || '',
                 classroomStudentId: student?.classroomStudentId,
             });
@@ -37,7 +37,6 @@ function StudentProfile({ student }: { student: Student }) {
             await action('SummarizedStudents');
             return push('/teacher/students');
         } catch (error: any) {
-            console.log(error);
             return toast.error(
                 error?.response.data.message || 'Something went wrong'
             );

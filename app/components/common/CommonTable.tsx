@@ -1,6 +1,16 @@
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
-import { Eye, Trash } from 'lucide-react';
+import {
+    Activity,
+    BookAIcon,
+    Database,
+    Eye,
+    FileTerminal,
+    FileType2,
+    LayoutList,
+    ScrollText,
+    Trash,
+} from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -124,23 +134,47 @@ function CommonTable({
                                 </TableCell>
                                 <TableCell className="flex space-x-2 items-center">
                                     {resourcesType?.toLowerCase() ===
-                                        'slideshow' && (
+                                        'slideshows' && (
                                         <PptIcon fill="#1ebeff" />
                                     )}
                                     {resourcesType?.toLowerCase() ===
-                                        "total-video's" && <RecorderIcon />}
+                                        'total-videos' && <RecorderIcon />}
                                     {resourcesType?.toLowerCase() ===
                                         'worksheets' && (
                                         <XlsIcon color="#54C3F4" />
                                     )}
                                     {resourcesType?.toLowerCase() ===
-                                        'exit-ticket-test' && (
-                                        <TicketIcon color="#54C3F4" />
-                                    )}
-                                    {resourcesType?.toLowerCase() ===
                                         'quizzes' && <QuestionMarkIcon />}
                                     {resourcesType?.toLowerCase() ===
                                         'assignments' && <AssignmentIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'labs' && (
+                                        <ScrollText color="#F02070" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'stations' && (
+                                        <LayoutList color="#F59A3B" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'activities' && (
+                                        <Activity color="#7D0DC3" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'guided-notes' && (
+                                        <BookAIcon color="#F0A020" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'formative-assessments' && (
+                                        <FileType2 color="#7D0DC3" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'summarize-assessments' && (
+                                        <FileTerminal />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'data-trackers' && (
+                                        <Database color="#F02070" />
+                                    )}
 
                                     <span>{resource.name}</span>
                                 </TableCell>

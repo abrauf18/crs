@@ -153,8 +153,11 @@ function UpdateResourceModal({
                         </div>
                         {(resource.type === ResourceType.QUIZ ||
                             resource.type === ResourceType.WORKSHEET ||
-                            resource.type === ResourceType.EXIT_TICKET_TEST ||
-                            resource.type === ResourceType.ASSIGNMENT) && (
+                            resource.type === ResourceType.ASSIGNMENT ||
+                            resource.type ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resource.type ===
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -181,8 +184,11 @@ function UpdateResourceModal({
                         )}
                         {(resource.type === ResourceType.QUIZ ||
                             resource.type === ResourceType.WORKSHEET ||
-                            resource.type === ResourceType.EXIT_TICKET_TEST ||
-                            resource.type === ResourceType.ASSIGNMENT) && (
+                            resource.type === ResourceType.ASSIGNMENT ||
+                            resource.type ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resource.type ===
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="deadline"

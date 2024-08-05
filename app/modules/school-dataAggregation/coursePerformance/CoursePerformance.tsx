@@ -48,7 +48,6 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
     const filteredVideoUploads = dailyUploads?.filter(
         (upload) => upload.resource.video !== null
     );
-
     const filteredAssessmentUploads = dailyUploads?.filter(
         (upload) => upload.resource.AssessmentResourcesDetail !== null
     );
@@ -61,8 +60,11 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
     const worksheetUploads = filteredAssessmentUploads?.filter(
         (upload) => upload.resource.type === ResourceType.WORKSHEET
     );
-    const testUploads = filteredAssessmentUploads?.filter(
-        (upload) => upload.resource.type === ResourceType.EXIT_TICKET_TEST
+    const summarizeAssessmentUploads = filteredAssessmentUploads?.filter(
+        (upload) => upload.resource.type === ResourceType.SUMMARIZE_ASSESSMENT
+    );
+    const formativeAssessmentUploads = filteredAssessmentUploads?.filter(
+        (upload) => upload.resource.type === ResourceType.FORMATIVE_ASSESSMENT
     );
 
     let filteredUploads: DailyUpload[] = [];
@@ -76,11 +78,14 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
         case ResourceType.WORKSHEET:
             filteredUploads = worksheetUploads;
             break;
-        case 'Test':
-            filteredUploads = testUploads;
-            break;
         case ResourceType.QUIZ:
             filteredUploads = quizUploads;
+            break;
+        case 'Summarize Assessments':
+            filteredUploads = summarizeAssessmentUploads;
+            break;
+        case 'Formative Assessments':
+            filteredUploads = formativeAssessmentUploads;
             break;
         default:
             filteredUploads = [];
@@ -101,8 +106,9 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
                     ResourceType.VIDEO,
                     ResourceType.ASSIGNMENT,
                     ResourceType.WORKSHEET,
-                    'Test',
                     ResourceType.QUIZ,
+                    'Summarize Assessments',
+                    'Formative Assessments',
                 ]}
             />
             <p className="text-dark-gray font-medium text-lg mt-5">

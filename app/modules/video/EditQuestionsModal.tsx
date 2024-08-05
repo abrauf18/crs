@@ -115,6 +115,8 @@ function EditQuestionsModal({
 
         const transformedQuestions = formdata.video.questions.map(
             (question) => ({
+                // Conditionally add id if the video is not new
+                ...(newVideo ? {} : { id: question.id || '' }),
                 statement: question.statement,
                 options: question.type === 'mcq' ? question.options : {},
                 correctOption: question.correctOption,

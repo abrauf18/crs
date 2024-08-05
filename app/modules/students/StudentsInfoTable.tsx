@@ -110,7 +110,7 @@ function StudentsInfoTable({
 
     const handleConfirmDelete = () => {
         setIsShowDialogBox(false);
-        handleDeleteStudents(selectedStudent?.id);
+        handleDeleteStudents(selectedStudent?.classroomStudentId || '');
     };
 
     const handleCancelDelete = () => {
@@ -221,32 +221,28 @@ function StudentsInfoTable({
                                             <EditIcon width={22} height={22} />
                                         </div>
                                     )}
-                                    {!isTeacherDashboardTable ||
-                                        (isTeacher && (
-                                            <div
-                                                className={`bg-red-100 rounded-md p-1 cursor-pointer ${
-                                                    disableButton
-                                                        ? 'opacity-50'
-                                                        : ''
-                                                }`}
-                                                onClick={() => {
-                                                    if (!disableButton) {
-                                                        setSelectedStudent(
-                                                            student
-                                                        );
-                                                        setIsShowDialogBox(
-                                                            true
-                                                        );
-                                                    }
-                                                }}
-                                            >
-                                                <Trash
-                                                    color="#D34645"
-                                                    width={18}
-                                                    height={18}
-                                                />
-                                            </div>
-                                        ))}
+                                    {(!isTeacherDashboardTable ||
+                                        isTeacher) && (
+                                        <div
+                                            className={`bg-red-100 rounded-md p-1 cursor-pointer ${
+                                                disableButton
+                                                    ? 'opacity-50'
+                                                    : ''
+                                            }`}
+                                            onClick={() => {
+                                                if (!disableButton) {
+                                                    setSelectedStudent(student);
+                                                    setIsShowDialogBox(true);
+                                                }
+                                            }}
+                                        >
+                                            <Trash
+                                                color="#D34645"
+                                                width={18}
+                                                height={18}
+                                            />
+                                        </div>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}
