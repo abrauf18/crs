@@ -274,3 +274,27 @@ export const updateTeacherClassroomsAPI = async ({
 
     return response;
 };
+
+export const changeClassStatus = async ({
+    accessToken,
+    status,
+    teacherId,
+    classroomId,
+}: {
+    accessToken: string;
+    status: string;
+    teacherId: string;
+    classroomId: string;
+}) => {
+    const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/changeClassStatus`,
+        {
+            accessToken,
+            status,
+            teacherId,
+            classroomId,
+        }
+    );
+
+    return response;
+};
