@@ -211,10 +211,10 @@ function TestReportModal({
                                             name={question.id}
                                             control={control}
                                             defaultValue={
-                                                (question.answers[0]
-                                                    ?.obtainedMarks) >= 0
-                                                    ? (question.answers[0]
-                                                          ?.obtainedMarks)
+                                                question.answers[0]
+                                                    ?.obtainedMarks >= 0
+                                                    ? question.answers[0]
+                                                          ?.obtainedMarks
                                                     : undefined
                                             }
                                             rules={{
@@ -333,13 +333,13 @@ function TestReportModal({
                                     name={`${test.resource?.AssessmentResourcesDetail.id}`}
                                     control={control}
                                     defaultValue={
-                                        (test.resource?.AssessmentResourcesDetail
+                                        test.resource?.AssessmentResourcesDetail
                                             ?.assessmentAnswers[0]
-                                            ?.obtainedMarks) >= 0
-                                            ? (test.resource
+                                            ?.obtainedMarks >= 0
+                                            ? test.resource
                                                   ?.AssessmentResourcesDetail
                                                   ?.assessmentAnswers[0]
-                                                  ?.obtainedMarks)
+                                                  ?.obtainedMarks
                                             : undefined
                                     }
                                     rules={{

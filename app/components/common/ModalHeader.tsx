@@ -30,7 +30,7 @@ export function ModalHeader({
                 </div>
                 <p className="text-sm text-dark-gray">{headerText?.tagline}</p>
             </div>
-            <div className="rounded-full bg-white border p-1 cursor-pointer">
+            <div className="rounded-full bg-white border p-1 cursor-pointer z-50">
                 <X size={15} onClick={onClose} />
             </div>
         </div>

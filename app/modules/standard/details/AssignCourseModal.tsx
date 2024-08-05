@@ -83,6 +83,7 @@ function AssignCourseModal({
 
     const onSubmit = async (formData: FormValues) => {
         try {
+            console.log('first');
             trigger('selectedClasses');
             setButtonLoading(true);
 
@@ -328,7 +329,7 @@ function AssignCourseModal({
                                     {filteredGradeOptions.length > 0 && (
                                         <div className="flex flex-col items-end">
                                             <div
-                                                className="flex border p-2 w-28 justify-center text-dark-gray rounded-lg items-center mt-4 cursor-pointer hover:bg-primary-color hover:text-white z-50"
+                                                className="flex border p-2 w-28 justify-center text-dark-gray rounded-lg items-center mt-4  hover:bg-primary-color hover:text-white z-50"
                                                 onClick={() =>
                                                     append({
                                                         classroomId:
