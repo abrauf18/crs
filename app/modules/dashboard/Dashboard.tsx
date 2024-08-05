@@ -175,7 +175,7 @@ function Dashboard({
                 <div className="flex flex-col items-center justify-center w-full h-72 bg-white rounded-lg shadow-lg">
                     <ShieldAlert size={48} />
                     <p className="text-lg font-semibold mt-4">
-                        No Users to Show
+                        No Students to Show
                     </p>
                 </div>
             )}
