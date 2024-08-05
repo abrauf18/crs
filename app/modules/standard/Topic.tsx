@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { CalendarDays, File, PlayIcon } from 'lucide-react';
 import Filters from '@/app/components/common/Filters';
