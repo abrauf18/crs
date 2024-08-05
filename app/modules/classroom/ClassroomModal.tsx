@@ -29,6 +29,7 @@ export interface StudentInfoInterface {
     grade: string;
     performance: number;
     gradeId: string;
+    classroomStudentId?: string;
 }
 interface FormValues {
     name: string;

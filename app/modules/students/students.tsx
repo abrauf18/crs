@@ -28,9 +28,10 @@ function Students({ data }: { data: any }) {
                         index: index + 1,
                         name: student?.userName,
                         email: student?.userEmail,
-                        grade: student?.className,
-                        performance: student?.totalObtainedScore || 0,
                         image: student?.image,
+                        classroomStudentId: student?.userClassroomStudentId,
+                        performance: student?.totalObtainedScore || 0,
+                        grade: student?.className,
                         gradeId: student?.classId,
                     })
                 );
