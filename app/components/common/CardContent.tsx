@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { deleteStandard } from '@/app/api/standard';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
+import action from '@/app/action';
 import DialogBox from './DialogBox';
 
 export interface IconProps {
@@ -70,10 +71,7 @@ function CardContent({
         );
         if (result?.status === 200) {
             toast.success('Standard Deleted Successfully');
-            await new Promise((resolve) => {
-                setTimeout(resolve, 1000);
-            });
-            location.reload();
+            action('getAllSummarizedStandards');
         }
     };
 
