@@ -16,6 +16,7 @@ import {
     Bookmark,
     GraduationCap,
     CreditCard,
+    BookText,
 } from 'lucide-react';
 import crsLogo from '@/app/assets/images/crsclogo.svg';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
@@ -160,6 +161,11 @@ export default function SideBar() {
                 to: '/school/teachers',
                 ItemIcon: TeacherIcon,
                 itemText: 'Teachers',
+            },
+            {
+                to: '/school/classrooms',
+                ItemIcon: BookText,
+                itemText: 'Classrooms',
             },
             {
                 to: '/school/data-aggregation',

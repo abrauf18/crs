@@ -275,26 +275,58 @@ export const updateTeacherClassroomsAPI = async ({
     return response;
 };
 
-export const changeClassStatus = async ({
+export const changeClassStatusAPI = async ({
     accessToken,
     status,
-    teacherId,
     classroomId,
+    schoolId,
 }: {
     accessToken: string;
     status: string;
-    teacherId: string;
     classroomId: string;
+    schoolId: string;
 }) => {
     const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/changeClassStatus`,
         {
             accessToken,
             status,
-            teacherId,
             classroomId,
+            schoolId,
         }
     );
 
     return response;
+};
+
+export const getSchoolClassroomsAPI = async ({
+    accessToken,
+    schoolId,
+    page,
+    limit,
+    search,
+}: {
+    accessToken: string;
+    schoolId: string;
+    page: number;
+    limit: number;
+    search: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/getSchoolClassrooms`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                schoolid: schoolId,
+                page: page.toString(),
+                limit: limit.toString(),
+                search,
+            },
+            next: {
+                tags: ['getSchoolClassrooms'],
+            },
+        }
+    );
+
+    return result;
 };
