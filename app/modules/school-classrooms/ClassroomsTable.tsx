@@ -2,7 +2,7 @@
 
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
-import { Eye, Trash } from 'lucide-react';
+import { Circle } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { useSession } from 'next-auth/react';
 import action from '@/app/action';
@@ -14,7 +14,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import EditIcon from '@/app/assets/icons/EditIcon';
 import { changeClassStatusAPI } from '@/app/api/classroom';
 
 interface APIClassroomsInterface {
@@ -121,34 +120,41 @@ function ClassroomsTable({
                                 <TableCell className="text-dark-gray ">
                                     {classroom.status}
                                 </TableCell>
-                                <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 ">
-                                    <div className="mr-2 rounded-md cursor-pointer">
-                                        <EditIcon width={28} height={28} />
-                                    </div>
-                                    <div
-                                        className={`bg-red-100 rounded-md p-1 cursor-pointer ${
+                                <TableCell>
+                                    <button
+                                        className={`${
                                             buttonLoader
-                                                ? 'opacity-50 cursor-not-allowed'
-                                                : ''
-                                        }`}
-                                        onClick={() => {
-                                            if (!buttonLoader) {
-                                                handleUpdateClassStatus(
-                                                    classroom
-                                                );
-                                            }
-                                        }}
+                                                ? 'bg-orange-100 '
+                                                : classroom?.status === 'active'
+                                                  ? 'bg-green-100 '
+                                                  : 'bg-red-100 '
+                                        } p-2 w-8 rounded-xl`}
+                                        onClick={() =>
+                                            handleUpdateClassStatus(classroom)
+                                        }
+                                        type="button"
+                                        disabled={buttonLoader}
                                     >
-                                        <Trash
-                                            color={
-                                                buttonLoader
-                                                    ? '#F5A9A9'
-                                                    : '#D34645'
-                                            }
-                                            width={18}
-                                            height={18}
-                                        />
-                                    </div>
+                                        {buttonLoader ? (
+                                            <Circle
+                                                size={15}
+                                                color="orange"
+                                                fill="orange"
+                                            />
+                                        ) : classroom?.status === 'active' ? (
+                                            <Circle
+                                                size={15}
+                                                color="green"
+                                                fill="green"
+                                            />
+                                        ) : (
+                                            <Circle
+                                                size={15}
+                                                color="red"
+                                                fill="red"
+                                            />
+                                        )}
+                                    </button>
                                 </TableCell>
                             </TableRow>
                         ))
