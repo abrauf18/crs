@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Searchbar from '@/app/components/common/Searchbar';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import ClassroomsTable from './ClassroomsTable';
-// import AddTeacherModal from './AddTeacherModal';
+import AddClassroomModal from '../school-dashboard/AddClassroomModal';
 
 interface APIClassroomsInterface {
     id: string;
@@ -35,8 +35,8 @@ function Classrooms({
     const pathname = usePathname();
     const urlSearchParams = useSearchParams();
     const page = urlSearchParams.get('page') || 1;
-    // const [isAddClassroomModalVisible, setAddClassroomModalVisible] =
-    //     useState(false);
+    const [isAddClassroomModalVisible, setAddClassroomModalVisible] =
+        useState(false);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -51,13 +51,25 @@ function Classrooms({
         router.push(`${pathname}?${createQueryString('page', `${page}`)}`);
     };
 
-    // const handleAddTeacherClick = () => {
-    //     setAddClassroomModalVisible(true);
-    // };
+    const handleAddClassroomClick = () => {
+        setAddClassroomModalVisible(true);
+    };
 
-    // const handleCloseModal = () => {
-    //     setAddClassroomModalVisible(false);
-    // };
+    const handleCloseModal = () => {
+        setAddClassroomModalVisible(false);
+    };
+
+    useEffect(() => {
+        if (isAddClassroomModalVisible) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isAddClassroomModalVisible]);
     return (
         <section className="px-2 lg:px-4">
             <Searchbar
@@ -69,7 +81,7 @@ function Classrooms({
                     <h1 className="text-xl font-semibold">Classrooms</h1>
                     <div
                         className="cursor-pointer border rounded-lg px-3 py-2 text-white bg-primary-color font-medium mobile:mt-2"
-                        // onClick={handleAddTeacherClick}
+                        onClick={handleAddClassroomClick}
                     >
                         Add Classroom
                     </div>
@@ -92,11 +104,11 @@ function Classrooms({
                 </div>
             )}
 
-            {/* {isAddTeacherModalVisible && (
+            {isAddClassroomModalVisible && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
-                    <AddTeacherModal onClose={handleCloseModal} />
+                    <AddClassroomModal onClose={handleCloseModal} />
                 </div>
-            )} */}
+            )}
         </section>
     );
 }

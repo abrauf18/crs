@@ -64,6 +64,7 @@ function AddClassroomModal({ onClose }: any) {
                 return toast.error(response.message);
             }
             action('getSchoolDashboard');
+            action('getSchoolClassrooms');
             return toast.success('Classroom created successfully');
         } catch (error: any) {
             return toast.error('Something went wrong');
