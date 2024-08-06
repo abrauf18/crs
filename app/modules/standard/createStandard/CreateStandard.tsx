@@ -165,8 +165,8 @@ function CreateStandard({
             },
             0
         );
-        if (totalWeightage > 100) {
-            toast.error('The sum of all weightages should not exceed 100');
+        if (totalWeightage !== 100) {
+            toast.error('The sum of all weightages should be 100');
             return;
         }
 
