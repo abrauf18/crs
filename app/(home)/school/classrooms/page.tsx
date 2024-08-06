@@ -19,13 +19,8 @@ interface APIClassroomsInterface {
 }
 
 interface APIPaginationInterface {
-    totalRecords: number;
     currentPage: number;
-    limit: number;
-    totalCount: number;
     totalPages: number;
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
 }
 
 interface ListTeacherResponse {
