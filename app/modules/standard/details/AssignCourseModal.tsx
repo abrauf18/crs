@@ -83,7 +83,6 @@ function AssignCourseModal({
 
     const onSubmit = async (formData: FormValues) => {
         try {
-            console.log('first');
             trigger('selectedClasses');
             setButtonLoading(true);
 
@@ -170,7 +169,10 @@ function AssignCourseModal({
                     ],
                 });
             } catch (error: any) {
-                console.log(error);
+                toast.error(
+                    error?.response?.data?.message ||
+                        'An error occurred while fetching standard classrooms'
+                );
             } finally {
                 setModalLoading(false);
             }
