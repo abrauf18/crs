@@ -168,53 +168,6 @@ function CreateTopic({
                 </div>
             </div>
             <div className="sm:flex justify-between items-center gap-5 w-full">
-                <div className="basis-1/2">
-                    <Label htmlFor={`standard.dailyUploads.${index}.topicName`}>
-                        Name
-                    </Label>
-                    {topicNameFields.map((field, topicNameIndex) => (
-                        <div key={field.id}>
-                            <Input
-                                type="text"
-                                placeholder="Write Topic Name"
-                                name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
-                                additionalClasses="mobile:!w-full mt-1"
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: validationError.REQUIRED_FIELD,
-                                    },
-                                }}
-                            />
-                            <span className="text-red-500 text-xs">
-                                <ErrorMessage
-                                    errors={errors}
-                                    name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
-                                    render={({ message }) => (
-                                        <p className="flex items-center">
-                                            <X size={20} color="#E6500D" />
-                                            {message}
-                                        </p>
-                                    )}
-                                />
-                            </span>
-                            <button
-                                type="button"
-                                className="cursor-pointer p-3 border text-center text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600"
-                                onClick={() => removeTopicName(topicNameIndex)}
-                            >
-                                Remove Topic
-                            </button>
-                        </div>
-                    ))}
-                    <button
-                        type="button"
-                        className="cursor-pointer border p-3 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
-                        onClick={() => appendTopicName({ value: '' })}
-                    >
-                        Add Topic
-                    </button>
-                </div>
                 <div className="basis-1/2 relative">
                     <Label
                         htmlFor={`standard.dailyUploads.${index}.accessibleDay`}
@@ -406,7 +359,94 @@ function CreateTopic({
                     </div>
                 </div>
             ))}
+            {topicNameFields.map((field, topicNameIndex) => (
+                <div key={field.id}>
+                    <div className="sm:flex justify-between items-center gap-5 w-full">
+                        <div className="basis-full relative">
+                            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:mb-1 mb-2 mobile:flex-col mobile:items-start mobile:w-full">
+                                <div className="!w-full">
+                                    <Label
+                                        htmlFor={`standard.dailyUploads.${index}.topicName`}
+                                    >
+                                        Name
+                                    </Label>
+                                    <div className="flex flex-row">
+                                        <Input
+                                            type="text"
+                                            placeholder="Write Topic Name"
+                                            name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
+                                            additionalClasses="!w-full mt-1"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                            }}
+                                        />
+                                        <span className="text-red-500 text-xs">
+                                            <ErrorMessage
+                                                errors={errors}
+                                                name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
+                                                render={({ message }) => (
+                                                    <p className="flex items-center">
+                                                        <X
+                                                            size={20}
+                                                            color="#E6500D"
+                                                        />
+                                                        {message}
+                                                    </p>
+                                                )}
+                                            />
+                                        </span>
+                                        <button
+                                            type="button"
+                                            className="whitespace-nowrap cursor-pointer p-1 border text-center text-sm rounded-lg w-28 bg-red-500 text-gray-50 hover:bg-red-600 ml-2 h-12 mt-2"
+                                            onClick={() =>
+                                                removeTopicName(topicNameIndex)
+                                            }
+                                        >
+                                            Remove Topic
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
+                        {isDisplayModal && (
+                            <VideoModal
+                                onClose={handleCloseModal}
+                                resourceType={watch(
+                                    `standard.dailyUploads.${index}.topics.${selectedIndex}.type`
+                                )}
+                                weightage={watch(
+                                    `standard.dailyUploads.${index}.topics.${selectedIndex}.weightage`
+                                )}
+                                setAllSelectedResources={
+                                    setAllSelectedResources
+                                }
+                                allSelectedResources={allSelectedResources}
+                                selectedIndex={selectedIndex}
+                                updateSelectedResource={(resourceId: string) =>
+                                    handleResourceSelect(
+                                        selectedIndex,
+                                        resourceId
+                                    )
+                                }
+                            />
+                        )}
+                    </div>
+                </div>
+            ))}
+            <button
+                type="button"
+                className="cursor-pointer border p-3 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
+                onClick={() => appendTopicName({ value: '' })}
+            >
+                Add Topic
+            </button>
             <hr className="my-5" />
         </>
     );
