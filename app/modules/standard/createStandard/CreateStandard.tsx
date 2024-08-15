@@ -9,8 +9,7 @@ import action from '@/app/action';
 import {
     validationError,
     ResourceType,
-    convertSpacesToDashes,
-    convertDashesToSpacesSimple,
+    trimAndConvertSpaces,
 } from '@/lib/utils';
 import Input from '@/app/components/common/Input';
 import { Label } from '@/app/components/ui/label';
@@ -26,7 +25,7 @@ interface Topic {
     weightage: number;
 }
 interface DailyUpload {
-    topicName: string;
+    topicName: { value: string }[];
     accessibleDay: number;
     topics: Topic[];
 }
@@ -43,7 +42,7 @@ const DEFAULT_STANDARD = {
     description: '',
     dailyUploads: [
         {
-            name: '',
+            topicName: [{ value: '' }],
             accessibleDay: 0,
             topics: [
                 {
@@ -82,7 +81,9 @@ function CreateStandard({
             description: description ?? '',
             dailyUploads:
                 dailyUploads?.map((upload) => ({
-                    topicName: convertDashesToSpacesSimple(upload.topicName),
+                    topicName: upload.topicName.map((tn) => ({
+                        value: tn.value,
+                    })),
                     accessibleDay: upload.accessibleDay,
                     topics: upload.topics.map((resource) => ({
                         resourceId: resource.resourceId,
@@ -175,7 +176,9 @@ function CreateStandard({
                 dailyUpload.topics.map((topic, topicIndex) => ({
                     resourceId:
                         allSelectedResources[index][topicIndex]?.resourceId,
-                    topicName: convertSpacesToDashes(dailyUpload.topicName),
+                    topicName: dailyUpload.topicName.flatMap((tn) =>
+                        trimAndConvertSpaces(tn.value)
+                    ),
                     accessibleDay: dailyUpload.accessibleDay,
                     weightage: topic?.weightage || 0,
                 }))
@@ -228,7 +231,7 @@ function CreateStandard({
         }
         if (dailyUploadFields.length === 0 && !dailyUploadAddedRef.current) {
             appendDailyUpload({
-                topicName: '',
+                topicName: [{ value: '' }],
                 accessibleDay: 0,
                 topics: [
                     {
@@ -355,7 +358,7 @@ function CreateStandard({
                                         return;
                                     }
                                     appendDailyUpload({
-                                        topicName: '',
+                                        topicName: [{ value: '' }],
                                         accessibleDay: 0,
                                         topics: [
                                             {

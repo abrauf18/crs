@@ -9,6 +9,7 @@ export const createStandardAPI = async ({
     name: string;
     description: string;
     dailyUploads: {
+        topicName: string[];
         resourceId: string;
         accessibleDay: number;
         weightage: number;
@@ -62,6 +63,7 @@ export const updateStandardAPI = async ({
     name: string;
     description: string;
     dailyUploads: {
+        topicName: string[];
         resourceId: string;
         accessibleDay: number;
         weightage: number;

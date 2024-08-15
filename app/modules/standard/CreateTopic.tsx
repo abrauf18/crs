@@ -24,7 +24,7 @@ interface Topic {
 }
 interface DailyUpload {
     id: string;
-    topicName: string;
+    topicName: { value: string }[];
     accessibleDay: string;
     topics: Topic[];
 }
@@ -74,6 +74,15 @@ function CreateTopic({
     } = useFieldArray<FormValues>({
         control,
         name: `standard.dailyUploads.${index}.topics`,
+    });
+
+    const {
+        fields: topicNameFields,
+        append: appendTopicName,
+        remove: removeTopicName,
+    } = useFieldArray<FormValues>({
+        control,
+        name: `standard.dailyUploads.${index}.topicName`,
     });
 
     const handleOpenModal = (topicIndex: number) => {
@@ -155,7 +164,7 @@ function CreateTopic({
                         ]);
                     }}
                 >
-                    <button type="button">Add More</button>
+                    <button type="button">Add Resource</button>
                 </div>
             </div>
             <div className="sm:flex justify-between items-center gap-5 w-full">
@@ -163,30 +172,48 @@ function CreateTopic({
                     <Label htmlFor={`standard.dailyUploads.${index}.topicName`}>
                         Name
                     </Label>
-                    <Input
-                        type="text"
-                        placeholder="Write Topic Name"
-                        name={`standard.dailyUploads.${index}.topicName`}
-                        additionalClasses="mobile:!w-full mt-1"
-                        rules={{
-                            required: {
-                                value: true,
-                                message: validationError.REQUIRED_FIELD,
-                            },
-                        }}
-                    />
-                    <span className="text-red-500 text-xs">
-                        <ErrorMessage
-                            errors={errors}
-                            name={`standard.dailyUploads.${index}.topicName`}
-                            render={({ message }) => (
-                                <p className="flex items-center">
-                                    <X size={20} color="#E6500D" />
-                                    {message}
-                                </p>
-                            )}
-                        />
-                    </span>
+                    {topicNameFields.map((field, topicNameIndex) => (
+                        <div key={field.id}>
+                            <Input
+                                type="text"
+                                placeholder="Write Topic Name"
+                                name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
+                                additionalClasses="mobile:!w-full mt-1"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: validationError.REQUIRED_FIELD,
+                                    },
+                                }}
+                            />
+                            <span className="text-red-500 text-xs">
+                                <ErrorMessage
+                                    errors={errors}
+                                    name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
+                                    render={({ message }) => (
+                                        <p className="flex items-center">
+                                            <X size={20} color="#E6500D" />
+                                            {message}
+                                        </p>
+                                    )}
+                                />
+                            </span>
+                            <button
+                                type="button"
+                                className="cursor-pointer p-3 border text-center text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600"
+                                onClick={() => removeTopicName(topicNameIndex)}
+                            >
+                                Remove Topic
+                            </button>
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        className="cursor-pointer border p-3 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
+                        onClick={() => appendTopicName({ value: '' })}
+                    >
+                        Add Topic
+                    </button>
                 </div>
                 <div className="basis-1/2 relative">
                     <Label

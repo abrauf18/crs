@@ -39,6 +39,10 @@ export function capitalizeWords(input: string): string {
         .join(' '); // Join the words back into a single string with spaces
 }
 
+export function trimAndConvertSpaces(topicName: string): string {
+    return topicName.trim().replace(/ /g, '-');
+}
+
 export const validationError = {
     PASSWORD_VALIDATION_INFO_TEXT:
         'Password must be 8 characters and must contain at least 1 small alphabet, 1 capital alphabet, 1 numeric value and 1 special character',
