@@ -256,10 +256,11 @@ export const getSchoolResourceResultsAPI = async (
     accessToken: string,
     schoolId: string,
     resourceId: string,
-    teacherId: string
+    teacherId: string,
+    courseId: string
 ) => {
     const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/school/get-resource-result?schoolId=${schoolId}&resourceId=${resourceId}&teacherId=${teacherId}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/school/get-resource-result?schoolId=${schoolId}&resourceId=${resourceId}&teacherId=${teacherId}&courseId=${courseId}`,
         {
             method: 'GET',
             headers: {

@@ -30,7 +30,7 @@ interface PerformanceDetail {
 }
 
 interface TestPerformancePageProps {
-    params: { testId: string };
+    params: { testId: string; courseId: string };
     searchParams: { [key: string]: string | undefined };
 }
 
@@ -46,7 +46,8 @@ async function TestPerformancePage({
                 session.user.accessToken,
                 session?.user?.schoolId || '',
                 params.testId,
-                teacherId
+                teacherId,
+                params.courseId
             );
             if (response.status !== 'error') {
                 return <TestPerformance APIdata={response?.data} />;
