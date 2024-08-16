@@ -13,7 +13,7 @@ interface Topic {
     weightage: number;
 }
 interface DailyUpload {
-    topicName: string;
+    topicName: { value: string }[];
     accessibleDay: number;
     topics: Topic[];
 }
@@ -29,7 +29,7 @@ const DEFAULT_STANDARD = {
     dailyUploads: [
         {
             accessibleDay: 0,
-            topicName: '',
+            topicName: [{ value: '' }],
             topics: [
                 {
                     resourceId: '',
