@@ -203,9 +203,6 @@ function CreateTopic({
                             )}
                         />
                     </span>
-                    <div className="absolute top-11 right-2">
-                        <CalendarDays size={16} color="#85878D" />
-                    </div>
                 </div>
             </div>
             {topicFields.map((topic, topicIndex) => (
@@ -213,7 +210,7 @@ function CreateTopic({
                     <div className="sm:flex justify-between items-center gap-5 w-full">
                         <div className="basis-full relative">
                             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:mb-1 mb-2 mobile:flex-col mobile:items-start mobile:w-full">
-                                <div className="w-full sm:!w-[38.5%]">
+                                <div className="w-full sm:w-1/2 md:!w-[38.5%]">
                                     <Label
                                         htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.type`}
                                     >
@@ -263,7 +260,7 @@ function CreateTopic({
                                         </div>
                                     )}
                                 </div>
-                                <div className="w-full sm:!w-[38.5%]">
+                                <div className="w-full sm:w-1/2 md:!w-[38.5%]">
                                     <Label
                                         htmlFor={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
                                     >
@@ -364,7 +361,7 @@ function CreateTopic({
                     <div className="sm:flex justify-between items-center gap-5 w-full">
                         <div className="basis-full relative">
                             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:mb-1 mb-2 mobile:flex-col mobile:items-start mobile:w-full">
-                                <div className="!w-full">
+                                <div className="w-full md:!w-1/2">
                                     <Label
                                         htmlFor={`standard.dailyUploads.${index}.topicName`}
                                     >
@@ -384,21 +381,6 @@ function CreateTopic({
                                                 },
                                             }}
                                         />
-                                        <span className="text-red-500 text-xs">
-                                            <ErrorMessage
-                                                errors={errors}
-                                                name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
-                                                render={({ message }) => (
-                                                    <p className="flex items-center">
-                                                        <X
-                                                            size={20}
-                                                            color="#E6500D"
-                                                        />
-                                                        {message}
-                                                    </p>
-                                                )}
-                                            />
-                                        </span>
                                         <button
                                             type="button"
                                             className="whitespace-nowrap cursor-pointer p-1 border text-center text-sm rounded-lg w-28 bg-red-500 text-gray-50 hover:bg-red-600 ml-2 h-12 mt-2"
@@ -406,9 +388,24 @@ function CreateTopic({
                                                 removeTopicName(topicNameIndex)
                                             }
                                         >
-                                            Remove Topic
+                                            Remove
                                         </button>
                                     </div>
+                                    <span className="text-red-500 text-xs">
+                                        <ErrorMessage
+                                            errors={errors}
+                                            name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
+                                            render={({ message }) => (
+                                                <p className="flex items-center">
+                                                    <X
+                                                        size={20}
+                                                        color="#E6500D"
+                                                    />
+                                                    {message}
+                                                </p>
+                                            )}
+                                        />
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +439,7 @@ function CreateTopic({
             ))}
             <button
                 type="button"
-                className="cursor-pointer border p-3 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
+                className="cursor-pointer border p-3 mt-1 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
                 onClick={() => appendTopicName({ value: '' })}
             >
                 Add Topic
