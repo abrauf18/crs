@@ -426,7 +426,7 @@ function CreateStandard({
                                 </div>
                                 <button
                                     type="button"
-                                    className="cursor-pointer p-3 border text-center text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600"
+                                    className="cursor-pointer p-3 border text-center text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600 mt-5"
                                     onClick={() =>
                                         removeTopicDescription(index)
                                     }
