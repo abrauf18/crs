@@ -43,9 +43,14 @@ type ResourceFormData = {
     deadline?: number;
 };
 
-const uploadOptions = [
+const videoUploadOptions = [
     { label: 'file', value: 'File' },
     { label: 'youtube', value: 'Youtube' },
+];
+
+const slideUploadOptions = [
+    { label: 'file', value: 'File' },
+    { label: 'googleSlides', value: 'Google Slide' },
 ];
 
 function UploadResourceModal({ onClose }: any) {
@@ -433,7 +438,7 @@ function UploadResourceModal({ onClose }: any) {
                                 </Label>
                                 <Select
                                     name="selectedUploadOption"
-                                    options={uploadOptions}
+                                    options={videoUploadOptions}
                                     rules={{
                                         required: {
                                             value: true,
@@ -504,6 +509,97 @@ function UploadResourceModal({ onClose }: any) {
                                 </>
                             )}
                             {selectedUploadOption !== 'youtube' && (
+                                <div
+                                    className="p-2 rounded-lg border w-32 text-center mt-3 text-dark-gray cursor-pointer hover:bg-dark-gray hover:text-light-gray"
+                                    onClick={() => setSelectedFile(null)}
+                                >
+                                    <button type="button" className="text-sm">
+                                        Remove
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                        {resourceType === ResourceType.SLIDESHOW && (
+                            <div className="flex flex-col space-y-1 mt-4">
+                                <Label
+                                    htmlFor="selectedUploadOption"
+                                    className="font-semibold mt-3"
+                                >
+                                    Upload Type
+                                </Label>
+                                <Select
+                                    name="selectedUploadOption"
+                                    options={slideUploadOptions}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message:
+                                                validationError.REQUIRED_FIELD,
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
+                        <div className="mt-4">
+                            {resourceType === ResourceType.SLIDESHOW &&
+                                selectedUploadOption === 'googleSlides' &&
+                                progress === 0 && (
+                                    <>
+                                        <div className="flex flex-col space-y-1 mt-5">
+                                            <Label
+                                                htmlFor="googleSlidesURL"
+                                                className="font-semibold text-md"
+                                            >
+                                                Google Slides URL
+                                            </Label>
+                                            <Input
+                                                name="googleSlidesURL"
+                                                placeholder="Provide Google Slides URL"
+                                                type="input"
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            validationError.REQUIRED_FIELD,
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                        {progress !== 0 && (
+                                            <div className="mt-4">
+                                                <FileUploading
+                                                    fileName={resourceName}
+                                                    progress={progress}
+                                                    Icon={Icon}
+                                                />
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                            {((resourceType === ResourceType.SLIDESHOW &&
+                                selectedUploadOption !== 'googleSlides') ||
+                                resourceType !== ResourceType.SLIDESHOW) && (
+                                <>
+                                    {!selectedFile && (
+                                        <UploadItem
+                                            resourceType={
+                                                resourceType ??
+                                                ResourceType.SLIDESHOW
+                                            }
+                                            itemName="Resource"
+                                            setSelectedFile={setSelectedFile}
+                                        />
+                                    )}
+                                    {selectedFile && (
+                                        <FileUploading
+                                            fileName={selectedFile.name}
+                                            progress={progress}
+                                            Icon={Icon}
+                                        />
+                                    )}
+                                </>
+                            )}
+                            {selectedUploadOption !== 'googleSlides' && (
                                 <div
                                     className="p-2 rounded-lg border w-32 text-center mt-3 text-dark-gray cursor-pointer hover:bg-dark-gray hover:text-light-gray"
                                     onClick={() => setSelectedFile(null)}
