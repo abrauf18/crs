@@ -33,6 +33,7 @@ interface Standard {
     name: string;
     description: string;
     dailyUploads: DailyUpload[];
+    topicsDescriptions: { topicName: string; description: string }[];
 }
 interface FormValues {
     standard: Standard;
@@ -40,6 +41,7 @@ interface FormValues {
 const DEFAULT_STANDARD = {
     name: '',
     description: '',
+    topicsDescriptions: [{ topicName: '', description: '' }],
     dailyUploads: [
         {
             topicName: [{ value: '' }],
@@ -63,12 +65,14 @@ function CreateStandard({
     standardId,
     name,
     description,
+    topicsDescriptions,
     dailyUploads,
     update,
 }: {
     standardId?: string;
     name?: string;
     description?: string;
+    topicsDescriptions: { topicName: string; description: string }[];
     dailyUploads?: DailyUpload[];
     update: boolean;
 }) {
@@ -79,6 +83,9 @@ function CreateStandard({
         standard: {
             name: name ?? '',
             description: description ?? '',
+            topicsDescriptions: topicsDescriptions ?? [
+                { topicName: '', description: '' },
+            ],
             dailyUploads:
                 dailyUploads?.map((upload) => ({
                     topicName: upload.topicName.map((tn) => ({
@@ -130,11 +137,22 @@ function CreateStandard({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
+
     const {
         control,
         handleSubmit,
         formState: { errors },
     } = methods;
+
+    const {
+        fields: topicDescriptionFields,
+        append: appendTopicDescription,
+        remove: removeTopicDescription,
+    } = useFieldArray<FormValues>({
+        control,
+        name: 'standard.topicsDescriptions',
+    });
+
     const {
         fields: dailyUploadFields,
         append: appendDailyUpload,
@@ -329,6 +347,108 @@ function CreateStandard({
                             </div>
                         </div>
                     </div>
+                    <div className="mt-3 pb-3 border-b">
+                        <h3 className="text-xl font-semibold">
+                            Topic Descriptions
+                        </h3>
+                        {topicDescriptionFields.map((field, index) => (
+                            <div
+                                key={field.id}
+                                className="sm:flex justify-between items-center gap-5 w-full mt-5"
+                            >
+                                <div className="basis-1/2">
+                                    <Label
+                                        htmlFor={`standard.topicsDescriptions[${index}].topicName`}
+                                    >
+                                        Topic Name
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="Write Topic Name"
+                                        name={`standard.topicsDescriptions[${index}].topicName`}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                        }}
+                                    />
+                                    <span className="text-red-500 text-xs">
+                                        <ErrorMessage
+                                            errors={errors}
+                                            name={`standard.topicsDescriptions[${index}].topicName`}
+                                            render={({ message }) => (
+                                                <p className="flex items-center">
+                                                    <X
+                                                        size={20}
+                                                        color="#E6500D"
+                                                    />
+                                                    {message}
+                                                </p>
+                                            )}
+                                        />
+                                    </span>
+                                </div>
+                                <div className="basis-1/2">
+                                    <Label
+                                        htmlFor={`standard.topicsDescriptions[${index}].description`}
+                                    >
+                                        Description
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="Write Description Here"
+                                        name={`standard.topicsDescriptions[${index}].description`}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                        }}
+                                    />
+                                    <span className="text-red-500 text-xs">
+                                        <ErrorMessage
+                                            errors={errors}
+                                            name={`standard.topicsDescriptions[${index}].description`}
+                                            render={({ message }) => (
+                                                <p className="flex items-center">
+                                                    <X
+                                                        size={20}
+                                                        color="#E6500D"
+                                                    />
+                                                    {message}
+                                                </p>
+                                            )}
+                                        />
+                                    </span>
+                                </div>
+                                <button
+                                    type="button"
+                                    className="cursor-pointer p-3 border text-center text-sm rounded-lg w-24 bg-red-500 text-gray-50 hover:bg-red-600"
+                                    onClick={() =>
+                                        removeTopicDescription(index)
+                                    }
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            className="bg-primary-color hover:bg-orange-400 text-white font-medium p-3 mt-3 rounded-lg"
+                            onClick={() =>
+                                appendTopicDescription({
+                                    topicName: '',
+                                    description: '',
+                                })
+                            }
+                        >
+                            Add Topic Description
+                        </button>
+                    </div>
+
                     <div>
                         <div className="flex justify-between items-center mt-5 mb-4">
                             <button
