@@ -153,12 +153,12 @@ export interface VideoSummary {
 }
 
 export const resourceDropDownOptions = [
+    { label: ResourceType.LAB, value: 'Lab' },
     { label: ResourceType.SLIDESHOW, value: 'Slideshow' },
     { label: ResourceType.QUIZ, value: 'Quiz' },
     { label: ResourceType.VIDEO, value: 'Video' },
     { label: ResourceType.WORKSHEET, value: 'Worksheet' },
     { label: ResourceType.ASSIGNMENT, value: 'Assignment' },
-    { label: ResourceType.LAB, value: 'Lab' },
     { label: ResourceType.STATION, value: 'Station' },
     { label: ResourceType.ACTIVITY, value: 'Activity' },
     { label: ResourceType.GUIDED_NOTE, value: 'Guided Note' },

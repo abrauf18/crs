@@ -38,7 +38,7 @@ type ResourceFormData = {
     name: string;
     thumbnail?: File;
     totalMarks?: number;
-    youtubeURL?: string;
+    URL?: string;
     selectedUploadOption: string;
     deadline?: number;
 };
@@ -61,6 +61,16 @@ function UploadResourceModal({ onClose }: any) {
     const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
+        // defaultValues: {
+        //     topic: '',
+        //     type: 'lab',
+        //     name: '',
+        //     thumbnail: null,
+        //     totalMarks: 0,
+        //     URL: '',
+        //     selectedUploadOption: '',
+        //     deadline: 0,
+        // },
     });
     const resourceName = methods.watch('name');
     const resourceType = methods.watch('type');
@@ -209,12 +219,12 @@ function UploadResourceModal({ onClose }: any) {
         let videoDuration = 0;
 
         if (selectedUploadOption === 'youtube') {
-            if (!formData.youtubeURL) {
+            if (!formData.URL) {
                 toast.error('Please Enter Youtube URL');
                 return { status: 400 };
             }
-            resourceURL = formData.youtubeURL;
-            videoDuration = await getVideoDuration(formData.youtubeURL);
+            resourceURL = formData.URL;
+            videoDuration = await getVideoDuration(formData.URL);
         } else {
             if (!selectedFile) {
                 toast.error('Please Select File');
@@ -240,12 +250,20 @@ function UploadResourceModal({ onClose }: any) {
     };
 
     const handleFileUpload = async (formData: ResourceFormData) => {
-        if (!selectedFile) {
-            toast.error('Please Select File');
-            return { status: 400 };
+        let resourceURL = '';
+        if (selectedUploadOption === 'googleSlides') {
+            if (!formData.URL) {
+                toast.error('Please Enter Google Slides URL');
+                return { status: 400 };
+            }
+            resourceURL = formData.URL;
+        } else {
+            if (!selectedFile) {
+                toast.error('Please Select File');
+                return { status: 400 };
+            }
+            resourceURL = await uploadFile(selectedFile);
         }
-
-        const resourceURL = await uploadFile(selectedFile);
         if (!resourceURL) {
             toast.error('Failed to upload file');
             return { status: 400 };
@@ -428,7 +446,8 @@ function UploadResourceModal({ onClose }: any) {
                                 />
                             </div>
                         )}
-                        {resourceType === ResourceType.VIDEO && (
+                        {(resourceType === ResourceType.VIDEO ||
+                            resourceType === ResourceType.SLIDESHOW) && (
                             <div className="flex flex-col space-y-1 mt-4">
                                 <Label
                                     htmlFor="selectedUploadOption"
@@ -438,7 +457,11 @@ function UploadResourceModal({ onClose }: any) {
                                 </Label>
                                 <Select
                                     name="selectedUploadOption"
-                                    options={videoUploadOptions}
+                                    options={
+                                        resourceType === ResourceType.VIDEO
+                                            ? videoUploadOptions
+                                            : slideUploadOptions
+                                    }
                                     rules={{
                                         required: {
                                             value: true,
@@ -450,44 +473,59 @@ function UploadResourceModal({ onClose }: any) {
                             </div>
                         )}
                         <div className="mt-4">
-                            {resourceType === ResourceType.VIDEO &&
-                                selectedUploadOption === 'youtube' &&
+                            {((resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption === 'youtube') ||
+                                (resourceType === ResourceType.SLIDESHOW &&
+                                    selectedUploadOption === 'googleSlides')) &&
                                 progress === 0 && (
-                                    <>
-                                        <div className="flex flex-col space-y-1 mt-5">
-                                            <Label
-                                                htmlFor="youtubeURL"
-                                                className="font-semibold text-md"
-                                            >
-                                                Youtube URL
-                                            </Label>
-                                            <Input
-                                                name="youtubeURL"
-                                                placeholder="Provide youtube URL"
-                                                type="input"
-                                                rules={{
-                                                    required: {
-                                                        value: true,
-                                                        message:
-                                                            validationError.REQUIRED_FIELD,
-                                                    },
-                                                }}
-                                            />
-                                        </div>
-                                        {progress !== 0 && (
-                                            <div className="mt-4">
-                                                <FileUploading
-                                                    fileName={resourceName}
-                                                    progress={progress}
-                                                    Icon={Icon}
-                                                />
-                                            </div>
-                                        )}
-                                    </>
+                                    <div className="flex flex-col space-y-1 mt-5">
+                                        <Label
+                                            htmlFor="URL"
+                                            className="font-semibold text-md"
+                                        >
+                                            {resourceType === ResourceType.VIDEO
+                                                ? `Youtube URL`
+                                                : `Google Slides URL`}
+                                        </Label>
+                                        <Input
+                                            name="URL"
+                                            placeholder={
+                                                resourceType ===
+                                                ResourceType.VIDEO
+                                                    ? `Provide Youtube URL`
+                                                    : `Provide Google Slides URL`
+                                            }
+                                            type="input"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            {((resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption === 'youtube') ||
+                                (resourceType === ResourceType.SLIDESHOW &&
+                                    selectedUploadOption === 'googleSlides')) &&
+                                progress !== 0 && (
+                                    <div className="mt-4">
+                                        <FileUploading
+                                            fileName={resourceName}
+                                            progress={progress}
+                                            Icon={Icon}
+                                        />
+                                    </div>
                                 )}
                             {((resourceType === ResourceType.VIDEO &&
                                 selectedUploadOption !== 'youtube') ||
-                                resourceType !== ResourceType.VIDEO) && (
+                                (resourceType === ResourceType.SLIDESHOW &&
+                                    selectedUploadOption !== 'googleSlides') ||
+                                (resourceType !== ResourceType.VIDEO &&
+                                    resourceType !==
+                                        ResourceType.SLIDESHOW)) && (
                                 <>
                                     {!selectedFile && (
                                         <UploadItem
@@ -508,98 +546,8 @@ function UploadResourceModal({ onClose }: any) {
                                     )}
                                 </>
                             )}
-                            {selectedUploadOption !== 'youtube' && (
-                                <div
-                                    className="p-2 rounded-lg border w-32 text-center mt-3 text-dark-gray cursor-pointer hover:bg-dark-gray hover:text-light-gray"
-                                    onClick={() => setSelectedFile(null)}
-                                >
-                                    <button type="button" className="text-sm">
-                                        Remove
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                        {resourceType === ResourceType.SLIDESHOW && (
-                            <div className="flex flex-col space-y-1 mt-4">
-                                <Label
-                                    htmlFor="selectedUploadOption"
-                                    className="font-semibold mt-3"
-                                >
-                                    Upload Type
-                                </Label>
-                                <Select
-                                    name="selectedUploadOption"
-                                    options={slideUploadOptions}
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message:
-                                                validationError.REQUIRED_FIELD,
-                                        },
-                                    }}
-                                />
-                            </div>
-                        )}
-                        <div className="mt-4">
-                            {resourceType === ResourceType.SLIDESHOW &&
-                                selectedUploadOption === 'googleSlides' &&
-                                progress === 0 && (
-                                    <>
-                                        <div className="flex flex-col space-y-1 mt-5">
-                                            <Label
-                                                htmlFor="googleSlidesURL"
-                                                className="font-semibold text-md"
-                                            >
-                                                Google Slides URL
-                                            </Label>
-                                            <Input
-                                                name="googleSlidesURL"
-                                                placeholder="Provide Google Slides URL"
-                                                type="input"
-                                                rules={{
-                                                    required: {
-                                                        value: true,
-                                                        message:
-                                                            validationError.REQUIRED_FIELD,
-                                                    },
-                                                }}
-                                            />
-                                        </div>
-                                        {progress !== 0 && (
-                                            <div className="mt-4">
-                                                <FileUploading
-                                                    fileName={resourceName}
-                                                    progress={progress}
-                                                    Icon={Icon}
-                                                />
-                                            </div>
-                                        )}
-                                    </>
-                                )}
-                            {((resourceType === ResourceType.SLIDESHOW &&
-                                selectedUploadOption !== 'googleSlides') ||
-                                resourceType !== ResourceType.SLIDESHOW) && (
-                                <>
-                                    {!selectedFile && (
-                                        <UploadItem
-                                            resourceType={
-                                                resourceType ??
-                                                ResourceType.SLIDESHOW
-                                            }
-                                            itemName="Resource"
-                                            setSelectedFile={setSelectedFile}
-                                        />
-                                    )}
-                                    {selectedFile && (
-                                        <FileUploading
-                                            fileName={selectedFile.name}
-                                            progress={progress}
-                                            Icon={Icon}
-                                        />
-                                    )}
-                                </>
-                            )}
-                            {selectedUploadOption !== 'googleSlides' && (
+                            {(selectedUploadOption !== 'youtube' ||
+                                selectedUploadOption !== 'googleSlides') && (
                                 <div
                                     className="p-2 rounded-lg border w-32 text-center mt-3 text-dark-gray cursor-pointer hover:bg-dark-gray hover:text-light-gray"
                                     onClick={() => setSelectedFile(null)}
