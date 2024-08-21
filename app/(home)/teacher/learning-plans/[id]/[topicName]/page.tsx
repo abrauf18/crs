@@ -12,6 +12,7 @@ interface Topic {
     type: ResourceType;
     topic: string;
     videoId?: string;
+    URL?: string;
 }
 interface DailyUpload {
     day: number;

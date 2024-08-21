@@ -263,3 +263,19 @@ export enum StudentProfileResourceType {
     VIDEO = 'video',
     ASSESSMENT = 'assessment',
 }
+
+export const handleDownload = async ({
+    url,
+    name,
+}: {
+    url: string;
+    name: string;
+}) => {
+    const response = await fetch(url as string);
+    const blob = await response.blob();
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = name;
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+};

@@ -2,25 +2,32 @@
 
 import React, { useState } from 'react';
 import { Poppins } from 'next/font/google';
-import { Eye, LucideFileQuestion, PlayIcon, Trash } from 'lucide-react';
 import {
-    DEFAULT_RESOURCE,
+    Eye,
+    LucideFileQuestion,
+    PlayIcon,
+    Trash,
+    Download,
+} from 'lucide-react';
+import {
     Resource,
-    ResourceToPath,
     ResourceType,
-    convertSpacesToDashes,
+    ResourceToPath,
+    handleDownload,
     capitalizeWords,
+    DEFAULT_RESOURCE,
+    convertSpacesToDashes,
 } from '@/lib/utils';
 import {
+    Table,
     TableRow,
     TableBody,
     TableCell,
-    Table,
 } from '@/app/components/ui/table';
 import EditIcon from '@/app/assets/icons/EditIcon';
 import { usePathname, useRouter } from 'next/navigation';
-import EditQuestionsModal from '../video/EditQuestionsModal';
 import EditTopicsModal from '../video/EditTopicsModal';
+import EditQuestionsModal from '../video/EditQuestionsModal';
 import UpdateResourceModal from '../resources/UpdateResourceModal';
 
 const poppins = Poppins({
@@ -39,6 +46,7 @@ interface Topic {
     canWrite?: boolean;
     deadline?: number;
     totalMarks?: number;
+    URL?: string;
 }
 
 function StandardTable({
@@ -266,6 +274,21 @@ function StandardTable({
                                                     );
                                                 }
                                             }}
+                                        />
+                                    </div>
+                                )}
+                                {isShownFromTeacher && (
+                                    <div className="mr-2 bg-green-100 rounded-md p-1 cursor-pointer">
+                                        <Download
+                                            color="#228B22"
+                                            width={18}
+                                            height={18}
+                                            onClick={() =>
+                                                handleDownload({
+                                                    name: topic.name,
+                                                    url: topic.URL || '',
+                                                })
+                                            }
                                         />
                                     </div>
                                 )}

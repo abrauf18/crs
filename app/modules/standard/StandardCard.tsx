@@ -12,6 +12,7 @@ interface Topic {
     watched?: boolean;
     completed?: boolean;
     canWrite?: boolean;
+    URL?: string;
 }
 interface DailyUpload {
     day: number;

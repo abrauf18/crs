@@ -1,8 +1,6 @@
 import React from 'react';
-import FileCard, { FileInterface } from '@/app/components/common/FileCard';
-import Resource1 from '@/app/assets/images/resourceImages/Resource1.svg';
-import Resource2 from '@/app/assets/images/resourceImages/Resource2.svg';
-import Resource3 from '@/app/assets/images/resourceImages/Resource3.svg';
+import { handleDownload } from '@/lib/utils';
+import FileCard from '@/app/components/common/FileCard';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 type Resource = {
@@ -28,22 +26,6 @@ function ResourceDownloadModal({
     onClose: () => void;
     standard: Standard;
 }) {
-    const handleDownload = async ({
-        url,
-        name,
-    }: {
-        url: string;
-        name: string;
-    }) => {
-        const response = await fetch(url as string);
-        const blob = await response.blob();
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = name;
-        link.click();
-        window.URL.revokeObjectURL(link.href);
-    };
-
     const handleDownloadAll = () => {
         standard.resources.forEach((resource) => {
             if (!resource.released) {
