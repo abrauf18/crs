@@ -72,7 +72,7 @@ function CreateStandard({
     standardId?: string;
     name?: string;
     description?: string;
-    topicsDescriptions: { topicName: string; description: string }[];
+    topicsDescriptions?: { topicName: string; description: string }[];
     dailyUploads?: DailyUpload[];
     update: boolean;
 }) {
