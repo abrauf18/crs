@@ -21,15 +21,17 @@ interface APIData {
     name: string;
     description: string;
     dailyUploads: DailyUpload[];
+    topicsDescriptions: { topicName: string; description: string }[];
 }
 
 const DEFAULT_STANDARD = {
     name: '',
     description: '',
+    topicsDescriptions: [{ topicName: '', description: '' }],
     dailyUploads: [
         {
-            accessibleDay: 0,
             topicName: [{ value: '' }],
+            accessibleDay: 0,
             topics: [
                 {
                     resourceId: '',

@@ -132,6 +132,7 @@ function CreateStandard({
                   ],
               ]
     );
+
     const methods = useForm<FormValues>({
         defaultValues: update ? transformedData : DEFAULT_FORM_VALUES,
         mode: 'onChange',
@@ -162,6 +163,12 @@ function CreateStandard({
         control,
         name: 'standard.dailyUploads',
     });
+
+    const watchedtopicsDescriptions = methods.watch('standard.topicsDescriptions');
+    const topicOptions = watchedtopicsDescriptions?.length ? watchedtopicsDescriptions.map((topic) => ({
+        label: topic.topicName,
+        value: topic.topicName
+    })) : [];
 
     const onSubmit = async (formdata: FormValues) => {
         if (!data) {
@@ -488,7 +495,7 @@ function CreateStandard({
                                         return;
                                     }
                                     appendDailyUpload({
-                                        topicName: [{ value: '' }],
+                                        topicName: [{ value: topicOptions[0]?.value ?? '' }],
                                         accessibleDay: 0,
                                         topics: [
                                             {
