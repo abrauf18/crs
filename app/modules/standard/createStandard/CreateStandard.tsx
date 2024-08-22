@@ -142,6 +142,7 @@ function CreateStandard({
         control,
         handleSubmit,
         formState: { errors },
+        trigger,
     } = methods;
 
     const {
@@ -446,6 +447,15 @@ function CreateStandard({
                             }
                         >
                             Add Topic Description
+                        </button>
+                        <button
+                            type="button"
+                            className="bg-primary-color hover:bg-orange-400 text-white font-medium p-3 mt-3 ml-3 rounded-lg"
+                            onClick={() => {
+                            trigger('standard.topicsDescriptions')
+                            }}
+                        >
+                            Submit Topics
                         </button>
                     </div>
 

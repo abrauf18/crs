@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { CalendarDays, FileUpIcon, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { FieldErrors, useFieldArray, useFormContext } from 'react-hook-form';
+import { FieldErrors, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import {
     validationError,
     ResourceType,
@@ -33,6 +33,7 @@ interface Standard {
     name: string;
     description: string;
     dailyUploads: DailyUpload[];
+    topicsDescriptions: { topicName: string; description: string }[];
 }
 interface FormValues {
     standard: Standard;
@@ -66,6 +67,12 @@ function CreateTopic({
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isDisplayModal, setIsDisplayModal] = useState(false);
     const { control, watch, setValue } = useFormContext<FormValues>();
+
+    const topicsDescriptions = watch('standard.topicsDescriptions');
+    const topicOptions = topicsDescriptions.map((topic) => ({
+        label: topic.topicName,
+        value: topic.topicName
+    }));
 
     const {
         fields: topicFields,
@@ -365,6 +372,35 @@ function CreateTopic({
                                     <Label
                                         htmlFor={`standard.dailyUploads.${index}.topicName`}
                                     >
+                                        Topic Name
+                                    </Label>
+                                    <div className="flex flex-row">
+                                        <Select
+                                            additionalClasses="mobile:!w-full mt-1"
+                                            name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
+                                            options={topicOptions}
+                                            selectedOption={topicOptions[0].value}
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                            }}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="whitespace-nowrap cursor-pointer p-1 border text-center text-sm rounded-lg w-28 bg-red-500 text-gray-50 hover:bg-red-600 ml-2 h-12"
+                                            onClick={() =>
+                                                removeTopicName(topicNameIndex)
+                                            }
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                    {/* <Label
+                                        htmlFor={`standard.dailyUploads.${index}.topicName`}
+                                    >
                                         Name
                                     </Label>
                                     <div className="flex flex-row">
@@ -390,7 +426,7 @@ function CreateTopic({
                                         >
                                             Remove
                                         </button>
-                                    </div>
+                                    </div> */}
                                     <span className="text-red-500 text-xs">
                                         <ErrorMessage
                                             errors={errors}
@@ -440,7 +476,7 @@ function CreateTopic({
             <button
                 type="button"
                 className="cursor-pointer border p-3 mt-1 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
-                onClick={() => appendTopicName({ value: '' })}
+                onClick={() => appendTopicName({ value: topicOptions[0].value })}
             >
                 Add Topic
             </button>
