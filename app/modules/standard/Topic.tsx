@@ -39,10 +39,14 @@ function Topics({
                 <div className="flex justify-between items-center mobile:items-start mb-1 mobile:flex-col">
                     <div className="flex  gap-2  items-center mobile:items-start">
                         <File color="#7AA43E" size={30} />
-                        <h1 className="text-3xl font-semibold">{standardName}</h1>
+                        <h1 className="text-3xl font-semibold">
+                            {standardName}
+                        </h1>
                     </div>
                 </div>
-                <p className="text-sm text-dark-gray mb-3">{standardDescription}</p>
+                <p className="text-sm text-dark-gray mb-3">
+                    {standardDescription}
+                </p>
             </div>
             <section>
                 {topicsCount > 0 ? (

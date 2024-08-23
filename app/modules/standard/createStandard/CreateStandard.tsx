@@ -164,11 +164,15 @@ function CreateStandard({
         name: 'standard.dailyUploads',
     });
 
-    const watchedtopicsDescriptions = methods.watch('standard.topicsDescriptions');
-    const topicOptions = watchedtopicsDescriptions?.length ? watchedtopicsDescriptions.map((topic) => ({
-        label: topic.topicName,
-        value: topic.topicName
-    })) : [];
+    const watchedtopicsDescriptions = methods.watch(
+        'standard.topicsDescriptions'
+    );
+    const topicOptions = watchedtopicsDescriptions?.length
+        ? watchedtopicsDescriptions.map((topic) => ({
+              label: topic.topicName,
+              value: topic.topicName,
+          }))
+        : [];
 
     const onSubmit = async (formdata: FormValues) => {
         if (!data) {
@@ -197,12 +201,12 @@ function CreateStandard({
             return;
         }
 
-        const transformedTopics = formdata.standard.topicsDescriptions.map((topicDescription) => {
-            return {
+        const transformedTopics = formdata.standard.topicsDescriptions.map(
+            (topicDescription) => ({
                 name: trimAndConvertSpaces(topicDescription.topicName),
                 description: topicDescription.description,
-            };
-        })
+            })
+        );
 
         const transformedDailyUploads = formdata.standard.dailyUploads
             .map((dailyUpload, index) =>
@@ -218,7 +222,9 @@ function CreateStandard({
             )
             .flat();
 
-        const result = Array.isArray(transformedDailyUploads) ? transformedDailyUploads : [transformedDailyUploads];
+        const result = Array.isArray(transformedDailyUploads)
+            ? transformedDailyUploads
+            : [transformedDailyUploads];
 
         try {
             setIsLoading(true);
@@ -470,7 +476,7 @@ function CreateStandard({
                             type="button"
                             className="bg-primary-color hover:bg-orange-400 text-white font-medium p-3 mt-3 ml-3 rounded-lg"
                             onClick={() => {
-                            trigger('standard.topicsDescriptions')
+                                trigger('standard.topicsDescriptions');
                             }}
                         >
                             Submit Topics
@@ -506,7 +512,13 @@ function CreateStandard({
                                         return;
                                     }
                                     appendDailyUpload({
-                                        topicName: [{ value: topicOptions[0]?.value ?? '' }],
+                                        topicName: [
+                                            {
+                                                value:
+                                                    topicOptions[0]?.value ??
+                                                    '',
+                                            },
+                                        ],
                                         accessibleDay: 0,
                                         topics: [
                                             {
