@@ -60,12 +60,13 @@ async function VideoDetailsPage({ params }: { params: { id: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { name, description, dailyUploads } = APIdata;
+                const { name, description, topicsDescriptions, dailyUploads } = APIdata;
                 return (
                     <CreateStandard
                         standardId={params.id}
                         name={name}
                         description={description}
+                        topicsDescriptions={topicsDescriptions}
                         dailyUploads={dailyUploads}
                         update
                     />
