@@ -197,6 +197,13 @@ function CreateStandard({
             return;
         }
 
+        const transformedTopics = formdata.standard.topicsDescriptions.map((topicDescription) => {
+            return {
+                name: trimAndConvertSpaces(topicDescription.topicName),
+                description: topicDescription.description,
+            };
+        })
+
         const transformedDailyUploads = formdata.standard.dailyUploads
             .map((dailyUpload, index) =>
                 dailyUpload.topics.map((topic, topicIndex) => ({
@@ -211,6 +218,8 @@ function CreateStandard({
             )
             .flat();
 
+        const result = Array.isArray(transformedDailyUploads) ? transformedDailyUploads : [transformedDailyUploads];
+
         try {
             setIsLoading(true);
             let response: any = null;
@@ -219,7 +228,8 @@ function CreateStandard({
                     standardId: standardId || '',
                     name: formdata.standard.name,
                     description: formdata.standard.description,
-                    dailyUploads: transformedDailyUploads,
+                    dailyUploads: result,
+                    topics: transformedTopics,
                     accessToken: data?.user?.accessToken || '',
                 });
             } else {
@@ -227,6 +237,7 @@ function CreateStandard({
                     name: formdata.standard.name,
                     description: formdata.standard.description,
                     dailyUploads: transformedDailyUploads,
+                    topics: transformedTopics,
                     accessToken: data?.user?.accessToken || '',
                 });
             }
