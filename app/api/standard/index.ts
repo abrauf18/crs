@@ -4,6 +4,7 @@ export const createStandardAPI = async ({
     name,
     description,
     dailyUploads,
+    topics,
     accessToken,
 }: {
     name: string;
@@ -14,6 +15,7 @@ export const createStandardAPI = async ({
         accessibleDay: number;
         weightage: number;
     }[];
+    topics: { name: string; description: string }[];
     accessToken: string;
 }) => {
     const response = await axios.post(
@@ -22,6 +24,7 @@ export const createStandardAPI = async ({
             name,
             description,
             dailyUploads,
+            topics,
             accessToken,
         }
     );
@@ -57,6 +60,7 @@ export const updateStandardAPI = async ({
     name,
     description,
     dailyUploads,
+    topics,
     accessToken,
 }: {
     standardId: string;
@@ -68,6 +72,7 @@ export const updateStandardAPI = async ({
         accessibleDay: number;
         weightage: number;
     }[];
+    topics: { name: string; description: string }[];
     accessToken: string;
 }) => {
     const response = await axios.put(
@@ -77,6 +82,7 @@ export const updateStandardAPI = async ({
             name,
             description,
             dailyUploads,
+            topics,
             accessToken,
         }
     );
