@@ -15,12 +15,14 @@ interface TopicResourceCount {
 
 interface APIData {
     name: string;
+    description: string;
     totalTopics: number;
     topicResourceCounts: TopicResourceCount[];
 }
 
 const DEFAULT_STANDARD = {
     name: '',
+    description: '',
     totalTopics: 0,
     topicResourceCounts: [],
 };
@@ -40,14 +42,15 @@ async function DetailsPage({ params }: { params: { id: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { name, totalTopics, topicResourceCounts } = APIdata;
+                const { name, description, totalTopics, topicResourceCounts } = APIdata;
                 return (
                     <Topics
                         isShownFromTeacher={false}
+                        standardId={params.id}
+                        standardName={name}
+                        standardDescription={description}
                         topicsCount={totalTopics}
                         allTopics={topicResourceCounts}
-                        standardName={name}
-                        standardId={params.id}
                     />
                 );
             }

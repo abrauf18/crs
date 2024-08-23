@@ -14,16 +14,18 @@ interface TopicResourceCount {
 
 function Topics({
     isShownFromTeacher,
+    standardId,
+    standardName,
+    standardDescription,
     topicsCount,
     allTopics,
-    standardName,
-    standardId,
 }: {
     isShownFromTeacher?: boolean;
+    standardId: string;
+    standardName: string;
+    standardDescription: string;
     topicsCount: number;
     allTopics?: TopicResourceCount[];
-    standardName: string;
-    standardId: string;
 }) {
     const Icons = {
         FirstIcon: PlayIcon,
@@ -33,13 +35,15 @@ function Topics({
 
     return (
         <>
-            <Filters
-                text={`${topicsCount} ${
-                    topicsCount > 1 ? `Topics` : `Topic`
-                } in Standard "${standardName}"`}
-                isHideFirstBtn
-                isHideSecondBtn
-            />
+            <div className="mt-5">
+                <div className="flex justify-between items-center mobile:items-start mb-1 mobile:flex-col">
+                    <div className="flex  gap-2  items-center mobile:items-start">
+                        <File color="#7AA43E" size={30} />
+                        <h1 className="text-3xl font-semibold">{standardName}</h1>
+                    </div>
+                </div>
+                <p className="text-sm text-dark-gray mb-3">{standardDescription}</p>
+            </div>
             <section>
                 {topicsCount > 0 ? (
                     <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
