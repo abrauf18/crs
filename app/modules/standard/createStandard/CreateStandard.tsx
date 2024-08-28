@@ -221,6 +221,7 @@ function CreateStandard({
                     accessibleDay: dailyUpload.accessibleDay,
                     dayName: dailyUpload.dayName,
                     weightage: topic?.weightage || 0,
+                    type: topic.type,
                 }))
             )
             .flat();
