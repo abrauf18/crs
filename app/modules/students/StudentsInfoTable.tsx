@@ -149,7 +149,7 @@ function StudentsInfoTable({
                             </TableHead>
                         )}
                         <TableHead className="text-dark-gray font-bold">
-                            Performance
+                            Completed Resources
                         </TableHead>
                         <TableHead className="text-dark-gray font-bold">
                             Action
