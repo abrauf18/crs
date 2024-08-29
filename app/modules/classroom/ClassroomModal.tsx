@@ -21,15 +21,16 @@ import ButtonLoader from '@/app/components/common/ButtonLoader';
 import action from '@/app/action';
 
 export interface StudentInfoInterface {
-    image: string;
     id: string;
     index?: number;
     name: string;
     email: string;
-    grade: string;
-    performance: number;
-    gradeId: string;
+    image: string;
     classroomStudentId?: string;
+    totalFinishedResources: number;
+    totalResourcesCount: number;
+    grade: string;
+    gradeId: string;
 }
 interface FormValues {
     name: string;
@@ -221,11 +222,12 @@ function ClassroomModal({
                                 <div>
                                     <FileLineChart color="#F59A3B" />
                                     <p className="font-medium mt-2">
-                                        Overall Performance
+                                        Resources Completed
                                     </p>
                                 </div>
                                 <p className="font-bold text-lg">
-                                    {student.performance}%
+                                    {student.totalResourcesCount}/
+                                    {student.totalFinishedResources}
                                 </p>
                             </div>
 

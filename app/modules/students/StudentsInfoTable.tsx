@@ -30,9 +30,11 @@ const DEFAULT_CLASSROOM_STUDENT = {
     index: 0,
     name: 'Name',
     email: 'name@gmail.com',
-    grade: 'Grade',
-    performance: 100,
     image: DEFAULT_IMAGE,
+    classroomStudentId: '0',
+    totalFinishedResources: 0,
+    totalResourcesCount: 0,
+    grade: 'Grade',
     gradeId: '0',
 };
 
@@ -190,7 +192,7 @@ function StudentsInfoTable({
                                     </TableCell>
                                 )}
                                 <TableCell className="text-dark-gray">
-                                    {`${student.performance} %`}
+                                    {`${student.totalFinishedResources} / ${student.totalFinishedResources}`}
                                 </TableCell>
                                 <TableCell className="flex justify-start space-x-2 items-center p-0 mt-5 ml-3">
                                     {!isClassroomTable && (
