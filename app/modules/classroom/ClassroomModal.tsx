@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Session } from 'next-auth';
 import { toast } from 'react-toastify';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { FileLineChart, Trash2, X } from 'lucide-react';
@@ -10,15 +11,15 @@ import {
     getAllClassroomsOfTeacherAPI,
     updateClassroomStudentAPI,
 } from '@/app/api/classroom';
+import action from '@/app/action';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import Select from '@/app/components/common/DropDown';
 import PageLoader from '@/app/components/common/PageLoader';
 import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
 import useProfileImage from '@/lib/custom-hooks/useProfileImage';
 import { OptionsInterface } from '@/app/components/common/AppDropDown';
-import ButtonLoader from '@/app/components/common/ButtonLoader';
-import action from '@/app/action';
 
 export interface StudentInfoInterface {
     id: string;
@@ -27,8 +28,9 @@ export interface StudentInfoInterface {
     email: string;
     image: string;
     classroomStudentId?: string;
-    totalFinishedResources: number;
-    totalResourcesCount: number;
+    totalFinishedResources?: number;
+    totalResourcesCount?: number;
+    performance?: number;
     grade: string;
     gradeId: string;
 }
@@ -56,6 +58,8 @@ function ClassroomModal({
         shouldResetProfilePicture,
         deleteProfilePicture,
     } = useProfileImage();
+    const pathname = usePathname();
+    const showResourcesCompleted = pathname.includes('/teacher/students');
     const [modalLoading, setModalLoading] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
     const [gradeOptions, setGradeOptions] = useState<OptionsInterface[]>([]);
@@ -221,14 +225,26 @@ function ClassroomModal({
                             <div className="flex items-center mt-4 py-3 px-2 lg:px-5 rounded-lg  border-2 border-primary-color justify-between">
                                 <div>
                                     <FileLineChart color="#F59A3B" />
-                                    <p className="font-medium mt-2">
-                                        Resources Completed
-                                    </p>
+                                    {showResourcesCompleted ? (
+                                        <p className="font-medium mt-2">
+                                            Resources Completed
+                                        </p>
+                                    ) : (
+                                        <p className="font-medium mt-2">
+                                            Performance
+                                        </p>
+                                    )}
                                 </div>
-                                <p className="font-bold text-lg">
-                                    {student.totalResourcesCount}/
-                                    {student.totalFinishedResources}
-                                </p>
+                                {showResourcesCompleted ? (
+                                    <p className="font-bold text-lg">
+                                        {student.totalResourcesCount}/
+                                        {student.totalFinishedResources}
+                                    </p>
+                                ) : (
+                                    <p className="font-bold text-lg">
+                                        {student.performance}%
+                                    </p>
+                                )}
                             </div>
 
                             <div className="my-3 h-fit">

@@ -148,9 +148,15 @@ function StudentsInfoTable({
                                 Grade
                             </TableHead>
                         )}
-                        <TableHead className="text-dark-gray font-bold">
-                            Completed Resources
-                        </TableHead>
+                        {isClassroomTable || isTeacherDashboardTable ? (
+                            <TableHead className="text-dark-gray font-bold">
+                                Performance
+                            </TableHead>
+                        ) : (
+                            <TableHead className="text-dark-gray font-bold">
+                                Completed Resources
+                            </TableHead>
+                        )}
                         <TableHead className="text-dark-gray font-bold">
                             Action
                         </TableHead>
@@ -191,9 +197,15 @@ function StudentsInfoTable({
                                         {student.grade}
                                     </TableCell>
                                 )}
-                                <TableCell className="text-dark-gray">
-                                    {`${student.totalFinishedResources} / ${student.totalFinishedResources}`}
-                                </TableCell>
+                                {isClassroomTable || isTeacherDashboardTable ? (
+                                    <TableCell className="text-dark-gray">
+                                        {student.performance} %
+                                    </TableCell>
+                                ) : (
+                                    <TableCell className="text-dark-gray">
+                                        {`${student.totalFinishedResources} / ${student.totalFinishedResources}`}
+                                    </TableCell>
+                                )}
                                 <TableCell className="flex justify-start space-x-2 items-center p-0 mt-5 ml-3">
                                     {!isClassroomTable && (
                                         <div
