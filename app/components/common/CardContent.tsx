@@ -68,20 +68,27 @@ function CardContent({
     }, [isShowDialogBox, data]);
 
     const handleConfirmDelete = async () => {
-        const result = path.includes('/admin/video')
-            ? await deleteVideoAPI({
-                  videoId: id || '',
-                  accessToken: data?.user?.accessToken || '',
-              })
-            : await deleteStandard(data?.user?.accessToken || '', id || '');
-        if (result?.status === 200) {
-            if (path.includes('/admin/video')) {
-                toast.success('Video Deleted Successfully');
-                action('getAllVideos');
-            } else {
-                toast.success('Standard Deleted Successfully');
-                action('getAllSummarizedStandards');
+        try {
+            const result = path.includes('/admin/video')
+                ? await deleteVideoAPI({
+                      videoId: id || '',
+                      accessToken: data?.user?.accessToken || '',
+                  })
+                : await deleteStandard(data?.user?.accessToken || '', id || '');
+            if (result?.status === 200) {
+                if (path.includes('/admin/video')) {
+                    toast.success('Video Deleted Successfully');
+                    action('getAllVideos');
+                } else {
+                    toast.success('Standard Deleted Successfully');
+                    action('getAllSummarizedStandards');
+                }
             }
+        } catch (error: any) {
+            toast.error(
+                error?.response?.data?.message ||
+                    'An error occurred during deletion'
+            );
         }
     };
 
