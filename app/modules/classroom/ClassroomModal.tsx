@@ -237,8 +237,8 @@ function ClassroomModal({
                                 </div>
                                 {showResourcesCompleted ? (
                                     <p className="font-bold text-lg">
-                                        {student.totalResourcesCount}/
-                                        {student.totalFinishedResources}
+                                        {student.totalFinishedResources} /{' '}
+                                        {student.totalResourcesCount}
                                     </p>
                                 ) : (
                                     <p className="font-bold text-lg">
