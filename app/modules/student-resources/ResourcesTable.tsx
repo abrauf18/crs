@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Poppins } from 'next/font/google';
 import {
     Table,
@@ -59,57 +59,82 @@ function ResourcesTable({ standards }: { standards: Standard[] }) {
         setSelectedStandard(null);
     };
 
+    useEffect(() => {
+        if (isShowDownloadModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowDownloadModal]);
+
     return (
         <section>
             <Table
-                className={`text-['18']px] mobile:text-sm ${poppins.className}`}
+                className={`text-['18']px] mobile:text-sm whitespace-nowrap ${poppins.className}`}
             >
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px] text-dark-gray font-bold">
+                        <TableHead className="text-dark-gray font-bold">
                             SNO.
                         </TableHead>
                         <TableHead className="text-dark-gray font-bold">
-                            Topic
+                            Standard
                         </TableHead>
-                        <TableHead className="text-dark-gray font-bold text-center">
+                        <TableHead className="text-dark-gray font-bold">
                             Assigned Resource
                         </TableHead>
-                        <TableHead className="text-dark-gray font-bold lg:flex lg:justify-end lg:pr-24 items-center">
+                        <TableHead className="text-dark-gray font-bold">
                             Action
                         </TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
-                    {standards?.map((standard, index) => (
-                        <TableRow className="border-none" key={standard.id}>
-                            <TableCell className="font-medium">
-                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {index + 1}
-                                </span>
-                            </TableCell>
-                            <TableCell>
-                                <span>{standard.name}</span>
-                            </TableCell>
-
-                            <TableCell className="text-dark-gray text-center">
-                                {standard.resourceCount}
-                            </TableCell>
-
-                            <TableCell className="flex lg:justify-end items-center p-0  lg:pr-10 space-x-2 font-medium mt-6 md:mt-5 lg:mt-2">
-                                <button
-                                    type="button"
-                                    className="border rounded-lg px-4 py-2 text-dark-gray "
-                                    onClick={() =>
-                                        handleOpenDownloadModal(standard)
-                                    }
-                                >
-                                    Download
-                                </button>
+                {standards.length === 0 ? (
+                    <TableBody>
+                        <TableRow>
+                            <TableCell
+                                className="text-center py-12"
+                                colSpan={4}
+                            >
+                                No Assignment found!
                             </TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
+                    </TableBody>
+                ) : (
+                    <TableBody>
+                        {standards?.map((standard, index) => (
+                            <TableRow className="border-none" key={standard.id}>
+                                <TableCell className="font-medium">
+                                    <span className="bg-light-gray rounded-md">
+                                        {index + 1}
+                                    </span>
+                                </TableCell>
+                                <TableCell>
+                                    <span>{standard.name}</span>
+                                </TableCell>
+
+                                <TableCell className="text-dark-gray">
+                                    {standard.resourceCount}
+                                </TableCell>
+
+                                <TableCell>
+                                    <button
+                                        type="button"
+                                        className="border rounded-lg px-4 py-2 text-dark-gray hover:bg-primary-color hover:text-white transition-colors duration-300 ease-in-out"
+                                        onClick={() =>
+                                            handleOpenDownloadModal(standard)
+                                        }
+                                    >
+                                        Download
+                                    </button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                )}
             </Table>
             {isShowDownloadModal && (
                 <div className="fixed right-0 top-0 z-50 lg:w-[30%] w-full md:w-[60%]">

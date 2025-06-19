@@ -11,7 +11,7 @@ function Pagination({
     totalPages = 1,
     onPageChange = () => {},
 }: PaginationProps) {
-    const maxPagesToShow = 4; // Adjust this value as needed
+    const maxPagesToShow = 10; // Adjust this value as needed
 
     let startPage = Math.max(1, currentPage - 2);
     const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);

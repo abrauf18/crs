@@ -264,6 +264,7 @@ function AddQuestions({
                                                 validationError.REQUIRED_FIELD,
                                         },
                                     }}
+                                    defaultValue={answerOptions[0].value}
                                 />
                                 <Label
                                     htmlFor="correctOptionExplanation"

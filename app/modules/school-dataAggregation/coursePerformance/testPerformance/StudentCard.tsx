@@ -9,6 +9,9 @@ export interface StudentCardInterface {
     id: string;
     name: string;
     image: string | StaticImport;
+    userDetails?: any;
+    answerText?: string;
+    obtainedMarks?: number;
 }
 
 interface StudentCardProp {

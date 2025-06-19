@@ -1,55 +1,45 @@
-'use client';
-
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import Searchbar from '@/app/components/common/Searchbar';
-import { StudentRecordInterface } from '../StudentsRecordTable';
 import StudentProfile from './StudentProfile';
 import StudentOverallReport from './StudentOverallReport';
 
-export const studentRecord: StudentRecordInterface[] = [
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-    {
-        id: 1,
-        testName: 'Computer',
-        result: '10',
-        score: '10',
-    },
-];
-function StudentDetails() {
+interface Data {
+    student: Student;
+    summarizedStandardResults: SummarizedStandardResult[];
+    DailyProgress: DailyProgress[];
+}
+
+export interface Student {
+    name: string;
+    email: string;
+    image: string;
+    classroomName: string;
+    averageTotalWeightage: number;
+    averageObtainedWeightage: number;
+    classroomStudentId: string;
+}
+
+interface SummarizedStandardResult {
+    standardId: string;
+    standardName: string;
+    totalWeightage: number;
+    obtainedWeightage: number;
+}
+
+interface DailyProgress {
+    id: string;
+    classroomStudentId: string;
+    obtainedWeightage: number;
+    totalWeightage: number;
+    date: string;
+}
+
+function StudentDetails({ APIdata }: { APIdata: Data }) {
     return (
         <section>
-            <StudentProfile />
-            <StudentOverallReport studentRecord={studentRecord} />
+            <StudentProfile student={APIdata.student} />
+            <StudentOverallReport
+                studentRecord={APIdata.summarizedStandardResults}
+            />
         </section>
     );
 }

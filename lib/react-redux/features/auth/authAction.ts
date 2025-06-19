@@ -91,17 +91,18 @@ export const resetPassword = createAsyncThunk(
     }
 );
 
-interface signupInvitePayload {
+export interface signupInvitePayload {
     username: string;
     email: string;
     role: string;
     accessToken: string;
+    schoolId?: string;
 }
 
 export const signupInvite = createAsyncThunk(
     'user/signupInvite',
     async (
-        { username, email, role, accessToken }: signupInvitePayload,
+        { username, email, role, accessToken, schoolId }: signupInvitePayload,
         { rejectWithValue }
     ) => {
         try {
@@ -109,7 +110,8 @@ export const signupInvite = createAsyncThunk(
                 username,
                 email,
                 role,
-                accessToken
+                accessToken,
+                schoolId
             );
             const emailResponse = response.data;
             return emailResponse.data;

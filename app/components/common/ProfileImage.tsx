@@ -4,6 +4,7 @@ import PictureIcon from '@/app/assets/icons/PictureIcon';
 import { Trash2 } from 'lucide-react';
 
 type ProfileImageProps = {
+    isViewOnly?: boolean;
     selectedFile: File | null;
     currentImage: string;
     handleClick: (event: React.MouseEvent) => void;
@@ -14,6 +15,7 @@ type ProfileImageProps = {
 };
 
 function ProfileImage({
+    isViewOnly,
     selectedFile,
     currentImage,
     handleClick,
@@ -26,7 +28,7 @@ function ProfileImage({
         <div
             className={
                 inSettings
-                    ? `md:flex justify-between lg:space-x-4 items-center  mobile:w-full mobile:mb-2 gap-x-2`
+                    ? `md:flex gap-2 lg:space-x-4 items-center  mobile:w-full mobile:mb-2 gap-x-2`
                     : `flex flex-col justify-between items-center space-y-2`
             }
         >
@@ -53,7 +55,7 @@ function ProfileImage({
                                         : currentImage
                                 }
                                 alt="profile Image"
-                                className="rounded-full aspect-square object-cover h-32 w-32"
+                                className="rounded-full object-fit h-28 w-28"
                                 width={176}
                                 height={176}
                             />
@@ -61,38 +63,50 @@ function ProfileImage({
                     </div>
                 </div>
             </div>
-            <div
-                className={`flex flex-col ${
-                    inSettings
-                        ? `justify-between items-center mobile:w-full mb-4 lg:mb-0`
-                        : `lg:flex-row lg:space-x-2 justify-center items-center  mobile:w-full mb-5`
-                }`}
-            >
-                <button
-                    type="button"
-                    onClick={handleClick}
-                    className="text-white flex items-center bg-primary-color font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2"
+            {!isViewOnly && (
+                <div
+                    className={`flex flex-col ${
+                        inSettings
+                            ? `justify-between items-center mobile:w-full mb-4 lg:mb-0`
+                            : `lg:flex-row lg:space-x-2 justify-center items-center  mobile:w-full mb-5`
+                    }`}
                 >
-                    <PictureIcon className="shrink-0" width={18} height={18} />
-                    <span className="ml-1">Change Photo</span>
-                    <input
-                        type="file"
-                        id="profilePicInput"
-                        accept=".jpg, .jpeg, .png"
-                        onChange={handleFileChange}
-                        ref={hiddenFileInput}
-                        style={{ display: 'none' }}
-                    />
-                </button>
-                <button
-                    type="button"
-                    onClick={removeImage}
-                    className="text-dark-gray items-center flex font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2"
-                >
-                    <Trash2 className="shrink-0" size={18} color="#E6500D" />
-                    <span className="ml-1">Remove Photo</span>
-                </button>
-            </div>
+                    <div className="flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={handleClick}
+                            className="text-white flex items-center bg-primary-color font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2 hover:bg-orange-500"
+                        >
+                            <PictureIcon
+                                className="shrink-0"
+                                width={18}
+                                height={18}
+                            />
+                            <span className="ml-1">Update</span>
+                            <input
+                                type="file"
+                                id="profilePicInput"
+                                accept=".jpg, .jpeg, .png"
+                                onChange={handleFileChange}
+                                ref={hiddenFileInput}
+                                style={{ display: 'none' }}
+                            />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={removeImage}
+                            className="text-dark-gray items-center flex font-semibold mobile:w-full px-3 py-2 border rounded-lg mt-2 hover:bg-gray-200"
+                        >
+                            <Trash2
+                                className="shrink-0"
+                                size={18}
+                                color="#E6500D"
+                            />
+                            <span className="ml-1">Remove</span>
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

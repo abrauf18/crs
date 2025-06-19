@@ -26,18 +26,21 @@ export const getAllClassroomsOfTeacherAPI = async ({
 export const assignStandardToClassroomsAPI = async ({
     accessToken,
     standardId,
-    classroomIds,
+    classCourses,
 }: {
     accessToken: string;
     standardId: string;
-    classroomIds: string[];
+    classCourses: {
+        classroomId: string;
+        startDate: string;
+    }[];
 }) => {
     const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/assignStandardToClassrooms`,
         {
             accessToken,
             standardId,
-            classroomIds,
+            classCourses,
         }
     );
 
@@ -165,14 +168,14 @@ export const updateClassroomStudentAPI = async ({
     email,
     image,
     classroomId,
-    classroomStudentId,
+    studentId,
 }: {
     accessToken: string;
     name: string;
     email: string;
     image: string;
     classroomId: string;
-    classroomStudentId: string;
+    studentId: string;
 }) => {
     const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/updateClassroomStudent`,
@@ -182,9 +185,148 @@ export const updateClassroomStudentAPI = async ({
             email,
             image,
             classroomId,
-            classroomStudentId,
+            studentId,
         }
     );
 
     return response;
+};
+
+export const createClassroomAPI = async ({
+    accessToken,
+    name,
+    teacherId,
+    schoolId,
+}: {
+    accessToken: string;
+    name: string;
+    teacherId: string;
+    schoolId: string;
+}) => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/createClassroom`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                accessToken,
+                name,
+                teacherId,
+                schoolId,
+            }),
+        }
+    );
+
+    const result = await response.json();
+    return result;
+};
+
+export const addStudentToClassroomAPI = async ({
+    accessToken,
+    email,
+    classroomId,
+}: {
+    accessToken: string;
+    email: string;
+    classroomId: string;
+}) => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/addStudentToClassroom`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                accessToken,
+                email,
+                classroomId,
+            }),
+        }
+    );
+
+    const result = await response.json();
+    return result;
+};
+
+export const updateTeacherClassroomsAPI = async ({
+    accessToken,
+    schoolId,
+    teacherId,
+    classroomIds,
+}: {
+    accessToken: string;
+    schoolId: string;
+    teacherId: string;
+    classroomIds: string[];
+}) => {
+    const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/updateTeacherClassrooms`,
+        {
+            accessToken,
+            schoolId,
+            teacherId,
+            classroomIds,
+        }
+    );
+
+    return response;
+};
+
+export const changeClassStatusAPI = async ({
+    accessToken,
+    status,
+    classroomId,
+    schoolId,
+}: {
+    accessToken: string;
+    status: string;
+    classroomId: string;
+    schoolId: string;
+}) => {
+    const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/changeClassStatus`,
+        {
+            accessToken,
+            status,
+            classroomId,
+            schoolId,
+        }
+    );
+
+    return response;
+};
+
+export const getSchoolClassroomsAPI = async ({
+    accessToken,
+    schoolId,
+    page,
+    limit,
+    search,
+}: {
+    accessToken: string;
+    schoolId: string;
+    page: number;
+    limit: number;
+    search: string;
+}) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/classroom/getSchoolClassrooms`,
+        {
+            headers: {
+                accesstoken: accessToken,
+                schoolid: schoolId,
+                page: page.toString(),
+                limit: limit.toString(),
+                search,
+            },
+            next: {
+                tags: ['getSchoolClassrooms'],
+            },
+        }
+    );
+
+    return result;
 };

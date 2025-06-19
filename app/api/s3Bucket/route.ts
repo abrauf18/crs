@@ -101,7 +101,7 @@ async function deleteFileFromS3(url: string) {
     const key = keyMatch[1];
 
     const params = {
-        Bucket: process.env.AWS_BUCKET!,
+        Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET!,
         Key: key,
     };
 

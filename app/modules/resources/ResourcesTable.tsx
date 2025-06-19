@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -23,6 +23,7 @@ import {
     convertSpacesToDashes,
     ResourceToPath,
     ResourceType,
+    capitalizeWords,
 } from '@/lib/utils';
 
 interface ResourcesProp {
@@ -52,6 +53,18 @@ function ResourcesTable({
     const [isShowDialogBox, setIsShowDialogBox] = useState(false);
     const [selectedResource, setSelectedResource] =
         useState<Resource>(DEFAULT_RESOURCE);
+
+    useEffect(() => {
+        if (isShowDialogBox) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowDialogBox]);
 
     const handleClick = (
         event: React.MouseEvent<HTMLTableCellElement, MouseEvent>
@@ -102,7 +115,7 @@ function ResourcesTable({
                     poppins.className
                 }`}
             >
-                <TableHeader>
+                <TableHeader className="whitespace-nowrap">
                     <TableRow>
                         <TableHead className=" text-dark-gray font-bold">
                             SNO.
@@ -113,63 +126,89 @@ function ResourcesTable({
                         <TableHead className="text-dark-gray font-bold">
                             Resource Type
                         </TableHead>
-                        <TableHead className="text-dark-gray font-bold">
-                            Assign Topic{' '}
-                        </TableHead>
+                        {!isDashboard && (
+                            <TableHead className="text-dark-gray font-bold">
+                                Assign Topic{' '}
+                            </TableHead>
+                        )}
                         <TableHead className="text-dark-gray font-bold">
                             Action
                         </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {resources
-                        .map((resource: Resource, index: number) => (
-                            <TableRow className="border-none" key={resource.id}>
-                                <TableCell className="font-medium ">
-                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                        {currentPage * limit + index + 1}
-                                    </span>
-                                </TableCell>
-                                <TableCell className="">
-                                    <span className="flex gap-x-2 items-center ">
-                                        <span className="truncate h-[26px]">
-                                            {resource.name}
-                                        </span>
-                                    </span>
-                                </TableCell>
-                                {/* <TableCell>{resource.name}</TableCell> */}
-                                <TableCell className="text-dark-gray">
-                                    {resource.type}
-                                </TableCell>
-                                <TableCell
-                                    className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
-                                    onClick={(
-                                        e: React.MouseEvent<
-                                            HTMLTableCellElement,
-                                            MouseEvent
-                                        >
-                                    ) => handleClick(e)}
+                    {resources?.length > 0 ? (
+                        resources
+                            .map((resource: Resource, index: number) => (
+                                <TableRow
+                                    className="border-none"
+                                    key={resource.id}
                                 >
-                                    {resource.topic}
-                                </TableCell>
-                                <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
-                                    <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
-                                        <Eye
-                                            color="#F59A3B"
-                                            width={18}
-                                            height={18}
-                                            onClick={() => {
-                                                if (isDashboard) {
+                                    <TableCell className="font-medium ">
+                                        <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                            {currentPage * limit + index + 1}
+                                        </span>
+                                    </TableCell>
+                                    <TableCell className="">
+                                        <span className="flex gap-x-2 items-center ">
+                                            <span className="truncate h-[26px]">
+                                                {resource.name}
+                                            </span>
+                                        </span>
+                                    </TableCell>
+                                    {/* <TableCell>{resource.name}</TableCell> */}
+                                    <TableCell className="text-dark-gray">
+                                        {capitalizeWords(resource.type)}
+                                    </TableCell>
+                                    {!isDashboard && (
+                                        <TableCell
+                                            className="text-dark-gray cursor-pointer lg:hover:text-gray-700 lg:hover:underline"
+                                            onClick={(
+                                                e: React.MouseEvent<
+                                                    HTMLTableCellElement,
+                                                    MouseEvent
+                                                >
+                                            ) => handleClick(e)}
+                                        >
+                                            {resource.topic}
+                                        </TableCell>
+                                    )}
+                                    <TableCell className="flex justify-start items-center p-0 mt-3 ml-3">
+                                        <div className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer">
+                                            <Eye
+                                                color="#F59A3B"
+                                                width={18}
+                                                height={18}
+                                                onClick={() => {
+                                                    if (isDashboard) {
+                                                        if (
+                                                            resource.type ===
+                                                            ResourceType.VIDEO
+                                                        ) {
+                                                            return push(
+                                                                `${path}/video/${resource.videoId}`
+                                                            );
+                                                        }
+                                                        return push(
+                                                            `${path}/resources/${convertSpacesToDashes(
+                                                                resource.topic
+                                                            )}/${
+                                                                ResourceToPath[
+                                                                    resource.type as keyof typeof ResourceToPath
+                                                                ]
+                                                            }/${resource.id}`
+                                                        );
+                                                    }
                                                     if (
                                                         resource.type ===
                                                         ResourceType.VIDEO
                                                     ) {
                                                         return push(
-                                                            `${path}/video/${resource.videoId}`
+                                                            `/admin/video/${resource.videoId}`
                                                         );
                                                     }
                                                     return push(
-                                                        `${path}/resources/${convertSpacesToDashes(
+                                                        `${path}/${convertSpacesToDashes(
                                                             resource.topic
                                                         )}/${
                                                             ResourceToPath[
@@ -177,46 +216,37 @@ function ResourcesTable({
                                                             ]
                                                         }/${resource.id}`
                                                     );
-                                                }
-                                                if (
-                                                    resource.type ===
-                                                    ResourceType.VIDEO
-                                                ) {
-                                                    return push(
-                                                        `/admin/video/${resource.videoId}`
-                                                    );
-                                                }
-                                                return push(
-                                                    `${path}/${convertSpacesToDashes(
-                                                        resource.topic
-                                                    )}/${
-                                                        ResourceToPath[
-                                                            resource.type as keyof typeof ResourceToPath
-                                                        ]
-                                                    }/${resource.id}`
-                                                );
-                                            }}
-                                        />
-                                    </div>
-                                    {!isDashboard && (
-                                        <div
-                                            className="bg-red-100 rounded-md p-1 cursor-pointer"
-                                            onClick={() => {
-                                                setSelectedResource(resource);
-                                                setIsShowDialogBox(true);
-                                            }}
-                                        >
-                                            <Trash
-                                                color="#D34645"
-                                                width={18}
-                                                height={18}
+                                                }}
                                             />
                                         </div>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        ))
-                        .slice(0, isDashboard ? 4 : resources.length)}
+                                        {!isDashboard && (
+                                            <div
+                                                className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                                onClick={() => {
+                                                    setSelectedResource(
+                                                        resource
+                                                    );
+                                                    setIsShowDialogBox(true);
+                                                }}
+                                            >
+                                                <Trash
+                                                    color="#D34645"
+                                                    width={18}
+                                                    height={18}
+                                                />
+                                            </div>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                            .slice(0, isDashboard ? 4 : resources.length)
+                    ) : (
+                        <TableRow>
+                            <TableCell className="text-center" colSpan={5}>
+                                No resources found!
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
             {isShowDialogBox && (

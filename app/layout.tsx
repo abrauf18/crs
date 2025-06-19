@@ -25,7 +25,7 @@ export default async function RootLayout({
             <body className={montserrat.className}>
                 <ToastContainer
                     position="top-right"
-                    autoClose={2500}
+                    autoClose={1500}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick

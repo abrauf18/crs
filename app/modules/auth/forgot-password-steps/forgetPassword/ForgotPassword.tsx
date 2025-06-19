@@ -78,6 +78,7 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
                         <div className="text-center mt-8">
                             <Button
                                 type="button"
+                                disabled={loading}
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                                 onClick={handleSubmit}
                             >

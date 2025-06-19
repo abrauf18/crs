@@ -8,8 +8,8 @@ import Resources from '@/app/modules/student-resources/Resources';
 import { getStandardsResourcesAndCountAPI } from '@/app/api/student';
 
 export const metadata: Metadata = {
-    title: 'Resources',
-    description: 'Your All Resources Allocated to Topics',
+    title: 'All Assignments',
+    description: 'Your All Assignments Allocated to Topics',
 };
 
 type Resource = {

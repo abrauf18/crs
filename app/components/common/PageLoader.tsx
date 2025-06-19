@@ -1,19 +1,26 @@
-import React from 'react';
+'use client';
 
-function PageLoader({ additionalClasses }: { additionalClasses?: string }) {
+import React from 'react';
+import { Player } from '@lottiefiles/react-lottie-player';
+import crsLoader from '@/app/assets/images/crsLoader.json';
+
+function PageLoader({
+    additionalClasses = '',
+}: {
+    additionalClasses?: string;
+}) {
+    if (!crsLoader) {
+        return <div>Loading...</div>;
+    }
     return (
-        <div
-            className={`flex justify-center items-center h-screen gap-4 ${additionalClasses}`}
-        >
-            <div
-                className="h-12 w-12 bg-primary-color rounded-full animate-bounce"
-                style={{ animationDelay: '-0.3s' }}
+        <div className={`${additionalClasses} mt-44`}>
+            <Player
+                style={{ height: '30vh', width: '100%' }}
+                src={crsLoader}
+                autoplay
+                loop
+                speed={1}
             />
-            <div
-                className="h-12 w-12 bg-primary-color rounded-full animate-bounce"
-                style={{ animationDelay: '-0.15s' }}
-            />
-            <div className="h-12 w-12 bg-primary-color rounded-full animate-bounce" />
         </div>
     );
 }

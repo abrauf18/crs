@@ -33,7 +33,7 @@ function VideoCard({ card, isModal, onClickEditBtn }: VideoCardProps) {
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2 h-96">
             <div className="h-[60%] relative">
-                <Link href="#">
+                <Link href={`/admin/video/${card.id}`}>
                     <Image
                         src={card.imageUrl}
                         alt="video"

@@ -7,6 +7,7 @@ import { VideoSummary } from '@/lib/utils';
 import VideoIcon from '@/app/assets/icons/VideoIcon';
 import Filters from '@/app/components/common/Filters';
 import UploadResourceModal from '@/app/components/common/UploadResourceModal';
+import Searchbar from '@/app/components/common/Searchbar';
 import AddQuestions from './AddQuestions';
 import VideoCard, { Card } from './VideoCard';
 import CheckPointsModal from './CheckPointsModal';
@@ -49,9 +50,26 @@ function Video({
         setStep(0);
     };
 
+    useEffect(() => {
+        if (isShowUploadVideoModal || isShowEditVideoModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowUploadVideoModal, isShowEditVideoModal]);
+
     return (
         <>
-            <div className="mobile:mb-4">
+            <Searchbar
+                headerText="All Videos"
+                Icon={VideoIcon}
+                tagline="Your All Videos Are Listed Here"
+            />
+            <div className="mobile:mb-4 !overflow-hidden">
                 <Filters
                     text={`${APIdata.totalVideos} Videos In Total`}
                     secondButtonText="Upload Video"
@@ -59,22 +77,31 @@ function Video({
                     handleClick={handleOpenUploadModal}
                 />
             </div>
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6 ">
-                {APIdata?.videos?.map((card) => (
-                    <VideoCard
-                        card={{
-                            id: card.id,
-                            imageUrl: card.thumbnailURL,
-                            Text: card.name,
-                            Questions: card.questionCountNumber,
-                            Checkpoints: card.topicsCount,
-                        }}
-                        key={card.id}
-                        onClickEditBtn={handleOpenEditModal}
-                    />
-                ))}
+            <div>
+                {APIdata.totalVideos > 0 ? (
+                    <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-4 md:gap-6">
+                        {APIdata?.videos?.map((card) => (
+                            <VideoCard
+                                key={card.id}
+                                card={{
+                                    id: card.id,
+                                    imageUrl: card.thumbnailURL,
+                                    Text: card.name,
+                                    Questions: card.questionCountNumber,
+                                    Checkpoints: card.topicsCount,
+                                }}
+                                onClickEditBtn={handleOpenEditModal}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="flex justify-center items-center h-72 w-full">
+                        <p className="text-lg text-gray-500">
+                            No Videos Found!
+                        </p>
+                    </div>
+                )}
             </div>
-
             {isShowUploadVideoModal && step === 0 && (
                 <div className="fixed right-0 top-0 z-50 w-full md:w-[60%] lg:w-[30%]">
                     <UploadResourceModal

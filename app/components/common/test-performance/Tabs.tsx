@@ -28,7 +28,7 @@ function Tabs({
                     }`}
                     onClick={() => handleTabClick(tab)}
                 >
-                    {tab}
+                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
             ))}
         </div>

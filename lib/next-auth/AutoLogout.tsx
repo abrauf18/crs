@@ -20,7 +20,7 @@ function AutoLogout({ children }: { children: React.ReactNode }) {
                 path.includes('teacher') ||
                 path.includes('student'))
         ) {
-            router.push('/signin'); // Redirect to signin page or endpoint
+            // router.push('/signin'); // Redirect to signin page or endpoint
         }
     }, [session, router, path]);
 

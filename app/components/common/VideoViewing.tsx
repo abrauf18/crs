@@ -25,6 +25,7 @@ import { secondsToString, timeStringToSeconds } from '@/lib/utils';
 import { Bookmark } from 'lucide-react';
 import VideoQuestion from './VideoQuestion';
 import DialogBox from './DialogBox';
+import ButtonLoader from './ButtonLoader';
 
 function getVideoIdFromPathname(path: string) {
     const parts = path.split('/');
@@ -47,6 +48,7 @@ type Question = {
 };
 
 export default function VideoViewing({
+    hideButton,
     standardId,
     videoURL,
     thumbnailURL,
@@ -56,6 +58,7 @@ export default function VideoViewing({
     lastSeenTime,
     data,
 }: {
+    hideButton?: boolean;
     standardId?: string;
     videoURL: string;
     thumbnailURL: string;
@@ -75,7 +78,7 @@ export default function VideoViewing({
     const [playing, setPlaying] = useState(true);
     const videoId = getVideoIdFromPathname(pathname);
     const [videoReady, setVideoReady] = useState(false);
-    // const [isMounted, setIsMounted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [lastPlayedTime, setLastPlayedTime] = useState<number>(
         lastSeenTime ? timeStringToSeconds(lastSeenTime) : 0
     );
@@ -162,6 +165,7 @@ export default function VideoViewing({
                         userId: data?.user?.id,
                         questionId: question.id,
                         answer: '',
+                        standardId: standardId || '',
                     });
                     if (APIresponse.status !== 200) {
                         throw new Error(
@@ -169,6 +173,10 @@ export default function VideoViewing({
                                 'An error occured while submitting your answer'
                         );
                     }
+                    setAnsweredQuestions((prevState) => {
+                        const newState = prevState.map(() => true); // Mark all as true (answered)
+                        return newState;
+                    });
                     // toast.success('Answer submitted successfully');
                 } catch (error: any) {
                     // toast.error(
@@ -244,6 +252,7 @@ export default function VideoViewing({
             return;
         }
         try {
+            setIsLoading(true);
             const APIresponse = await SaveOrRemoveVideoAPI({
                 accessToken: data?.user?.accessToken,
                 standardId: standardId || '',
@@ -263,6 +272,8 @@ export default function VideoViewing({
                 error?.response?.data?.message ||
                     'Error updating video last seen time'
             );
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -356,13 +367,6 @@ export default function VideoViewing({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // useEffect(() => {
-    //     setIsMounted(true);
-    // }, []);
-
-    // if (!isMounted) {
-    //     return <PageLoader />;
-    // }
     return (
         <>
             <div>
@@ -374,18 +378,26 @@ export default function VideoViewing({
                             setPlaying={setPlaying}
                             handlePlayAfterQuestion={handlePlayAfterQuestion}
                             markQuestionAsAnswered={markQuestionAsAnswered}
+                            hideButton={hideButton}
+                            standardId={standardId || ''}
                         />
                     </div>
                 ) : (
                     <div>
-                        <button
-                            type="button"
-                            className="bg-primary-color text-white px-5 py-2 xl:float-right xl:mb-0 mb-5 rounded-lg hover:bg-orange-400 flex items-center gap-2"
-                            onClick={handleSavingVideo}
-                        >
-                            <Bookmark />
-                            <span>Save Video</span>
-                        </button>
+                        {/* {hideButton && (
+                            <button
+                                type="button"
+                                disabled={isLoading}
+                                className="bg-primary-color text-white w-38 p-3 xl:float-right xl:mb-0 mb-5 rounded-lg hover:bg-orange-400 flex items-center gap-2"
+                                onClick={handleSavingVideo}
+                            >
+                                <Bookmark />
+                                <span>
+                                    {isLoading ? 'Loading...' : 'Save Video'}
+                                </span>
+                            </button>
+                        )} */}
+
                         <div className="text-lg flex justify-center">
                             <ReactPlayer
                                 ref={playerRef}
@@ -400,15 +412,14 @@ export default function VideoViewing({
                                 onReady={() => setVideoReady(true)}
                             />
                         </div>
-
-                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-center gap-4">
-                            {topicsArray.length > 0 && (
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-center gap-4">
+                            {topicsArray.length > 0 ? (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
-                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
                                         Checkpoints
                                     </h2>
-                                    <Table className="text-center">
-                                        <TableHeader className="font-semibold whitespace-nowrap	">
+                                    <Table>
+                                        <TableHeader className="font-semibold whitespace-nowrap">
                                             <TableRow>
                                                 <TableCell>S.No</TableCell>
                                                 <TableCell>Topic</TableCell>
@@ -416,7 +427,7 @@ export default function VideoViewing({
                                                 <TableCell>Action</TableCell>
                                             </TableRow>
                                         </TableHeader>
-                                        <TableBody className="whitespace-nowrap	">
+                                        <TableBody className="whitespace-nowrap">
                                             {sortedTopics.map(
                                                 (
                                                     { popupTime, topic },
@@ -451,14 +462,21 @@ export default function VideoViewing({
                                         </TableBody>
                                     </Table>
                                 </div>
+                            ) : (
+                                <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow text-center">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
+                                        Checkpoints
+                                    </h2>
+                                    <p className="py-4 text-center">No Topic</p>
+                                </div>
                             )}
-                            {questionsArray.length > 0 && (
+                            {questionsArray.length > 0 ? (
                                 <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow">
-                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 pl-3">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
                                         Questions
                                     </h2>
-                                    <Table className="text-center">
-                                        <TableHeader className="font-semibold whitespace-nowrap	">
+                                    <Table>
+                                        <TableHeader className="font-semibold whitespace-nowrap">
                                             <TableRow>
                                                 <TableCell>Q.No</TableCell>
                                                 <TableCell>
@@ -468,7 +486,7 @@ export default function VideoViewing({
                                                 <TableCell>Action</TableCell>
                                             </TableRow>
                                         </TableHeader>
-                                        <TableBody className="whitespace-nowrap	">
+                                        <TableBody className="whitespace-nowrap">
                                             {questionsArray.map(
                                                 (
                                                     { popupTime, totalMarks },
@@ -506,6 +524,15 @@ export default function VideoViewing({
                                             )}
                                         </TableBody>
                                     </Table>
+                                </div>
+                            ) : (
+                                <div className="mt-4 border-2 border-light-gray p-2 basis-1/2 grow text-center">
+                                    <h2 className="text-xl font-semibold mb-2 border-b py-2 text-center">
+                                        Questions
+                                    </h2>
+                                    <p className="py-4 text-center">
+                                        No Question
+                                    </p>
                                 </div>
                             )}
                         </div>

@@ -1,6 +1,16 @@
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
-import { Eye, Trash } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import {
+    Activity,
+    BookAIcon,
+    Database,
+    Eye,
+    FileTerminal,
+    FileType2,
+    LayoutList,
+    ScrollText,
+    Trash,
+} from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -82,6 +92,18 @@ function CommonTable({
         setIsShowDialogBox(false);
     };
 
+    useEffect(() => {
+        if (showUploadResourceModal || isShowDialogBox) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [showUploadResourceModal, isShowDialogBox]);
+
     return (
         <>
             <Table className={`text-md mobile:text-sm ${poppins.className}`}>
@@ -101,42 +123,67 @@ function CommonTable({
                         </TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
-                    {resources.map((resource, index) => (
-                        <TableRow className="border-none" key={resource.id}>
-                            <TableCell className="font-medium">
-                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                    {currentPage * limit + index + 1}
-                                </span>
-                            </TableCell>
-                            <TableCell className="flex space-x-2 items-center">
-                                {resourcesType?.toLowerCase() ===
-                                    'slideshow' && <PptIcon fill="#1ebeff" />}
-                                {resourcesType?.toLowerCase() ===
-                                    "total-video's" && <RecorderIcon />}
-                                {resourcesType?.toLowerCase() ===
-                                    'worksheets' && <XlsIcon color="#54C3F4" />}
-                                {resourcesType?.toLowerCase() ===
-                                    'exit-ticket-test' && (
-                                    <TicketIcon color="#54C3F4" />
-                                )}
-                                {resourcesType?.toLowerCase() === 'quizzes' && (
-                                    <QuestionMarkIcon />
-                                )}
-                                {resourcesType?.toLowerCase() ===
-                                    'assignments' && <AssignmentIcon />}
+                {resources.length > 0 ? (
+                    <TableBody>
+                        {resources.map((resource, index) => (
+                            <TableRow className="border-none" key={resource.id}>
+                                <TableCell className="font-medium">
+                                    <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                        {currentPage * limit + index + 1}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="flex space-x-2 items-center">
+                                    {resourcesType?.toLowerCase() ===
+                                        'slideshows' && (
+                                        <PptIcon fill="#1ebeff" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'total-videos' && <RecorderIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'worksheets' && (
+                                        <XlsIcon color="#54C3F4" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'quizzes' && <QuestionMarkIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'assignments' && <AssignmentIcon />}
+                                    {resourcesType?.toLowerCase() ===
+                                        'labs' && (
+                                        <ScrollText color="#F02070" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'stations' && (
+                                        <LayoutList color="#F59A3B" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'activities' && (
+                                        <Activity color="#7D0DC3" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'guided-notes' && (
+                                        <BookAIcon color="#F0A020" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'formative-assessments' && (
+                                        <FileType2 color="#7D0DC3" />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'summarize-assessments' && (
+                                        <FileTerminal />
+                                    )}
+                                    {resourcesType?.toLowerCase() ===
+                                        'data-trackers' && (
+                                        <Database color="#F02070" />
+                                    )}
 
-                                <span>{resource.name}</span>
-                            </TableCell>
-                            <TableCell className="text-dark-gray">
-                                {resource.topic}
-                            </TableCell>
-                            <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 gap-2">
-                                <div className="bg-light-orange p-1 rounded-md cursor-pointer">
-                                    <Eye
-                                        color="#F59A3B"
-                                        width={18}
-                                        height={18}
+                                    <span>{resource.name}</span>
+                                </TableCell>
+                                <TableCell className="text-dark-gray">
+                                    {resource.topic}
+                                </TableCell>
+                                <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 gap-2">
+                                    <div
+                                        className="bg-light-orange p-1 rounded-md cursor-pointer"
                                         onClick={() => {
                                             if (
                                                 resource.type ===
@@ -150,34 +197,51 @@ function CommonTable({
                                                 `${pathname}/${resource.id}`
                                             );
                                         }}
+                                    >
+                                        <Eye
+                                            color="#F59A3B"
+                                            width={18}
+                                            height={18}
+                                        />
+                                    </div>
+                                    <EditIcon
+                                        width={28}
+                                        height={28}
+                                        className="cursor-pointer"
+                                        onClick={() => {
+                                            setSelectedResource(resource);
+                                            setShowUploadResourceModal(true);
+                                        }}
                                     />
-                                </div>
-                                <EditIcon
-                                    width={28}
-                                    height={28}
-                                    className="cursor-pointer"
-                                    onClick={() => {
-                                        setSelectedResource(resource);
-                                        setShowUploadResourceModal(true);
-                                    }}
-                                />
-                                <div
-                                    className="bg-red-100 rounded-md p-1 cursor-pointer"
-                                    onClick={() => {
-                                        setSelectedResource(resource);
-                                        setIsShowDialogBox(true);
-                                    }}
-                                >
-                                    <Trash
-                                        color="#D34645"
-                                        width={18}
-                                        height={18}
-                                    />
-                                </div>
+                                    <div
+                                        className="bg-red-100 rounded-md p-1 cursor-pointer"
+                                        onClick={() => {
+                                            setSelectedResource(resource);
+                                            setIsShowDialogBox(true);
+                                        }}
+                                    >
+                                        <Trash
+                                            color="#D34645"
+                                            width={18}
+                                            height={18}
+                                        />
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                ) : (
+                    <TableBody>
+                        <TableRow>
+                            <TableCell
+                                className="text-center py-12"
+                                colSpan={4}
+                            >
+                                No Entries found
                             </TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
+                    </TableBody>
+                )}
             </Table>
             {isShowDialogBox && (
                 <DialogBox

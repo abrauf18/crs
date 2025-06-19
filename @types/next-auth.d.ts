@@ -11,6 +11,7 @@ declare module 'next-auth' {
             name: string;
             role: string;
             message: string; // error message
+            schoolId?: string;
         };
     }
 }

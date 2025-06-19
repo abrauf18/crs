@@ -57,7 +57,7 @@ function Filters({
             {renderHeaderText()}
             <div className="flex">
                 {!isHideFirstBtn && (
-                    <div className="cursor-pointer mr-2 px-3 py-2 border text-dark-gray rounded-lg flex items-center justify-between text-sm">
+                    <div className="cursor-pointer mr-2 p-3 border text-dark-gray rounded-lg flex items-center justify-between text-sm">
                         <FilterIcon width={15} height={15} />
                         <select
                             onChange={handleFilterUpdate}
@@ -77,7 +77,7 @@ function Filters({
                 {!isHideSecondBtn && (
                     <div
                         onClick={handleClick}
-                        className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between gap-x-2.5 text-sm ${
+                        className={`px-4 py-3 cursor-pointer border rounded-lg flex items-center justify-between gap-x-2.5 text-sm hover:bg-orange-500 ${
                             secondButtonText?.startsWith('Create New') ||
                             secondButtonText?.startsWith('Upload')
                                 ? 'bg-primary-color text-white' // Add your styles for the bg-yellow condition

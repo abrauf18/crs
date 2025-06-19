@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import StudentIcon from '@/app/assets/icons/StudentIcon';
+import { ShieldAlert } from 'lucide-react';
 import ClassroomCard from './ClassroomCard';
 
 const colors = [
@@ -32,7 +33,7 @@ function Classroom({
 }) {
     const { push } = useRouter();
     const pathname = usePathname();
-    const [selectedClass, setSelectedClass] = useState('6th Class');
+    const [selectedClass, setSelectedClass] = useState('');
     const showClassStudents = (viewClass: React.SetStateAction<string>) => {
         setSelectedClass(viewClass);
         const detailsSection = document.getElementById('classDetailsSection');
@@ -41,27 +42,29 @@ function Classroom({
         }
     };
 
-    return (
-        <div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 ">
-                {summarizedClassrooms?.map((classroom, index) => {
-                    const colorIndex = index % colors.length;
-                    const { iconColor, iconBg, activeColor } =
-                        colors[colorIndex];
-                    return (
-                        <ClassroomCard
-                            key={classroom.id}
-                            Icon={StudentIcon}
-                            periods={`${classroom.name}`}
-                            students={`${classroom.studentCount} Students`}
-                            iconColor={iconColor}
-                            iconBg={iconBg}
-                            activeColor={activeColor}
-                            onClick={() => push(`${pathname}/${classroom.id}`)}
-                        />
-                    );
-                })}
-            </div>
+    return summarizedClassrooms?.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            {summarizedClassrooms.map((classroom, index) => {
+                const colorIndex = index % colors.length;
+                const { iconColor, iconBg, activeColor } = colors[colorIndex];
+                return (
+                    <ClassroomCard
+                        key={classroom.id}
+                        Icon={StudentIcon}
+                        periods={`${classroom.name}`}
+                        students={`${classroom.studentCount} Students`}
+                        iconColor={iconColor}
+                        iconBg={iconBg}
+                        activeColor={activeColor}
+                        onClick={() => push(`${pathname}/${classroom.id}`)}
+                    />
+                );
+            })}
+        </div>
+    ) : (
+        <div className="flex flex-col items-center justify-center w-full h-72 bg-white rounded-lg shadow-lg">
+            <ShieldAlert size={48} />
+            <p className="text-lg font-semibold mt-4">No Classroom Found</p>
         </div>
     );
 }

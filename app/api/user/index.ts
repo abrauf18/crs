@@ -18,7 +18,8 @@ export const updateUserProfileAPI = async (
     image: string,
     name: string,
     email: string,
-    password: string
+    password: string,
+    schoolName?: string
 ) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/updateUserProfile`,
@@ -28,6 +29,7 @@ export const updateUserProfileAPI = async (
             name,
             email,
             password,
+            ...(schoolName && { schoolName }),
         }
     );
 
@@ -96,4 +98,20 @@ export const deleteUserProfileAPI = async (
     );
 
     return result;
+};
+
+export const getAllTeacherAPI = async (accessToken: string) => {
+    const result = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/getAllTeachers`,
+        {
+            headers: {
+                accesstoken: accessToken,
+            },
+            next: {
+                tags: ['getAllTeachers'],
+            },
+        }
+    );
+    const response = await result.json();
+    return response;
 };

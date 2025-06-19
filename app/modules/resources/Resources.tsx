@@ -1,7 +1,7 @@
 'use client';
 
 // component is client beacuse of pagination
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Filters from '@/app/components/common/Filters';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
@@ -9,7 +9,6 @@ import Searchbar from '@/app/components/common/Searchbar';
 import Pagintaion from '@/app/components/common/Pagintaion';
 import {
     Resource,
-    ResourceType,
     commonFilterQueries,
     commonFilterOptions,
 } from '@/lib/utils';
@@ -59,6 +58,18 @@ function Resoures({
             router.push(`?page=${page}`);
         }
     };
+
+    useEffect(() => {
+        if (showAddResourceModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [showAddResourceModal]);
 
     return (
         <section>

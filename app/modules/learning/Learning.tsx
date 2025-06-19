@@ -152,14 +152,20 @@ function Learning({ standards }: { standards: StandardData[] }) {
                 tagline="Here’s Your All Learning Assigned to You"
             />
             <div className="flex justify-between items-center mt-8">
-                <p className="font-semibold text-2xl ">
-                    Your Assigned Learnings
-                </p>
+                <p className="font-medium text-xl ">Your Assigned Learnings</p>
             </div>
-
-            <div className="my-8">
-                <LearningCard standards={standards} />
-            </div>
+            {standards?.length > 0 ? (
+                <div className="my-8">
+                    <LearningCard standards={standards} />
+                </div>
+            ) : (
+                <div className="flex flex-col items-center justify-center w-full h-96 mt-5 bg-white rounded-lg shadow-lg">
+                    <CalendarDays size={48} />
+                    <p className="text-lg font-semibold mt-4">
+                        No Learning Assigned
+                    </p>
+                </div>
+            )}
         </div>
     );
 }

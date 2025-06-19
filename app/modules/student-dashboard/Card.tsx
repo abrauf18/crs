@@ -1,5 +1,4 @@
-import { ArrowDownRightSquare, LucideIcon, MoveDownRight } from 'lucide-react';
-import Link from 'next/link';
+import { LucideIcon, MoveDownRight } from 'lucide-react';
 import React from 'react';
 
 interface CardProps {

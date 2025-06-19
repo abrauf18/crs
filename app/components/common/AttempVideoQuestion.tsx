@@ -17,10 +17,13 @@ import FormError from './FormError';
 import PageLoader from './PageLoader';
 
 export default function AttempVideoQuestion({
+    hideButton,
     question,
     continueVideo,
     markQuestionAsAnswered,
+    standardId,
 }: {
+    hideButton?: boolean;
     question: {
         id: string;
         statement: string;
@@ -36,6 +39,7 @@ export default function AttempVideoQuestion({
     };
     continueVideo: () => void;
     markQuestionAsAnswered: () => void;
+    standardId: string;
 }) {
     const { data } = useSession();
     const methods = useForm({
@@ -69,6 +73,7 @@ export default function AttempVideoQuestion({
                     questionType === 'mcq'
                         ? formData.selectedOption
                         : formData.statement,
+                standardId: standardId || '',
             });
             if (APIresponse.status !== 200) {
                 throw new Error(
@@ -100,7 +105,7 @@ export default function AttempVideoQuestion({
                     alt="quiz"
                 />
             </div>
-            <div className="sm:basis-2/5">
+            <div className="sm:basis-4/12">
                 <div className="text-lg">
                     <FormProvider {...methods}>
                         <form
@@ -173,12 +178,12 @@ export default function AttempVideoQuestion({
                                     className="bg-primary-color text-sm text-white px-6 py-2 rounded-lg hover:bg-orange-400 float-right mt-2"
                                     type="submit"
                                 >
-                                    Submit
+                                    Next
                                 </button>
                             )}
-                            {data?.user?.role !== 'student' && (
+                            {data?.user?.role !== 'student' && hideButton && (
                                 <button
-                                    className="bg-primary-color text-sm text-white px-6 py-2 rounded-lg hover:bg-orange-400 float-right mt-2"
+                                    className="bg-primary-color text-sm text-white px-6 py-3 rounded-lg hover:bg-orange-400 float-right mt-4"
                                     type="button"
                                     onClick={continueVideo}
                                 >
@@ -189,11 +194,14 @@ export default function AttempVideoQuestion({
                     </FormProvider>
                 </div>
             </div>
-            <div className="absolute bottom-0 right-0 mb-6 text-dark-gray mr-6 text-[10px] font-semibold border p-2 rounded-lg">
-                <button type="button" onClick={continueVideo}>
-                    I’ll Do it Later
-                </button>
-            </div>
+            {!hideButton && (
+                <div
+                    className="absolute bottom-0 right-0 mb-6 text-dark-gray mr-6 text-[10px] font-semibold border border-dark-gray px-4 py-2 rounded-lg hover:bg-dark-gray hover:text-light-gray cursor-pointer"
+                    onClick={continueVideo}
+                >
+                    <button type="button">Skip</button>
+                </div>
+            )}
         </div>
     );
 }

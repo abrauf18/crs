@@ -11,6 +11,7 @@ export interface NavigationItemProps {
     itemText?: string;
     // eslint-disable-next-line react/no-unused-prop-types
     onClick?: () => void;
+    closeMenu?: () => void;
 }
 
 function NavigationItem({
@@ -18,6 +19,7 @@ function NavigationItem({
     ItemIcon,
     itemText,
     onClick,
+    closeMenu,
 }: NavigationItemProps) {
     const pathname = usePathname();
     const role = pathname.split('/')[1];
@@ -25,9 +27,18 @@ function NavigationItem({
     const isActive =
         pathname === to || (pathname.startsWith(to) && to !== `/${role}`);
 
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
+        }
+        if (closeMenu) {
+            closeMenu();
+        }
+    };
+
     return (
         <Link
-            onClick={onClick}
+            onClick={handleClick}
             href={to}
             // w-52
             className={`flex justify-start items-center w-52 md:w-[48px] md:h-[48px]   lg:w-52 p-3 mb-2 rounded-lg font-semibold text-sm ${

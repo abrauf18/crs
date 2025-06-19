@@ -7,10 +7,8 @@ import { LucideMoveUpRight } from 'lucide-react';
 import { StudentProfileResourceType } from '@/lib/utils';
 import Searchbar from '@/app/components/common/Searchbar';
 import Tabs from './Tabs';
-import TestPerformanceTable, {
-    TestRecordInterface,
-} from './TestPerformanceTable';
 import PageLoader from '../PageLoader';
+import TestPerformanceTable from './TestPerformanceTable';
 
 interface CourseData {
     id: string;
@@ -73,57 +71,6 @@ interface AssessmentAnswer {
     answerURL: string;
 }
 
-// export const TestRecord: TestRecordInterface[] = [
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Wrong',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Wrong',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Wrong',
-//     },
-//     {
-//         id: 1,
-//         question:
-//             'What did say as a kid when asked: What do you want to be when you grow up?',
-//         answer: 'Right',
-//     },
-// ];
-
 function TestPerformance({
     isShownFromStudent,
     isShownFromTeacher,
@@ -145,12 +92,14 @@ function TestPerformance({
                 <PageLoader />
             ) : (
                 <div>
-                    <Searchbar
-                        headerText={data?.user?.name || ''}
-                        tagline={data?.user?.email || ''}
-                        isShowBackArrow
-                        onBackClick={back}
-                    />
+                    {isShownFromStudent && (
+                        <Searchbar
+                            headerText={data?.user?.name || ''}
+                            tagline={data?.user?.email || ''}
+                            isShowBackArrow
+                            onBackClick={back}
+                        />
+                    )}
                     <div className="border rounded-lg p-5 mt-10">
                         <div className="flex flex-col mb-4 lg:flex-row justify-between items-center">
                             <h1 className="text-2xl lg:text-3xl font-semibold mb-4 lg:mb-0">

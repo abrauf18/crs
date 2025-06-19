@@ -13,17 +13,29 @@ async function TopicPage({ params }: { params: { topic: string } }) {
         slideshowCount: number;
         videoCount: number;
         worksheetCount: number;
-        exitTicketTestCount: number;
         quizCount: number;
         assignmentCount: number;
+        labCount: number;
+        stationCount: number;
+        activityCount: number;
+        guidedNoteCount: number;
+        formativeAssessmentCount: number;
+        summarizeAssessmentCount: number;
+        dataTrackerCount: number;
         totalCount: number;
     } = {
         slideshowCount: 0,
         videoCount: 0,
         worksheetCount: 0,
-        exitTicketTestCount: 0,
         quizCount: 0,
         assignmentCount: 0,
+        labCount: 0,
+        stationCount: 0,
+        activityCount: 0,
+        guidedNoteCount: 0,
+        formativeAssessmentCount: 0,
+        summarizeAssessmentCount: 0,
+        dataTrackerCount: 0,
         totalCount: 0,
     };
 

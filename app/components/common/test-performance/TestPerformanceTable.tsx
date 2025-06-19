@@ -98,16 +98,16 @@ function TestPerformanceTable({
     return (
         <section>
             <Table
-                className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                    poppins.className
-                }`}
+                className={`text-[${
+                    fontSize || '18'
+                }px] mobile:text-sm whitespace-nowrap ${poppins.className}`}
             >
-                <TableHeader>
+                <TableHeader className="whitespace-nowrap">
                     <TableRow>
-                        <TableHead className="w-[100px] text-dark-gray font-semibold">
+                        <TableHead className=" text-dark-gray font-semibold">
                             Q NO.
                         </TableHead>
-                        <TableHead className="w-[900px] text-dark-gray font-semibold">
+                        <TableHead className=" text-dark-gray font-semibold">
                             {activeTab === StudentProfileResourceType.VIDEO
                                 ? 'Video'
                                 : 'Assessment'}
@@ -150,9 +150,9 @@ function TestPerformanceTable({
                                     {test.weightage ?? 0}
                                 </TableCell>
 
-                                <TableCell className="flex justify-center items-center">
+                                <TableCell>
                                     <div
-                                        className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer md:mt-5 lg:mt-0"
+                                        className="w-7 bg-light-orange rounded-lg p-1 cursor-pointer"
                                         onClick={() => {
                                             const testDetails = test; // Capture the current test's details
                                             if (isShownFromStudent) {
@@ -164,7 +164,7 @@ function TestPerformanceTable({
                                                 setCurrentTest({
                                                     showModal: true,
                                                     testDetails,
-                                                }); // Assuming you want to use the same state for simplicity
+                                                });
                                             }
                                         }}
                                     >
@@ -193,14 +193,14 @@ function TestPerformanceTable({
             )}
 
             {currentTest.showModal && isShownFromTeacher && (
-                <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[25%]">
+                <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[30%]">
                     <TestReportModal
+                        test={currentTest.testDetails!}
                         onClose={() =>
                             setCurrentTest({
                                 showModal: false,
                             })
                         }
-                        test={currentTest.testDetails}
                     />
                 </div>
             )}

@@ -18,16 +18,14 @@ function CourseCard({
                 {name}
             </h5>
             <div>
-                <div className="flex flex-col lg:flex-row gap-2 mb-4">
-                    <div className="flex gap-1  text-dark-gray text-xs">
+                <div className="flex flex-col gap-2 mb-4">
+                    <div className="flex gap-1 text-dark-gray text-xs">
                         <PlayIcon height={17} width={17} color="#F59A3B" />
                         <p>Videos ({videoCount})</p>
-                    </div>
-                    <div className="flex gap-1  text-dark-gray text-xs">
                         <File width={17} height={17} color="#7AA43E" />
                         <p>Other Resources ({otherResourcesCount})</p>
                     </div>
-                    <div className="flex gap-1   text-dark-gray text-xs">
+                    <div className="flex gap-1 text-dark-gray text-xs">
                         <CalendarDays height={17} width={17} color="#54C3F4" />
                         <p>Course Length ({courseLength})</p>
                     </div>

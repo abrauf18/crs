@@ -80,7 +80,7 @@ function MyAnswersModal({
 
                 <div className="flex   w-full">
                     <div className="p-4 border-2 border-green-600 bg-green-100 rounded-lg w-full">
-                        <h1 className="font-medium">Obtained Marks</h1>
+                        <h1 className="font-medium">Obtained Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
                                 {test.performance}
@@ -88,7 +88,7 @@ function MyAnswersModal({
                         </h1>
                     </div>
                     <div className="p-4 border-2 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">Total Marks</h1>
+                        <h1 className="font-medium">Total Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold ">
                             <span className="font-bold text-lg text-black">
                                 {test.weightage}
@@ -100,7 +100,7 @@ function MyAnswersModal({
                 <div className="flex mt-2  w-full">
                     <div className="p-4 border-2 rounded-lg w-full">
                         <h1 className="font-medium">
-                            Marks Awaiting Evaluation
+                            Weightage Awaiting Evaluation
                         </h1>
                         <h1 className="mt-2 text-gray-600 font-semibold">
                             <span className="font-bold text-lg text-black">
@@ -109,9 +109,7 @@ function MyAnswersModal({
                         </h1>
                     </div>
                     <div className="p-4 border-2 border-red-600 bg-red-100 rounded-lg w-full ml-4">
-                        <h1 className="font-medium">
-                            Marks of Unattempted Questions
-                        </h1>
+                        <h1 className="font-medium">Unattempted Weightage</h1>
                         <h1 className="mt-2 text-gray-600 font-semibold ">
                             <span className="font-bold text-lg text-black">
                                 {test.unAnsweredWeightage}
@@ -167,25 +165,24 @@ function MyAnswersModal({
                                         </p>
                                     )
                                 )}
-                            <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
-                                {question?.answers[0] ? (
-                                    question.answers[0].obtainedMarks === -1 ? (
-                                        'Not Marked'
-                                    ) : (
-                                        <>
-                                            Marked:{' '}
-                                            <span className="text-primary-color">
-                                                {
-                                                    question.answers[0]
-                                                        .obtainedMarks
-                                                }
-                                            </span>
-                                        </>
-                                    )
+                            {question?.answers[0] ? (
+                                question.answers[0].obtainedMarks === -1 ? (
+                                    <p className="mt-2 text-dark-gray font-semibold text-center border p-2 rounded-lg">
+                                        Not Marked
+                                    </p>
                                 ) : (
-                                    'Not Answered'
-                                )}
-                            </p>
+                                    <p className="mt-2 text-dark-gray font-semibold text-center border p-2 rounded-lg">
+                                        Marked:{' '}
+                                        <span className="text-primary-color">
+                                            {question.answers[0].obtainedMarks}
+                                        </span>
+                                    </p>
+                                )
+                            ) : (
+                                <p className="mt-2 text-red-600 bg-red-100 font-semibold text-center border border-red-600 p-2 rounded-lg">
+                                    Not Answered
+                                </p>
+                            )}
 
                             <hr className="my-5" />
                         </div>
@@ -214,7 +211,7 @@ function MyAnswersModal({
                                     Not Marked
                                 </p>
                             ) : (
-                                <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                                <p className="mt-2 text-dark-gray font-semibold text-center border p-2 rounded-lg">
                                     Marked:{' '}
                                     <span className="text-primary-color">
                                         {
@@ -227,7 +224,7 @@ function MyAnswersModal({
                                 </p>
                             )
                         ) : (
-                            <p className="mt-2 text-dark-gray font-semibold text-base border p-2 rounded-lg">
+                            <p className="mt-2 text-red-600 bg-red-100 border-red-600 font-semibold text-center border p-2 rounded-lg">
                                 Not Answered
                             </p>
                         )}

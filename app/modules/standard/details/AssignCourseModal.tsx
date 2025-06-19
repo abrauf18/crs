@@ -3,16 +3,18 @@
 import { Session } from 'next-auth';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
-import { FileVideoIcon, X } from 'lucide-react';
+import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
+import { X } from 'lucide-react';
 import action from '@/app/action';
-import { OptionsInterface } from '@/app/components/common/AppDropDown';
+import { validationError } from '@/lib/utils';
+import Input from '@/app/components/common/Input';
 import { ErrorMessage } from '@hookform/error-message';
 import { Label } from '@/app/components/ui/label';
 import Select from '@/app/components/common/DropDown';
 import PageLoader from '@/app/components/common/PageLoader';
 import ModalFooter from '@/app/components/common/ModalFooter';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
+import { OptionsInterface } from '@/app/components/common/AppDropDown';
 import {
     assignStandardToClassroomsAPI,
     getAllClassroomsOfTeacherAPI,
@@ -21,7 +23,10 @@ import { getSummarizedStandardAPI } from '@/app/api/standard';
 import CourseCard from './CourseCard';
 
 interface FormValues {
-    selectedClasses: string[];
+    selectedClasses: {
+        classroomId: string;
+        startDate: string;
+    }[];
 }
 
 function AssignCourseModal({
@@ -47,34 +52,52 @@ function AssignCourseModal({
         totalNonVideoUploads: '',
     });
     const [gradeOptions, setGradeOptions] = useState<OptionsInterface[]>([]);
+
     const methods = useForm<FormValues>({
         mode: 'onChange',
         reValidateMode: 'onChange',
         defaultValues: {
-            selectedClasses: [gradeOptions[0]?.label],
+            selectedClasses: [],
         },
     });
+
     const {
         formState: { errors, isValid },
         trigger,
         watch,
+        control,
         reset,
-        setValue,
     } = methods;
-    const selectedGradeIds = watch('selectedClasses');
+
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: 'selectedClasses',
+    });
+
     const filteredGradeOptions = gradeOptions?.filter(
         (classItem: OptionsInterface) =>
-            !selectedGradeIds?.includes(classItem?.label)
+            !watch('selectedClasses')?.some(
+                (selected) => selected.classroomId === classItem.label
+            )
     );
 
     const onSubmit = async (formData: FormValues) => {
         try {
             trigger('selectedClasses');
             setButtonLoading(true);
+
+            // Prepare data for API
+            const classCourses = formData.selectedClasses.map(
+                ({ classroomId, startDate }) => ({
+                    classroomId,
+                    startDate,
+                })
+            );
+
             const response = await assignStandardToClassroomsAPI({
                 accessToken: data?.user?.accessToken || '',
                 standardId,
-                classroomIds: formData?.selectedClasses,
+                classCourses,
             });
 
             if (response.status !== 200) {
@@ -138,12 +161,17 @@ function AssignCourseModal({
                 const teacherResponseData = await teacherAPIdata.json();
                 setGradeOptions(teacherResponseData?.data);
                 reset({
-                    selectedClasses: [teacherResponseData?.data[0].label],
+                    selectedClasses: [
+                        {
+                            classroomId: teacherResponseData?.data[0].label,
+                            startDate: '',
+                        },
+                    ],
                 });
             } catch (error: any) {
                 toast.error(
-                    error?.message ??
-                        'An error occurred while fetching teachers classes'
+                    error?.response?.data?.message ||
+                        'An error occurred while fetching standard classrooms'
                 );
             } finally {
                 setModalLoading(false);
@@ -159,7 +187,7 @@ function AssignCourseModal({
     }
 
     return (
-        <section className="w-full bg-white h-screen py-4 shadow-lg">
+        <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-scroll">
             {modalLoading ? (
                 <div>
                     <PageLoader />
@@ -189,131 +217,132 @@ function AssignCourseModal({
                                 />
                                 <div className="h-96 overflow-y-scroll">
                                     <div className="my-3 w-full">
-                                        <Label htmlFor="password ">
+                                        <Label htmlFor="selectedClasses">
                                             Select Class To Assign
                                         </Label>
-                                        {watch('selectedClasses')?.map(
-                                            (
-                                                classItem: string,
-                                                index: number
-                                            ) => (
-                                                <div
-                                                    // eslint-disable-next-line react/no-array-index-key
-                                                    key={`selectedClasses.${index}`}
-                                                >
-                                                    <div className="flex gap-1">
-                                                        <div className="mt-4 grow">
-                                                            <Select
-                                                                additionalClasses="!w-full"
-                                                                name={`selectedClasses.${index}`}
-                                                                options={
-                                                                    gradeOptions
-                                                                }
-                                                                // eslint-disable-next-line prettier/prettier
-                                                                selectedOption={
-                                                                    classItem
-                                                                }
-                                                                rules={{
-                                                                    validate: (
-                                                                        currentLabel: string
-                                                                    ) => {
-                                                                        const allSelectedGradeIds =
-                                                                            watch(
-                                                                                'selectedClasses'
-                                                                            );
-                                                                        const previousSelectedGradeIds =
-                                                                            allSelectedGradeIds.slice(
-                                                                                0,
-                                                                                index
-                                                                            );
-                                                                        return (
-                                                                            !previousSelectedGradeIds.includes(
-                                                                                currentLabel
-                                                                            ) ||
-                                                                            'This value has been selected before'
+                                        {fields.map((field, index) => (
+                                            <div key={field.id}>
+                                                <div className="flex gap-1">
+                                                    <div className="mt-4 grow">
+                                                        <Select
+                                                            additionalClasses="!w-full z-50"
+                                                            name={`selectedClasses.${index}.classroomId`}
+                                                            options={
+                                                                gradeOptions
+                                                            }
+                                                            selectedOption={
+                                                                field.classroomId
+                                                            }
+                                                            rules={{
+                                                                validate: (
+                                                                    currentClassroomId: string
+                                                                ) => {
+                                                                    const allSelectedClassroomIds =
+                                                                        watch(
+                                                                            'selectedClasses'
+                                                                        ).map(
+                                                                            (
+                                                                                selected
+                                                                            ) =>
+                                                                                selected.classroomId
                                                                         );
-                                                                    },
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <button
-                                                            className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white"
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const currentClasses =
-                                                                    watch(
-                                                                        'selectedClasses'
-                                                                    );
-                                                                const updatedClasses =
-                                                                    currentClasses.filter(
-                                                                        (
-                                                                            currentClass: string,
-                                                                            idx: number
-                                                                        ) =>
-                                                                            idx !==
+                                                                    const previousSelectedClassroomIds =
+                                                                        allSelectedClassroomIds.slice(
+                                                                            0,
                                                                             index
+                                                                        );
+                                                                    return (
+                                                                        !previousSelectedClassroomIds.includes(
+                                                                            currentClassroomId
+                                                                        ) ||
+                                                                        'This value has been selected before'
                                                                     );
-                                                                setValue(
-                                                                    'selectedClasses',
-                                                                    updatedClasses
-                                                                );
-                                                                trigger(
-                                                                    'selectedClasses'
-                                                                );
+                                                                },
                                                             }}
-                                                        >
-                                                            remove
-                                                        </button>
+                                                        />
                                                     </div>
-                                                    <div className="mt-2">
-                                                        <span className="text-red-500 text-xs mt-2">
-                                                            <ErrorMessage
-                                                                errors={errors}
-                                                                name={`selectedClasses.${index}`}
-                                                                render={({
-                                                                    message,
-                                                                }) => (
-                                                                    <p className="flex items-center">
-                                                                        <X
-                                                                            size={
-                                                                                20
-                                                                            }
-                                                                            color="#E6500D"
-                                                                        />
-                                                                        {
-                                                                            message
-                                                                        }
-                                                                    </p>
-                                                                )}
-                                                            />
-                                                        </span>
+                                                    <button
+                                                        className="flex-none cursor-pointer mt-4 p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 z-50"
+                                                        type="button"
+                                                        onClick={() =>
+                                                            remove(index)
+                                                        }
+                                                    >
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                                <div className="flex gap-1">
+                                                    <div className="mt-4 grow">
+                                                        <Input
+                                                            name={`selectedClasses.${index}.startDate`}
+                                                            additionalClasses="!w-full"
+                                                            type="date"
+                                                            rules={{
+                                                                required: {
+                                                                    value: true,
+                                                                    message:
+                                                                        validationError.REQUIRED_FIELD,
+                                                                },
+                                                            }}
+                                                        />
                                                     </div>
                                                 </div>
-                                            )
-                                        )}
+                                                <div className="mt-2">
+                                                    <span className="text-red-500 text-xs mt-2">
+                                                        <ErrorMessage
+                                                            errors={errors}
+                                                            name={`selectedClasses.${index}.classroomId`}
+                                                            render={({
+                                                                message,
+                                                            }) => (
+                                                                <p className="flex items-center">
+                                                                    <X
+                                                                        size={
+                                                                            20
+                                                                        }
+                                                                        color="#E6500D"
+                                                                    />
+                                                                    {message}
+                                                                </p>
+                                                            )}
+                                                        />
+                                                        <ErrorMessage
+                                                            errors={errors}
+                                                            name={`selectedClasses.${index}.startDate`}
+                                                            render={({
+                                                                message,
+                                                            }) => (
+                                                                <p className="flex items-center">
+                                                                    <X
+                                                                        size={
+                                                                            20
+                                                                        }
+                                                                        color="#E6500D"
+                                                                    />
+                                                                    {message}
+                                                                </p>
+                                                            )}
+                                                        />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                     {filteredGradeOptions.length > 0 && (
-                                        <div className="flex justify-end">
-                                            <p
-                                                className="text-dark-gray text-base cursor-pointer"
-                                                onClick={() => {
-                                                    const currentClasses =
-                                                        watch(
-                                                            'selectedClasses'
-                                                        );
-                                                    const updatedClasses = [
-                                                        ...currentClasses,
-                                                        filteredGradeOptions[0]
-                                                            .label,
-                                                    ];
-                                                    setValue(
-                                                        'selectedClasses',
-                                                        updatedClasses
-                                                    );
-                                                }}
+                                        <div className="flex flex-col items-end">
+                                            <div
+                                                className="flex border p-2 w-28 justify-center text-dark-gray rounded-lg items-center mt-4  hover:bg-primary-color hover:text-white z-50"
+                                                onClick={() =>
+                                                    append({
+                                                        classroomId:
+                                                            filteredGradeOptions[0]
+                                                                .label,
+                                                        startDate: '',
+                                                    })
+                                                }
                                             >
                                                 Add More
-                                            </p>
+                                            </div>
                                         </div>
                                     )}
                                 </div>

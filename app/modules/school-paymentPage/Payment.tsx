@@ -24,12 +24,9 @@ function Payment() {
                     </p>
 
                     <div className="flex flex-col mt-5  ">
-                        <label
-                            htmlFor="card_number"
-                            className="font-medium mb-2"
-                        >
+                        <Label htmlFor="card_name" className="font-medium mb-2">
                             Card Number
-                        </label>
+                        </Label>
 
                         <div
                             className={`border ${
@@ -97,17 +94,17 @@ function Payment() {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-primary-color text-center font-semibold cursor-pointer lg:hover:bg-orange-400 rounded-xl py-2 text-white mt-5 ">
+                    <div className="bg-primary-color text-center font-semibold cursor-pointer lg:hover:bg-orange-400 rounded-lg py-2 text-white mt-5 ">
                         <span>Pay Now</span>
                     </div>
 
                     <div className="text-center font-semibold mt-5">Or</div>
                     <div>
-                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2 lg:hover:bg-gray-100 mt-5">
+                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-lg py-2 lg:hover:bg-gray-100 mt-5">
                             <StripeIcon />
                             <span>Pay With Stripe</span>
                         </div>
-                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-xl py-2  lg:hover:bg-gray-100 mt-5">
+                        <div className="border flex space-x-2 justify-center items-center text-center font-semibold cursor-pointer rounded-lg py-2  lg:hover:bg-gray-100 mt-5">
                             <PayPalIcon />
                             <span>Pay With Paypal</span>
                         </div>

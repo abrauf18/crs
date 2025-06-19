@@ -79,6 +79,7 @@ async function DashboardPage() {
                 ResourceAPIData = ResourceAPIResponse?.data;
                 return (
                     <Dashboard
+                        name={data.user.name}
                         AdminSummaries={adminDashboardAPIResponse.data}
                         UserAPIData={UserAPIdata}
                         ResourceAPIData={ResourceAPIData}

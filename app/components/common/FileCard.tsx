@@ -4,6 +4,7 @@ import React from 'react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import PptIcon from '@/app/assets/icons/PptIcon';
 import XlsIcon from '@/app/assets/icons/XlsIcon';
+import { ResourceType } from '@/lib/utils';
 
 export interface FileInterface {
     id: string;
@@ -20,9 +21,22 @@ interface FileCardProp {
 }
 
 function FileCard({ card, released, handleDownload }: FileCardProp) {
-    const resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
-        card?.imageUrl as string
-    )}`;
+    let resourceRenderingLink = '';
+
+    if (
+        card?.resourceType === ResourceType.SLIDESHOW ||
+        card?.resourceType === ResourceType.ASSIGNMENT ||
+        card?.resourceType === ResourceType.QUIZ ||
+        card?.resourceType === ResourceType.WORKSHEET ||
+        card?.resourceType === ResourceType.SUMMARIZE_ASSESSMENT ||
+        card?.resourceType === ResourceType.FORMATIVE_ASSESSMENT
+    ) {
+        resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+            card?.imageUrl as string
+        )}`;
+    } else {
+        resourceRenderingLink = card?.imageUrl?.toString() as string;
+    }
 
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2 ">
@@ -54,7 +68,7 @@ function FileCard({ card, released, handleDownload }: FileCardProp) {
                 }}
             >
                 <p
-                    className={` px-5 py-3 w-fit rounded-2xl
+                    className={`p-3 w-fit rounded-lg hover:bg-orange-500
                         ${
                             !released
                                 ? 'bg-gray-300 text-white'

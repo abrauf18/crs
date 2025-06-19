@@ -38,14 +38,19 @@ type ResourceFormData = {
     name: string;
     thumbnail?: File;
     totalMarks?: number;
-    youtubeURL?: string;
+    URL?: string;
     selectedUploadOption: string;
     deadline?: number;
 };
 
-const uploadOptions = [
-    { label: 'file', value: 'file' },
-    { label: 'youtube', value: 'youtube' },
+const videoUploadOptions = [
+    { label: 'file', value: 'File' },
+    { label: 'youtube', value: 'Youtube' },
+];
+
+const slideUploadOptions = [
+    { label: 'file', value: 'File' },
+    { label: 'googleSlides', value: 'Google Slide' },
 ];
 
 function UploadResourceModal({ onClose }: any) {
@@ -56,6 +61,16 @@ function UploadResourceModal({ onClose }: any) {
     const methods = useForm({
         mode: 'onChange',
         reValidateMode: 'onChange',
+        // defaultValues: {
+        //     topic: '',
+        //     type: 'lab',
+        //     name: '',
+        //     thumbnail: null,
+        //     totalMarks: 0,
+        //     URL: '',
+        //     selectedUploadOption: '',
+        //     deadline: 0,
+        // },
     });
     const resourceName = methods.watch('name');
     const resourceType = methods.watch('type');
@@ -204,12 +219,12 @@ function UploadResourceModal({ onClose }: any) {
         let videoDuration = 0;
 
         if (selectedUploadOption === 'youtube') {
-            if (!formData.youtubeURL) {
+            if (!formData.URL) {
                 toast.error('Please Enter Youtube URL');
                 return { status: 400 };
             }
-            resourceURL = formData.youtubeURL;
-            videoDuration = await getVideoDuration(formData.youtubeURL);
+            resourceURL = formData.URL;
+            videoDuration = await getVideoDuration(formData.URL);
         } else {
             if (!selectedFile) {
                 toast.error('Please Select File');
@@ -235,12 +250,20 @@ function UploadResourceModal({ onClose }: any) {
     };
 
     const handleFileUpload = async (formData: ResourceFormData) => {
-        if (!selectedFile) {
-            toast.error('Please Select File');
-            return { status: 400 };
+        let resourceURL = '';
+        if (selectedUploadOption === 'googleSlides') {
+            if (!formData.URL) {
+                toast.error('Please Enter Google Slides URL');
+                return { status: 400 };
+            }
+            resourceURL = formData.URL;
+        } else {
+            if (!selectedFile) {
+                toast.error('Please Select File');
+                return { status: 400 };
+            }
+            resourceURL = await uploadFile(selectedFile);
         }
-
-        const resourceURL = await uploadFile(selectedFile);
         if (!resourceURL) {
             toast.error('Failed to upload file');
             return { status: 400 };
@@ -261,14 +284,14 @@ function UploadResourceModal({ onClose }: any) {
     const Icon = resourceTypeToIcon(resourceType);
 
     return (
-        <section className="w-full bg-white h-screen py-4 shadow-lg">
+        <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-auto">
             <FormProvider {...methods}>
                 <form
                     onSubmit={methods.handleSubmit(
                         handleUpload as SubmitHandler<FieldValues>
                     )}
                 >
-                    <div className="lg:h-[41rem] md:h-[39rem] h-[33rem] overflow-y-auto w-full px-6">
+                    <div className="px-6 mb-24">
                         <ModalHeader
                             headerText={{
                                 heading: 'Upload Resource',
@@ -286,6 +309,7 @@ function UploadResourceModal({ onClose }: any) {
                             </Label>
                             <Select
                                 name="type"
+                                additionalClasses="font-semibold text-md"
                                 options={resourceTypeOptions}
                                 rules={{
                                     required: {
@@ -345,6 +369,7 @@ function UploadResourceModal({ onClose }: any) {
                                     name="thumbnail"
                                     placeholder="Select Thumbnail"
                                     type="file"
+                                    accept=".jpeg, .png, .jpg"
                                     rules={{
                                         required: {
                                             value: true,
@@ -357,8 +382,11 @@ function UploadResourceModal({ onClose }: any) {
                         )}
                         {(resourceType === ResourceType.QUIZ ||
                             resourceType === ResourceType.WORKSHEET ||
-                            resourceType === ResourceType.EXIT_TICKET_TEST ||
-                            resourceType === ResourceType.ASSIGNMENT) && (
+                            resourceType === ResourceType.ASSIGNMENT ||
+                            resourceType ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resourceType ===
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -387,8 +415,11 @@ function UploadResourceModal({ onClose }: any) {
                         )}
                         {(resourceType === ResourceType.QUIZ ||
                             resourceType === ResourceType.WORKSHEET ||
-                            resourceType === ResourceType.EXIT_TICKET_TEST ||
-                            resourceType === ResourceType.ASSIGNMENT) && (
+                            resourceType === ResourceType.ASSIGNMENT ||
+                            resourceType ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resourceType ===
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="deadline"
@@ -415,7 +446,8 @@ function UploadResourceModal({ onClose }: any) {
                                 />
                             </div>
                         )}
-                        {resourceType === ResourceType.VIDEO && (
+                        {(resourceType === ResourceType.VIDEO ||
+                            resourceType === ResourceType.SLIDESHOW) && (
                             <div className="flex flex-col space-y-1 mt-4">
                                 <Label
                                     htmlFor="selectedUploadOption"
@@ -425,7 +457,11 @@ function UploadResourceModal({ onClose }: any) {
                                 </Label>
                                 <Select
                                     name="selectedUploadOption"
-                                    options={uploadOptions}
+                                    options={
+                                        resourceType === ResourceType.VIDEO
+                                            ? videoUploadOptions
+                                            : slideUploadOptions
+                                    }
                                     rules={{
                                         required: {
                                             value: true,
@@ -437,44 +473,59 @@ function UploadResourceModal({ onClose }: any) {
                             </div>
                         )}
                         <div className="mt-4">
-                            {resourceType === ResourceType.VIDEO &&
-                                selectedUploadOption === 'youtube' &&
+                            {((resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption === 'youtube') ||
+                                (resourceType === ResourceType.SLIDESHOW &&
+                                    selectedUploadOption === 'googleSlides')) &&
                                 progress === 0 && (
-                                    <>
-                                        <div className="flex flex-col space-y-1 mt-5">
-                                            <Label
-                                                htmlFor="youtubeURL"
-                                                className="font-semibold text-md"
-                                            >
-                                                Youtube URL
-                                            </Label>
-                                            <Input
-                                                name="youtubeURL"
-                                                placeholder="Provide youtube URL"
-                                                type="input"
-                                                rules={{
-                                                    required: {
-                                                        value: true,
-                                                        message:
-                                                            validationError.REQUIRED_FIELD,
-                                                    },
-                                                }}
-                                            />
-                                        </div>
-                                        {progress !== 0 && (
-                                            <div className="mt-4">
-                                                <FileUploading
-                                                    fileName={resourceName}
-                                                    progress={progress}
-                                                    Icon={Icon}
-                                                />
-                                            </div>
-                                        )}
-                                    </>
+                                    <div className="flex flex-col space-y-1 mt-5">
+                                        <Label
+                                            htmlFor="URL"
+                                            className="font-semibold text-md"
+                                        >
+                                            {resourceType === ResourceType.VIDEO
+                                                ? `Youtube URL`
+                                                : `Google Slides URL`}
+                                        </Label>
+                                        <Input
+                                            name="URL"
+                                            placeholder={
+                                                resourceType ===
+                                                ResourceType.VIDEO
+                                                    ? `Provide Youtube URL`
+                                                    : `Provide Google Slides URL`
+                                            }
+                                            type="input"
+                                            rules={{
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        validationError.REQUIRED_FIELD,
+                                                },
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            {((resourceType === ResourceType.VIDEO &&
+                                selectedUploadOption === 'youtube') ||
+                                (resourceType === ResourceType.SLIDESHOW &&
+                                    selectedUploadOption === 'googleSlides')) &&
+                                progress !== 0 && (
+                                    <div className="mt-4">
+                                        <FileUploading
+                                            fileName={resourceName}
+                                            progress={progress}
+                                            Icon={Icon}
+                                        />
+                                    </div>
                                 )}
                             {((resourceType === ResourceType.VIDEO &&
                                 selectedUploadOption !== 'youtube') ||
-                                resourceType !== ResourceType.VIDEO) && (
+                                (resourceType === ResourceType.SLIDESHOW &&
+                                    selectedUploadOption !== 'googleSlides') ||
+                                (resourceType !== ResourceType.VIDEO &&
+                                    resourceType !==
+                                        ResourceType.SLIDESHOW)) && (
                                 <>
                                     {!selectedFile && (
                                         <UploadItem
@@ -495,15 +546,17 @@ function UploadResourceModal({ onClose }: any) {
                                     )}
                                 </>
                             )}
-                            <div className="p-2 rounded-lg border w-32 text-center mt-3">
-                                <button
-                                    type="button"
-                                    className="text-dark-gray text-sm"
+                            {(selectedUploadOption !== 'youtube' ||
+                                selectedUploadOption !== 'googleSlides') && (
+                                <div
+                                    className="p-2 rounded-lg border w-32 text-center mt-3 text-dark-gray cursor-pointer hover:bg-dark-gray hover:text-light-gray"
                                     onClick={() => setSelectedFile(null)}
                                 >
-                                    Cancel Upload
-                                </button>
-                            </div>
+                                    <button type="button" className="text-sm">
+                                        Remove
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <ModalFooter text="Upload" loading={loading} />

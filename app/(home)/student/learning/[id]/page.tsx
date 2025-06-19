@@ -17,6 +17,7 @@ interface Topic {
     canWrite?: boolean;
 }
 interface DailyUpload {
+    day: number;
     date: string;
     released: boolean;
     topics: Topic[];
@@ -32,6 +33,7 @@ const DEFAULT_STANDARD = {
     description: '',
     dailyUploads: [
         {
+            day: 0,
             date: '',
             released: false,
             topics: [

@@ -1,7 +1,7 @@
 'use client';
 
 // component is client beacuse of pagination
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Filters from '@/app/components/common/Filters';
 import Pagintaion from '@/app/components/common/Pagintaion';
@@ -11,6 +11,7 @@ import {
     convertDashesToSpaces,
     commonFilterQueries,
     commonFilterOptions,
+    convertDashesToSpacesSimple,
 } from '@/lib/utils';
 import UploadResourceModal from '../../UploadResourceModal';
 
@@ -45,6 +46,18 @@ function ResourceDetails({
         router.push(`${pathname}?${createQueryString('page', `${page}`)}`);
     };
 
+    useEffect(() => {
+        if (isShowUploadModal) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scroll');
+        };
+    }, [isShowUploadModal]);
+
     const handleFilterUpdate = (
         event: React.ChangeEvent<HTMLSelectElement>
     ) => {
@@ -75,16 +88,14 @@ function ResourceDetails({
                 text={`${APIdata.totalResources}  ${
                     params.typeName.startsWith('Total-Video')
                         ? ' Videos'
-                        : params.typeName.startsWith('Exit-Ticket-Test')
-                          ? 'Exit Ticket'
-                          : `${params.typeName}`
+                        : `${convertDashesToSpacesSimple(params.typeName)}`
                 }   in total`}
                 secondButtonText={
                     params.typeName.startsWith('Total-Video')
                         ? 'Upload Videos'
-                        : params.typeName.startsWith('Exit-Ticket-Test')
-                          ? 'Upload Exit Ticket'
-                          : `Upload ${params.typeName}`
+                        : `Upload ${convertDashesToSpacesSimple(
+                              params.typeName
+                          )}`
                 }
                 isHideFirstBtn
                 handleClick={handleOpenUploadModal}
@@ -107,15 +118,18 @@ function ResourceDetails({
                 />
             </div>
 
-            <div className="flex items-center w-full justify-center mt-5">
-                <Pagintaion
-                    currentPage={Number(page) > 0 ? Number(page) : 1}
-                    totalPages={
-                        APIdata?.totalPages > 0 ? APIdata.totalPages : 1
-                    }
-                    onPageChange={handlePageChange}
-                />
-            </div>
+            {APIdata.resources.length > 10 && (
+                <div className="flex items-center w-full justify-center mt-5">
+                    <Pagintaion
+                        currentPage={Number(page) > 0 ? Number(page) : 1}
+                        totalPages={
+                            APIdata?.totalPages > 0 ? APIdata.totalPages : 1
+                        }
+                        onPageChange={handlePageChange}
+                    />
+                </div>
+            )}
+
             {isShowUploadModal && (
                 <div className="fixed right-0 top-0 z-50 w-[100%] md:w-[60%] lg:w-[30%]">
                     <UploadResourceModal onClose={handleCloseUploadModal} />

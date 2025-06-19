@@ -3,8 +3,8 @@ import React from 'react';
 function AssignmentIcon({ ...props }) {
     return (
         <svg
-            width="28"
-            height="30"
+            width="24"
+            height="24"
             viewBox="0 0 28 30"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -15,6 +15,7 @@ function AssignmentIcon({ ...props }) {
                 stroke="#54C3F4"
                 strokeWidth="2.5"
                 strokeLinecap="round"
+                {...props}
             />
         </svg>
     );

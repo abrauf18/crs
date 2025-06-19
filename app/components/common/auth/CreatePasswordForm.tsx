@@ -2,32 +2,52 @@ import React from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, set } from 'react-hook-form';
 import { Button } from '@/app/components/ui/button';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { resetPassword } from '@/lib/react-redux/features/auth/authAction';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
 import { validationError } from '@/lib/utils';
+import { Eye, EyeOff } from 'lucide-react';
 import Input from '../Input';
+import ButtonLoader from '../ButtonLoader';
 
 function CreatePasswordForm({ description }: { description: string }) {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
+    const [isLoader, setIsLoader] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
+    // eslint-disable-next-line consistent-return
     const onFormSubmit = async (data: any) => {
-        const { newPassword } = data;
-        const { id } = state.data;
-        const response = await dispatch(resetPassword({ id, newPassword }));
-        if (response.type === 'user/verifyOTP/rejected') {
-            toast.error(response.payload);
-            return push('/forgot-password');
+        try {
+            setIsLoader(true);
+            const { newPassword } = data;
+            const { id } = state.data;
+            const response = await dispatch(resetPassword({ id, newPassword }));
+            if (response.type === 'user/verifyOTP/rejected') {
+                toast.error(response.payload);
+                return push('/forgot-password');
+            }
+            toast.success('Successfully Updated Password');
+            return push('/signin');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoader(false);
         }
-        toast.success('Successfully Updated Password');
-        return push('/signin');
+    };
+    const toggleShowPassword = () => {
+        setShowPassword((prev) => !prev);
+    };
+
+    const toggleShowConfirmPassword = () => {
+        setShowConfirmPassword((prev) => !prev);
     };
 
     return (
@@ -46,7 +66,7 @@ function CreatePasswordForm({ description }: { description: string }) {
             </div>
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onFormSubmit)}>
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                         <Label htmlFor="password">New Password</Label>
                         <Input
                             name="newPassword"
@@ -72,9 +92,20 @@ function CreatePasswordForm({ description }: { description: string }) {
                                 },
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleShowPassword}
+                            className="absolute right-3 top-10 mt-1"
+                        >
+                            {showPassword ? (
+                                <Eye className="w-5 h-5" />
+                            ) : (
+                                <EyeOff className="w-5 h-5" />
+                            )}
+                        </button>
                     </div>
 
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                         <Label htmlFor="password">Confirm Password</Label>
                         <Input
                             name="confirmPassword"
@@ -91,14 +122,26 @@ function CreatePasswordForm({ description }: { description: string }) {
                                     'Passwords must match',
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleShowConfirmPassword}
+                            className="absolute right-3 top-10 mt-1"
+                        >
+                            {showConfirmPassword ? (
+                                <Eye className="w-5 h-5" />
+                            ) : (
+                                <EyeOff className="w-5 h-5" />
+                            )}
+                        </button>
                     </div>
 
                     <div className="text-center mt-8">
                         <Button
                             type="submit"
+                            disabled={isLoader}
                             className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         >
-                            Create Password
+                            {isLoader ? <ButtonLoader /> : 'Create Password'}
                         </Button>
                     </div>
                 </form>

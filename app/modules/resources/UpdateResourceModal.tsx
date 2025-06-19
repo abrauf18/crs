@@ -53,6 +53,7 @@ function UpdateResourceModal({
                     topic: formData.topic,
                     totalMarks: formData.totalMarks,
                     accessToken: data?.user?.accessToken,
+                    deadline: formData.deadline,
                 });
                 if (updateResponse?.status !== 200) {
                     toast.error(
@@ -66,7 +67,9 @@ function UpdateResourceModal({
                 toast.error('Token Expire, Please Signin Again');
             }
         } catch (error: any) {
-            toast.error(error?.message || 'Resource Update Failed');
+            toast.error(
+                error?.response?.data?.message || 'Resource Update Failed'
+            );
         } finally {
             setLoading(false);
         }
@@ -150,8 +153,11 @@ function UpdateResourceModal({
                         </div>
                         {(resource.type === ResourceType.QUIZ ||
                             resource.type === ResourceType.WORKSHEET ||
-                            resource.type === ResourceType.EXIT_TICKET_TEST ||
-                            resource.type === ResourceType.ASSIGNMENT) && (
+                            resource.type === ResourceType.ASSIGNMENT ||
+                            resource.type ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resource.type ===
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="totalMarks"
@@ -178,8 +184,11 @@ function UpdateResourceModal({
                         )}
                         {(resource.type === ResourceType.QUIZ ||
                             resource.type === ResourceType.WORKSHEET ||
-                            resource.type === ResourceType.EXIT_TICKET_TEST ||
-                            resource.type === ResourceType.ASSIGNMENT) && (
+                            resource.type === ResourceType.ASSIGNMENT ||
+                            resource.type ===
+                                ResourceType.FORMATIVE_ASSESSMENT ||
+                            resource.type ===
+                                ResourceType.SUMMARIZE_ASSESSMENT) && (
                             <div className="flex flex-col space-y-1 mt-5">
                                 <Label
                                     htmlFor="deadline"

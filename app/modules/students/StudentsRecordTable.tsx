@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { Eye } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -13,15 +13,15 @@ import {
     TableRow,
 } from '@/app/components/ui/table';
 
-export interface StudentRecordInterface {
-    id: number;
-    testName: string;
-    result: string;
-    score: string;
+interface SummarizedStandardResult {
+    standardId: string;
+    standardName: string;
+    totalWeightage: number;
+    obtainedWeightage: number;
 }
 
 interface StudentsRecordProp {
-    students: StudentRecordInterface[];
+    students: SummarizedStandardResult[];
     fontSize?: string;
 }
 
@@ -31,66 +31,83 @@ const poppins = Poppins({
 });
 function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
     const { push } = useRouter();
+    const path = usePathname();
 
-    const handleClick = (id: number) => {
-        push(`/teacher/students/${id}/courses`);
+    const handleClick = (id: string) => {
+        // push(`${path}/courses/${id}`);
+        push(`${path}/courses`);
     };
 
     return (
         <Table
-            className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                poppins.className
-            }`}
+            className={`text-[${
+                fontSize || '18'
+            }px] mobile:text-sm whitespace-nowrap ${poppins.className}`}
         >
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[80px] text-dark-gray font-semibold text-sm text-center">
+                    <TableHead className="w-[80px] text-dark-gray font-semibold text-sm">
                         SNO.
                     </TableHead>
-                    <TableHead className=" text-dark-gray font-semibold text-sm text-center">
-                        Test Name
+                    <TableHead className=" text-dark-gray font-semibold text-sm">
+                        Standard Name
                     </TableHead>
-                    <TableHead className="text-dark-gray font-semibold text-sm text-center">
-                        Result
+                    <TableHead className="text-dark-gray font-semibold text-sm">
+                        Total Weightage
                     </TableHead>
-                    <TableHead className="text-dark-gray font-semibold text-sm text-center">
-                        Score
+                    <TableHead className="text-dark-gray font-semibold text-sm">
+                        Obtained Weightage
                     </TableHead>
-
-                    <TableHead className="text-dark-gray font-semibold text-sm text-center">
+                    <TableHead className="text-dark-gray font-semibold text-sm">
                         Action
                     </TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {students.map((resource, index) => (
-                    <TableRow className="border-none" key={resource.id}>
-                        <TableCell className="font-normal text-sm text-center">
-                            <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                {index + 1}
-                            </span>
-                        </TableCell>
-                        <TableCell className="text-dark-gray font-normal text-sm text-center">
-                            <span>{resource.testName}</span>
-                        </TableCell>
+                {students?.length > 0 ? (
+                    students.map((resource, index) => (
+                        <TableRow
+                            className="border-none"
+                            key={resource.standardId}
+                        >
+                            <TableCell className="font-normal text-sm">
+                                <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
+                                    {index + 1}
+                                </span>
+                            </TableCell>
+                            <TableCell className="text-dark-gray font-normal text-sm">
+                                <span>{resource.standardName}</span>
+                            </TableCell>
 
-                        <TableCell className="text-dark-gray font-normal text-sm text-center">
-                            {resource.result}
-                        </TableCell>
-                        <TableCell className="text-dark-gray font-normal text-sm text-center">
-                            {resource.score}%
-                        </TableCell>
-
-                        <TableCell className="flex justify-center items-center text-center">
-                            <div
-                                className="mr-2 bg-light-orange rounded-md p-1 cursor-pointer ml-5"
-                                onClick={() => handleClick(index)}
-                            >
-                                <Eye color="#F59A3B" width={18} height={18} />
-                            </div>
+                            <TableCell className="text-dark-gray font-normal text-sm">
+                                {resource.totalWeightage}%
+                            </TableCell>
+                            <TableCell className="text-dark-gray font-normal text-sm">
+                                {resource.obtainedWeightage}%
+                            </TableCell>
+                            <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 gap-2">
+                                <div
+                                    className="bg-light-orange p-1 rounded-md cursor-pointer"
+                                    onClick={() =>
+                                        handleClick(resource.standardId)
+                                    }
+                                >
+                                    <Eye
+                                        color="#F59A3B"
+                                        width={18}
+                                        height={18}
+                                    />
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    ))
+                ) : (
+                    <TableRow>
+                        <TableCell colSpan={5} className="text-center ">
+                            No data found
                         </TableCell>
                     </TableRow>
-                ))}
+                )}
             </TableBody>
         </Table>
     );

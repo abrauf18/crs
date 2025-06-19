@@ -2,30 +2,32 @@
 
 import React, { useState } from 'react';
 import { Poppins } from 'next/font/google';
-import { Eye, LucideFileQuestion, PlayIcon, Trash } from 'lucide-react';
 import {
-    DEFAULT_RESOURCE,
+    Eye,
+    LucideFileQuestion,
+    PlayIcon,
+    Trash,
+    Download,
+} from 'lucide-react';
+import {
     Resource,
-    ResourceToPath,
     ResourceType,
+    ResourceToPath,
+    handleDownload,
+    capitalizeWords,
+    DEFAULT_RESOURCE,
     convertSpacesToDashes,
 } from '@/lib/utils';
 import {
+    Table,
     TableRow,
     TableBody,
     TableCell,
-    Table,
 } from '@/app/components/ui/table';
-import XlsIcon from '@/app/assets/icons/XlsIcon';
-import PptIcon from '@/app/assets/icons/PptIcon';
 import EditIcon from '@/app/assets/icons/EditIcon';
-import TicketIcon from '@/app/assets/icons/TicketIcon';
-import RecorderIcon from '@/app/assets/icons/RecorderIcon';
-import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import AssignmentIcon from '@/app/assets/icons/AssignmentIcon';
-import EditQuestionsModal from '../video/EditQuestionsModal';
+import { usePathname, useRouter } from 'next/navigation';
 import EditTopicsModal from '../video/EditTopicsModal';
+import EditQuestionsModal from '../video/EditQuestionsModal';
 import UpdateResourceModal from '../resources/UpdateResourceModal';
 
 const poppins = Poppins({
@@ -42,6 +44,9 @@ interface Topic {
     watched?: boolean;
     completed?: boolean;
     canWrite?: boolean;
+    deadline?: number;
+    totalMarks?: number;
+    URL?: string;
 }
 
 function StandardTable({
@@ -82,10 +87,12 @@ function StandardTable({
         id: string,
         name: string,
         type: ResourceType,
-        topic: string
+        topic: string,
+        deadline?: number,
+        totalMarks?: number
     ) => {
         setShowUpdateResourceModal(true);
-        setSelectedResource({ id, name, type, topic });
+        setSelectedResource({ id, name, type, topic, deadline, totalMarks });
     };
 
     const handleCloseEditResourceModal = () => {
@@ -133,52 +140,10 @@ function StandardTable({
                                 </span>
                             </TableCell>
                             <TableCell className="flex gap-2 items-center p-8">
-                                {topic.type?.toLowerCase() === 'slideshow' && (
-                                    <PptIcon
-                                        fill="#1ebeff"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() === 'video' && (
-                                    <RecorderIcon className="shrink-0" />
-                                )}
-                                {topic.type?.toLowerCase() === 'worksheet' && (
-                                    <XlsIcon
-                                        color="#54C3F4"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() ===
-                                    'exit-ticket-test' && (
-                                    <TicketIcon
-                                        color="#54C3F4"
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() === 'quiz' && (
-                                    <QuestionMarkIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
-                                {topic.type?.toLowerCase() === 'assignment' && (
-                                    <AssignmentIcon
-                                        className="shrink-0"
-                                        height={20}
-                                        width={20}
-                                    />
-                                )}
                                 {topic.name}
                             </TableCell>
-                            <TableCell className="text-dark-gray text-center">
-                                {topic.type}
+                            <TableCell className="text-dark-gray">
+                                {capitalizeWords(topic.type)}
                             </TableCell>
                             <TableCell className="flex justify-center items-center">
                                 {!isShownFromStudent && (
@@ -233,7 +198,9 @@ function StandardTable({
                                                 topic.type ===
                                                     ResourceType.ASSIGNMENT ||
                                                 topic.type ===
-                                                    ResourceType.EXIT_TICKET_TEST ||
+                                                    ResourceType.FORMATIVE_ASSESSMENT ||
+                                                topic.type ===
+                                                    ResourceType.SUMMARIZE_ASSESSMENT ||
                                                 topic.type === ResourceType.QUIZ
                                             ) {
                                                 return takeAssessment(
@@ -269,7 +236,9 @@ function StandardTable({
                                           topic.type ===
                                               ResourceType.ASSIGNMENT ||
                                           topic.type ===
-                                              ResourceType.EXIT_TICKET_TEST ||
+                                              ResourceType.FORMATIVE_ASSESSMENT ||
+                                          topic.type ===
+                                              ResourceType.SUMMARIZE_ASSESSMENT ||
                                           topic.type ===
                                               ResourceType.WORKSHEET ? (
                                             <p className="py-0.5 px-2.5">
@@ -299,10 +268,27 @@ function StandardTable({
                                                         topic.resourceId,
                                                         topic.name,
                                                         topic.type,
-                                                        topic.topic
+                                                        topic.topic,
+                                                        topic.deadline,
+                                                        topic.totalMarks
                                                     );
                                                 }
                                             }}
+                                        />
+                                    </div>
+                                )}
+                                {isShownFromTeacher && (
+                                    <div className="mr-2 bg-green-100 rounded-md p-1 cursor-pointer">
+                                        <Download
+                                            color="#228B22"
+                                            width={18}
+                                            height={18}
+                                            onClick={() =>
+                                                handleDownload({
+                                                    name: topic.name,
+                                                    url: topic.URL || '',
+                                                })
+                                            }
                                         />
                                     </div>
                                 )}

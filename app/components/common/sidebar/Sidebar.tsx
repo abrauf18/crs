@@ -16,6 +16,7 @@ import {
     Bookmark,
     GraduationCap,
     CreditCard,
+    BookText,
 } from 'lucide-react';
 import crsLogo from '@/app/assets/images/crsclogo.svg';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
@@ -84,11 +85,6 @@ export default function SideBar() {
                 itemText: 'Dashboard',
             },
             {
-                to: '/teacher/standard',
-                ItemIcon: TeacherStandardIcon,
-                itemText: 'Standards',
-            },
-            {
                 to: '/teacher/students',
                 ItemIcon: UserIcon,
                 itemText: 'Students',
@@ -127,20 +123,20 @@ export default function SideBar() {
                 ItemIcon: Lightbulb,
                 itemText: 'Learning',
             },
-            {
-                to: '/student/saved-videos',
-                ItemIcon: Bookmark,
-                itemText: 'Saved Videos',
-            },
+            // {
+            //     to: '/student/saved-videos',
+            //     ItemIcon: Bookmark,
+            //     itemText: 'Saved Videos',
+            // },
             {
                 to: '/student/profile',
                 ItemIcon: UserIcon,
                 itemText: 'Profile',
             },
             {
-                to: '/student/resources',
+                to: '/student/assignments',
                 ItemIcon: ResourceIcon,
-                itemText: 'Resources',
+                itemText: 'All Assignments',
             },
             {
                 to: '/student/setting',
@@ -165,6 +161,11 @@ export default function SideBar() {
                 to: '/school/teachers',
                 ItemIcon: TeacherIcon,
                 itemText: 'Teachers',
+            },
+            {
+                to: '/school/classrooms',
+                ItemIcon: BookText,
+                itemText: 'Classrooms',
             },
             {
                 to: '/school/data-aggregation',
@@ -275,25 +276,25 @@ export default function SideBar() {
             </ul>
 
             {/* Mobile Navbar */}
-            <ul
-                onClick={() => SetMenu(!menu)}
-                className="md:hidden bg-light-gray w-screen p-4"
-            >
+            <ul className="md:hidden bg-light-gray w-screen p-4">
                 <div className="flex justify-between items-center">
                     <Image
                         src={crsLogo as string}
                         alt="crs logo"
+                        priority
                         style={{
                             width: '50px',
                             height: '50px',
                             objectFit: 'contain',
                         }}
                     />
-                    {menu ? (
-                        <X width={35} height={35} />
-                    ) : (
-                        <Menu width={35} height={35} />
-                    )}
+                    <div onClick={() => SetMenu(!menu)}>
+                        {menu ? (
+                            <X width={35} height={35} />
+                        ) : (
+                            <Menu width={35} height={35} />
+                        )}
+                    </div>
                 </div>
                 {menu && (
                     <div className="flex flex-col justify-start items-center h-full">
@@ -305,6 +306,7 @@ export default function SideBar() {
                                 ItemIcon={item.ItemIcon}
                                 itemText={item.itemText}
                                 onClick={item.onClick}
+                                closeMenu={() => SetMenu(false)}
                             />
                         ))}
                     </div>

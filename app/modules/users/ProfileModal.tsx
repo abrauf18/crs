@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-import { Trash2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 import {
@@ -75,7 +73,6 @@ function ProfileModal({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
-
     // Function to undo all changes made before clicking save
     const handleReset = () => {
         undoImageChange();
@@ -108,7 +105,7 @@ function ProfileModal({
 
             const { name, email, role } = formData;
 
-            // Update heading and tagline
+            // // Update heading and tagline
             setHeading(name);
             setTagline(email);
 
@@ -161,7 +158,7 @@ function ProfileModal({
                         onFormSubmit as SubmitHandler<FieldValues>
                     )}
                 >
-                    <div className="h-[80%] lg:h-[95%] overflow-y-auto px-6">
+                    <div className="px-6 mb-24">
                         <ModalHeader
                             headerText={{
                                 heading,
@@ -171,6 +168,7 @@ function ProfileModal({
                         />
                         <div className="flex flex-col  mobile:items-center w-full">
                             <ProfileImage
+                                isViewOnly={isViewOnly}
                                 selectedFile={selectedFile}
                                 currentImage={currentImage}
                                 handleClick={handleClick}
@@ -179,8 +177,9 @@ function ProfileModal({
                                 removeImage={removeImage}
                             />
                             <div className="mb-2 w-full mt-4">
-                                <Label htmlFor="name">User Name</Label>
+                                <Label htmlFor="name">Name</Label>
                                 <Input
+                                    disabled={isViewOnly}
                                     name="name"
                                     placeholder="Enter Name"
                                     type="text"
@@ -196,6 +195,7 @@ function ProfileModal({
                             <div className="mb-2 w-full">
                                 <Label htmlFor="email">Email Address</Label>
                                 <Input
+                                    disabled={isViewOnly}
                                     name="email"
                                     placeholder="Enter Email"
                                     type="email"
@@ -213,30 +213,47 @@ function ProfileModal({
                                     }}
                                 />
                             </div>
-                            <div className="mb-2 w-full">
-                                <Label htmlFor="role ">Role</Label>
-                                <Select
-                                    name="role"
-                                    options={roleOptions}
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message:
-                                                validationError.REQUIRED_FIELD,
-                                        },
-                                    }}
-                                />
-                            </div>
+                            {isViewOnly ? (
+                                <div className="mb-2 w-full">
+                                    <Label htmlFor="role">Role</Label>
+                                    <Input
+                                        disabled={isViewOnly}
+                                        name="text"
+                                        type="text"
+                                        inputValue={
+                                            role.charAt(0).toUpperCase() +
+                                            role.slice(1)
+                                        }
+                                    />
+                                </div>
+                            ) : (
+                                <div className="mb-2 w-full">
+                                    <Label htmlFor="role ">Role</Label>
+                                    <Select
+                                        disabled
+                                        name="role"
+                                        additionalClasses="mt-1"
+                                        options={roleOptions}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message:
+                                                    validationError.REQUIRED_FIELD,
+                                            },
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                     {!isViewOnly && (
-                        <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between w-full py-2 gap-1 bottom-0 left-0  p-3 border bg-white">
+                        <div className="flex lg:flex-row flex-col lg:space-x-2 lg:space-y-0 space-y-2 lg:justify-between w-full py-2 gap-1 absolute bottom-0 left-0  p-3 border bg-white">
                             <button
                                 type="button"
                                 onClick={handleReset}
-                                className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl"
+                                className="text-dark-gray font-semibold  w-full px-5 py-2 border rounded-xl hover:bg-gray-200"
                             >
-                                Discard Changes
+                                Discard
                             </button>
                             <button
                                 type="submit"
@@ -245,9 +262,9 @@ function ProfileModal({
                                     !methods.formState.isValid
                                         ? 'bg-gray-300'
                                         : 'bg-primary-color'
-                                } font-semibold w-full px-5 py-2  border rounded-xl`}
+                                } font-semibold w-full px-5 py-2  border rounded-xl hover:bg-orange-500`}
                             >
-                                {loading ? <Loader /> : 'Save Changes'}
+                                {loading ? <Loader /> : 'Save'}
                             </button>
                         </div>
                     )}

@@ -11,6 +11,7 @@ type StandardData = {
     courseLength: string;
     totalVideoUploads: string;
     totalNonVideoUploads: string;
+    topicCount: string;
 };
 
 interface APIData {
@@ -27,6 +28,7 @@ const DEFAULT_ALL_STANDARD_SUMMARY = {
             courseLength: '',
             totalVideoUploads: '',
             totalNonVideoUploads: '',
+            topicCount: '',
         },
     ],
 };

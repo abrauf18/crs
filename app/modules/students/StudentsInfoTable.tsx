@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { useSession } from 'next-auth/react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
     Table,
     TableBody,
@@ -21,18 +21,9 @@ import EditIcon from '@/app/assets/icons/EditIcon';
 import DialogBox from '@/app/components/common/DialogBox';
 import PageLoader from '@/app/components/common/PageLoader';
 import { removeStudentFromClassroomAPI } from '@/app/api/classroom';
-import ClassroomModal from '../classroom/ClassroomModal';
-
-export interface StudentInfoInterface {
-    image: string;
-    id: string;
-    index: number;
-    name: string;
-    email: string;
-    grade: string;
-    performance: number;
-    gradeId: string;
-}
+import ClassroomModal, {
+    StudentInfoInterface,
+} from '../classroom/ClassroomModal';
 
 const DEFAULT_CLASSROOM_STUDENT = {
     id: '0',
@@ -52,6 +43,7 @@ export interface StudentsInfoProp {
     isTeacherDashboardTable?: boolean;
     currentPage?: number;
     handlePageChange?: (page: number) => void;
+    isTeacher?: boolean;
 }
 
 const poppins = Poppins({
@@ -66,9 +58,9 @@ function StudentsInfoTable({
     isTeacherDashboardTable,
     currentPage = 0,
     handlePageChange,
+    isTeacher,
 }: StudentsInfoProp) {
     const { push } = useRouter();
-    const pathname = usePathname();
     const { data, status } = useSession();
     const [disableButton, setDisableButton] = useState(false);
     const [isShowDialogBox, setIsShowDialogBox] = useState(false);
@@ -118,14 +110,14 @@ function StudentsInfoTable({
 
     const handleConfirmDelete = () => {
         setIsShowDialogBox(false);
-        handleDeleteStudents(selectedStudent?.id);
+        handleDeleteStudents(selectedStudent?.classroomStudentId || '');
     };
 
     const handleCancelDelete = () => {
         setIsShowDialogBox(false);
     };
 
-    const handleClick = (id: number) => {
+    const handleClick = (id: string) => {
         push(`/teacher/students/${id}`);
     };
 
@@ -133,42 +125,42 @@ function StudentsInfoTable({
         <PageLoader />
     ) : (
         <section>
-            {students[0] ? (
-                <Table
-                    className={`text-[${fontSize || '18'}px] mobile:text-sm ${
-                        poppins.className
-                    }`}
-                >
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className=" text-dark-gray font-bold">
-                                SNO.
-                            </TableHead>
+            <Table
+                className={`text-[${
+                    fontSize || '18'
+                }px] mobile:text-sm whitespace-nowrap ${poppins.className}`}
+            >
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className=" text-dark-gray font-bold">
+                            SNO.
+                        </TableHead>
+                        <TableHead className="text-dark-gray font-bold">
+                            Name
+                        </TableHead>
+                        <TableHead className="text-dark-gray font-bold pl-12">
+                            Email
+                        </TableHead>
+                        {!isTeacherDashboardTable && (
                             <TableHead className="text-dark-gray font-bold">
-                                Name
+                                Grade
                             </TableHead>
-                            <TableHead className="text-dark-gray font-bold">
-                                Email
-                            </TableHead>
-                            {!isTeacherDashboardTable && (
-                                <TableHead className="text-dark-gray font-bold">
-                                    Grade
-                                </TableHead>
-                            )}
-                            <TableHead className="text-dark-gray font-bold">
-                                Performance
-                            </TableHead>
-                            <TableHead className="text-dark-gray font-bold">
-                                Action
-                            </TableHead>
-                        </TableRow>
-                    </TableHeader>
+                        )}
+                        <TableHead className="text-dark-gray font-bold">
+                            Performance
+                        </TableHead>
+                        <TableHead className="text-dark-gray font-bold">
+                            Action
+                        </TableHead>
+                    </TableRow>
+                </TableHeader>
+                {students && students[0] ? (
                     <TableBody>
                         {students.map((student, index) => (
                             <TableRow className="border-none" key={student.id}>
                                 <TableCell className="font-medium">
                                     <span className="bg-light-gray px-[7px] py-[4px] rounded-md">
-                                        {student.index}
+                                        {index + 1}
                                     </span>
                                 </TableCell>
                                 <TableCell>
@@ -189,7 +181,7 @@ function StudentsInfoTable({
                                     </span>
                                 </TableCell>
 
-                                <TableCell className="text-dark-gray">
+                                <TableCell className="text-dark-gray pl-12">
                                     {student.email}
                                 </TableCell>
                                 {!isTeacherDashboardTable && (
@@ -206,7 +198,7 @@ function StudentsInfoTable({
                                             className=" bg-light-orange rounded-md p-1 cursor-pointer"
                                             onClick={() =>
                                                 !isClassroomTable
-                                                    ? handleClick(index)
+                                                    ? handleClick(student.id)
                                                     : handleOpenStudentModal(
                                                           student
                                                       )
@@ -229,7 +221,8 @@ function StudentsInfoTable({
                                             <EditIcon width={22} height={22} />
                                         </div>
                                     )}
-                                    {!isTeacherDashboardTable && (
+                                    {(!isTeacherDashboardTable ||
+                                        isTeacher) && (
                                         <div
                                             className={`bg-red-100 rounded-md p-1 cursor-pointer ${
                                                 disableButton
@@ -254,16 +247,14 @@ function StudentsInfoTable({
                             </TableRow>
                         ))}
                     </TableBody>
-                </Table>
-            ) : (
-                <div className="flex justify-center items-center">
-                    {' '}
-                    No student found!
-                </div>
-            )}
-
+                ) : (
+                    <TableCell colSpan={6} className="text-center">
+                        No Student Found!
+                    </TableCell>
+                )}
+            </Table>
             {isShowStudentModal && (
-                <div className="fixed right-0 top-0 z-50 w-[100%] lg:w-[40%] md:w-[60%] lg:max-w-[400px] xl:max-w-[400px] 2xl:max-w-[400px]">
+                <div className="fixed right-0 top-0 z-50 w-[100%] md:w-[60%] lg:w-[30%]">
                     <ClassroomModal
                         data={data}
                         student={selectedStudent}

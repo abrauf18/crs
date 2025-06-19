@@ -31,13 +31,14 @@ function VideoCard({
         selectedResource?.resourceType === ResourceType.ASSIGNMENT ||
         selectedResource?.resourceType === ResourceType.QUIZ ||
         selectedResource?.resourceType === ResourceType.WORKSHEET ||
-        selectedResource?.resourceType === ResourceType.EXIT_TICKET_TEST
+        selectedResource?.resourceType === ResourceType.SUMMARIZE_ASSESSMENT ||
+        selectedResource?.resourceType === ResourceType.FORMATIVE_ASSESSMENT
     ) {
         resourceRenderingLink = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
             card?.imageUrl as string
         )}`;
     } else {
-        resourceRenderingLink = card?.imageUrl?.toString();
+        resourceRenderingLink = card?.imageUrl?.toString() as string;
     }
     return (
         <div className=" bg-white border rounded-lg shadow flex flex-col justify-center md:p-4 mobile:p-2">
@@ -45,8 +46,10 @@ function VideoCard({
                 <iframe
                     src={resourceRenderingLink}
                     title="Thumbnail Viewer"
-                    style={{ width: '100%', height: '20vh' }}
+                    className="w-full"
+                    style={{ width: '100%', height: '100%' }}
                 />
+
                 <div className="absolute left-3 top-3 transform -translate-x-1/2 -translate-y-1/2">
                     <HelpCircle fill="#54C3F4" color="white" size={35} />
                 </div>

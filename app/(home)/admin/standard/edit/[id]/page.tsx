@@ -13,21 +13,25 @@ interface Topic {
     weightage: number;
 }
 interface DailyUpload {
-    date: string;
+    topicName: { value: string }[];
+    accessibleDay: number;
     topics: Topic[];
 }
 interface APIData {
     name: string;
     description: string;
     dailyUploads: DailyUpload[];
+    topicsDescriptions: { topicName: string; description: string }[];
 }
 
 const DEFAULT_STANDARD = {
     name: '',
     description: '',
+    topicsDescriptions: [{ topicName: '', description: '' }],
     dailyUploads: [
         {
-            date: '',
+            topicName: [{ value: '' }],
+            accessibleDay: 0,
             topics: [
                 {
                     resourceId: '',
@@ -56,12 +60,13 @@ async function VideoDetailsPage({ params }: { params: { id: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { name, description, dailyUploads } = APIdata;
+                const { name, description, topicsDescriptions, dailyUploads } = APIdata;
                 return (
                     <CreateStandard
                         standardId={params.id}
                         name={name}
                         description={description}
+                        topicsDescriptions={topicsDescriptions}
                         dailyUploads={dailyUploads}
                         update
                     />

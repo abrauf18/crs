@@ -53,7 +53,8 @@ export const signupInviteAPI = async (
     name: string,
     email: string,
     role: string,
-    accessToken: string
+    accessToken: string,
+    schoolId?: string
 ) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/emailBasedInvite`,
@@ -62,6 +63,7 @@ export const signupInviteAPI = async (
             email,
             role,
             accessToken,
+            schoolId,
         }
     );
 

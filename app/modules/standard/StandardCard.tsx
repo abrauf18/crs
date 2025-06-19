@@ -12,9 +12,10 @@ interface Topic {
     watched?: boolean;
     completed?: boolean;
     canWrite?: boolean;
+    URL?: string;
 }
 interface DailyUpload {
-    date: string;
+    day: number;
     released?: boolean;
     topics: Topic[];
 }
@@ -32,7 +33,7 @@ function StandardCard({
 }) {
     return (
         <section className="mt-5 w-full rounded-lg border p-3">
-            <GetDate date={dailyUpload.date} />
+            <GetDate day={dailyUpload.day} />
             <div className="mt-5 w-full">
                 <StandardTable
                     topicList={dailyUpload.topics}

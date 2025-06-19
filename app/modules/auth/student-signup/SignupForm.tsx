@@ -13,24 +13,39 @@ import { useAppDispatch } from '@/lib/react-redux/hooks';
 import { signup } from '@/lib/react-redux/features/auth/authAction';
 import Input from '@/app/components/common/Input';
 import { validationError } from '@/lib/utils';
-import { CheckBox } from '../Checkbox';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
+import { Eye, EyeOff } from 'lucide-react';
 
 function SignupForm({ token }: { token: string }) {
+    const [isLoader, setIsLoader] = React.useState(false);
     const dispatch = useAppDispatch();
     const { push } = useRouter();
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const methods = useForm({ mode: 'onChange', reValidateMode: 'onChange' });
 
+    // eslint-disable-next-line consistent-return
     const onFormSubmit = async (data: any) => {
-        const { name, email, password } = data;
-        const response = await dispatch(
-            signup({ name, email, password, token })
-        );
-        if (response.type === 'user/signup/rejected') {
-            return toast.error(response.payload);
+        try {
+            setIsLoader(true);
+            const { name, email, password } = data;
+            const response = await dispatch(
+                signup({ name, email, password, token })
+            );
+            if (response.type === 'user/signup/rejected') {
+                return toast.error(response.payload);
+            }
+            toast.success('Signup Successful');
+            return push('/signin');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoader(false);
         }
-        toast.success('Signup Successful');
-        return push('/signin');
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword((prev) => !prev);
     };
 
     return (
@@ -45,7 +60,7 @@ function SignupForm({ token }: { token: string }) {
                     />
                     <h1 className="text-2xl font-semibold mt-6">
                         Join School{' '}
-                        <span className="text-primary-color">XYZ</span>
+                        {/* <span className="text-primary-color">XYZ</span> */}
                     </h1>
                     <p className="text-sm font-medium text-dark-gray mb-6">
                         Enter Details to Create your Account
@@ -85,7 +100,7 @@ function SignupForm({ token }: { token: string }) {
                         />
                     </div>
 
-                    <div className="mt-2">
+                    <div className="mt-2 relative">
                         <Label htmlFor="password">Password</Label>
                         <Input
                             name="password"
@@ -113,27 +128,35 @@ function SignupForm({ token }: { token: string }) {
                                 },
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleShowPassword}
+                            className="absolute right-3 top-10 mt-1"
+                        >
+                            {showPassword ? (
+                                <Eye className="w-5 h-5" />
+                            ) : (
+                                <EyeOff className="w-5 h-5" />
+                            )}
+                        </button>
                     </div>
-
-                    <div className="flex mb-12 mt-5">
-                        <CheckBox label="Remember Me" />
-                    </div>
-                    <div className="text-center">
+                    <div className="text-center mt-5">
                         <Button
                             type="submit"
+                            disabled={isLoader}
                             className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                         >
-                            Sign Up
+                            {isLoader ? <ButtonLoader /> : 'Sign Up'}
                         </Button>
-                        <span className="text-black text-xs">Or</span>
-                        <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
+                        {/* <span className="text-black text-xs">Or</span> */}
+                        {/* <Button className="w-full bg-slate-200 text-black mt-3 lg:hover:bg-slate-300">
                             <GoogleIcon
                                 width={20}
                                 height={20}
                                 className="mr-2"
                             />
                             Sign Up With Google
-                        </Button>
+                        </Button> */}
                     </div>
                 </form>
             </div>

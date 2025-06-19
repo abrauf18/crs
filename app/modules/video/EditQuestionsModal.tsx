@@ -21,8 +21,8 @@ import ButtonLoader from '@/app/components/common/ButtonLoader';
 import { ModalHeader } from '../../components/common/ModalHeader';
 
 const questionsTypes = [
-    { label: 'open', value: 'open' },
-    { label: 'mcq', value: 'mcq' },
+    { label: 'open', value: 'Open' },
+    { label: 'mcq', value: 'Mcq' },
 ];
 
 const answerOptions = [
@@ -115,6 +115,8 @@ function EditQuestionsModal({
 
         const transformedQuestions = formdata.video.questions.map(
             (question) => ({
+                // Conditionally add id if the video is not new
+                ...(newVideo ? {} : { id: question.id || '' }),
                 statement: question.statement,
                 options: question.type === 'mcq' ? question.options : {},
                 correctOption: question.correctOption,
@@ -279,7 +281,7 @@ function EditQuestionsModal({
                                 <div key={question.id}>
                                     <Label
                                         htmlFor={`video.questions[${index}].statement`}
-                                        className="font-semibold"
+                                        className="font-semibold text-md"
                                     >
                                         {`Question ${index + 1}`}
                                     </Label>

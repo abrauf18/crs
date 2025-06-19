@@ -53,14 +53,14 @@ function Searchbar({
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
                 <SearchInput />
                 <BellIcon
                     width={45}
                     height={45}
                     className="cursor-pointer p-3 rounded-lg ml-3 border bg-white"
                 />
-            </div>
+            </div> */}
         </div>
     );
 }
