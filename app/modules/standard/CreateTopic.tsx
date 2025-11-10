@@ -1,7 +1,7 @@
 'use client';
 
 import { toast } from 'react-toastify';
-import { CalendarDays, FileUpIcon, X } from 'lucide-react';
+import { FileUpIcon, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { FieldErrors, useFieldArray, useFormContext } from 'react-hook-form';
@@ -24,9 +24,10 @@ interface Topic {
 }
 interface DailyUpload {
     id: string;
-    topicName: { value: string }[];
-    accessibleDay: string;
     topics: Topic[];
+    dayName: string;
+    accessibleDay: string;
+    topicName: { value: string }[];
 }
 interface Standard {
     id: string;
@@ -69,10 +70,13 @@ function CreateTopic({
     const { control, watch, setValue } = useFormContext<FormValues>();
 
     const topicsDescriptions = watch('standard.topicsDescriptions');
-    const topicOptions = topicsDescriptions?.length > 0 ? topicsDescriptions.map((topic) => ({
-        label: topic.topicName,
-        value: topic.topicName
-    })) : [];
+    const topicOptions =
+        topicsDescriptions?.length > 0
+            ? topicsDescriptions.map((topic) => ({
+                  label: topic.topicName,
+                  value: topic.topicName,
+              }))
+            : [];
 
     const {
         fields: topicFields,
@@ -211,6 +215,35 @@ function CreateTopic({
                         />
                     </span>
                 </div>
+                <div className="basis-1/2 relative">
+                    <Label htmlFor={`standard.dailyUploads.${index}.dayName`}>
+                        Day Name
+                    </Label>
+                    <Input
+                        type="text"
+                        placeholder="Enter Name for the Day"
+                        name={`standard.dailyUploads.${index}.dayName`}
+                        additionalClasses="mobile:!w-full mt-1"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: validationError.REQUIRED_FIELD,
+                            },
+                        }}
+                    />
+                    <span className="text-red-500 text-xs">
+                        <ErrorMessage
+                            errors={errors}
+                            name={`standard.dailyUploads.${index}.dayName`}
+                            render={({ message }) => (
+                                <p className="flex items-center">
+                                    <X size={20} color="#E6500D" />
+                                    {message}
+                                </p>
+                            )}
+                        />
+                    </span>
+                </div>
             </div>
             {topicFields.map((topic, topicIndex) => (
                 <div key={topic.id}>
@@ -275,7 +308,7 @@ function CreateTopic({
                                     </Label>
                                     <Input
                                         additionalClasses="!my-0"
-                                        type="text"
+                                        type="number"
                                         placeholder="Enter Weightage"
                                         name={`standard.dailyUploads.${index}.topics.${topicIndex}.weightage`}
                                         rules={{
@@ -379,7 +412,9 @@ function CreateTopic({
                                             additionalClasses="mobile:!w-full mt-1"
                                             name={`standard.dailyUploads.${index}.topicName.${topicNameIndex}.value`}
                                             options={topicOptions}
-                                            selectedOption={topicOptions[0]?.value}
+                                            selectedOption={
+                                                topicOptions[0]?.value
+                                            }
                                             rules={{
                                                 required: {
                                                     value: true,
@@ -447,7 +482,9 @@ function CreateTopic({
             <button
                 type="button"
                 className="cursor-pointer border p-3 mt-1 text-sm text-dark-gray rounded-lg hover:bg-slate-100 "
-                onClick={() => appendTopicName({ value: topicOptions[0]?.value ?? '' })}
+                onClick={() =>
+                    appendTopicName({ value: topicOptions[0]?.value ?? '' })
+                }
             >
                 Add Topic
             </button>

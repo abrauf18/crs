@@ -25,9 +25,10 @@ interface Topic {
     weightage: number;
 }
 interface DailyUpload {
-    topicName: { value: string }[];
-    accessibleDay: number;
     topics: Topic[];
+    dayName: string;
+    accessibleDay: number;
+    topicName: { value: string }[];
 }
 interface Standard {
     name: string;
@@ -92,6 +93,7 @@ function CreateStandard({
                         value: tn.value,
                     })),
                     accessibleDay: upload.accessibleDay,
+                    dayName: upload.dayName,
                     topics: upload.topics.map((resource) => ({
                         resourceId: resource.resourceId,
                         name: resource.name,
@@ -217,7 +219,9 @@ function CreateStandard({
                         trimAndConvertSpaces(tn.value)
                     ),
                     accessibleDay: dailyUpload.accessibleDay,
+                    dayName: dailyUpload.dayName,
                     weightage: topic?.weightage || 0,
+                    type: topic.type,
                 }))
             )
             .flat();
@@ -276,6 +280,7 @@ function CreateStandard({
             appendDailyUpload({
                 topicName: [{ value: '' }],
                 accessibleDay: 0,
+                dayName: '',
                 topics: [
                     {
                         resourceId: '',
@@ -520,6 +525,7 @@ function CreateStandard({
                                             },
                                         ],
                                         accessibleDay: 0,
+                                        dayName: '',
                                         topics: [
                                             {
                                                 resourceId: '',

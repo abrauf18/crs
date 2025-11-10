@@ -5,7 +5,6 @@ import StudentOverallReport from './StudentOverallReport';
 interface Data {
     student: Student;
     summarizedStandardResults: SummarizedStandardResult[];
-    DailyProgress: DailyProgress[];
 }
 
 export interface Student {
@@ -13,24 +12,16 @@ export interface Student {
     email: string;
     image: string;
     classroomName: string;
-    averageTotalWeightage: number;
-    averageObtainedWeightage: number;
+    totalResourcesCount: number;
+    finishedResourcesCount: number;
     classroomStudentId: string;
 }
 
 interface SummarizedStandardResult {
     standardId: string;
     standardName: string;
-    totalWeightage: number;
-    obtainedWeightage: number;
-}
-
-interface DailyProgress {
-    id: string;
-    classroomStudentId: string;
-    obtainedWeightage: number;
-    totalWeightage: number;
-    date: string;
+    totalResources: number;
+    finishedResources: number;
 }
 
 function StudentDetails({ APIdata }: { APIdata: Data }) {

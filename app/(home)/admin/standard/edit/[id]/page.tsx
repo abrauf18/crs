@@ -13,9 +13,10 @@ interface Topic {
     weightage: number;
 }
 interface DailyUpload {
-    topicName: { value: string }[];
-    accessibleDay: number;
     topics: Topic[];
+    dayName: string;
+    accessibleDay: number;
+    topicName: { value: string }[];
 }
 interface APIData {
     name: string;
@@ -31,6 +32,7 @@ const DEFAULT_STANDARD = {
     dailyUploads: [
         {
             topicName: [{ value: '' }],
+            dayName: '',
             accessibleDay: 0,
             topics: [
                 {
@@ -60,7 +62,8 @@ async function VideoDetailsPage({ params }: { params: { id: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { name, description, topicsDescriptions, dailyUploads } = APIdata;
+                const { name, description, topicsDescriptions, dailyUploads } =
+                    APIdata;
                 return (
                     <CreateStandard
                         standardId={params.id}

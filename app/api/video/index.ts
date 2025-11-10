@@ -140,3 +140,23 @@ export const updateVideoAPI = async ({
 
     return response;
 };
+
+export const deleteVideoAPI = async ({
+    videoId,
+    accessToken,
+}: {
+    videoId: string;
+    accessToken: string;
+}) => {
+    const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/video/deleteVideo`,
+        {
+            headers: {
+                videoId,
+                accessToken,
+            },
+        }
+    );
+
+    return response;
+};

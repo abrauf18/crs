@@ -9,13 +9,13 @@ import { useRouter } from 'next/navigation';
 import action from '@/app/action';
 import { toast } from 'react-toastify';
 
-interface Student {
+export interface Student {
     name: string;
     email: string;
     image: string;
     classroomName: string;
-    averageTotalWeightage: number;
-    averageObtainedWeightage: number;
+    totalResourcesCount: number;
+    finishedResourcesCount: number;
     classroomStudentId: string;
 }
 
@@ -116,8 +116,7 @@ function StudentProfile({ student }: { student: Student }) {
                                 Overall Performance
                             </h1>
                             <h1 className="font-semibold text-lg">
-                                {`${student?.averageObtainedWeightage} of ${student?.averageTotalWeightage} `}{' '}
-                                %
+                                {`${student?.finishedResourcesCount} of ${student?.totalResourcesCount} `}
                             </h1>
                         </div>
                     </div>

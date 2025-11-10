@@ -16,8 +16,8 @@ import {
 interface SummarizedStandardResult {
     standardId: string;
     standardName: string;
-    totalWeightage: number;
-    obtainedWeightage: number;
+    totalResources: number;
+    finishedResources: number;
 }
 
 interface StudentsRecordProp {
@@ -34,8 +34,7 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
     const path = usePathname();
 
     const handleClick = (id: string) => {
-        // push(`${path}/courses/${id}`);
-        push(`${path}/courses`);
+        push(`${path}/${id}`);
     };
 
     return (
@@ -53,10 +52,10 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
                         Standard Name
                     </TableHead>
                     <TableHead className="text-dark-gray font-semibold text-sm">
-                        Total Weightage
+                        Total Resources
                     </TableHead>
                     <TableHead className="text-dark-gray font-semibold text-sm">
-                        Obtained Weightage
+                        Finished Resources
                     </TableHead>
                     <TableHead className="text-dark-gray font-semibold text-sm">
                         Action
@@ -80,10 +79,10 @@ function StudentsRecordTable({ students, fontSize }: StudentsRecordProp) {
                             </TableCell>
 
                             <TableCell className="text-dark-gray font-normal text-sm">
-                                {resource.totalWeightage}%
+                                {resource.totalResources}
                             </TableCell>
                             <TableCell className="text-dark-gray font-normal text-sm">
-                                {resource.obtainedWeightage}%
+                                {resource.finishedResources}
                             </TableCell>
                             <TableCell className="flex justify-start items-center p-0 mt-3 ml-3 gap-2">
                                 <div

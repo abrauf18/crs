@@ -1,12 +1,14 @@
 'use client';
 
-import { EditIcon, LucideIcon, Trash } from 'lucide-react';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { deleteStandard } from '@/app/api/standard';
-import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { EditIcon, LucideIcon, Trash } from 'lucide-react';
 import action from '@/app/action';
+import { deleteVideoAPI } from '@/app/api/video';
+import { deleteStandard } from '@/app/api/standard';
 import DialogBox from './DialogBox';
 
 export interface IconProps {
@@ -45,6 +47,7 @@ function CardContent({
     handleOpenEditModal,
 }: CardContentProps) {
     const { FirstIcon, SecondIcon, ThirdIcon } = Icons;
+    const path = usePathname();
     const { data } = useSession();
     const [isShowDialogBox, setIsShowDialogBox] = useState(false);
 
@@ -65,13 +68,27 @@ function CardContent({
     }, [isShowDialogBox, data]);
 
     const handleConfirmDelete = async () => {
-        const result = await deleteStandard(
-            data?.user?.accessToken || '',
-            id || ''
-        );
-        if (result?.status === 200) {
-            toast.success('Standard Deleted Successfully');
-            action('getAllSummarizedStandards');
+        try {
+            const result = path.includes('/admin/video')
+                ? await deleteVideoAPI({
+                      videoId: id || '',
+                      accessToken: data?.user?.accessToken || '',
+                  })
+                : await deleteStandard(data?.user?.accessToken || '', id || '');
+            if (result?.status === 200) {
+                if (path.includes('/admin/video')) {
+                    toast.success('Video Deleted Successfully');
+                    action('getAllVideos');
+                } else {
+                    toast.success('Standard Deleted Successfully');
+                    action('getAllSummarizedStandards');
+                }
+            }
+        } catch (error: any) {
+            toast.error(
+                error?.response?.data?.message ||
+                    'An error occurred during deletion'
+            );
         }
     };
 
