@@ -78,7 +78,7 @@ function TestReportModal({
     const { data } = useSession();
     const pathname = usePathname();
     const studentId = pathname.split('/')[3];
-    const standardId = pathname.split('/')[5];
+    const standardId = pathname.split('/')[4];
     const { control, handleSubmit } = useForm<FormData>();
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 

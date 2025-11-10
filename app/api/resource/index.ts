@@ -60,12 +60,12 @@ export const getResourcesCountAPI = async ({
     accessToken: string;
     topic: string;
 }) => {
+    const encodedTopic = encodeURIComponent(topic);
     const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/resource/getResourcesCount`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/resource/getResourcesCount?topic=${encodedTopic}`,
         {
             headers: {
                 accesstoken: accessToken,
-                topic,
             },
             next: {
                 tags: ['getResourcesCount'],

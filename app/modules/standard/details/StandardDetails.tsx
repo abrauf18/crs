@@ -21,6 +21,7 @@ interface Topic {
 }
 interface DailyUpload {
     day: number;
+    dayName: string;
     date?: string;
     released?: boolean;
     topics: Topic[];

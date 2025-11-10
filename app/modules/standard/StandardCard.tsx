@@ -16,6 +16,7 @@ interface Topic {
 }
 interface DailyUpload {
     day: number;
+    dayName: string;
     released?: boolean;
     topics: Topic[];
 }
@@ -33,7 +34,7 @@ function StandardCard({
 }) {
     return (
         <section className="mt-5 w-full rounded-lg border p-3">
-            <GetDate day={dailyUpload.day} />
+            <GetDate heading={dailyUpload.dayName} />
             <div className="mt-5 w-full">
                 <StandardTable
                     topicList={dailyUpload.topics}

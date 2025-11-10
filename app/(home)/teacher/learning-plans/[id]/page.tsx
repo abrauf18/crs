@@ -40,7 +40,8 @@ async function DetailsPage({ params }: { params: { id: string } }) {
 
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
-                const { name, description, totalTopics, topicResourceCounts } = APIdata;
+                const { name, description, totalTopics, topicResourceCounts } =
+                    APIdata;
                 return (
                     <Topics
                         isShownFromTeacher
