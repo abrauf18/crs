@@ -1,22 +1,11 @@
 import React from 'react';
-import Image from 'next/image';
-import Filters from '@/app/components/common/Filters';
-import graphImage from '@/app/assets/images/graph.png';
 import StudentsRecordTable from '../StudentsRecordTable';
 
 interface SummarizedStandardResult {
     standardId: string;
     standardName: string;
-    totalWeightage: number;
-    obtainedWeightage: number;
-}
-
-interface DailyProgress {
-    id: string;
-    classroomStudentId: string;
-    obtainedWeightage: number;
-    totalWeightage: number;
-    date: string;
+    totalResources: number;
+    finishedResources: number;
 }
 
 function StudentOverallReport({

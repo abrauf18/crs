@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import Filters from '@/app/components/common/Filters';
+import { ShieldAlert } from 'lucide-react';
 import { ResourceType } from '@/lib/utils';
+import Filters from '@/app/components/common/Filters';
 import Tabs from '@/app/components/common/test-performance/Tabs';
-import PerformanceCard, { PerformanceCardInterface } from './PerformanceCard';
+import PerformanceCard from './PerformanceCard';
 
 interface AssessmentResourcesDetail {
     id: string;
@@ -92,7 +93,7 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
     }
 
     return (
-        <section className="mt-5">
+        <div className="mt-5">
             <Filters
                 text="Course Performance"
                 secondButtonText="Student"
@@ -118,17 +119,26 @@ function CoursePerformance({ dailyUploads }: { dailyUploads: DailyUpload[] }) {
                 Results
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-                {filteredUploads?.map((upload) => (
-                    <div key={upload.id}>
-                        <PerformanceCard
-                            name={upload.resource.name}
-                            id={upload.resource.id}
-                            // percentage={'100'}
-                        />
-                    </div>
-                ))}
+                {filteredUploads?.length > 0 &&
+                    filteredUploads?.map((upload) => (
+                        <div key={upload.id}>
+                            <PerformanceCard
+                                name={upload.resource.name}
+                                id={upload.resource.id}
+                                // percentage={'100'}
+                            />
+                        </div>
+                    ))}
             </div>
-        </section>
+            {filteredUploads?.length === 0 && (
+                <div className="flex flex-col items-center justify-center w-full h-72 bg-white rounded-lg shadow-lg">
+                    <ShieldAlert size={48} />
+                    <p className="text-lg font-semibold mt-4">
+                        No Results Found
+                    </p>
+                </div>
+            )}
+        </div>
     );
 }
 

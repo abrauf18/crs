@@ -16,22 +16,13 @@ interface APIResponse {
 interface Data {
     student: Student;
     summarizedStandardResults: SummarizedStandardResult[];
-    DailyProgress: DailyProgress[];
 }
 
 interface SummarizedStandardResult {
     standardId: string;
     standardName: string;
-    totalWeightage: number;
-    obtainedWeightage: number;
-}
-
-interface DailyProgress {
-    id: string;
-    classroomStudentId: string;
-    obtainedWeightage: number;
-    totalWeightage: number;
-    date: string;
+    totalResources: number;
+    finishedResources: number;
 }
 
 async function StudentDetailsPage({ params }: { params: { id: string } }) {

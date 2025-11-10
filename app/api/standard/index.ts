@@ -14,6 +14,7 @@ export const createStandardAPI = async ({
         resourceId: string;
         accessibleDay: number;
         weightage: number;
+        type: string;
     }[];
     topics: { name: string; description: string }[];
     accessToken: string;
@@ -71,6 +72,7 @@ export const updateStandardAPI = async ({
         resourceId: string;
         accessibleDay: number;
         weightage: number;
+        type: string;
     }[];
     topics: { name: string; description: string }[];
     accessToken: string;

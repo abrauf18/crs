@@ -81,26 +81,32 @@ function ResourcesTable({
     const handleDeleteResources = async (idToRemove: string) => {
         if (data?.user?.accessToken) {
             try {
-                await deleteResourceAPI({
+                const response = await deleteResourceAPI({
                     accessToken: data?.user?.accessToken,
                     resourceId: idToRemove,
                 });
+                if (!response.ok) {
+                    const errorResponse = await response.json();
+                    throw new Error(
+                        errorResponse.message || 'Failed to delete resource'
+                    );
+                }
+
+                toast.success('Resource deleted successfully');
+
                 if (resources?.length === 1 && currentPage >= 1) {
                     handlePageChange && handlePageChange(currentPage);
                 } else {
                     action('getResources');
                 }
             } catch (error: any) {
-                toast.error(
-                    error?.response?.data?.message || 'An Error Occured'
-                );
+                toast.error(error.message || 'An Error Occured');
             }
         }
     };
 
     const handleConfirmDelete = async () => {
         await handleDeleteResources(selectedResource?.id);
-        toast.success('Resource deleted successfully');
         setIsShowDialogBox(false);
     };
 

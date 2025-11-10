@@ -5,7 +5,6 @@ import { User } from 'lucide-react';
 import Searchbar from '@/app/components/common/Searchbar';
 import { Button } from '@/app/components/ui/button';
 import TabBar from '@/app/components/common/TabBar';
-import StatsTable from '@/app/components/common/StatsTable';
 import StudentsInfoTable from './StudentsInfoTable';
 import AddStudentModal from './AddStudentModal';
 
@@ -14,7 +13,6 @@ function Students({ data }: { data: any }) {
     const [isAddStudentModalOpen, setAddStudentModalOpen] = useState(false);
     const [selectedTab, setSelectedTab] = useState(gradeOptions[0]);
     const [studentsData, setStudentsData] = useState<any[]>([]);
-    const [statsList, setStatsList] = useState<any[]>([]);
 
     useEffect(() => {
         if (data && selectedTab) {
@@ -30,24 +28,15 @@ function Students({ data }: { data: any }) {
                         email: student?.userEmail,
                         image: student?.image,
                         classroomStudentId: student?.userClassroomStudentId,
-                        performance: student?.totalObtainedScore || 0,
+                        totalFinishedResources:
+                            student?.totalFinishedResources || 0,
+                        totalResourcesCount:
+                            filterClass?.totalResourcesCount || 0,
                         grade: student?.className,
                         gradeId: student?.classId,
                     })
                 );
                 setStudentsData(filteredStudents);
-
-                const statsList = filterClass?.standardList?.map(
-                    (standard: any) => ({
-                        id: standard.standardId,
-                        name: standard?.standardName,
-                        first: standard?.studentWeightageDistribution['0-25'],
-                        second: standard?.studentWeightageDistribution['25-50'],
-                        third: standard?.studentWeightageDistribution['50-75'],
-                        forth: standard?.studentWeightageDistribution['75-100'],
-                    })
-                );
-                setStatsList(statsList);
             }
         }
     }, [selectedTab, data]);
@@ -89,9 +78,9 @@ function Students({ data }: { data: any }) {
                     Add Student
                 </Button>
             </div>
-            <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
+            {/* <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <StatsTable statsList={statsList} />
-            </div>
+            </div> */}
             <div className="rounded-lg border mt-5 py-3 md:px-6 mobile:px-3">
                 <StudentsInfoTable students={studentsData} isTeacher />
             </div>

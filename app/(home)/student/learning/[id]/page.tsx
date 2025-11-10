@@ -19,6 +19,7 @@ interface Topic {
 interface DailyUpload {
     day: number;
     date: string;
+    dayName: string;
     released: boolean;
     topics: Topic[];
 }
@@ -35,6 +36,7 @@ const DEFAULT_STANDARD = {
         {
             day: 0,
             date: '',
+            dayName: '',
             released: false,
             topics: [
                 {
