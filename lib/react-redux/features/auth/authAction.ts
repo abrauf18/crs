@@ -4,8 +4,6 @@ import {
     forgotPasswordAPI,
     verifyOTPAPI,
     resetPasswordAPI,
-    signupInviteAPI,
-    signupAPI,
 } from '@/app/api/auth';
 
 interface LoginPayload {
@@ -91,61 +89,3 @@ export const resetPassword = createAsyncThunk(
     }
 );
 
-export interface signupInvitePayload {
-    username: string;
-    email: string;
-    role: string;
-    accessToken: string;
-    schoolId?: string;
-}
-
-export const signupInvite = createAsyncThunk(
-    'user/signupInvite',
-    async (
-        { username, email, role, accessToken, schoolId }: signupInvitePayload,
-        { rejectWithValue }
-    ) => {
-        try {
-            const response = await signupInviteAPI(
-                username,
-                email,
-                role,
-                accessToken,
-                schoolId
-            );
-            const emailResponse = response.data;
-            return emailResponse.data;
-        } catch (error: Error | any) {
-            if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message);
-            }
-            return rejectWithValue(error.message);
-        }
-    }
-);
-
-interface signupPayload {
-    name: string;
-    email: string;
-    password: string;
-    token: string;
-}
-
-export const signup = createAsyncThunk(
-    'user/signup',
-    async (
-        { name, email, password, token }: signupPayload,
-        { rejectWithValue }
-    ) => {
-        try {
-            const response = await signupAPI(name, email, password, token);
-            const emailResponse = response.data;
-            return emailResponse.data;
-        } catch (error: Error | any) {
-            if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message);
-            }
-            return rejectWithValue(error.message);
-        }
-    }
-);

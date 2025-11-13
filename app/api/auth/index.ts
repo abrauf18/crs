@@ -70,20 +70,3 @@ export const signupInviteAPI = async (
     return result;
 };
 
-export const signupAPI = async (
-    name: string,
-    email: string,
-    password: string,
-    token: string
-) => {
-    const result = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/emailBasedSignup/token/${token}`,
-        {
-            name,
-            email,
-            password,
-        }
-    );
-
-    return result;
-};

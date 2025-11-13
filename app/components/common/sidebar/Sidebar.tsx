@@ -12,8 +12,6 @@ import {
     X,
     LogOut,
     LayoutGrid,
-    Lightbulb,
-    Bookmark,
     GraduationCap,
     CreditCard,
     BookText,
@@ -23,7 +21,6 @@ import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import ResourceIcon from '@/app/assets/icons/ResourceIcon';
 import QueryIcon from '@/app/assets/icons/QueryIcon';
 import StandardIcon from '@/app/assets/icons/StandardIcon';
-import DataAggregationIcon from '@/app/assets/icons/DataAggregationIcon';
 import TeacherStandardIcon from '@/app/assets/icons/TeacherStandardIcon';
 import TeacherIcon from '@/app/assets/icons/TeacherIcon';
 import NavigationItem, { NavigationItemProps } from './NavigationItem';
@@ -85,11 +82,6 @@ export default function SideBar() {
                 itemText: 'Dashboard',
             },
             {
-                to: '/teacher/students',
-                ItemIcon: UserIcon,
-                itemText: 'Students',
-            },
-            {
                 to: '/teacher/learning-plans',
                 ItemIcon: StandardIcon,
                 itemText: 'Learning Plans',
@@ -101,45 +93,6 @@ export default function SideBar() {
             },
             {
                 to: '/teacher/setting',
-                ItemIcon: Settings,
-                itemText: 'Settings',
-            },
-            {
-                to: '#',
-                ItemIcon: LogOut,
-                itemText: 'Logout',
-                onClick: () => signOut(),
-            },
-        ];
-    } else if (path.startsWith('/student')) {
-        navItems = [
-            {
-                to: '/student',
-                ItemIcon: LayoutGrid,
-                itemText: 'Dashboard',
-            },
-            {
-                to: '/student/learning',
-                ItemIcon: Lightbulb,
-                itemText: 'Learning',
-            },
-            // {
-            //     to: '/student/saved-videos',
-            //     ItemIcon: Bookmark,
-            //     itemText: 'Saved Videos',
-            // },
-            {
-                to: '/student/profile',
-                ItemIcon: UserIcon,
-                itemText: 'Profile',
-            },
-            {
-                to: '/student/assignments',
-                ItemIcon: ResourceIcon,
-                itemText: 'All Assignments',
-            },
-            {
-                to: '/student/setting',
                 ItemIcon: Settings,
                 itemText: 'Settings',
             },
@@ -166,11 +119,6 @@ export default function SideBar() {
                 to: '/school/classrooms',
                 ItemIcon: BookText,
                 itemText: 'Classrooms',
-            },
-            {
-                to: '/school/data-aggregation',
-                ItemIcon: DataAggregationIcon,
-                itemText: 'Data Aggregation',
             },
             {
                 to: '/school/payment',

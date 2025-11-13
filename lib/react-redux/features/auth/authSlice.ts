@@ -4,8 +4,6 @@ import {
     forgotPassword,
     verifyOTP,
     resetPassword,
-    signupInvite,
-    signup,
 } from './authAction';
 
 type User = {
@@ -105,30 +103,6 @@ const userSlice = createSlice({
         builder.addCase(resetPassword.rejected, (state, action) => {
             state.loading = false;
             state.data = initialState.data;
-            state.error = action.error.message || 'Something went wrong';
-        });
-        // signup Invite action
-        builder.addCase(signupInvite.pending, (state) => {
-            state.loading = true;
-        });
-        builder.addCase(signupInvite.fulfilled, (state) => {
-            state.loading = false;
-            state.error = '';
-        });
-        builder.addCase(signupInvite.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.error.message || 'Something went wrong';
-        });
-        // signup action
-        builder.addCase(signup.pending, (state) => {
-            state.loading = true;
-        });
-        builder.addCase(signup.fulfilled, (state) => {
-            state.loading = false;
-            state.error = '';
-        });
-        builder.addCase(signup.rejected, (state, action) => {
-            state.loading = false;
             state.error = action.error.message || 'Something went wrong';
         });
     },

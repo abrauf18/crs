@@ -13,7 +13,6 @@ import {
 } from '@/app/components/ui/table';
 import { ResourceType, StudentProfileResourceType } from '@/lib/utils';
 import MyAnswersModal from '@/app/modules/profile/MyAnswersModal';
-import TestReportModal from '@/app/modules/students/courses/TestReportModal';
 
 export interface TestRecordInterface {
     id: number;
@@ -188,19 +187,6 @@ function TestPerformanceTable({
                             })
                         }
                         test={currentTest.testDetails!}
-                    />
-                </div>
-            )}
-
-            {currentTest.showModal && isShownFromTeacher && (
-                <div className="fixed right-0 top-0 z-50 text-sm md:w-[60%] lg:w-[30%]">
-                    <TestReportModal
-                        test={currentTest.testDetails!}
-                        onClose={() =>
-                            setCurrentTest({
-                                showModal: false,
-                            })
-                        }
                     />
                 </div>
             )}

@@ -58,13 +58,7 @@ function SchoolDashboard({ data, name }: { data: any; name: string }) {
                 tagline="Here’s a Quick Overview"
                 Icon={WavingHandIcon}
             />
-            <div className="grid mobile:grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mobile:mt-10 mt-4 mobile:place-items-center mb-4">
-                <Card
-                    Icon={UserIcon}
-                    cardText="Total Students"
-                    count={data?.totalStudent}
-                    isSchool
-                />
+            <div className="grid mobile:grid-col-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mobile:mt-10 mt-4 mobile:place-items-center mb-4">
                 <Card
                     Icon={SchoolClassroomIcon}
                     cardText="No of Classroom"

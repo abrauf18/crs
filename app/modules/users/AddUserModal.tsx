@@ -9,23 +9,17 @@ import AppDropDown, {
     OptionsInterface,
 } from '@/app/components/common/AppDropDown';
 import { ModalHeader } from '@/app/components/common/ModalHeader';
-import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
-import {
-    signupInvite,
-    signupInvitePayload,
-} from '@/lib/react-redux/features/auth/authAction';
 import { Button } from '@/app/components/ui/button';
 import Input from '@/app/components/common/Input';
 import { validationError } from '@/lib/utils';
 import Loader from '@/app/components/common/ButtonLoader';
+import { signupInviteAPI } from '@/app/api/auth';
 
 function ProfileModal({ onClose, school, setSchool, schoolList }: any) {
-    const [role, setRole] = useState('student');
-    const dispatch = useAppDispatch();
-    const state = useAppSelector((state: { user: any }) => state.user);
+    const [role, setRole] = useState('teacher');
+    const [loading, setLoading] = useState(false);
     const { data } = useSession();
     const allRoles: OptionsInterface[] = [
-        { label: 'student', value: 'Student' },
         { label: 'teacher', value: 'Teacher' },
         { label: 'school', value: 'School' },
         { label: 'admin', value: 'Admin' },
@@ -42,28 +36,36 @@ function ProfileModal({ onClose, school, setSchool, schoolList }: any) {
     };
 
     const onFormSubmit = async (formData: any) => {
-        const { username, email } = formData;
-        const getSchoolId = schoolList.find(
-            (value: { value: string; id: string }) => value?.value === school
-        );
-        const accessToken = data?.user.accessToken || '';
+        try {
+            setLoading(true);
+            const { username, email } = formData;
+            const getSchoolId = schoolList.find(
+                (value: { value: string; id: string }) => value?.value === school
+            );
+            const accessToken = data?.user.accessToken || '';
 
-        const payload: signupInvitePayload = {
-            email,
-            username,
-            role,
-            accessToken,
-        };
+            let schoolId = '';
+            if (role === 'teacher') {
+                schoolId = getSchoolId?.id || '';
+            }
 
-        if (role === 'teacher' || role === 'student') {
-            payload.schoolId = getSchoolId?.id;
+            const response = await signupInviteAPI(
+                username,
+                email,
+                role,
+                accessToken,
+                schoolId
+            );
+
+            if (response.status === 200) {
+                toast.success('Invitation sent successfully');
+                onClose();
+            }
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message || 'Something went wrong');
+        } finally {
+            setLoading(false);
         }
-
-        const response = await dispatch(signupInvite(payload));
-        if (response.type === 'user/signupInvite/rejected') {
-            return toast.error(response.payload);
-        }
-        return toast.success('Invitation sent successfully');
     };
 
     return (
@@ -120,7 +122,7 @@ function ProfileModal({ onClose, school, setSchool, schoolList }: any) {
                                 onChange={handleRoleChange}
                             />
                         </div>
-                        {(role === 'student' || role === 'teacher') && (
+                        {role === 'teacher' && (
                             <div className="flex flex-col space-y-2 mt-3">
                                 <Label htmlFor="school">School</Label>
                                 <AppDropDown
@@ -136,8 +138,9 @@ function ProfileModal({ onClose, school, setSchool, schoolList }: any) {
                             <Button
                                 type="submit"
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
+                                disabled={loading}
                             >
-                                {state.loading ? <Loader /> : 'Invite'}
+                                {loading ? <Loader /> : 'Invite'}
                             </Button>
                         </div>
                     </form>

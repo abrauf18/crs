@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { ShieldAlert } from 'lucide-react';
 import SlideShowIcon from '@/app/assets/icons/SlideShowIcon';
 import DataIcon from '@/app/assets/icons/DataIcon';
 import UserIcon from '@/app/assets/icons/UserIcon';
@@ -14,7 +13,6 @@ import ResourcesTable from '../resources/ResourcesTable';
 import Card from '../../components/common/Card';
 import Searchbar from '../../components/common/Searchbar';
 import LearningPlanTable from './LearningPlanTable';
-import StudentsInfoTable from '../students/StudentsInfoTable';
 
 function Dashboard({
     name,
@@ -24,7 +22,6 @@ function Dashboard({
     ResourceAPIData,
     TeacherSummaries,
     StandardOverview,
-    students,
 }: {
     name?: string;
     isTeacher?: boolean;
@@ -47,7 +44,6 @@ function Dashboard({
         usersJoining: any[];
     };
     StandardOverview?: LearningInterface[];
-    students?: any[];
 }) {
     const [currentYear, setCurrentYear] = React.useState(
         new Date().getFullYear()
@@ -56,17 +52,6 @@ function Dashboard({
     async function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setCurrentYear(+e.target.value);
     }
-
-    const filteredStudents = students?.map((student) => ({
-        ...student,
-        id: student?.userId,
-        name: student?.userName,
-        email: student?.userEmail,
-        image: student?.image,
-        gradeId: student?.classId,
-        grade: student?.className,
-        performance: student?.totalObtainedScore,
-    }));
     return (
         <section className="flex flex-col w-full scroll-smooth mobile:mt-2">
             <Searchbar
@@ -106,13 +91,6 @@ function Dashboard({
                     </>
                 ) : (
                     <>
-                        <Card
-                            Icon={UserIcon}
-                            cardText="Total Students"
-                            count={TeacherSummaries?.totalStudents ?? 0}
-                            currentPath="/teacher/students"
-                            iconBackgroundColour="bg-indigo-100"
-                        />
                         <Card
                             Icon={SlideShowIcon}
                             cardText="Assigned Classroom"
@@ -171,14 +149,7 @@ function Dashboard({
                         />
                     </div>
                 </>
-            ) : (
-                <div className="flex flex-col items-center justify-center w-full h-72 bg-white rounded-lg shadow-lg">
-                    <ShieldAlert size={48} />
-                    <p className="text-lg font-semibold mt-4">
-                        No Students to Show
-                    </p>
-                </div>
-            )}
+            ) : null}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 mobile:gap-8 mt-5">
                 {!isTeacher ? (
@@ -190,18 +161,7 @@ function Dashboard({
                             isDashboard
                         />
                     </div>
-                ) : (
-                    <div className="border rounded-lg p-4 px-6">
-                        <h1 className="text-xl font-semibold mb-2">
-                            All Student’s
-                        </h1>
-                        <StudentsInfoTable
-                            students={filteredStudents ?? []}
-                            isTeacherDashboardTable
-                            fontSize="12"
-                        />
-                    </div>
-                )}
+                ) : null}
 
                 {!isTeacher ? (
                     <div className="border rounded-lg p-4 px-6">
