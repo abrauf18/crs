@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { useForm, FormProvider, set } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '@/app/components/ui/button';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
@@ -28,10 +28,17 @@ function CreatePasswordForm({ description }: { description: string }) {
         try {
             setIsLoader(true);
             const { newPassword } = data;
-            const { id } = state.data;
-            const response = await dispatch(resetPassword({ id, newPassword }));
-            if (response.type === 'user/verifyOTP/rejected') {
-                toast.error(response.payload);
+            const { email } = state.data;
+            const verificationCode = state.otp;
+
+            if (!verificationCode) {
+                toast.error('Verification code is missing. Please try again.');
+                return push('/forgot-password');
+            }
+
+            const response = await dispatch(resetPassword({ email, verificationCode, newPassword }));
+            if (response.type === 'user/resetPassword/rejected') {
+                toast.error(response.payload as string);
                 return push('/forgot-password');
             }
             toast.success('Successfully Updated Password');

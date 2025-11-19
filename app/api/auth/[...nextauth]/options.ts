@@ -29,7 +29,7 @@ export const options: NextAuthOptions = {
                             'Content-Type': 'application/json',
                         },
                         credentials: 'include',
-                        body: JSON.stringify({ email, password }),
+                        body: JSON.stringify({ userinfo: email, password }),
                     }
                 );
                 const data = await response.json();

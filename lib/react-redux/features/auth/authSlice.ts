@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     login,
     forgotPassword,
-    verifyOTP,
     resetPassword,
 } from './authAction';
 
@@ -16,6 +15,7 @@ type User = {
 type state = {
     loading: boolean;
     data: User;
+    otp: string;
     error: string;
 };
 
@@ -27,13 +27,21 @@ const initialState: state = {
         email: '',
         role: '',
     },
+    otp: '',
     error: '',
 };
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
+    reducers: {
+        setOtp: (state, action: PayloadAction<string>) => {
+            state.otp = action.payload;
+        },
+        clearOtp: (state) => {
+            state.otp = '';
+        },
+    },
     extraReducers: (builder) => {
         // login action
         builder.addCase(login.pending, (state) => {
@@ -73,22 +81,6 @@ const userSlice = createSlice({
             state.data = initialState.data;
             state.error = action.error.message || 'Something went wrong';
         });
-        // verify OTP action
-        builder.addCase(verifyOTP.pending, (state) => {
-            state.loading = true;
-        });
-        builder.addCase(
-            verifyOTP.fulfilled,
-            (state, action: PayloadAction<User>) => {
-                state.loading = false;
-                state.error = '';
-            }
-        );
-        builder.addCase(verifyOTP.rejected, (state, action) => {
-            state.loading = false;
-            state.data = initialState.data;
-            state.error = action.error.message || 'Something went wrong';
-        });
         // Reset Password action
         builder.addCase(resetPassword.pending, (state) => {
             state.loading = true;
@@ -108,4 +100,5 @@ const userSlice = createSlice({
     },
 });
 
+export const { setOtp, clearOtp } = userSlice.actions;
 export default userSlice.reducer;

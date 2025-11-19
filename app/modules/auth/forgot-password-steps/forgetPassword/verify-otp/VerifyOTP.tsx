@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import loginimage2 from '@/app/assets/images/leftside2.svg';
 import loginimage3 from '@/app/assets/images/leftside3.svg';
 import loginimage4 from '@/app/assets/images/leftside4.svg';
@@ -11,9 +11,7 @@ import { Button } from '@/app/components/ui/button';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
-import { verifyOTP } from '@/lib/react-redux/features/auth/authAction';
-import { toast } from 'react-toastify';
-import ButtonLoader from '@/app/components/common/ButtonLoader';
+import { setOtp } from '@/lib/react-redux/features/auth/authSlice';
 import LeftSide from '../../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
@@ -26,14 +24,11 @@ function VerifyOTP({
 }) {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
     const [otpArray, setOtpArray] = useState(['', '', '', '']);
-    const [isLoader, setIsLoader] = useState(false);
-    const { push } = useRouter();
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
-    // const [isPageLoading, setIsPageLoading] = useState(false);
     const metaText = {
         title: 'Reset Password!',
-        description: 'Forgot Your Password Don’t worry lets Recover It',
+        description: "Forgot Your Password Don't worry lets Recover It",
     };
 
     const handleOtpChange = (index: number, value: string) => {
@@ -79,24 +74,16 @@ function VerifyOTP({
         }
     };
 
-    // eslint-disable-next-line consistent-return
     const handleSubmit = async () => {
-        try {
-            setIsLoader(true);
-            const OTP = otpArray.join('');
-            const { id } = state.data;
-            const response = await dispatch(verifyOTP({ id, OTP }));
-            if (response.type === 'user/verifyOTP/rejected') {
-                toast.error(response.payload);
-                return handlePreviousStep();
-            }
-            toast.success('Successfully Verified');
-            return handleNextStep();
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setIsLoader(false);
+        const OTP = otpArray.join('');
+        if (OTP.length !== 4) {
+            toast.error('Please enter a valid 4-digit OTP');
+            return;
         }
+        // Store OTP in redux and proceed to password reset step
+        dispatch(setOtp(OTP));
+        toast.success('OTP verified. Please enter your new password.');
+        handleNextStep();
     };
 
     return (
@@ -155,11 +142,10 @@ function VerifyOTP({
                         <div className="text-center mt-10">
                             <Button
                                 type="button"
-                                disabled={isLoader}
                                 className="w-full bg-primary-color lg:hover:bg-orange-400 mb-3"
                                 onClick={handleSubmit}
                             >
-                                {isLoader ? <ButtonLoader /> : 'Verify Now'}
+                                Verify Now
                             </Button>
                         </div>
                     </form>

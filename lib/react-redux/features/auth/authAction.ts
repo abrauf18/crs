@@ -1,10 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-    loginAPI,
-    forgotPasswordAPI,
-    verifyOTPAPI,
-    resetPasswordAPI,
-} from '@/app/api/auth';
+import { loginAPI, forgotPasswordAPI, resetPasswordAPI, registerTeacherAPI } from '@/app/api/auth';
 
 interface LoginPayload {
     email: string;
@@ -47,37 +42,24 @@ export const forgotPassword = createAsyncThunk(
     }
 );
 
-interface VerifyOTPPayload {
-    id: string;
-    OTP: string;
-}
-
-export const verifyOTP = createAsyncThunk(
-    'user/verifyOTP',
-    async ({ id, OTP }: VerifyOTPPayload, { rejectWithValue }) => {
-        try {
-            const response = await verifyOTPAPI(id, OTP);
-            const emailResponse = response.data;
-            return emailResponse.data;
-        } catch (error: Error | any) {
-            if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message);
-            }
-            return rejectWithValue(error.message);
-        }
-    }
-);
-
 interface resetPasswordPayload {
-    id: string;
+    email: string;
+    verificationCode: string;
     newPassword: string;
 }
 
 export const resetPassword = createAsyncThunk(
     'user/resetPassword',
-    async ({ id, newPassword }: resetPasswordPayload, { rejectWithValue }) => {
+    async (
+        { email, verificationCode, newPassword }: resetPasswordPayload,
+        { rejectWithValue }
+    ) => {
         try {
-            const response = await resetPasswordAPI(id, newPassword);
+            const response = await resetPasswordAPI(
+                email,
+                verificationCode,
+                newPassword
+            );
             const emailResponse = response.data;
             return emailResponse.data;
         } catch (error: Error | any) {
@@ -89,3 +71,33 @@ export const resetPassword = createAsyncThunk(
     }
 );
 
+interface RegisterTeacherPayload {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+}
+
+export const registerTeacher = createAsyncThunk(
+    'user/registerTeacher',
+    async (
+        { firstName, lastName, email, password }: RegisterTeacherPayload,
+        { rejectWithValue }
+    ) => {
+        try {
+            const response = await registerTeacherAPI(
+                firstName,
+                lastName,
+                email,
+                password
+            );
+            const registerResponse = response.data;
+            return registerResponse.data;
+        } catch (error: Error | any) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            }
+            return rejectWithValue(error.message);
+        }
+    }
+);

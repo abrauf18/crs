@@ -1,6 +1,6 @@
 import React from 'react';
-import Signin from '@/app/modules/auth/Signin';
 import { Metadata } from 'next';
+import Signin from '@/app/modules/auth/Signin';
 
 export const metadata: Metadata = {
     title: 'Sign In',

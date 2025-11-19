@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import loginimage2 from '@/app/assets/images/leftside2.svg';
 import loginimage3 from '@/app/assets/images/leftside3.svg';
 import loginimage4 from '@/app/assets/images/leftside4.svg';
@@ -13,7 +14,6 @@ import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
 import { forgotPassword } from '@/lib/react-redux/features/auth/authAction';
-import { toast } from 'react-toastify';
 import Loader from '@/app/components/common/ButtonLoader';
 import LeftSide from '../../common/LeftSide';
 

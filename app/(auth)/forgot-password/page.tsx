@@ -1,6 +1,6 @@
 import React from 'react';
-import Steps from '@/app/modules/auth/forgot-password-steps/Steps';
 import { Metadata } from 'next';
+import Steps from '@/app/modules/auth/forgot-password-steps/Steps';
 
 export const metadata: Metadata = {
     title: 'Reset Password!',

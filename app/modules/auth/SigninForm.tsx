@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { getSession, signIn } from 'next-auth/react';
 import { useForm, FormProvider } from 'react-hook-form';
+import { Eye, EyeOff } from 'lucide-react';
 import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@/app/components/ui/button';
@@ -14,7 +15,6 @@ import GoogleIcon from '@/app/assets/icons/GoogleIcon';
 import Input from '@/app/components/common/Input';
 import Loader from '@/app/components/common/ButtonLoader';
 import { validationError } from '@/lib/utils';
-import { Eye, EyeOff } from 'lucide-react';
 
 function SigninForm() {
     const router = useRouter();
@@ -191,6 +191,17 @@ function SigninForm() {
                             />
                             Sign In With Google
                         </Button> */}
+                    </div>
+                    <div className="text-center mt-4">
+                        <span className="text-sm text-dark-gray">
+                            Don&apos;t have an account?{' '}
+                            <Link
+                                href="/signup"
+                                className="text-primary-color lg:hover:text-orange-400 font-medium"
+                            >
+                                Sign Up
+                            </Link>
+                        </span>
                     </div>
                 </form>
             </div>

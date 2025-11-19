@@ -6,7 +6,7 @@ export const loginAPI = async (email: string, password: string) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
         {
-            email,
+            userinfo: email,
             password,
         }
     );
@@ -25,23 +25,16 @@ export const forgotPasswordAPI = async (email: string) => {
     return result;
 };
 
-export const verifyOTPAPI = async (userId: string, OTP: string) => {
-    const result = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-otp`,
-        {
-            userId,
-            OTP,
-        }
-    );
-
-    return result;
-};
-
-export const resetPasswordAPI = async (userId: string, newPassword: string) => {
+export const resetPasswordAPI = async (
+    email: string,
+    verificationCode: string,
+    newPassword: string
+) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password`,
         {
-            userId,
+            email,
+            verificationCode,
             newPassword,
         }
     );
@@ -70,3 +63,21 @@ export const signupInviteAPI = async (
     return result;
 };
 
+export const registerTeacherAPI = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+) => {
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`,
+        {
+            firstName,
+            lastName,
+            email,
+            password,
+        }
+    );
+
+    return result;
+};
