@@ -66,4 +66,8 @@ export const options: NextAuthOptions = {
         maxAge: 1 * 60 * 60,
     },
     secret: process.env.NEXTAUTH_SECRET as string,
+    pages: {
+        signIn: '/signin',
+        signOut: '/signin',
+    },
 };

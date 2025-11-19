@@ -71,7 +71,7 @@ export default function SideBar() {
                 to: '#',
                 ItemIcon: LogOut,
                 itemText: 'Logout',
-                onClick: () => signOut(),
+                onClick: () => signOut({ callbackUrl: '/signin' }),
             },
         ];
     } else if (path.startsWith('/teacher')) {
@@ -100,7 +100,7 @@ export default function SideBar() {
                 to: '#',
                 ItemIcon: LogOut,
                 itemText: 'Logout',
-                onClick: () => signOut(),
+                onClick: () => signOut({ callbackUrl: '/signin' }),
             },
         ];
     } else if (path.startsWith('/school')) {
@@ -134,7 +134,7 @@ export default function SideBar() {
                 to: '#',
                 ItemIcon: LogOut,
                 itemText: 'Logout',
-                onClick: () => signOut(),
+                onClick: () => signOut({ callbackUrl: '/signin' }),
             },
         ];
     }

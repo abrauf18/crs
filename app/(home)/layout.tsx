@@ -1,12 +1,8 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
-import { Montserrat } from 'next/font/google';
-import '@/app/globals.css';
 import SideBar from '@/app/components/common/sidebar/Sidebar';
 import { options } from '../api/auth/[...nextauth]/options';
-
-const montserrat = Montserrat({ subsets: ['latin'] });
 
 export default async function RootLayout({
     children,
