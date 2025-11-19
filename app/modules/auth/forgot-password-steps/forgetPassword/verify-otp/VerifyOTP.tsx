@@ -12,6 +12,8 @@ import crscLogo from '@/app/assets/images/crsclogo.svg';
 import { Label } from '@/app/components/ui/label';
 import { useAppDispatch, useAppSelector } from '@/lib/react-redux/hooks';
 import { setOtp } from '@/lib/react-redux/features/auth/authSlice';
+import { forgotPassword } from '@/lib/react-redux/features/auth/authAction';
+import Loader from '@/app/components/common/ButtonLoader';
 import LeftSide from '../../../common/LeftSide';
 import { OTPInput } from './OTPInput';
 
@@ -24,6 +26,7 @@ function VerifyOTP({
 }) {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
     const [otpArray, setOtpArray] = useState(['', '', '', '', '', '']);
+    const [resending, setResending] = useState(false);
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
     const metaText = {
@@ -90,6 +93,21 @@ function VerifyOTP({
         handleNextStep();
     };
 
+    const handleResendOTP = async () => {
+        setResending(true);
+        const response = await dispatch(
+            forgotPassword({ email: state.data.email })
+        );
+        setResending(false);
+        if (response.type === 'user/forgotPassword/rejected') {
+            toast.error(response.payload as string);
+            return;
+        }
+        // Clear the OTP inputs
+        setOtpArray(['', '', '', '', '', '']);
+        toast.success('OTP resent successfully');
+    };
+
     return (
         <section className="flex lg:flex-row flex-col justify-between  h-screen">
             <div className="w-full hidden lg:block">
@@ -150,6 +168,19 @@ function VerifyOTP({
                                 onClick={handleSubmit}
                             >
                                 Verify Now
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                disabled={resending}
+                                className="w-full"
+                                onClick={handleResendOTP}
+                            >
+                                {resending ? (
+                                    <Loader color="primary" />
+                                ) : (
+                                    'Resend Code'
+                                )}
                             </Button>
                         </div>
                     </form>
