@@ -23,7 +23,7 @@ function VerifyOTP({
     handlePreviousStep: () => void;
 }) {
     const images = [signupImage, loginimage2, loginimage3, loginimage4];
-    const [otpArray, setOtpArray] = useState(['', '', '', '']);
+    const [otpArray, setOtpArray] = useState(['', '', '', '', '', '']);
     const dispatch = useAppDispatch();
     const state = useAppSelector((state) => state.user);
     const metaText = {
@@ -52,7 +52,7 @@ function VerifyOTP({
     };
 
     const handleFocusNext = (currentIndex: number) => {
-        if (currentIndex < 3) {
+        if (currentIndex < 5) {
             const nextInput = document.getElementById(
                 `otpInput_${currentIndex + 1}`
             );
@@ -64,10 +64,14 @@ function VerifyOTP({
 
     const handlePaste = (pastedOTP: string) => {
         if (pastedOTP) {
-            const sanitizedArray = pastedOTP.replace(/\D/g, '');
+            const sanitizedArray = pastedOTP.replace(/\D/g, '').slice(0, 6);
             const otpSepratedArray = sanitizedArray.split('');
+            // Pad with empty strings if less than 6 digits
+            while (otpSepratedArray.length < 6) {
+                otpSepratedArray.push('');
+            }
             setOtpArray(otpSepratedArray);
-            const lastInput = document.getElementById('otpInput_3');
+            const lastInput = document.getElementById('otpInput_5');
             if (lastInput) {
                 lastInput.focus();
             }
@@ -76,8 +80,8 @@ function VerifyOTP({
 
     const handleSubmit = async () => {
         const OTP = otpArray.join('');
-        if (OTP.length !== 4) {
-            toast.error('Please enter a valid 4-digit OTP');
+        if (OTP.length !== 6) {
+            toast.error('Please enter a valid 6-digit OTP');
             return;
         }
         // Store OTP in redux and proceed to password reset step
@@ -118,8 +122,8 @@ function VerifyOTP({
                         <div className="mt-2">
                             <Label htmlFor="email">Verification Code</Label>
 
-                            <div className="grid grid-cols-4 gap-4">
-                                {[0, 1, 2, 3].map((index) => (
+                            <div className="grid grid-cols-6 gap-2">
+                                {[0, 1, 2, 3, 4, 5].map((index) => (
                                     <OTPInput
                                         index={index}
                                         key={index}

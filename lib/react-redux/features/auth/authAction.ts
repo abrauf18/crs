@@ -31,8 +31,9 @@ export const forgotPassword = createAsyncThunk(
     async ({ email }: ForgotPasswordPayload, { rejectWithValue }) => {
         try {
             const response = await forgotPasswordAPI(email);
-            const emailResponse = response.data;
-            return emailResponse.data;
+            // Return the email so it can be stored in Redux state
+            // The backend doesn't return user data, just a success message
+            return { email };
         } catch (error: Error | any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);

@@ -69,9 +69,8 @@ const userSlice = createSlice({
         });
         builder.addCase(
             forgotPassword.fulfilled,
-            (state, action: PayloadAction<User>) => {
+            (state, action: PayloadAction<{ email: string }>) => {
                 state.loading = false;
-                state.data.id = action.payload.id;
                 state.data.email = action.payload.email;
                 state.error = '';
             }

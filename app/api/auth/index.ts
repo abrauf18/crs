@@ -82,7 +82,10 @@ export const registerTeacherAPI = async (
     return result;
 };
 
-export const verifyEmailAPI = async (email: string, verificationCode: string) => {
+export const verifyEmailAPI = async (
+    email: string,
+    verificationCode: string
+) => {
     const result = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email`,
         {
