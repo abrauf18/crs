@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import action from '@/app/action';
 import { validationError } from '@/lib/utils';
 import CharacterImage from '@/app/assets/images/character.svg';
-import { createVideoQuestionAnswerAPI } from '@/app/api/student';
+// import { createVideoQuestionAnswerAPI } from '@/app/api/student';
 import QuestionMarkIcon from '@/app/assets/icons/QuestionMarkIcon';
 import FormError from './FormError';
 import PageLoader from './PageLoader';
@@ -65,22 +65,22 @@ export default function AttempVideoQuestion({
             return;
         }
         try {
-            const APIresponse = await createVideoQuestionAnswerAPI({
-                accessToken: data?.user?.accessToken,
-                userId: data?.user?.id,
-                questionId: question.id,
-                answer:
-                    questionType === 'mcq'
-                        ? formData.selectedOption
-                        : formData.statement,
-                standardId: standardId || '',
-            });
-            if (APIresponse.status !== 200) {
-                throw new Error(
-                    APIresponse?.data?.message ||
-                        'An error occured while submitting your answer'
-                );
-            }
+            // const APIresponse = await createVideoQuestionAnswerAPI({
+            //     accessToken: data?.user?.accessToken,
+            //     userId: data?.user?.id,
+            //     questionId: question.id,
+            //     answer:
+            //         questionType === 'mcq'
+            //             ? formData.selectedOption
+            //             : formData.statement,
+            //     standardId: standardId || '',
+            // });
+            // if (APIresponse.status !== 200) {
+            //     throw new Error(
+            //         APIresponse?.data?.message ||
+            //             'An error occured while submitting your answer'
+            //     );
+            // }
             markQuestionAsAnswered();
             toast.success('Answer submitted successfully');
         } catch (error: any) {

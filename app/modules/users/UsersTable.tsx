@@ -266,7 +266,7 @@ function UsersTable({
                             colSpan={5}
                             className="h-12 rounded-lg text-center"
                         >
-                            <ButtonLoader style="black" />
+                            <ButtonLoader />
                         </TableCell>
                     </TableRow>
                 )}

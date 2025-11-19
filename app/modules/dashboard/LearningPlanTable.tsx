@@ -16,7 +16,7 @@ import {
 } from '@/app/components/ui/table';
 import action from '@/app/action';
 import { LearningInterface } from '@/lib/utils';
-import { deleteClassCourseAPI } from '@/app/api/classroom';
+// import { deleteClassCourseAPI } from '@/app/api/classroom';
 import DialogBox from '@/app/components/common/DialogBox';
 
 interface LearningPlanProp {
@@ -53,10 +53,10 @@ function LearningPlanTable({ learnings, fontSize }: LearningPlanProp) {
     };
     const handleDeleteClassStandard = async (classStandardId: string) => {
         try {
-            await deleteClassCourseAPI({
-                accessToken: data?.user.accessToken || '',
-                classroomCourseId: classStandardId,
-            });
+            // await deleteClassCourseAPI({
+            //     accessToken: data?.user.accessToken || '',
+            //     classroomCourseId: classStandardId,
+            // });
             action('getClassesAndCourses');
             toast.success('Standard removed from class successfully.');
         } catch (error: any) {

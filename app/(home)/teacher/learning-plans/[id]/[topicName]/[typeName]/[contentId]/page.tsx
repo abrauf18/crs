@@ -6,7 +6,7 @@ import UnhandledError from '@/app/modules/error/UnhandledError';
 import { Resource, DEFAULT_RESOURCE, ResourceType, Video } from '@/lib/utils';
 import FileViewing from '@/app/components/common/FileViewing';
 import { getVideoAPI } from '@/app/api/video';
-import VideoViewing from '@/app/components/common/VideoViewing';
+// import VideoViewing from '@/app/components/common/VideoViewing';
 
 async function ResourceDetailsPage({
     params,
@@ -39,14 +39,14 @@ async function ResourceDetailsPage({
                 const APIdata: { video: Video } = APIResponse?.data;
                 const { videoUrl, thumbnailURL, topics, questions } =
                     APIdata.video;
-                return (
-                    <VideoViewing
-                        videoURL={videoUrl}
-                        thumbnailURL={thumbnailURL}
-                        topics={topics}
-                        questions={questions}
-                    />
-                );
+                // return (
+                //     <VideoViewing
+                //         videoURL={videoUrl}
+                //         thumbnailURL={thumbnailURL}
+                //         topics={topics}
+                //         questions={questions}
+                //     />
+                // );
             }
             const APIdata: Resource = APIResponse?.data;
             return (

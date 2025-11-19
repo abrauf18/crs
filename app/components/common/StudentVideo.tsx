@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React, { useRef, useState } from 'react';
 import StandardIcon from '@/app/assets/icons/StandardIcon';
-import VideoViewing from '@/app/components/common/VideoViewing';
+// import VideoViewing from '@/app/components/common/VideoViewing';
 import ClientSearchbar from '@/app/components/common/ClientSearchBar';
 import PageLoader from './PageLoader';
 
@@ -50,7 +50,7 @@ export default function StudentVideo({
                 isShowBackArrow
                 onBackClick={back}
             />
-            {data ? (
+            {/* {data ? (
                 <VideoViewing
                     standardId={standardId}
                     videoURL={videoURL}
@@ -64,7 +64,7 @@ export default function StudentVideo({
                 />
             ) : (
                 <PageLoader />
-            )}
+            )} */}
         </div>
     );
 }

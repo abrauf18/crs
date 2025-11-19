@@ -17,7 +17,7 @@ import { forgotPassword } from '@/lib/react-redux/features/auth/authAction';
 import Loader from '@/app/components/common/ButtonLoader';
 import LeftSide from '../../common/LeftSide';
 
-function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
+function ForgotPassword() {
     const { push } = useRouter();
     const dispatch = useAppDispatch();
     const [email, setEmail] = useState('');
@@ -36,10 +36,10 @@ function ForgotPassword({ handleNextStep }: { handleNextStep: () => void }) {
         event.preventDefault();
         const response = await dispatch(forgotPassword({ email }));
         if (response.type === 'user/forgotPassword/rejected') {
-            return toast.error(response.payload);
+            return toast.error(response.payload as any);
         }
         toast.success('OTP sent successfully');
-        return handleNextStep();
+        push(`/forgot-password/reset-verify?email=${encodeURIComponent(email)}`);
     };
 
     return (

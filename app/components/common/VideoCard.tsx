@@ -9,7 +9,6 @@ import { useSession } from 'next-auth/react';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import action from '@/app/action';
 import { timeStringToSeconds } from '@/lib/utils';
-import { SaveOrRemoveVideoAPI } from '@/app/api/student';
 import QuestionIcon from '@/app/assets/icons/QuestionIcon';
 import CheckPointIcon from '@/app/assets/icons/CheckPointIcon';
 
@@ -42,17 +41,6 @@ function VideoCard({ card }: VideoCardProps) {
             return;
         }
         try {
-            const APIresponse = await SaveOrRemoveVideoAPI({
-                accessToken: data?.user?.accessToken,
-                standardId: card.standardId,
-                studentId: data?.user?.id,
-                videoId: card.id,
-                save: false,
-            });
-
-            if (APIresponse.status !== 200) {
-                throw new Error('Error updating video last seen time');
-            }
             action('getSavedVideos');
             action('getStudentDashboardSummaries');
             toast.success('Removed saved video successfully');

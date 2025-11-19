@@ -4,7 +4,6 @@ import { ResourceType } from '@/lib/utils';
 import { getTopicResourcesAPI } from '@/app/api/standard';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import StandardDetails from '@/app/modules/standard/details/StandardDetails';
 
 interface Topic {
     name: string;
@@ -67,15 +66,6 @@ async function DetailsPage({
             if (APIResponse.status !== 'error') {
                 APIdata = APIResponse?.data;
                 const { name, description, dailyUploads } = APIdata;
-                return (
-                    <StandardDetails
-                        params={params}
-                        name={name}
-                        description={description}
-                        dailyUploads={dailyUploads}
-                        isShownFromTeacher
-                    />
-                );
             }
 
             if (!response.ok) {
