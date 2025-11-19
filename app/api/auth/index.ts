@@ -81,3 +81,27 @@ export const registerTeacherAPI = async (
 
     return result;
 };
+
+export const verifyEmailAPI = async (email: string, verificationCode: string) => {
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email`,
+        {
+            email,
+            verificationCode,
+        }
+    );
+
+    return result;
+};
+
+export const resendOtpAPI = async (email: string, type: string) => {
+    const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/resend-otp`,
+        {
+            email,
+            type,
+        }
+    );
+
+    return result;
+};
