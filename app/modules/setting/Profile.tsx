@@ -4,17 +4,16 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useRef, useState } from 'react';
-import { DEFAULT_IMAGE, validationError } from '@/lib/utils';
+import React, { useEffect, useState } from 'react';
+import { validationError } from '@/lib/utils';
 import { Label } from '@/app/components/ui/label';
 import Input from '@/app/components/common/Input';
 import Loader from '@/app/components/common/ButtonLoader';
-import PictureIcon from '@/app/assets/icons/PictureIcon';
+
 import { getUserProfileAPI, updateUserProfileAPI } from '@/app/api/user/index';
-import { UploadProfilePicture, DeleteProfilePicture } from '@/app/api/s3Bucket';
+
 import useProfileImage from '@/lib/custom-hooks/useProfileImage';
 import ProfileImage from '@/app/components/common/ProfileImage';
-import SchoolProfile from './SchoolProfile';
 
 interface MyProfileProps {
     isSchoolProfile?: boolean;

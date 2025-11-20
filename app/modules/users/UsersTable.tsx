@@ -5,7 +5,6 @@
 import React, { useEffect, useState } from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
-import Image from 'next/image';
 import EditIcon from '@/app/assets/icons/EditIcon';
 import {
     Table,
@@ -16,18 +15,15 @@ import {
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import { DEFAULT_IMAGE } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
-import { deleteUserProfileAPI } from '@/app/api/user';
 import { toast } from 'react-toastify';
-import action from '@/app/action';
 import DialogBox from '@/app/components/common/DialogBox';
 import ButtonLoader from '@/app/components/common/ButtonLoader';
 import ProfileModal from './ProfileModal';
+import { deleteUserProfileAction } from '@/lib/actions/users';
 
 export interface User {
     id: string;
-    image: string;
     name: string;
     email: string;
     role: string;
@@ -41,6 +37,7 @@ interface UsersProp {
     limit?: number;
     isPending?: boolean;
     handlePageChange?: (page: number) => void;
+    onUserDeleted?: () => void;
 }
 
 const poppins = Poppins({
@@ -50,7 +47,6 @@ const poppins = Poppins({
 
 export const DEFAULT_USER = {
     id: '',
-    image: DEFAULT_IMAGE,
     name: '',
     email: '',
     role: 'student',
@@ -64,6 +60,7 @@ function UsersTable({
     limit = 0,
     handlePageChange,
     isPending,
+    onUserDeleted,
 }: UsersProp): JSX.Element {
     const { data } = useSession();
     const [isShowProfileModal, setIsShowProfileModal] = useState(false);
@@ -92,19 +89,33 @@ function UsersTable({
     };
 
     const handleDeleteStudents = async (idToRemove: string) => {
-        if (data?.user?.accessToken) {
-            try {
-                await deleteUserProfileAPI(data?.user?.accessToken, idToRemove);
-                if (users?.length === 1 && currentPage > 1) {
-                    handlePageChange && handlePageChange(currentPage);
-                } else {
-                    action('getAllUsers');
-                }
-            } catch (error: any) {
-                toast.error(
-                    error?.response?.data?.message || 'An Error Occured'
-                );
+        const sessionUser = data?.user as any;
+        const accessToken = sessionUser?.token;
+
+        if (!accessToken) {
+            toast.error('No access token found');
+            return;
+        }
+
+        try {
+            const response = await deleteUserProfileAction(accessToken, idToRemove);
+
+            if (!response.success) {
+                throw new Error(response.error || 'Failed to delete user');
             }
+
+            toast.success('User deleted successfully');
+
+            // Trigger refetch
+            if (onUserDeleted) {
+                onUserDeleted();
+            }
+        } catch (error: unknown) {
+            let message = 'An Error Occurred';
+            if (error instanceof Error && error.message) {
+                message = error.message;
+            }
+            toast.error(message);
         }
     };
 
@@ -159,28 +170,12 @@ function UsersTable({
                                         </span>
                                     </TableCell>
                                     <TableCell className="whitespace-nowrap">
-                                        <span className="rounded-full flex gap-x-2 items-center">
-                                            <Image
-                                                src={
-                                                    user?.image || DEFAULT_IMAGE
-                                                }
-                                                alt="crs logo"
-                                                width={26}
-                                                height={26}
-                                                style={{
-                                                    width: '26px',
-                                                    height: '26px',
-                                                    objectFit: 'fill',
-                                                    borderRadius: '50%',
-                                                }}
-                                            />
-                                            <span>
-                                                {user?.name &&
-                                                    user.name
-                                                        .charAt(0)
-                                                        .toUpperCase() +
-                                                        user.name.slice(1)}
-                                            </span>
+                                        <span>
+                                            {user?.name &&
+                                                user.name
+                                                    .charAt(0)
+                                                    .toUpperCase() +
+                                                    user.name.slice(1)}
                                         </span>
                                     </TableCell>
                                     {!isDashboard && (
@@ -275,7 +270,6 @@ function UsersTable({
                 <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
                     <ProfileModal
                         userId={selectedUser?.id}
-                        image={selectedUser?.image}
                         name={selectedUser?.name}
                         email={selectedUser?.email}
                         role={selectedUser?.role}

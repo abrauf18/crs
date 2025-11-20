@@ -31,7 +31,6 @@ type ProfileFormData = {
 function ProfileModal({
     onClose,
     userId,
-    image,
     name,
     email,
     role,
@@ -39,7 +38,6 @@ function ProfileModal({
 }: {
     onClose: () => void;
     userId: string;
-    image: string;
     name: string;
     email: string;
     role: string;
@@ -141,14 +139,14 @@ function ProfileModal({
     };
 
     useEffect(() => {
-        setOriginalImage(image);
-        setCurrentImage(image);
+        setOriginalImage('');
+        setCurrentImage('');
         methods.reset({
             name,
             email,
             role,
         });
-    }, [email, image, methods, name, role, setCurrentImage, setOriginalImage]);
+    }, [email, methods, name, role, setCurrentImage, setOriginalImage]);
 
     return (
         <section className="w-full bg-white h-screen py-4 shadow-lg overflow-y-auto">

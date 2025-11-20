@@ -6,10 +6,11 @@
         "eslint:recommended",
         "next/core-web-vitals",
         "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:import/recommended",
         "prettier"
     ],
-    "plugins": ["react", "prettier"],
+    "plugins": ["react", "@typescript-eslint", "prettier"],
     "env": {
         "browser": true,
         "commonjs": true,
@@ -17,6 +18,7 @@
         "jest": true,
         "node": true
     },
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2022,
         "sourceType": "module",
@@ -27,22 +29,19 @@
     "settings": {
         "react": {
             "version": "detect"
+        },
+        "import/resolver": {
+            "typescript": {}
         }
     },
     "rules": {
-        "@next/next/no-img-element": "off",
-        "jsx-a11y/href-no-hash": 0,
-        "jsx-a11y/anchor-is-valid": [
-            "error",
-            {
-                "component": ["link"],
-                "socialLink": ["hrefLeft", "hrefRight"],
-                "aspects": ["invalidHref", "preferButton"]
-            }
-        ],
-        "react/react-in-jsx-scope": 0,
+        /* Turn off PropTypes check since TS handles it */
+        "react/prop-types": "off",
 
-        /* Base */
+        /* Next.js */
+        "@next/next/no-img-element": "off",
+
+        /* Airbnb overrides */
         "import/prefer-default-export": 0,
         "no-console": 0,
         "no-nested-ternary": 0,
@@ -53,22 +52,44 @@
         "no-alert": 0,
         "import/no-unresolved": 0,
         "import/extensions": 0,
-        "jsx-a11y/label-has-associated-control": [
+
+        /* React JSX */
+        "react/jsx-filename-extension": [
+            "warn",
+            { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+        ],
+        "react/jsx-props-no-spreading": 0,
+        "react/require-default-props": 0,
+
+        /* JSX accessibility overrides */
+        "jsx-a11y/href-no-hash": 0,
+        "jsx-a11y/anchor-is-valid": [
             "error",
             {
-                "required": {
-                    "some": ["nesting", "id"]
-                }
+                "component": ["link"],
+                "socialLink": ["hrefLeft", "hrefRight"],
+                "aspects": ["invalidHref", "preferButton"]
             }
+        ],
+        "jsx-a11y/label-has-associated-control": [
+            "error",
+            { "required": { "some": ["nesting", "id"] } }
         ],
         "jsx-a11y/label-has-for": [
             "error",
-            {
-                "required": {
-                    "some": ["nesting", "id"]
-                }
-            }
+            { "required": { "some": ["nesting", "id"] } }
         ],
+        "jsx-a11y/no-static-element-interactions": 0,
+        "jsx-a11y/click-events-have-key-events": 0,
+        "jsx-a11y/no-noninteractive-element-interactions": 0,
+
+        /* General JS rules */
+        "no-unused-expressions": 0,
+        "no-unused-vars": 0,
+        "no-param-reassign": 0,
+        "no-plusplus": 0,
+        "no-undef": 0,
+        "no-restricted-globals": 0,
 
         /* Prettier */
         "prettier/prettier": [
@@ -78,25 +99,6 @@
                 "arrow-body-style": "off",
                 "prefer-arrow-callback": "off"
             }
-        ],
-
-        /* React */
-        "react/jsx-filename-extension": [
-            "warn",
-            {
-                "extensions": [".js", "jsx","ts","tsx"]
-            }
-        ],
-        "react/jsx-props-no-spreading": 0,
-        "react/require-default-props": 0,
-        "no-unused-expressions": 0,
-        "no-unused-vars": 0,
-        "jsx-a11y/no-static-element-interactions": 0,
-        "jsx-a11y/click-events-have-key-events": 0,
-        "jsx-a11y/no-noninteractive-element-interactions": 0,
-        "no-param-reassign": 0,
-        "no-plusplus": 0,
-        "no-undef": 0,
-        "no-restricted-globals": 0
+        ]
     }
 }

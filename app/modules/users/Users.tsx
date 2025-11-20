@@ -3,30 +3,56 @@
 'use client';
 
 import { Plus } from 'lucide-react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useEffect, useState, useTransition } from 'react';
-import Filters from '@/app/components/common/Filters';
-import Pagintaion from '@/app/components/common/Pagintaion';
-import AddUserModal from '@/app/modules/users/AddUserModal';
-import { commonFilterOptions, commonFilterQueries } from '@/lib/utils';
-import { getAllSchoolsAPI } from '@/app/api/school';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
-import UsersTable, { User } from './UsersTable';
+import Filters from '@/app/components/common/Filters';
+import AddUserModal from '@/app/modules/users/AddUserModal';
+import { getAllSchoolsAPI } from '@/app/api/school';
+import UsersTable from './UsersTable';
+import Tabs from '@/app/components/common/test-performance/Tabs';
+import Pagintaion from '@/app/components/common/Pagintaion';
+import { User } from '@/app/(home)/admin/users/page';
+
+const filterOptions = [
+    { value: 'All', label: 'All' },
+    { value: 'Newest', label: 'Newest' },
+    { value: 'Oldest', label: 'Oldest' },
+    { value: 'A-Z', label: 'A-Z' },
+    { value: 'Z-A', label: 'Z-A' },
+];
+
+interface PaginationInfo {
+    currentPage: number;
+    totalPages: number;
+    totalUsers: number;
+    limit: number;
+}
 
 function Users({
-    APIdata,
+    users,
+    loggedInUserId,
+    pagination,
+    onPageChange,
+    onRoleChange,
+    activeRole,
+    onUserDeleted,
 }: {
-    APIdata: { users: User[]; totalUsers: number; totalPages: number };
+    users: User[];
+    loggedInUserId: string;
+    pagination?: PaginationInfo;
+    onPageChange?: (page: number) => void;
+    onRoleChange?: (role: 'admin' | 'teacher') => void;
+    activeRole?: 'admin' | 'teacher';
+    onUserDeleted?: () => void;
 }) {
-    const router = useRouter();
-    const pathname = usePathname();
-    const urlSearchParams = useSearchParams();
-    const page = urlSearchParams.get('page') || 1;
     const [showAddUserModal, setShowProfileModal] = useState(false);
     const [school, setSchool] = useState('');
-    const [schoolList, setSchoolList] = useState<any>([]);
+    const [schoolList, setSchoolList] = useState<
+        { id: string; label: string; value: string }[]
+    >([]);
     const { data } = useSession();
-    const [isPending, startTransition] = useTransition();
+    const [activeTab, setActiveTab] = useState(activeRole || 'admin');
+    const [sortOrder, setSortOrder] = useState('');
 
     const handleOpenAddUserModal = () => {
         setShowProfileModal(true);
@@ -36,36 +62,75 @@ function Users({
         setShowProfileModal(false);
     };
 
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(urlSearchParams.toString());
-            params.set(name, value);
-            return params.toString();
-        },
-        [urlSearchParams]
-    );
-
-    const handlePageChange = (page: number) => {
-        startTransition(() => {
-            router.push(`${pathname}?${createQueryString('page', `${page}`)}`);
-        });
-    };
-
     const handleFilterUpdate = (
         event: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        const query =
-            commonFilterQueries[
-                event.target.value as keyof typeof commonFilterQueries
-            ];
-        if (query) {
-            router.push(
-                `?page=${page}&orderBy=${query.orderBy}&sortBy=${query.sortBy}`
-            );
-        } else {
-            router.push(`?page=${page}`);
+        setSortOrder(event.target.value);
+    };
+
+    const handleTabChange = (tab: string) => {
+        if (tab === 'admin' || tab === 'teacher') {
+            setActiveTab(tab);
+            if (onRoleChange) {
+                onRoleChange(tab);
+            }
         }
     };
+
+    // Sync activeTab with activeRole prop
+    useEffect(() => {
+        if (activeRole) {
+            setActiveTab(activeRole);
+        }
+    }, [activeRole]);
+
+    // Filter users by role and exclude logged in admin
+    // Note: We DON'T filter by role here because backend already does it
+    const filteredUsers = useMemo(() => {
+        // Only exclude logged in user if needed
+        const filtered = users.filter((user) => user.id !== loggedInUserId);
+
+        // Sort users based on sortOrder
+        if (sortOrder === 'Newest') {
+            filtered.sort(
+                (a, b) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+            );
+        } else if (sortOrder === 'Oldest') {
+            filtered.sort(
+                (a, b) =>
+                    new Date(a.createdAt).getTime() -
+                    new Date(b.createdAt).getTime()
+            );
+        } else if (sortOrder === 'A-Z') {
+            filtered.sort((a, b) =>
+                `${a.firstName} ${a.lastName}`.localeCompare(
+                    `${b.firstName} ${b.lastName}`
+                )
+            );
+        } else if (sortOrder === 'Z-A') {
+            filtered.sort((a, b) =>
+                `${b.firstName} ${b.lastName}`.localeCompare(
+                    `${a.firstName} ${a.lastName}`
+                )
+            );
+        }
+
+        return filtered;
+    }, [users, loggedInUserId, sortOrder]);
+
+    // Transform users to match UsersTable interface
+    const transformedUsers = useMemo(
+        () =>
+            filteredUsers.map((user) => ({
+                id: user.id,
+                name: `${user.firstName} ${user.lastName}`,
+                email: user.email,
+                role: user.role,
+            })),
+        [filteredUsers]
+    );
 
     useEffect(() => {
         const accessToken = data?.user.accessToken || '';
@@ -79,19 +144,21 @@ function Users({
                     })
                 );
                 setSchoolList(newSchoolList);
-                setSchool(schoolList?.value);
+                if (newSchoolList.length > 0) {
+                    setSchool(newSchoolList[0].value);
+                }
             }
         });
     }, [data?.user?.accessToken]);
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-4">
                     <div className="flex-grow">
                         <Filters
                             text="Users"
                             isHideSecondBtn
-                            options={[...commonFilterOptions]}
+                            options={filterOptions}
                             handleFilterUpdate={handleFilterUpdate}
                         />
                     </div>
@@ -108,23 +175,24 @@ function Users({
                         </button>
                     </div>
                 </div>
-                <UsersTable
-                    users={APIdata?.users}
-                    currentPage={Number(page) - 1}
-                    limit={10}
-                    handlePageChange={handlePageChange}
-                    isPending={isPending}
-                />
+                <div className="mb-4">
+                    <Tabs
+                        activeTab={activeTab}
+                        setActiveTabLocal={handleTabChange}
+                        tabOptions={['admin', 'teacher']}
+                    />
+                </div>
+                <UsersTable users={transformedUsers} onUserDeleted={onUserDeleted} />
             </div>
-            <div className="flex items-center w-full justify-center mt-5">
-                <Pagintaion
-                    currentPage={Number(page) > 0 ? Number(page) : 1}
-                    totalPages={
-                        APIdata?.totalPages > 0 ? APIdata.totalPages : 1
-                    }
-                    onPageChange={handlePageChange}
-                />
-            </div>
+            {pagination && onPageChange && pagination.totalPages > 1 && (
+                <div className="flex items-center w-full justify-center mt-5">
+                    <Pagintaion
+                        currentPage={pagination.currentPage}
+                        totalPages={pagination.totalPages}
+                        onPageChange={onPageChange}
+                    />
+                </div>
+            )}
             {showAddUserModal && (
                 <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
                     <AddUserModal

@@ -9,6 +9,15 @@
 # testing
 /coverage
 
+.yarn/**
+! .yarn/releases
+! .yarn/plugins
+! .yarn/versions
+
+.yarn/unplugged/
+.yarn/cache/
+
+
 # next.js
 /.next/
 /out/
