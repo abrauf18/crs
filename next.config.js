@@ -13,6 +13,11 @@ const nextConfig = {
                 hostname: 'crsbuck.s3.us-east-2.amazonaws.com',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+                pathname: '/**',
+            },
         ],
     },
     webpack: (config) => {
