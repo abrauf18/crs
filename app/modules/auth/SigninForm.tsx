@@ -70,6 +70,7 @@ function SigninForm() {
                 password,
                 redirect: false,
             });
+            console.log('SignIn Result:', result);
             const session = await getSession();
             if (session) {
                 const role = session?.user?.role;
