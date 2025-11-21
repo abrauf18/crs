@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import Users from '@/app/modules/users/Users';
 import { getAllUsersAction } from '@/lib/actions/users';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import ButtonLoader from '@/app/components/common/ButtonLoader';
+import PageLoader from '@/app/components/common/PageLoader';
 
 export interface User {
     id: string;
@@ -132,11 +132,7 @@ export default function UsersClient() {
 
     // Show loading while session is being fetched OR initial data load
     if (status === 'loading' || initialLoading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <ButtonLoader color="primary" />
-            </div>
-        );
+        return <PageLoader />;
     }
 
     if (status === 'unauthenticated' || !data) {

@@ -74,6 +74,10 @@ function ProfileModal({
         mode: 'onChange',
         reValidateMode: 'onChange',
     });
+
+    // Watch form fields to make button reactive
+    const watchedFields = methods.watch(['firstName', 'lastName', 'password']);
+
     // Function to check if there are unsaved changes
     const hasUnsavedChanges = () => {
         const { firstName, lastName, password } = methods.getValues();
@@ -379,13 +383,17 @@ function ProfileModal({
                                         <button
                                             type="submit"
                                             disabled={
-                                                !methods.formState.isValid || loading
+                                                !methods.formState.isValid ||
+                                                loading ||
+                                                !hasUnsavedChanges()
                                             }
                                             className={`text-white ${
-                                                !methods.formState.isValid || loading
-                                                    ? 'bg-gray-300'
-                                                    : 'bg-primary-color'
-                                            } font-semibold w-full px-5 py-2  border rounded-xl hover:bg-orange-500`}
+                                                !methods.formState.isValid ||
+                                                loading ||
+                                                !hasUnsavedChanges()
+                                                    ? 'bg-gray-300 cursor-not-allowed'
+                                                    : 'bg-primary-color hover:bg-orange-500'
+                                            } font-semibold w-full px-5 py-2  border rounded-xl`}
                                         >
                                             {loading ? <Loader /> : 'Save'}
                                         </button>
