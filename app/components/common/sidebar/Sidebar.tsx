@@ -37,15 +37,20 @@ export default function SideBar() {
                 ItemIcon: LayoutGrid,
                 itemText: 'Dashboard',
             },
+            // {
+            //     to: '/admin/video',
+            //     ItemIcon: SlideShowIcon,
+            //     itemText: 'Video',
+            // },
+            // {
+            //     to: '/admin/resources',
+            //     ItemIcon: ResourceIcon,
+            //     itemText: 'Resources',
+            // },
             {
-                to: '/admin/video',
-                ItemIcon: SlideShowIcon,
-                itemText: 'Video',
-            },
-            {
-                to: '/admin/resources',
+                to: '/admin/courses',
                 ItemIcon: ResourceIcon,
-                itemText: 'Resources',
+                itemText: 'Courses',
             },
             // {
             //     to: '#',
