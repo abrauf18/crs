@@ -16,12 +16,12 @@ function Tabs({
     };
 
     return (
-        <div className="flex space-x-3">
+        <div className="flex gap-3 w-full">
             {tabOptions.map((tab) => (
                 <button
                     key={tab}
                     type="button"
-                    className={`py-2 px-4 border-2 rounded-xl ${
+                    className={`flex-1 py-2 px-4 border-2 rounded-xl ${
                         activeTab === tab
                             ? 'border-primary-color bg-orange-50'
                             : ''

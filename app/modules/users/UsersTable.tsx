@@ -252,7 +252,7 @@ function UsersTable({
                         <TableRow>
                             <TableCell
                                 colSpan={isDashboard ? 4 : 5}
-                                className="text-center"
+                                className="text-center h-32"
                             >
                                 No User Found!
                             </TableCell>

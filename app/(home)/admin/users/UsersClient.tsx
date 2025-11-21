@@ -1,11 +1,23 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import Users from '@/app/modules/users/Users';
 import { getAllUsersAction } from '@/lib/actions/users';
 import UnhandledError from '@/app/modules/error/UnhandledError';
-import { User } from './page';
+import ButtonLoader from '@/app/components/common/ButtonLoader';
+
+export interface User {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    profilePicture: string;
+    isEmailVerified: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
 
 interface SessionUser {
     id: string;
@@ -28,6 +40,7 @@ export default function UsersClient() {
     const { data, status } = useSession();
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
+    const [initialLoading, setInitialLoading] = useState(true);
     const [error, setError] = useState<{
         message: string;
         name: string;
@@ -40,13 +53,16 @@ export default function UsersClient() {
     });
     const [currentPage, setCurrentPage] = useState(1);
     const [activeRole, setActiveRole] = useState<'admin' | 'teacher'>('admin');
+    const [isFetching, setIsFetching] = useState(false);
+    const skipEffectRef = useRef(false);
 
     const fetchUsers = async (
         page: number = 1,
         role: 'admin' | 'teacher' = 'admin'
     ) => {
-        if (!data?.user) return;
+        if (!data?.user || isFetching) return;
 
+        setIsFetching(true);
         setLoading(true);
         try {
             const sessionUser = data.user as unknown as SessionUser;
@@ -84,6 +100,8 @@ export default function UsersClient() {
             setError({ message, name });
         } finally {
             setLoading(false);
+            setInitialLoading(false);
+            setIsFetching(false);
         }
     };
 
@@ -91,12 +109,16 @@ export default function UsersClient() {
         if (status === 'authenticated' && data) {
             fetchUsers(currentPage, activeRole);
         }
-    }, [data, currentPage, status, activeRole]);
+    }, [currentPage, status, activeRole]);
 
     // Reset to page 1 when role changes
     const handleRoleChange = (role: 'admin' | 'teacher') => {
         setActiveRole(role);
         setCurrentPage(1);
+        // Immediately fetch with new role and page 1
+        if (data?.user) {
+            fetchUsers(1, role);
+        }
     };
 
     const handlePageChange = (page: number) => {
@@ -108,11 +130,11 @@ export default function UsersClient() {
         fetchUsers(currentPage, activeRole);
     };
 
-    // Show loading while session is being fetched
-    if (status === 'loading') {
+    // Show loading while session is being fetched OR initial data load
+    if (status === 'loading' || initialLoading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <div className="text-lg">Loading...</div>
+                <ButtonLoader color="primary" />
             </div>
         );
     }
