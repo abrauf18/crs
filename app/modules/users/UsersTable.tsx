@@ -5,18 +5,17 @@
 import React, { useEffect, useState } from 'react';
 import { Eye, Trash } from 'lucide-react';
 import { Poppins } from 'next/font/google';
+import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 import EditIcon from '@/app/assets/icons/EditIcon';
 import {
     Table,
     TableBody,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from '@/app/components/ui/table';
-import { useSession } from 'next-auth/react';
-import { toast } from 'react-toastify';
 import DialogBox from '@/app/components/common/DialogBox';
 import ButtonLoader from '@/app/components/common/ButtonLoader';
 import ProfileModal from './ProfileModal';
@@ -27,6 +26,7 @@ export interface User {
     name: string;
     email: string;
     role: string;
+    profilePicture?: string;
 }
 
 interface UsersProp {
@@ -50,6 +50,7 @@ export const DEFAULT_USER = {
     name: '',
     email: '',
     role: 'student',
+    profilePicture: '',
 };
 
 function UsersTable({
@@ -89,7 +90,7 @@ function UsersTable({
     };
 
     const handleDeleteStudents = async (idToRemove: string) => {
-        const sessionUser = data?.user as any;
+        const sessionUser = data?.user as { token?: string } | undefined;
         const accessToken = sessionUser?.token;
 
         if (!accessToken) {
@@ -98,7 +99,10 @@ function UsersTable({
         }
 
         try {
-            const response = await deleteUserProfileAction(accessToken, idToRemove);
+            const response = await deleteUserProfileAction(
+                accessToken,
+                idToRemove
+            );
 
             if (!response.success) {
                 throw new Error(response.error || 'Failed to delete user');
@@ -267,16 +271,16 @@ function UsersTable({
                 )}
             </Table>
             {isShowProfileModal && (
-                <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
-                    <ProfileModal
-                        userId={selectedUser?.id}
-                        name={selectedUser?.name}
-                        email={selectedUser?.email}
-                        role={selectedUser?.role}
-                        isViewOnly={isDashboard}
-                        onClose={handleCloseProfileModal}
-                    />
-                </div>
+                <ProfileModal
+                    userId={selectedUser?.id}
+                    name={selectedUser?.name}
+                    email={selectedUser?.email}
+                    role={selectedUser?.role}
+                    profilePicture={selectedUser?.profilePicture}
+                    isViewOnly={isDashboard}
+                    onClose={handleCloseProfileModal}
+                    onUserUpdated={onUserDeleted}
+                />
             )}
             {isShowDialogBox && (
                 <DialogBox

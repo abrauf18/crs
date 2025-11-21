@@ -48,17 +48,25 @@ function ProfileImage({
                                 inSettings ? `h-32 w-32` : `h-36 w-36 p-2 `
                             }`}
                         >
-                            <Image
-                                src={
-                                    selectedFile
-                                        ? URL.createObjectURL(selectedFile)
-                                        : currentImage
-                                }
-                                alt="profile Image"
-                                className="rounded-full object-fit h-28 w-28"
-                                width={176}
-                                height={176}
-                            />
+                            {selectedFile || currentImage ? (
+                                <Image
+                                    src={
+                                        selectedFile
+                                            ? URL.createObjectURL(selectedFile)
+                                            : currentImage
+                                    }
+                                    alt="profile Image"
+                                    className="rounded-full object-cover h-28 w-28"
+                                    width={176}
+                                    height={176}
+                                />
+                            ) : (
+                                <div className="flex items-center justify-center h-28 w-28 rounded-full bg-gray-100">
+                                    <span className="text-gray-400 text-xs text-center px-2">
+                                        Profile Picture
+                                    </span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

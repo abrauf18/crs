@@ -86,6 +86,7 @@
         /* General JS rules */
         "no-unused-expressions": 0,
         "no-unused-vars": 0,
+        "@typescript-eslint/no-unused-vars": "warn",
         "no-param-reassign": 0,
         "no-plusplus": 0,
         "no-undef": 0,

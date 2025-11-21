@@ -2,12 +2,9 @@
 
 'use client';
 
-import { Plus } from 'lucide-react';
+import { Search } from 'lucide-react';
 import React, { useEffect, useState, useMemo } from 'react';
-import { useSession } from 'next-auth/react';
 import Filters from '@/app/components/common/Filters';
-import AddUserModal from '@/app/modules/users/AddUserModal';
-import { getAllSchoolsAPI } from '@/app/api/school';
 import UsersTable from './UsersTable';
 import Tabs from '@/app/components/common/test-performance/Tabs';
 import Pagintaion from '@/app/components/common/Pagintaion';
@@ -45,27 +42,18 @@ function Users({
     activeRole?: 'admin' | 'teacher';
     onUserDeleted?: () => void;
 }) {
-    const [showAddUserModal, setShowProfileModal] = useState(false);
-    const [school, setSchool] = useState('');
-    const [schoolList, setSchoolList] = useState<
-        { id: string; label: string; value: string }[]
-    >([]);
-    const { data } = useSession();
     const [activeTab, setActiveTab] = useState(activeRole || 'admin');
     const [sortOrder, setSortOrder] = useState('');
-
-    const handleOpenAddUserModal = () => {
-        setShowProfileModal(true);
-    };
-
-    const handleCloseAddUserModal = () => {
-        setShowProfileModal(false);
-    };
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleFilterUpdate = (
         event: React.ChangeEvent<HTMLSelectElement>
     ) => {
         setSortOrder(event.target.value);
+    };
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
     };
 
     const handleTabChange = (tab: string) => {
@@ -88,7 +76,18 @@ function Users({
     // Note: We DON'T filter by role here because backend already does it
     const filteredUsers = useMemo(() => {
         // Only exclude logged in user if needed
-        const filtered = users.filter((user) => user.id !== loggedInUserId);
+        let filtered = users.filter((user) => user.id !== loggedInUserId);
+
+        // Apply search filter
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            filtered = filtered.filter((user) => {
+                const fullName =
+                    `${user.firstName} ${user.lastName}`.toLowerCase();
+                const email = user.email.toLowerCase();
+                return fullName.includes(query) || email.includes(query);
+            });
+        }
 
         // Sort users based on sortOrder
         if (sortOrder === 'Newest') {
@@ -118,7 +117,7 @@ function Users({
         }
 
         return filtered;
-    }, [users, loggedInUserId, sortOrder]);
+    }, [users, loggedInUserId, sortOrder, searchQuery]);
 
     // Transform users to match UsersTable interface
     const transformedUsers = useMemo(
@@ -128,33 +127,16 @@ function Users({
                 name: `${user.firstName} ${user.lastName}`,
                 email: user.email,
                 role: user.role,
+                profilePicture: user.profilePicture,
             })),
         [filteredUsers]
     );
 
-    useEffect(() => {
-        const accessToken = data?.user.accessToken || '';
-        getAllSchoolsAPI(accessToken).then((response) => {
-            if (response.data.status === 'success') {
-                const newSchoolList = response?.data?.data?.map(
-                    (school: { name: string; id: string }) => ({
-                        id: school.id,
-                        label: school.name,
-                        value: school.name,
-                    })
-                );
-                setSchoolList(newSchoolList);
-                if (newSchoolList.length > 0) {
-                    setSchool(newSchoolList[0].value);
-                }
-            }
-        });
-    }, [data?.user?.accessToken]);
     return (
         <>
             <div className="rounded-lg border mt-5 py-3 md:px-1 lg:px-6 mobile:px-3">
-                <div className="flex justify-between items-center mb-4">
-                    <div className="flex-grow">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+                    <div className="flex-grow w-full md:w-auto">
                         <Filters
                             text="Users"
                             isHideSecondBtn
@@ -162,17 +144,18 @@ function Users({
                             handleFilterUpdate={handleFilterUpdate}
                         />
                     </div>
-                    <div
-                        className="cursor-pointer text-white bg-primary-color font-semibold p-3 border rounded-lg flex justify-between items-center mobile:mt-9 hover:bg-orange-400"
-                        onClick={handleOpenAddUserModal}
-                    >
-                        <Plus size={20} />
-                        <button
-                            type="button"
-                            className="ml-2 text-sm font-medium"
-                        >
-                            Add User
-                        </button>
+                    <div className="relative w-full md:w-80">
+                        <input
+                            type="text"
+                            placeholder="Search by name or email..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            className="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-color focus:border-transparent"
+                        />
+                        <Search
+                            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                            size={20}
+                        />
                     </div>
                 </div>
                 <div className="mb-4">
@@ -182,7 +165,10 @@ function Users({
                         tabOptions={['admin', 'teacher']}
                     />
                 </div>
-                <UsersTable users={transformedUsers} onUserDeleted={onUserDeleted} />
+                <UsersTable
+                    users={transformedUsers}
+                    onUserDeleted={onUserDeleted}
+                />
             </div>
             {pagination && onPageChange && pagination.totalPages > 1 && (
                 <div className="flex items-center w-full justify-center mt-5">
@@ -190,16 +176,6 @@ function Users({
                         currentPage={pagination.currentPage}
                         totalPages={pagination.totalPages}
                         onPageChange={onPageChange}
-                    />
-                </div>
-            )}
-            {showAddUserModal && (
-                <div className="fixed right-0 top-0 z-50 md:w-[60%] lg:w-[30%] w-full">
-                    <AddUserModal
-                        onClose={handleCloseAddUserModal}
-                        school={school}
-                        setSchool={setSchool}
-                        schoolList={schoolList}
                     />
                 </div>
             )}
