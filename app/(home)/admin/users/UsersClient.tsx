@@ -113,6 +113,7 @@ export default function UsersClient() {
 
     // Reset to page 1 when role changes
     const handleRoleChange = (role: 'admin' | 'teacher') => {
+        setLoading(true); // Show skeleton immediately
         setActiveRole(role);
         setCurrentPage(1);
         // Immediately fetch with new role and page 1
@@ -162,6 +163,7 @@ export default function UsersClient() {
             onRoleChange={handleRoleChange}
             activeRole={activeRole}
             onUserDeleted={handleUserDeleted}
+            isLoading={loading}
         />
     );
 }

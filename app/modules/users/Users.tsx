@@ -33,6 +33,7 @@ function Users({
     onRoleChange,
     activeRole,
     onUserDeleted,
+    isLoading,
 }: {
     users: User[];
     loggedInUserId: string;
@@ -41,6 +42,7 @@ function Users({
     onRoleChange?: (role: 'admin' | 'teacher') => void;
     activeRole?: 'admin' | 'teacher';
     onUserDeleted?: () => void;
+    isLoading?: boolean;
 }) {
     const [activeTab, setActiveTab] = useState(activeRole || 'admin');
     const [sortOrder, setSortOrder] = useState('');
@@ -168,6 +170,7 @@ function Users({
                 <UsersTable
                     users={transformedUsers}
                     onUserDeleted={onUserDeleted}
+                    isLoading={isLoading}
                 />
             </div>
             {pagination && onPageChange && pagination.totalPages > 1 && (

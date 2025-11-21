@@ -18,6 +18,7 @@ import {
 } from '@/app/components/ui/table';
 import DialogBox from '@/app/components/common/DialogBox';
 import ButtonLoader from '@/app/components/common/ButtonLoader';
+import TableSkeleton from '@/app/components/common/TableSkeleton';
 import ProfileModal from './ProfileModal';
 import { deleteUserProfileAction } from '@/lib/actions/users';
 
@@ -38,6 +39,7 @@ interface UsersProp {
     isPending?: boolean;
     handlePageChange?: (page: number) => void;
     onUserDeleted?: () => void;
+    isLoading?: boolean;
 }
 
 const poppins = Poppins({
@@ -62,6 +64,7 @@ function UsersTable({
     handlePageChange,
     isPending,
     onUserDeleted,
+    isLoading,
 }: UsersProp): JSX.Element {
     const { data } = useSession();
     const [isShowProfileModal, setIsShowProfileModal] = useState(false);
@@ -131,6 +134,15 @@ function UsersTable({
     const handleCancelDelete = () => {
         setIsShowDialogBox(false);
     };
+
+    // Show skeleton while loading
+    if (isLoading) {
+        return (
+            <section>
+                <TableSkeleton isDashboard={isDashboard} />
+            </section>
+        );
+    }
 
     return (
         <section>
