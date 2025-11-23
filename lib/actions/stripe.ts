@@ -3,29 +3,29 @@
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { options } from '@/app/api/auth/[...nextauth]/options';
-import { Course, CourseDetail, Resource } from '../types/course';
 
-export const createCourse = async ({
-    name,
-    description,
-    courseLength,
+export const buyCourse = async ({
+    courseId,
+    discount,
 }: {
-    name: string;
-    description: string;
-    courseLength: number;
+    courseId: string;
+    discount?: number;
 }) => {
     try {
         const userSession = await getServerSession(options);
         if (!userSession) {
-            throw new Error('Unauthorized');
+            return {
+                success: false,
+                message: 'Unauthorized',
+            };
         }
         const accessToken = userSession.user?.token;
 
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/courses`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/purchase-courses`,
             {
                 method: 'POST',
-                body: JSON.stringify({ name, description, courseLength }),
+                body: JSON.stringify({ courseId, discount }),
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
@@ -39,23 +39,62 @@ export const createCourse = async ({
                 message: result.message || 'Something went wrong',
             };
         }
-        revalidatePath('/admin/courses');
         return { ...result, success: true };
     } catch (error) {
-        return { success: false, message: 'Internal server errro' };
+        return { success: false, message: 'Internal server error' };
     }
 };
 
-export const getCourses = async () => {
+export const enrollFreeCourse = async ({ courseId }: { courseId: string }) => {
     try {
         const userSession = await getServerSession(options);
         if (!userSession) {
-            throw new Error('Unauthorized');
+            return {
+                success: false,
+                message: 'Unauthorized',
+            };
+        }
+        const accessToken = userSession.user?.token;
+        const userId = userSession.user?.id;
+
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/purchase-courses/enroll-free`,
+            {
+                method: 'POST',
+                body: JSON.stringify({ courseId, userId }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        const result = await response.json();
+        if (!response.ok) {
+            return {
+                success: false,
+                message: result.message || 'Something went wrong',
+            };
+        }
+        revalidatePath('/teacher/courses');
+        return { ...result, success: true };
+    } catch (error) {
+        return { success: false, message: 'Internal server error' };
+    }
+};
+
+export const checkCoursePurchase = async (courseId: string) => {
+    try {
+        const userSession = await getServerSession(options);
+        if (!userSession) {
+            return {
+                success: false,
+                message: 'Unauthorized',
+            };
         }
         const accessToken = userSession.user?.token;
 
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/courses`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/purchase-courses/check-purchase/${courseId}`,
             {
                 method: 'GET',
                 headers: {
@@ -77,60 +116,22 @@ export const getCourses = async () => {
     }
 };
 
-export async function getCourseById(id: string) {
+export const getUserPurchasedCourses = async (userId?: string) => {
     try {
         const userSession = await getServerSession(options);
         if (!userSession) {
-            throw new Error('Unauthorized');
+            return {
+                success: false,
+                message: 'Unauthorized',
+            };
         }
         const accessToken = userSession.user?.token;
-        const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}`,
+
+        const queryParam = userId ? `?userId=${userId}` : '';
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/purchase-courses${queryParam}`,
             {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
-        );
-
-        if (!res.ok) {
-            const errorData = await res.json().catch(() => ({}));
-            throw new Error(
-                errorData.message || `Failed to fetch course: ${res.status}`
-            );
-        }
-        const result = await res.json();
-        return result.data as CourseDetail;
-    } catch (error) {
-        console.error(`Error fetching course ${id}:`, error);
-        throw error;
-    }
-}
-
-export async function updateCourse(data: {
-    id: string;
-    name: string;
-    description: string;
-    courseLength: number;
-}) {
-    try {
-        const userSession = await getServerSession(options);
-        if (!userSession) {
-            return { success: false, message: 'Unauthorized' };
-        }
-        const accessToken = userSession.user?.token;
-
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${data.id}`,
-            {
-                method: 'PUT',
-                body: JSON.stringify({
-                    name: data.name,
-                    description: data.description,
-                    courseLength: data.courseLength,
-                }),
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
@@ -144,9 +145,8 @@ export async function updateCourse(data: {
                 message: result.message || 'Something went wrong',
             };
         }
-        revalidatePath('/admin/courses');
         return { ...result, success: true };
     } catch (error) {
-        return { success: false, message: 'Internal server errro' };
+        return { success: false, message: 'Internal server error' };
     }
-}
+};

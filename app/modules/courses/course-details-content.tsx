@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
     BookOpen,
     Clock,
@@ -10,12 +10,17 @@ import {
     FileText,
     Activity,
     Image as ImageIcon,
+    Loader2,
+    CheckCircle2,
 } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 import { CourseDetail } from '@/lib/types/course';
+import { buyCourse, enrollFreeCourse } from '@/lib/actions/stripe';
 
 type CourseDetailsContentProps = {
     course: CourseDetail;
+    isEnrolled?: boolean;
 };
 
 const resourceTypeIcons = {
@@ -36,7 +41,10 @@ const resourceTypeColors = {
 
 export default function CourseDetailsContent({
     course,
+    isEnrolled = false,
 }: CourseDetailsContentProps) {
+    const [isEnrolling, setIsEnrolling] = useState(false);
+
     const courseLength = Number(course.courseLength);
     const price = Number(course.price);
 
@@ -53,6 +61,38 @@ export default function CourseDetailsContent({
         : 'Date not available';
 
     const isFree = Number.isNaN(price) || price === 0;
+
+    const handleEnrollment = async () => {
+        setIsEnrolling(true);
+        try {
+            if (isFree) {
+                const result = await enrollFreeCourse({ courseId: course.id });
+                if (result.success) {
+                    toast.success(
+                        result.message || 'Successfully enrolled in course!'
+                    );
+                    setTimeout(() => {
+                        window.location.href = '/teacher/courses';
+                    }, 1500);
+                } else {
+                    toast.error(result.message || 'Failed to enroll in course');
+                }
+            } else {
+                const result = await buyCourse({ courseId: course.id });
+                if (result.success && result.data?.url) {
+                    window.location.href = result.data.url;
+                } else {
+                    toast.error(
+                        result.message || 'Failed to create checkout session'
+                    );
+                }
+            }
+        } catch (error) {
+            toast.error('An unexpected error occurred');
+        } finally {
+            setIsEnrolling(false);
+        }
+    };
 
     const visibleResources = course.resources.filter(
         (resource) => resource.status === 'SHOW'
@@ -126,30 +166,64 @@ export default function CourseDetailsContent({
 
                         <div className="lg:w-80">
                             <div className="bg-light-gray rounded-2xl p-6 border border-gray-200">
-                                <div className="text-center mb-4">
-                                    {isFree ? (
-                                        <div>
-                                            <p className="text-3xl font-bold text-primary-color">
-                                                Free
+                                {isEnrolled ? (
+                                    <div className="text-center">
+                                        <div className="mb-4">
+                                            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                                                <CheckCircle2 className="h-8 w-8 text-green-600" />
+                                            </div>
+                                            <p className="text-xl font-bold text-gray-900">
+                                                You&apos;re Enrolled!
                                             </p>
-                                            <p className="text-sm text-gray-500 mt-1">
-                                                No cost to enroll
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <p className="text-3xl font-bold text-gray-900">
-                                                ${price.toFixed(2)}
-                                            </p>
-                                            <p className="text-sm text-gray-500 mt-1">
-                                                One-time payment
+                                            <p className="text-sm text-gray-500 mt-2">
+                                                Access all course materials below
                                             </p>
                                         </div>
-                                    )}
-                                </div>
-                                <button className="w-full bg-primary-color text-white font-semibold py-4 rounded-lg hover:opacity-90 transition-all duration-200 hover:shadow-lg active:scale-95">
-                                    {isFree ? 'Enroll for Free' : 'Buy Course'}
-                                </button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="text-center mb-4">
+                                            {isFree ? (
+                                                <div>
+                                                    <p className="text-3xl font-bold text-primary-color">
+                                                        Free
+                                                    </p>
+                                                    <p className="text-sm text-gray-500 mt-1">
+                                                        No cost to enroll
+                                                    </p>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <p className="text-3xl font-bold text-gray-900">
+                                                        ${price.toFixed(2)}
+                                                    </p>
+                                                    <p className="text-sm text-gray-500 mt-1">
+                                                        One-time payment
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={handleEnrollment}
+                                            disabled={isEnrolling}
+                                            className="w-full bg-primary-color text-white font-semibold py-4 rounded-lg hover:opacity-90 transition-all duration-200 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        >
+                                            {isEnrolling ? (
+                                                <>
+                                                    <Loader2 className="h-5 w-5 animate-spin" />
+                                                    <span>Processing...</span>
+                                                </>
+                                            ) : (
+                                                <span>
+                                                    {isFree
+                                                        ? 'Enroll for Free'
+                                                        : 'Buy Course'}
+                                                </span>
+                                            )}
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
