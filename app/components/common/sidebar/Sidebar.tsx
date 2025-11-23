@@ -92,6 +92,11 @@ export default function SideBar() {
                 itemText: 'Learning Plans',
             },
             {
+                to: '/teacher/courses',
+                ItemIcon: BookText,
+                itemText: 'Courses',
+            },
+            {
                 to: '/teacher/classroom',
                 ItemIcon: GraduationCap,
                 itemText: 'Classroom',

@@ -1,8 +1,8 @@
 'use server';
 
-import { options } from '@/app/api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
+import { options } from '@/app/api/auth/[...nextauth]/options';
 import { Course, CourseDetail, Resource } from '../types/course';
 
 export const createCourse = async ({
