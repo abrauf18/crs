@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     BookOpen,
     Clock,
@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { CourseDetail } from '@/lib/types/course';
 import { buyCourse, enrollFreeCourse } from '@/lib/actions/stripe';
+import { Progress } from '@/components/ui/progress';
 
 type CourseDetailsContentProps = {
     course: CourseDetail;
@@ -61,6 +62,9 @@ export default function CourseDetailsContent({
         : 'Date not available';
 
     const isFree = Number.isNaN(price) || price === 0;
+
+    // Hardcoded progress for testing - replace with actual progress later
+    const progress: number = 65;
 
     const handleEnrollment = async () => {
         setIsEnrolling(true);
@@ -176,7 +180,8 @@ export default function CourseDetailsContent({
                                                 You&apos;re Enrolled!
                                             </p>
                                             <p className="text-sm text-gray-500 mt-2">
-                                                Access all course materials below
+                                                Access all course materials
+                                                below
                                             </p>
                                         </div>
                                     </div>
@@ -230,6 +235,32 @@ export default function CourseDetailsContent({
                 </div>
             </div>
 
+            {/* Progress Bar - Only shown when enrolled */}
+            {isEnrolled && (
+                <div className="bg-white border-b border-gray-200">
+                    <div className="max-w-7xl mx-auto px-6 py-6">
+                        <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-lg font-semibold text-gray-900">
+                                    Your Progress
+                                </h2>
+                                <span className="text-2xl font-bold text-primary-color">
+                                    {progress}%
+                                </span>
+                            </div>
+                            <Progress value={progress} className="h-3" />
+                            <p className="text-sm text-gray-600">
+                                {progress === 100
+                                    ? 'Congratulations! You have completed this course.'
+                                    : `Keep going! You're ${
+                                          100 - progress
+                                      }% away from completing this course.`}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Course Content */}
             <div className="max-w-7xl mx-auto px-6 py-8">
                 <div className="bg-white rounded-2xl border border-gray-200 p-6 lg:p-8">
@@ -262,7 +293,8 @@ export default function CourseDetailsContent({
                                                 const colorClass =
                                                     resourceTypeColors[
                                                         resource.type as keyof typeof resourceTypeColors
-                                                    ] || 'bg-gray-100 text-gray-600';
+                                                    ] ||
+                                                    'bg-gray-100 text-gray-600';
 
                                                 return (
                                                     <div
