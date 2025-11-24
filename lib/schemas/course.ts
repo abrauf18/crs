@@ -69,28 +69,43 @@ export const courseStatusOptions = [
 export type CourseStatusOptionsType =
     (typeof courseStatusOptions)[number]['value'];
 export const addResourceSchema = z.object({
+    unit: z
+        .string({ message: 'Unit Number is required' })
+        .trim()
+        .refine(
+            (val) => !isNaN(parseInt(val)) && parseInt(val) >= 0,
+            'Unit number must be a valid number'
+        ),
     name: z.string().min(2, 'Name is required'),
-    topic: z.string().min(2, 'Topic is required'),
-    type: z.enum(
-        courseTypeOptions.map(
-            (option) => option.value
-        ) as CourseTypeOptionsType[],
-        {
-            message: 'Type is required',
-        }
-    ),
-    status: z.enum(
-        courseStatusOptions.map(
-            (option) => option.value
-        ) as CourseStatusOptionsType[],
-        {
-            message: 'Status is required',
-        }
-    ),
-    file: z
-        .union([z.instanceof(File), z.null(), z.string()])
-        .or(z.null())
-        .refine((file) => file !== null, 'File is required'),
+    resources: z
+        .array(
+            z.object({
+                topic: z.string().min(2, 'Topic is required'),
+                type: z.enum(
+                    courseTypeOptions.map(
+                        (option) => option.value
+                    ) as CourseTypeOptionsType[],
+                    {
+                        message: 'Type is required',
+                    }
+                ),
+                status: z.enum(
+                    courseStatusOptions.map(
+                        (option) => option.value
+                    ) as CourseStatusOptionsType[],
+                    {
+                        message: 'Status is required',
+                    }
+                ),
+                file: z
+                    .instanceof(File)
+                    .optional()
+                    .refine((val) => val instanceof File, {
+                        message: 'File is required',
+                    }),
+            })
+        )
+        .min(1, 'Add at least one resource'),
 });
 
 export type AddResourceForm = z.infer<typeof addResourceSchema>;

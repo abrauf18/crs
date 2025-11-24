@@ -5,6 +5,7 @@ import {
 
 export type Resource = {
     id: string;
+    unit: number;
     courseId: string;
     name: string;
     topic: string;

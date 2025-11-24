@@ -9,6 +9,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createCourse, updateCourse } from '@/lib/actions/courses';
 import { toast } from 'react-toastify';
+import { Switch } from '@/app/components/ui/switch';
 
 import {
     Dialog,
@@ -20,11 +21,20 @@ import {
 } from '@/components/ui/dialog';
 import { Course } from '@/lib/types/course';
 
-const courseSchema = z.object({
-    name: z.string().min(1, 'Course name is required'),
-    description: z.string().min(1, 'Description is required'),
-    courseLength: z.number().min(1, 'Course length must be at least 1 minute'),
-});
+const courseSchema = z
+    .object({
+        name: z.string().min(1, 'Course name is required'),
+        description: z.string().min(1, 'Description is required'),
+        courseLength: z
+            .number()
+            .min(1, 'Course length must be at least 1 minute'),
+        isPaid: z.boolean(),
+        price: z.number().optional(),
+    })
+    .refine((data) => (data.isPaid ? !!data.price : true), {
+        message: 'Price is required for paid courses',
+        path: ['price'],
+    });
 
 type CourseFormValues = z.infer<typeof courseSchema>;
 
@@ -39,16 +49,21 @@ export default function CreateCourseModal({
     const isEditing = Boolean(defaultData);
 
     const {
+        watch,
         register,
         handleSubmit,
         reset,
         formState: { errors, isSubmitting },
+        setValue,
     } = useForm<CourseFormValues>({
-        resolver: zodResolver<CourseFormValues>(courseSchema),
+        resolver: zodResolver(courseSchema),
+        reValidateMode: 'onChange',
         defaultValues: {
             name: defaultData?.name || '',
             description: defaultData?.description || '',
             courseLength: Number(defaultData?.courseLength) || 30,
+            isPaid: !!Number(defaultData?.price),
+            price: Number(defaultData?.price) || 0,
         },
     });
 
@@ -68,6 +83,7 @@ export default function CreateCourseModal({
         setIsDialogOpen(false);
     };
 
+    const isPaid = watch('isPaid');
     return (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
@@ -140,6 +156,42 @@ export default function CreateCourseModal({
                             </p>
                         )}
                     </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="price" className="mr-2 ">
+                            Is Paid
+                        </Label>
+                        <Switch
+                            checked={isPaid}
+                            {...register('isPaid')}
+                            onCheckedChange={(value) => {
+                                setValue('isPaid', value);
+                            }}
+                            className="mt-1"
+                        />
+                    </div>
+                    {isPaid && (
+                        <div className="space-y-2">
+                            <Label htmlFor="lengthInMinutes">
+                                Course Price
+                            </Label>
+                            <Input
+                                id="price"
+                                type="number"
+                                min={1}
+                                placeholder="60"
+                                {...register('price', {
+                                    valueAsNumber: true,
+                                })}
+                            />
+
+                            {errors.price && (
+                                <p className="text-sm text-red-600">
+                                    {errors.price.message}
+                                </p>
+                            )}
+                        </div>
+                    )}
 
                     <div className="flex items-center justify-end gap-3 pt-2">
                         <Button

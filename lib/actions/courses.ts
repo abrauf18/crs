@@ -9,10 +9,12 @@ export const createCourse = async ({
     name,
     description,
     courseLength,
+    price = 0,
 }: {
     name: string;
     description: string;
     courseLength: number;
+    price?: number;
 }) => {
     try {
         const userSession = await getServerSession(options);
@@ -25,7 +27,12 @@ export const createCourse = async ({
             `${process.env.NEXT_PUBLIC_BASE_URL}/courses`,
             {
                 method: 'POST',
-                body: JSON.stringify({ name, description, courseLength }),
+                body: JSON.stringify({
+                    name,
+                    description,
+                    courseLength,
+                    price,
+                }),
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
