@@ -159,3 +159,83 @@ export async function updateCourse(data: {
         return { success: false, message: 'Internal server errro' };
     }
 }
+
+export async function deleteCourse(id: string) {
+    try {
+        const userSession = await getServerSession(options);
+        if (!userSession) {
+            return { success: false, message: 'Unauthorized' };
+        }
+        const accessToken = userSession.user?.token;
+
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}`,
+            {
+                method: 'DELETE',
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        const result = await response.json();
+        if (!response.ok) {
+            return {
+                success: false,
+                message: result.message || 'Something went wrong',
+            };
+        }
+        revalidatePath('/admin/courses');
+        return {
+            success: true,
+            message: 'Course deleted successfully',
+            ...result,
+        };
+    } catch (error) {
+        return { success: false, message: 'Internal server errro' };
+    }
+}
+
+export async function deleteResource({
+    courseId,
+    resourceId,
+}: {
+    courseId: string;
+    resourceId: string;
+}) {
+    try {
+        const userSession = await getServerSession(options);
+        if (!userSession) {
+            return { success: false, message: 'Unauthorized' };
+        }
+        const accessToken = userSession.user?.token;
+
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${courseId}/resource/${resourceId}`,
+            {
+                method: 'DELETE',
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        const result = await response.json();
+        if (!response.ok) {
+            return {
+                success: false,
+                message: result.message || 'Something went wrong',
+            };
+        }
+        revalidatePath(`/admin/courses/${courseId}`);
+        return {
+            success: true,
+            message: 'Course deleted successfully',
+            ...result,
+        };
+    } catch (error) {
+        return { success: false, message: 'Internal server errro' };
+    }
+}

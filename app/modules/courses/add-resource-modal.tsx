@@ -78,8 +78,6 @@ export default function AddResourceModal({
                 return;
             }
 
-            console.log('resoureces data', data);
-
             const structuredData = data.resources.map((item) => ({
                 ...item,
                 unit: data.unit,
@@ -121,7 +119,9 @@ export default function AddResourceModal({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                {trigger || <Button>Add Resource</Button>}
+                {trigger || (
+                    <Button className="bg-primary-color">Add Resource</Button>
+                )}
             </DialogTrigger>
 
             <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
@@ -318,7 +318,7 @@ export default function AddResourceModal({
                     {/* Submit Button */}
                     <Button
                         type="submit"
-                        className="w-full"
+                        className="w-full "
                         disabled={isSubmitting}
                     >
                         {isSubmitting

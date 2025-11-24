@@ -4,6 +4,7 @@ import React from 'react';
 import { Course } from '@/lib/types/course';
 import AddResourceModal from './add-resource-modal';
 import CreateCourseModal from './create-course-modal';
+import { DeleteCourseDialog } from './delete-course-dialog';
 
 type CourseCardProps = {
     course: Course;
@@ -79,7 +80,8 @@ export default function CourseCard({ course }: CourseCardProps) {
                 </div>
             </dl>
 
-            <div className="mt-auto flex justify-end">
+            <div className="mt-auto flex justify-between gap-3">
+                <DeleteCourseDialog id={course.id} type="course" />
                 <AddResourceModal courseId={course.id} />
             </div>
         </article>

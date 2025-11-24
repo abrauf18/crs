@@ -7,6 +7,7 @@ import { Resource } from '@/lib/types/course';
 import { getFileIcon, getFileType } from '@/lib/utils';
 import AddResourceModal from './add-resource-modal';
 import { RenderFilePreview } from './render-file-preview';
+import { DeleteCourseDialog } from './delete-course-dialog';
 
 export default function ResourceViewer({ resource }: { resource: Resource }) {
     const { name, url, type } = resource;
@@ -33,6 +34,11 @@ export default function ResourceViewer({ resource }: { resource: Resource }) {
                     }
                     defaultData={resource}
                 /> */}
+                <DeleteCourseDialog
+                    id={resource.id}
+                    courseId={resource.courseId}
+                    type="resource"
+                />
                 <Dialog>
                     <DialogTrigger asChild>
                         <EyeIcon className="w-5 h-5 inline-block mr-2" />
