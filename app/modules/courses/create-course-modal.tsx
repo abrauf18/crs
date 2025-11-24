@@ -166,6 +166,7 @@ export default function CreateCourseModal({
                             {...register('isPaid')}
                             onCheckedChange={(value) => {
                                 setValue('isPaid', value);
+                                setValue('price', 0);
                             }}
                             className="mt-1"
                         />

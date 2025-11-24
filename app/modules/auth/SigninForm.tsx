@@ -76,7 +76,7 @@ function SigninForm() {
                 const role = session?.user?.role;
                 if (role) {
                     toast.success('Login Successful');
-                    return router.push(`/${role}`);
+                    return router.push(`/${role}/courses`);
                 }
                 return toast.error(session?.user?.message);
             }

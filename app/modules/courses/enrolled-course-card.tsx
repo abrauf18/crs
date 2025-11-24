@@ -8,7 +8,9 @@ type EnrolledCourseCardProps = {
     course: Course;
 };
 
-export default function EnrolledCourseCard({ course }: EnrolledCourseCardProps) {
+export default function EnrolledCourseCard({
+    course,
+}: EnrolledCourseCardProps) {
     const courseLength = Number(course.courseLength);
 
     const formattedCourseLength = Number.isNaN(courseLength)
@@ -24,7 +26,7 @@ export default function EnrolledCourseCard({ course }: EnrolledCourseCardProps) 
         : 'Date not available';
 
     // Hardcoded progress for testing - replace with actual progress later
-    const progress = 65;
+    // const progress = 65;
 
     return (
         <Link href={`/teacher/courses/${course.id}`}>
@@ -55,13 +57,13 @@ export default function EnrolledCourseCard({ course }: EnrolledCourseCardProps) 
                         {course.description || 'No description provided yet.'}
                     </p>
 
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                         <div className="flex items-center justify-between text-sm">
                             <span className="text-gray-600 font-medium">Course Progress</span>
                             <span className="text-primary-color font-semibold">{progress}%</span>
                         </div>
                         <Progress value={progress} className="h-2" />
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
                         <div className="flex items-center gap-2 text-sm text-gray-500">
