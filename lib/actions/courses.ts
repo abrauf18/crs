@@ -121,6 +121,7 @@ export async function updateCourse(data: {
     name: string;
     description: string;
     courseLength: number;
+    price?: number;
 }) {
     try {
         const userSession = await getServerSession(options);
@@ -137,6 +138,7 @@ export async function updateCourse(data: {
                     name: data.name,
                     description: data.description,
                     courseLength: data.courseLength,
+                    price: data.price || 0,
                 }),
                 headers: {
                     'Content-Type': 'application/json',

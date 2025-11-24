@@ -23,7 +23,7 @@ export default function ResourceViewer({ resource }: { resource: Resource }) {
                 </div>
             </div>
             <div className="flex items-center justify-end gap-x-4">
-                <AddResourceModal
+                {/* <AddResourceModal
                     courseId={resource.courseId}
                     trigger={
                         <Pencil
@@ -32,7 +32,7 @@ export default function ResourceViewer({ resource }: { resource: Resource }) {
                         />
                     }
                     defaultData={resource}
-                />
+                /> */}
                 <Dialog>
                     <DialogTrigger asChild>
                         <EyeIcon className="w-5 h-5 inline-block mr-2" />

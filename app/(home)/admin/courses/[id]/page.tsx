@@ -35,13 +35,31 @@ export default async function CourseDetailsPage({
                 {course.resources.length === 0 ? (
                     <p className="text-gray-500">No resources uploaded yet.</p>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {course.resources.map((resource) => (
-                            <ResourceViewer
-                                key={resource.id}
-                                resource={resource}
-                            />
-                        ))}
+                    <div className="space-y-8">
+                        {Object.values(course.groupedResources).map(
+                            (resources, i) => (
+                                <div
+                                    key={resources[0].unit}
+                                    className="space-y-2"
+                                >
+                                    <h4 className="font-semibold text-xl flex items-center gap-2">
+                                        <div className="h-1 w-8 bg-primary-color rounded" />
+                                        Unit {resources[0].unit}:{' '}
+                                        {resources[0].name}
+                                    </h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {resources
+                                            .filter((r) => r.status === 'SHOW')
+                                            .map((resource) => (
+                                                <ResourceViewer
+                                                    key={resource.id}
+                                                    resource={resource}
+                                                />
+                                            ))}
+                                    </div>
+                                </div>
+                            )
+                        )}
                     </div>
                 )}
             </div>

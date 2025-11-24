@@ -103,17 +103,17 @@ export default function CourseDetailsContent({
     );
 
     // Group resources by topic
-    const resourcesByTopic = visibleResources.reduce(
-        (acc, resource) => {
-            const topic = resource.topic || 'Uncategorized';
-            if (!acc[topic]) {
-                acc[topic] = [];
-            }
-            acc[topic].push(resource);
-            return acc;
-        },
-        {} as Record<string, typeof visibleResources>
-    );
+    // const resourcesByTopic = visibleResources.reduce(
+    //     (acc, resource) => {
+    //         const topic = resource.topic || 'Uncategorized';
+    //         if (!acc[topic]) {
+    //             acc[topic] = [];
+    //         }
+    //         acc[topic].push(resource);
+    //         return acc;
+    //     },
+    //     {} as Record<string, typeof visibleResources>
+    // );
 
     return (
         <div className="min-h-screen bg-lighter-gray">
@@ -236,7 +236,7 @@ export default function CourseDetailsContent({
             </div>
 
             {/* Progress Bar - Only shown when enrolled */}
-            {isEnrolled && (
+            {/* {isEnrolled && (
                 <div className="bg-white border-b border-gray-200">
                     <div className="max-w-7xl mx-auto px-6 py-6">
                         <div className="space-y-3">
@@ -259,7 +259,7 @@ export default function CourseDetailsContent({
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
 
             {/* Course Content */}
             <div className="max-w-7xl mx-auto px-6 py-8">
@@ -275,14 +275,19 @@ export default function CourseDetailsContent({
                                 No resources available yet for this course.
                             </p>
                         </div>
+                    ) : Number(course.price) > 0 && !isEnrolled ? (
+                        <div className="grid place-items-center">
+                            Please Buy this course first to view it&apos;s
+                            content
+                        </div>
                     ) : (
                         <div className="space-y-8">
-                            {Object.entries(resourcesByTopic).map(
-                                ([topic, resources]) => (
-                                    <div key={topic}>
+                            {Object.entries(course.groupedResources).map(
+                                ([unit, resources]) => (
+                                    <div key={unit}>
                                         <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                             <div className="h-1 w-8 bg-primary-color rounded" />
-                                            {topic}
+                                            Unit {unit}: {resources[0]?.name}
                                         </h3>
                                         <div className="space-y-3">
                                             {resources.map((resource) => {

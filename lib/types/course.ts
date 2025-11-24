@@ -35,6 +35,7 @@ export type CourseDetail = {
     createdAt: string;
     updatedAt: string;
     resources: Resource[];
+    groupedResources: Record<string, Resource[]>;
 };
 
 export type FileTypes = 'pdf' | 'video' | 'image' | 'doc' | 'other' | 'ppt';
