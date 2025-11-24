@@ -32,11 +32,11 @@ export default function SideBar() {
     let navItems: NavigationItemProps[] = [];
     if (path.startsWith('/admin')) {
         navItems = [
-            {
-                to: '/admin',
-                ItemIcon: LayoutGrid,
-                itemText: 'Dashboard',
-            },
+            // {
+            //     to: '/admin',
+            //     ItemIcon: LayoutGrid,
+            //     itemText: 'Dashboard',
+            // },
             // {
             //     to: '/admin/video',
             //     ItemIcon: SlideShowIcon,
@@ -57,11 +57,11 @@ export default function SideBar() {
             //     ItemIcon: QueryIcon,
             //     itemText: 'Query',
             // },
-            {
-                to: '/admin/standard',
-                ItemIcon: StandardIcon,
-                itemText: 'Standard',
-            },
+            // {
+            //     to: '/admin/standard',
+            //     ItemIcon: StandardIcon,
+            //     itemText: 'Standard',
+            // },
             {
                 to: '/admin/users',
                 ItemIcon: UserIcon,
@@ -81,26 +81,26 @@ export default function SideBar() {
         ];
     } else if (path.startsWith('/teacher')) {
         navItems = [
-            {
-                to: '/teacher',
-                ItemIcon: LayoutGrid,
-                itemText: 'Dashboard',
-            },
-            {
-                to: '/teacher/learning-plans',
-                ItemIcon: StandardIcon,
-                itemText: 'Learning Plans',
-            },
+            // {
+            //     to: '/teacher',
+            //     ItemIcon: LayoutGrid,
+            //     itemText: 'Dashboard',
+            // },
+            // {
+            //     to: '/teacher/learning-plans',
+            //     ItemIcon: StandardIcon,
+            //     itemText: 'Learning Plans',
+            // },
             {
                 to: '/teacher/courses',
                 ItemIcon: BookText,
                 itemText: 'Courses',
             },
-            {
-                to: '/teacher/classroom',
-                ItemIcon: GraduationCap,
-                itemText: 'Classroom',
-            },
+            // {
+            //     to: '/teacher/classroom',
+            //     ItemIcon: GraduationCap,
+            //     itemText: 'Classroom',
+            // },
             {
                 to: '/teacher/setting',
                 ItemIcon: Settings,
