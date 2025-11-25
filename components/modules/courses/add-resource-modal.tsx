@@ -125,162 +125,170 @@ export default function AddResourceModal({
         )}
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-2xl max-h-[85vh] flex flex-col overflow-hidden">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle>
             {isEditing ? "Edit Resource" : "Add New Resource"}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Unit Number */}
-          <div className="space-y-2">
-            <Label>Unit Number</Label>
-            <Input
-              placeholder="Enter unit number"
-              {...register("unit")}
-              type="number"
-            />
-            {errors.unit && (
-              <p className="text-red-500 text-sm">{errors?.unit?.message}</p>
-            )}
-          </div>
-
-          {/* Name */}
-          <div className="space-y-2">
-            <Label>Name</Label>
-            <Input placeholder="Enter resource name" {...register("name")} />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
-            )}
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-medium">Resources</h3>
-
-              {/* Add More Resource */}
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() =>
-                  append({
-                    topic: "",
-                    type: "ACTIVITY",
-                    status: "SHOW",
-                    file: undefined,
-                  })
-                }
-              >
-                <Plus className="w-4 h-4 mr-1" /> Add Resource
-              </Button>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden">
+          <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+            {/* Unit Number */}
+            <div className="space-y-2">
+              <Label>Unit Number</Label>
+              <Input
+                placeholder="Enter unit number"
+                {...register("unit")}
+                type="number"
+              />
+              {errors.unit && (
+                <p className="text-red-500 text-sm">{errors?.unit?.message}</p>
+              )}
             </div>
 
-            {fields.map((field, index) => (
-              <div key={field.id} className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Topic</Label>
-                  <Input
-                    placeholder="Topic"
-                    {...register(`resources.${index}.topic`)}
-                  />
-                  {errors.resources?.[index]?.topic && (
-                    <p className="text-red-500 text-sm">
-                      {errors.resources?.[index]?.topic.message}
-                    </p>
-                  )}
-                </div>
+            {/* Name */}
+            <div className="space-y-2">
+              <Label>Name</Label>
+              <Input placeholder="Enter resource name" {...register("name")} />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name.message}</p>
+              )}
+            </div>
 
-                <div className="space-y-2">
-                  <Label>Type</Label>
-                  <Select
-                    {...register(`resources.${index}.type`)}
-                    value={watch(`resources.${index}.type`)}
-                    onValueChange={(val: CourseTypeOptionsType) =>
-                      setValue(`resources.${index}.type`, val)
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select resource type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {courseTypeOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.resources?.[index]?.type && (
-                    <p className="text-red-500 text-sm">
-                      {errors.resources?.[index]?.type.message}
-                    </p>
-                  )}
-                </div>
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium">Resources</h3>
 
-                <div className="space-y-2">
-                  <Label>Status</Label>
-                  <Select
-                    {...register(`resources.${index}.status`)}
-                    value={watch(`resources.${index}.status`)}
-                    onValueChange={(val: CourseStatusOptionsType) =>
-                      setValue(`resources.${index}.status`, val)
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select resource status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {courseStatusOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.resources?.[index]?.status && (
-                    <p className="text-red-500 text-sm">
-                      {errors.resources?.[index]?.status.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Files</Label>
-
-                  <Input
-                    type="file"
-                    accept="video/*,application/pdf,image/*,.docx,.pptx"
-                    // {...register(`resources.${index}.file`)}
-                    onChange={(e) => {
-                      const file = e.target?.files?.[0];
-                      console.log("file", file);
-                      setValue(`resources.${index}.file`, file as File, {
-                        shouldValidate: true,
-                      });
-                    }}
-                  />
-
-                  {errors.resources?.[index]?.file && (
-                    <p className="text-red-500 text-sm">
-                      {errors.resources?.[index]?.file.message}
-                    </p>
-                  )}
-                </div>
+                {/* Add More Resource */}
+                <Button
+                  type="button"
+                  className="bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all duration-200"
+                  onClick={() =>
+                    append({
+                      topic: "",
+                      type: "ACTIVITY",
+                      status: "SHOW",
+                      file: undefined,
+                    })
+                  }
+                >
+                  <Plus className="w-4 h-4 mr-1" /> Add Resource
+                </Button>
               </div>
-            ))}
+
+              {fields.map((field, index) => (
+                <div key={field.id} className="space-y-4 mb-6 pb-6 border-b last:border-b-0">
+                  <div className="space-y-2">
+                    <Label>Topic</Label>
+                    <Input
+                      placeholder="Topic"
+                      {...register(`resources.${index}.topic`)}
+                    />
+                    {errors.resources?.[index]?.topic && (
+                      <p className="text-red-500 text-sm">
+                        {errors.resources?.[index]?.topic.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Type</Label>
+                    <Select
+                      {...register(`resources.${index}.type`)}
+                      value={watch(`resources.${index}.type`)}
+                      onValueChange={(val: CourseTypeOptionsType) =>
+                        setValue(`resources.${index}.type`, val)
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select resource type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {courseTypeOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.resources?.[index]?.type && (
+                      <p className="text-red-500 text-sm">
+                        {errors.resources?.[index]?.type.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Status</Label>
+                    <Select
+                      {...register(`resources.${index}.status`)}
+                      value={watch(`resources.${index}.status`)}
+                      onValueChange={(val: CourseStatusOptionsType) =>
+                        setValue(`resources.${index}.status`, val)
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select resource status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {courseStatusOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.resources?.[index]?.status && (
+                      <p className="text-red-500 text-sm">
+                        {errors.resources?.[index]?.status.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Files</Label>
+
+                    <Input
+                      type="file"
+                      accept="video/*,application/pdf,image/*,.docx,.pptx"
+                      // {...register(`resources.${index}.file`)}
+                      onChange={(e) => {
+                        const file = e.target?.files?.[0];
+                        console.log("file", file);
+                        setValue(`resources.${index}.file`, file as File, {
+                          shouldValidate: true,
+                        });
+                      }}
+                    />
+
+                    {errors.resources?.[index]?.file && (
+                      <p className="text-red-500 text-sm">
+                        {errors.resources?.[index]?.file.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full " disabled={isSubmitting}>
-            {isSubmitting
-              ? isEditing
-                ? "Updating..."
-                : "Adding..."
-              : isEditing
-              ? "Update Resource"
-              : "Add Resource"}
-          </Button>
+          <div className="flex-shrink-0 pt-4 border-t mt-4">
+            <Button
+              type="submit"
+              className="w-full bg-primary-color hover:bg-primary-color/90 text-white transition-all duration-200"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? isEditing
+                  ? "Updating..."
+                  : "Adding..."
+                : isEditing
+                ? "Update Resource"
+                : "Add Resource"}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

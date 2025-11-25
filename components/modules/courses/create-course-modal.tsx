@@ -86,24 +86,25 @@ export default function CreateCourseModal({
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <button
+          <Button
             type="button"
-            className="bg-primary-color text-white px-3 py-2 rounded"
+            className="bg-primary-color hover:bg-primary-color/90 text-white transition-all duration-200"
             onClick={() => setIsDialogOpen(true)}
           >
             Create Course
-          </button>
+          </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-xl">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-xl max-h-[85vh] flex flex-col overflow-hidden">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle>{isEditing ? "Update" : "Create"} Course</DialogTitle>
           <DialogDescription>
             Fill in the details to{" "}
             {isEditing ? "update course" : "create a new course"}.
           </DialogDescription>
         </DialogHeader>
-        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col flex-1 overflow-hidden" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex-1 overflow-y-auto pr-2 space-y-5">
           <div className="space-y-2">
             <Label htmlFor="name">Course name</Label>
             <Input
@@ -181,11 +182,13 @@ export default function CreateCourseModal({
               )}
             </div>
           )}
+          </div>
 
-          <div className="flex items-center justify-end gap-3 pt-2">
+          <div className="flex-shrink-0 flex items-center justify-end gap-3 pt-4 border-t mt-4">
             <Button
               type="button"
               variant="outline"
+              className="hover:bg-gray-100 transition-all duration-200"
               onClick={() => {
                 reset();
                 setIsDialogOpen(false);
@@ -193,8 +196,12 @@ export default function CreateCourseModal({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Create course"}
+            <Button
+              type="submit"
+              className="bg-primary-color hover:bg-primary-color/90 text-white transition-all duration-200"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving..." : isEditing ? "Update course" : "Create course"}
             </Button>
           </div>
         </form>

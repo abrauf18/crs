@@ -67,10 +67,19 @@ export function DeleteCourseDialog({
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button
+              variant="outline"
+              className="hover:bg-gray-100 transition-all duration-200"
+            >
+              Cancel
+            </Button>
           </DialogClose>
-          <Button disabled={loading} onClick={handleRemove}>
-            Continue
+          <Button
+            disabled={loading}
+            onClick={handleRemove}
+            className="bg-red-600 hover:bg-red-700 text-white transition-all duration-200"
+          >
+            {loading ? "Deleting..." : "Continue"}
           </Button>
         </DialogFooter>
       </DialogContent>
