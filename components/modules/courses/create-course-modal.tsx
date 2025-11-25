@@ -95,7 +95,7 @@ export default function CreateCourseModal({
           </button>
         )}
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>{isEditing ? "Update" : "Create"} Course</DialogTitle>
           <DialogDescription>
