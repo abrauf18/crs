@@ -25,64 +25,79 @@ export default function CourseCard({ course }: CourseCardProps) {
         : '—';
 
     return (
-        <article className="flex h-full flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+        <article className="group flex h-full flex-col gap-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-gray-300 hover:-translate-y-1">
+            {/* Header Section */}
             <div className="flex items-start justify-between gap-4">
-                <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-primary-color transition-colors">
                         {course.name}
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
                         {course.description || 'No description provided yet.'}
                     </p>
                 </div>
-                <div className="flex items-center gap-x-2">
-                    <Link href={`/admin/courses/${course.id}`}>
+
+                {/* Action Icons */}
+                <div className="flex items-center gap-2 flex-shrink-0">
+                    <Link
+                        href={`/admin/courses/${course.id}`}
+                        className="p-2 rounded-lg border border-gray-200 bg-white hover:bg-primary-color hover:border-primary-color hover:text-white transition-all duration-200 group/view"
+                    >
                         <Eye
-                            className="h-4 w-4"
+                            className="h-4 w-4 text-gray-600 group-hover/view:text-white transition-colors"
                             aria-label={`View ${course.name}`}
                         />
                     </Link>
 
                     <CreateCourseModal
                         trigger={
-                            <Pencil
-                                className="h-3 w-3 cursor-pointer"
-                                aria-label={`Edit ${course.name}`}
-                            />
+                            <button className="p-2 rounded-lg border border-gray-200 bg-white hover:bg-primary-color hover:border-primary-color hover:text-white transition-all duration-200 group/edit">
+                                <Pencil
+                                    className="h-4 w-4 text-gray-600 group-hover/edit:text-white transition-colors cursor-pointer"
+                                    aria-label={`Edit ${course.name}`}
+                                />
+                            </button>
                         }
                         defaultData={course}
                     />
                 </div>
             </div>
 
-            <dl className="grid gap-3 text-sm text-gray-600 sm:grid-cols-3">
-                <div>
-                    <dt className="text-xs uppercase tracking-wide text-gray-400">
+            {/* Divider */}
+            <div className="border-t border-gray-100"></div>
+
+            {/* Info Grid */}
+            <dl className="grid gap-4 text-sm sm:grid-cols-3">
+                <div className="space-y-1">
+                    <dt className="text-xs font-medium uppercase tracking-wider text-gray-500">
                         Length
                     </dt>
-                    <dd className="font-medium text-gray-900">
+                    <dd className="text-base font-semibold text-gray-900">
                         {formattedCourseLength}
                     </dd>
                 </div>
-                <div>
-                    <dt className="text-xs uppercase tracking-wide text-gray-400">
+                <div className="space-y-1">
+                    <dt className="text-xs font-medium uppercase tracking-wider text-gray-500">
                         Price
                     </dt>
-                    <dd className="font-medium text-gray-900">
+                    <dd className="text-base font-semibold text-gray-900">
                         {formattedPrice}
                     </dd>
                 </div>
-                <div>
-                    <dt className="text-xs uppercase tracking-wide text-gray-400">
+                <div className="space-y-1">
+                    <dt className="text-xs font-medium uppercase tracking-wider text-gray-500">
                         Created
                     </dt>
-                    <dd className="font-medium text-gray-900">{createdAt}</dd>
+                    <dd className="text-base font-semibold text-gray-900">{createdAt}</dd>
                 </div>
             </dl>
 
-            <div className="mt-auto flex justify-between gap-3">
+            {/* Action Buttons */}
+            <div className="mt-auto flex gap-3 pt-2">
+                <div className="flex-1">
+                    <AddResourceModal courseId={course.id} />
+                </div>
                 <DeleteCourseDialog id={course.id} type="course" />
-                <AddResourceModal courseId={course.id} />
             </div>
         </article>
     );

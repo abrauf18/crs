@@ -44,13 +44,13 @@ export function DeleteCourseDialog({
     <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DialogTrigger asChild>
         {type === "course" ? (
-          <Button className=" bg-destructive text-destructive-foreground text-white">
+          <Button className="bg-red-600 hover:bg-red-700 text-white transition-all duration-200 focus-visible:ring-red-500/20">
             Delete
           </Button>
         ) : (
           <Button
             variant="ghost"
-            className="text-destructive hover:bg-transparent"
+            className="text-red-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200"
           >
             <Trash2 size={20} />
           </Button>

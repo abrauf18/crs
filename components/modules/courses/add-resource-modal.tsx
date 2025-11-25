@@ -118,7 +118,11 @@ export default function AddResourceModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {trigger || <Button className="bg-primary-color">Add Resource</Button>}
+        {trigger || (
+          <Button className="w-full bg-primary-color hover:bg-primary-color/90 text-white transition-all duration-200">
+            Add Resource
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
