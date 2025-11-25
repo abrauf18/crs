@@ -13,6 +13,7 @@ import {
   LayoutGrid,
   CreditCard,
   BookText,
+  BookOpen,
 } from "lucide-react";
 import crsLogo from "@/assets/images/crsclogo.svg";
 import ResourceIcon from "@/assets/icons/ResourceIcon";
@@ -43,7 +44,7 @@ export default function SideBar() {
       // },
       {
         to: "/admin/courses",
-        ItemIcon: ResourceIcon,
+        ItemIcon: BookOpen,
         itemText: "Courses",
       },
       // {
