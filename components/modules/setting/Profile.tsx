@@ -387,6 +387,7 @@ function Profile() {
                     message="You have unsaved changes. Do you want to discard them?"
                     onYes={handleConfirmDiscard}
                     onNo={handleCancelDiscard}
+                    setIsOpen={setShowDiscardDialog}
                 />
             )}
         </>
